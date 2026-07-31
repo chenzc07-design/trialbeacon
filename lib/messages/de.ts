@@ -1,0 +1,446 @@
+import type { Messages } from './en';
+
+export const de: Messages = {
+  nav: {
+    cancerTypes: 'Krebserkrankungen',
+    afterCare: 'Nach konservativer / palliativer Behandlung',
+    changeTracker: 'Änderungsverlauf',
+    sources: 'Quellen',
+    alerts: 'Wöchentliche Hinweise',
+    getWeekly: 'Wöchentliche Updates erhalten',
+    toggleMenu: 'Navigationsmenü umschalten',
+    myList: 'Meine Liste',
+    safety: 'Vor Kontaktaufnahme mit einer Studie',
+  },
+  common: {
+    noMedicalAdvice: 'Keine medizinischen Ratschläge',
+    noRecommendations: 'Keine Behandlungsempfehlungen',
+    freeToUse: 'Kostenlos nutzbar',
+    viewAllTypes: 'Alle Typen ansehen',
+    openView: 'Diese Ansicht öffnen',
+    allTypes: 'Alle Typen',
+    allRegions: 'Alle Regionen',
+    searchAria: 'Offizielle Datensätze durchsuchen',
+    searchPlaceholder: 'Suche nach Stichwort, NCT-Nummer, Phase…',
+    searchButton: 'Suchen',
+    viewOriginal: 'Original ansehen',
+    noRecordsMatch: 'Keine Datensätze passen zu dieser Ansicht',
+    openRegistries:
+      'Versuchen Sie einen anderen Filter, oder öffnen Sie die offiziellen Register direkt über die Seite „Quellen".',
+    continuouslyUpdated: 'Fortlaufend aktualisiert',
+    readFullDisclaimer: 'Vollständigen Haftungsausschluss lesen',
+    recordsIndexed: '{n|indexierter Datensatz|indexierte Datensätze}',
+    advancedLaterLine: '{n} fortgeschritten / späte Behandlungslinie',
+    details: 'Details',
+    back: 'Zurück',
+  },
+  home: {
+    eyebrow: 'Unabhängig · Neutral · Nachvollziehbar',
+    title1: 'Verlässliche Updates aus offiziellen Quellen.',
+    title2: 'Nichts weiter.',
+    subtitle:
+      'TrialBeacon ist ein ruhiges Verzeichnis öffentlich gelisteter klinischer Studien, Leitlinien-Verzeichnisse und behördlicher Mitteilungen aus den Vereinigten Staaten, Europa und China — mit einem direkten Link zur Originalseite für jeden einzelnen Eintrag.',
+    afterCareTitle: 'Nach konservativer / palliativer Behandlung',
+    afterCareBody:
+      'Eine eigene Ansicht offizieller Datensätze zu fortgeschrittenen, wiederkehrenden oder späten Erkrankungsstadien sowie unterstützender Behandlung — für Menschen, denen zur konservativen oder palliativen Behandlung geraten wurde und die dennoch sehen möchten, was öffentlich gelistet ist.',
+    afterCareCta: 'Diese Ansicht öffnen',
+    browseTitle: 'Nach Krebserkrankung durchsuchen',
+    browseSub:
+      'Jede Seite listet offizielle Datensätze aus den USA, Europa und China nebeneinander auf.',
+    principlesTitle: 'So funktioniert diese Website',
+    principles: {
+      official: {
+        title: 'Ausschließlich offizielle Quellen',
+        body: 'Jeder Eintrag verlinkt direkt zu ClinicalTrials.gov, FDA, NCCN, EMA, CTIS, ESMO, CDE, NMPA oder ChiCTR. Wir verfassen keinen eigenen Inhalt.',
+      },
+      noRec: {
+        title: 'Keine Empfehlungen',
+        body: 'Wir ordnen Behandlungen niemals ein, bewerten sie nicht oder schlagen sie vor. Titel werden unverändert aus dem offiziellen Datensatz übernommen.',
+      },
+      threeRegions: {
+        title: 'Drei Regionen, nebeneinander',
+        body: 'Vereinigte Staaten, Europa und China gemeinsam dargestellt, damit Sie vergleichen können, was jedes offizielle System listet.',
+      },
+      traceable: {
+        title: 'Immer nachvollziehbar',
+        body: 'Jede Karte hat einen Zweck: Sie in einem Klick zur ursprünglichen offiziellen Seite zu bringen, damit Sie alles selbst überprüfen können.',
+      },
+    },
+    sourcesTitle: 'Jeder Datensatz lässt sich auf eine dieser offiziellen Quellen zurückführen',
+    sourcesSub: 'Snapshot am {date} verifiziert. Lesen Sie auf der Seite „Quellen", wie Datensätze erfasst werden.',
+    sourcesCta: 'Quellen & Methodik',
+  },
+  cancersIndex: {
+    eyebrow: 'Durchsuchen',
+    title: 'Krebserkrankungen',
+    subtitle:
+      'Jede Seite fasst öffentlich gelistete Datensätze für eine Krebserkrankung zusammen — Registrierungen klinischer Studien, Leitlinien-Verzeichnisse und behördliche Mitteilungen — aus offiziellen Quellen in den Vereinigten Staaten, Europa und China. Jeder Eintrag verlinkt zur Originalseite.',
+  },
+  cancerDetail: {
+    advancedViewCta: 'Ansicht „Fortgeschritten / späte Linie"',
+    indexed: '{n} offizielle Datensätze derzeit über drei Regionen indexiert.',
+  },
+  afterCare: {
+    eyebrow: 'Eigene Ansicht',
+    title: 'Nach konservativer / palliativer Behandlung',
+    intro:
+      'Diese Ansicht filtert offizielle Datensätze, deren eigene Beschreibungen auf fortgeschrittene, metastasierte, wiederkehrende oder rezidivierte Erkrankungen, spätere Behandlungslinien oder unterstützende und palliative Behandlung verweisen. Sie existiert aus einem Grund: Wenn Ihnen zur konservativen oder palliativen Behandlung geraten wurde und Sie dennoch sehen möchten, was offizielle Register derzeit listen, können Sie sie hier — ruhig, an einem Ort und stets über die Originalquelle — durchsehen.',
+    pleaseRead: 'Bitte lesen Sie dies zuerst.',
+    pleaseReadBody:
+      'Dass ein Datensatz hier erscheint, bedeutet nicht, dass er für eine Person geeignet, verfügbar oder angemessen ist. Die Aufnahme beruht allein auf der Formulierung im offiziellen Datensatz — niemals auf einer Bewertung durch diese Website. Besprechen Sie alles, was Sie finden, mit Ihrer behandelnden Ärztin oder Ihrem behandelnden Arzt.',
+  },
+  changes: {
+    eyebrow: 'Was hat sich geändert',
+    title: 'Änderungsverlauf',
+    intro:
+      'Ein sachlicher Protokoll der Bewegungen in den offiziellen Registern: Datensätze, die innerhalb des ausgewählten Zeitraums neu gelistet, überarbeitet oder für die Einschreibung geschlossen wurden. Statusbezeichnungen stammen direkt aus dem Register.',
+    lastNDays: 'Letzte {n} Tage',
+    changesSince: '{n|Änderung|Änderungen} seit {date}',
+    noChangesTitle: 'Keine erfassten Änderungen in diesem Zeitraum',
+    noChangesBody: 'Versuchen Sie den 14-Tage-Zeitraum oder durchsuchen Sie die vollständigen Listen nach Krebserkrankung.',
+    groups: {
+      new: {
+        heading: 'Neu gelistet',
+        sub: 'Datensätze, die innerhalb dieses Zeitraums erstmals veröffentlicht wurden',
+      },
+      updated: {
+        heading: 'Kürzlich aktualisiert',
+        sub: 'Bestehende Datensätze, deren offizielle Seite überarbeitet wurde',
+      },
+      closed: {
+        heading: 'Nicht mehr offen',
+        sub: 'Datensätze, deren Status darauf hinweist, dass die Einschreibung beendet ist',
+      },
+    },
+  },
+  search: {
+    eyebrow: 'Suche',
+    title: 'Indexierte Datensätze durchsuchen',
+    intro:
+      'Einfache Stichwortsuche über die Titel und Kennungen indexierter Datensätze. Für eine vollständige, stets aktuelle Suche bleiben die offiziellen Register die Referenz — jedes Ergebnis verlinkt direkt dorthin.',
+    results: '{n|Eintrag|Einträge} für „{query}"',
+    quickEntries: 'Schnelleinstiege',
+  },
+  alerts: {
+    eyebrow: 'Kostenlos',
+    title: 'Wöchentliche Hinweise',
+    intro:
+      'Wenn das Prüfen von Websites das Letzte ist, was Sie gerade tun möchten, lassen Sie das Update zu Ihnen kommen. Einmal pro Woche senden wir eine einzige schlichte E-Mail, die neu indexierte offizielle Datensätze zu den von Ihnen verfolgten Themen auflistet — nichts weiter.',
+    whatYouGet: [
+      'Eine schlichte E-Mail pro Woche — nicht mehr',
+      'Nur Links zu offiziellen Datensätzen, mit Quelle und Datum',
+      'Bis zu 3 Krebserkrankungen Ihrer Wahl',
+      'US-, europäische und chinesische Quellen, nach Ihren Wünschen',
+      'Mit einem Klick abbestellen, aus jeder E-Mail',
+    ],
+    form: {
+      emailLabel: 'E-Mail-Adresse',
+      emailPlaceholder: 'you@example.com',
+      cancerLegend: 'Zu verfolgende Krebserkrankungen',
+      selectedCount: '{n}/{max} ausgewählt',
+      regionsLegend: 'Regionen',
+      subscribe: 'Wöchentliche Updates abonnieren',
+      submitting: 'Speichern…',
+      savedTitle: 'Abonnement gespeichert',
+      savedBody:
+        'Sie erhalten einmal pro Woche eine schlichte E-Mail, die nur Links zu offiziellen Datensätzen zu den von Ihnen gewählten Themen enthält. Sie können jederzeit aus jeder E-Mail abbestellen.',
+      errorNetwork: 'Netzwerkfehler. Bitte versuchen Sie es erneut.',
+      finePrint:
+        'Eine E-Mail pro Woche, nur Links, keine Tracking-Pixel, jederzeit abbestellbar. Ihre Adresse wird ausschließlich für diesen Hinweis verwendet und niemals weitergegeben.',
+    },
+  },
+  sources: {
+    eyebrow: 'Transparenz',
+    title: 'Quellen & Methodik',
+    intro:
+      'Alles auf TrialBeacon lässt sich auf eine der unten stehenden offiziellen Quellen zurückführen. Diese Seite erklärt genau, wie Datensätze erfasst werden und was die Website mit ihnen tut — und nicht tut.',
+    kind: {
+      registry: 'Register klinischer Studien',
+      regulator: 'Arzneimittelbehörde',
+      guidelines: 'Klinische Leitlinien (öffentliche Seiten)',
+    },
+    methodologyTitle: 'Methodik',
+    method: {
+      where: {
+        title: 'Woher die Datensätze kommen',
+        body: 'Studiendatensätze werden über die öffentliche API v2 von ClinicalTrials.gov abgerufen. Europäische und chinesische Einträge sind kuratierte Links zu den offiziellen Registern und öffentlichen Listen, die von EMA, CTIS, ESMO, CDE, NMPA und ChiCTR verwaltet werden. TrialBeacon scannt keine geschützten Inhalte und hostet keine Kopien von Dokumenten.',
+      },
+      what: {
+        title: 'Was angezeigt wird',
+        body: 'Für jeden Datensatz: der vom Anbieter veröffentlichte Titel, der Quellenname, die Region, der Datensatztyp, die Phase und der Status, sofern das Register sie bereitstellt, sowie das offizielle Datum. Das ist der gesamte Datensatz — es gibt keine Kommentarebene.',
+      },
+      absent: {
+        title: 'Was bewusst fehlt',
+        body: 'Keine Wirksamkeitsbehauptungen, keine Rankings, keine Zuordnung, keine „Relevanz"-Bewertungen, keine redaktionellen Zusammenfassungen. Formulierungen, die eine Behandlung bewerten oder bewerben, erscheinen nicht auf dieser Website.',
+      },
+      afterCare: {
+        title: 'Wie die Ansicht „Nach konservativer / palliativer Behandlung" aufgebaut ist',
+        body: 'Ein Datensatz erscheint in der Ansicht „Nach konservativer / palliativer Behandlung" nur dann, wenn sein eigener offizieller Titel oder Geltungsbereich auf fortgeschrittene, metastasierte, wiederkehrende oder rezidivierte Erkrankungen, spätere Behandlungslinien oder unterstützende und palliative Behandlung verweist. Der Filter ist lexikalisch und transparent — niemals eine Bewertung.',
+      },
+      freshness: {
+        title: 'Aktualität',
+        body: 'Live-Registerabfragen werden eine Stunde lang zwischengespeichert. Ist die Live-API nicht erreichbar, zeigt die Website ihren zuletzt verifizierten Snapshot (derzeit {date}) an und weist darauf auf der Seite hin. Links öffnen stets den live offiziellen Datensatz.',
+      },
+      corrections: {
+        title: 'Korrekturen',
+        body: 'Verlinkt ein Eintrag zur falschen Seite oder gibt ein vom Anbieter stammendes Feld falsch wieder, wird dies so schnell wie möglich korrigiert. Die ursprüngliche Registerseite ist stets die maßgebliche Version.',
+      },
+    },
+  },
+  about: {
+    eyebrow: 'Über',
+    title: 'Was TrialBeacon ist — und was nicht',
+    p1:
+      'Wenn jemandem gesagt wird, dass konservative oder palliative Behandlung der empfohlene Weg ist, möchten viele dennoch eine einfache Sache wissen: Gibt es im öffentlichen Register etwas Neues? Diese Frage heute zu beantworten bedeutet, sich durch mehrere Register in verschiedenen Sprachen zu navigieren, umgeben von Marketing, Interpretation und emotional aufgeladenen Inhalten.',
+    p2:
+      'TrialBeacon existiert, um diese Last zu nehmen. Es sammelt Links zu öffentlich gelisteten klinischen Studien, Leitlinien-Verzeichnissen und behördlichen Mitteilungen aus offiziellen Quellen in den Vereinigten Staaten, Europa und China und stellt sie an einem ruhigen, minimalen Ort dar. Jeder Eintrag zeigt einen Titel, eine Quelle, ein Datum und einen Link zur Originalseite. Das ist alles.',
+    isTitle: 'TrialBeacon ist',
+    is: [
+      'Ein neutrales Verzeichnis öffentlich verfügbarer offizieller Informationen',
+      'Eine Möglichkeit, US-, europäische und chinesische offizielle Quellen nebeneinander zu sehen',
+      'Ein Protokoll dessen, was sich in offiziellen Registern kürzlich geändert hat',
+      'Ein direkter Weg zur Originalseite für jeden einzelnen Eintrag',
+    ],
+    isNotTitle: 'TrialBeacon ist nicht',
+    isNot: [
+      'Es bietet keinerlei medizinische Ratschläge',
+      'Es empfiehlt, ordnet nicht ein oder bewertet Behandlungen oder Studien',
+      'Es ordnet Patienten keinen Studien zu',
+      'Es deutet offizielle Datensätze nicht aus, fasst sie nicht zusammen und redigiert sie nicht',
+      'Es hostet keine Werbung oder gesponserte Inhalte',
+    ],
+    principlesTitle: 'Grundsätze',
+    neutralityLabel: 'Neutralität.',
+    neutralityBody:
+      'Titel werden unverändert aus offiziellen Datensätzen übernommen. Wörter, die eine Behandlung bewerten oder bewerben, erscheinen nicht auf dieser Website — weder in Datensätzen noch in der Benutzeroberfläche.',
+    traceabilityLabel: 'Nachvollziehbarkeit.',
+    traceabilityBody:
+      'Jeder Eintrag enthält einen Ein-Klick-Link zu seiner ursprünglichen offiziellen Seite. Lässt sich ein Datensatz nicht zurückverfolgen, wird er nicht gelistet.',
+    restraintLabel: 'Zurückhaltung.',
+    restraintBody:
+      'Der Kernindex ist kostenlos und bleibt kostenlos. Werden später optionale kostenpflichtige Funktionen hinzugefügt, werden diese niemals Werbung, Empfehlungen oder emotionalisierende Inhalte enthalten. Vertrauen ist das einzige Gut, das dieses Projekt besitzt.',
+    sourcesCta: 'Quellen & Methodik',
+    disclaimerCta: 'Vollständiger Haftungsausschluss',
+  },
+  disclaimer: {
+    eyebrow: 'Bitte lesen',
+    title: 'Vollständiger Haftungsausschluss',
+    intro:
+      'Diese Seite legt offen dar, was TrialBeacon tut und wo die Grenzen dessen liegen, was es verantwortungsvoll anbieten kann. Eine kurze Version dieses Hinweises erscheint auf jeder Seite der Website und in jeder E-Mail.',
+    compact:
+      'TrialBeacon gibt keine medizinischen Ratschläge und empfiehlt, bewertet oder ordnet keine Behandlung oder Studie ein. Besprechen Sie bitte alles, was Sie hier finden, mit Ihrem Arzt, und verlassen Sie sich stets auf die ursprüngliche offizielle Seite.',
+    bannerTitle: 'Diese Website gibt keine medizinischen Ratschläge',
+    bannerBody:
+      'TrialBeacon aggregiert lediglich Links zu öffentlich verfügbaren offiziellen Informationen. Es empfiehlt, ordnet oder bewertet keine Behandlung, Studie oder Arznei, und nichts hier impliziert eine Eignung für eine Person. Besprechen Sie bitte alles, was Sie hier finden, mit Ihrem behandelnden Arzt, und verlassen Sie sich stets auf die ursprüngliche offizielle Seite — Datensätze ändern sich im Laufe der Zeit.',
+    sections: {
+      noAdvice: {
+        heading: 'Keine medizinischen Ratschläge',
+        body: 'TrialBeacon ist ein Informationsverzeichnis. Nichts auf dieser Website — einschließlich des Vorhandenseins, der Reihenfolge, der Formulierung oder der Kategorisierung eines Datensatzes — stellt eine medizinische Beratung, eine ärztliche Meinung, eine Diagnose oder eine Empfehlung für oder gegen eine Behandlung, klinische Studie, Arznei oder Einrichtung dar. Entscheidungen über die Behandlung sollten stets gemeinsam mit einer qualifizierten medizinischen Fachkraft getroffen werden, die die individuelle Situation kennt.',
+      },
+      noRelationship: {
+        heading: 'Keine Arzt-Patient-Beziehung',
+        body: 'Die Nutzung dieser Website begründet keine Form einer beruflichen oder Versorgungsbeziehung. TrialBeacon hat keine Kenntnis von den medizinischen Umständen eines Besuchers und kann die Eignung dessen, worauf verlinkt wird, nicht beurteilen.',
+      },
+      accuracy: {
+        heading: 'Richtigkeit und Vollständigkeit',
+        body: 'Datensätze werden aus offiziellen öffentlichen Quellen übernommen und auf diese zurückverlinkt. Offizielle Datensätze ändern sich im Laufe der Zeit; eine Seite hier kann der Originalseite hinterherhinken. Die ursprüngliche offizielle Seite ist stets die maßgebliche Version. TrialBeacon garantiert keine Vollständigkeit — das Fehlen eines Datensatzes hier bedeutet nicht, dass er nicht existiert.',
+      },
+      eligibility: {
+        heading: 'Teilnahmeberechtigung und Verfügbarkeit',
+        body: 'Dass eine klinische Studie in diesem Verzeichnis erscheint, bedeutet nicht, dass sie für eine bestimmte Person offen, geeignet oder verfügbar ist. Die Berechtigung wird ausschließlich durch das offizielle Protokoll definiert und vom Studienteam festgelegt. Kontaktinformationen sind bei Bedarf auf der ursprünglichen Registerseite verfügbar.',
+      },
+      thirdParty: {
+        heading: 'Websites Dritter',
+        body: 'Links führen zu Websites, die von Regierungen, Behörden und Organisationen betrieben werden, die völlig unabhängig von TrialBeacon sind. Deren Inhalte, Verfügbarkeit und Richtlinien liegen in deren Verantwortung.',
+      },
+      wellbeing: {
+        heading: 'Emotionale Balance',
+        body: 'Das Lesen von Studienregistern während einer schweren Erkrankung kann belastend sein. Diese Website ist bewusst minimal gehalten, damit ihre Prüfung Minuten und nicht Stunden dauert. Falls die Informationen hier Fragen aufwerfen, ist der hilfreichste nächste Schritt ein Gespräch mit dem behandelnden Team — bringen Sie Links mit und fragen Sie.',
+      },
+    },
+  },
+  unsubscribe: {
+    eyebrow: 'Wöchentliche Hinweise',
+    title: 'Abbestellen',
+    intro:
+      'Geben Sie die Adresse ein, mit der Sie abonniert haben, und sie wird aus der Wochenliste entfernt. Es gibt nichts weiter zu bestätigen.',
+    emailLabel: 'E-Mail-Adresse',
+    emailPlaceholder: 'you@example.com',
+    button: 'Abbestellen',
+    submitting: 'Entfernen…',
+    doneTitle: 'Abbestellt',
+    doneMsgRemoved:
+      'Ihr Abonnement wurde entfernt. Sie erhalten keine weiteren E-Mails.',
+    doneMsgNone:
+      'Für diese Adresse wurde kein aktives Abonnement gefunden. So oder so erhalten Sie keine weiteren E-Mails.',
+    finePrint:
+      'Kein Bestätigungsschritt und keine Fragen. Ihre Adresse wird sofort aus dem Speicher entfernt.',
+  },
+  notFound: {
+    eyebrow: '404',
+    title: 'Diese Seite existiert nicht',
+    body:
+      'Die Adresse hat sich möglicherweise geändert. Alles auf dieser Website ist über die unten stehenden Seiten erreichbar.',
+    home: 'Startseite',
+    cancers: 'Krebserkrankungen',
+    search: 'Suche',
+  },
+  footer: {
+    tagline: 'Verlässliche Updates aus offiziellen Quellen. Nichts weiter.',
+    desc:
+      'Ein neutraler Link-Aggregator für öffentlich gelistete klinische Studien, Leitlinien-Verzeichnisse und behördliche Mitteilungen aus den Vereinigten Staaten, Europa und China.',
+    browse: 'Durchsuchen',
+    about: 'Über',
+    stayInformed: 'Bleiben Sie informiert',
+    legal:
+      'TrialBeacon ist ein unabhängiges Informationsverzeichnis. Es ist weder verbunden mit noch wird es unterstützt von ClinicalTrials.gov, der FDA, NCCN, EMA, ESMO, CDE, NMPA, ChiCTR oder einer anderen auf dieser Website genannten Organisation. Alle Marken gehören ihren jeweiligen Inhabern. Datensätze werden unverändert aus offiziellen Registern übernommen; verlassen Sie sich stets auf die Originalseite, die sich seit ihrer Indexierung hier möglicherweise geändert hat.',
+  },
+  badge: {
+    change: {
+      new: 'Neu gelistet',
+      updated: 'Datensatz aktualisiert',
+      closed: 'Nicht mehr offen',
+    },
+    type: {
+      trial: 'Klinische Studie',
+      regulatory: 'Regulatorisch',
+      guideline: 'Leitlinie',
+      registry: 'Register',
+    },
+  },
+  region: {
+    US: 'Vereinigte Staaten',
+    EU: 'Europa',
+    CN: 'China',
+    OTHER: 'Andere Regionen',
+    all: 'Alle Regionen',
+  },
+  filters: {
+    heading: 'Filtern',
+    openOnly: 'Nur offene Studien',
+    openOnlyHint: 'Behält Einträge, deren offizieller Status „Rekrutierung“, „Noch nicht rekrutierend“ oder „Rekrutierung auf Einladung“ ist.',
+    phase: 'Phase',
+    allPhases: 'Alle Phasen',
+    clear: 'Filter zurücksetzen',
+    showing: '{n} von {total} angezeigt',
+    noMatch: 'Keine Einträge entsprechen diesen Filtern.',
+    noMatchHint: 'Entfernen Sie einen Filter, um die Auswahl zu erweitern.',
+  },
+  trial: {
+    breadcrumb: 'Eintrag',
+    officialRecordTitle: 'Offizieller Eintrag',
+    identifiers: 'Kennung',
+    viewOnRegistry: 'Offiziellen Eintrag öffnen',
+    viewOnRegistryHint: 'Die Registrierungsseite ist die maßgebliche Version und kann sich seit der Indexierung hier geändert haben.',
+    locations: 'Rekrutierungsorte',
+    locationsCount: '{n} Länder',
+    locationsUnavailable: 'Die Standorte sind im Offline-Basissatz dieses Eintrags nicht enthalten. Öffnen Sie den offiziellen Eintrag, um die aktuelle Liste zu sehen.',
+    interventions: 'Untersuchte Interventionen',
+    sponsor: 'Hauptsponsor',
+    enrollment: 'Geplante Teilnehmerzahl',
+    enrollmentValue: '{n} Teilnehmende',
+    studyType: 'Studientyp',
+    phase: 'Phase',
+    status: 'Status',
+    firstPosted: 'Erstmals veröffentlicht',
+    lastUpdate: 'Zuletzt im Register aktualisiert',
+    eligibility: 'Teilnahmekriterien',
+    eligibilityIntro: 'Wortwörtlich aus dem offiziellen Eintrag übernommen. Die Eignung wird vom Studienteam entschieden, nie von dieser Seite.',
+    eligibilityUnavailable: 'Die Teilnahmekriterien sind im Offline-Basissatz dieses Eintrags nicht enthalten. Sie sind vollständig im offiziellen Eintrag veröffentlicht.',
+    ageRange: 'Alter',
+    sex: 'Geschlecht',
+    contact: 'Studienkontakt',
+    contactAvailable: 'Der offizielle Eintrag nennt einen Studienkontakt. Die Kontaktdaten sind dort veröffentlicht und bewusst nicht auf diese Seite kopiert.',
+    contactUnavailable: 'Im offiziellen Eintrag ist kein öffentlicher Kontakt angegeben.',
+    notProvided: 'Nicht im offiziellen Eintrag angegeben',
+    baselineNotice: 'Diese Ansicht basiert auf dem am {date} indexierten Offline-Basissatz. Felder, die der Basissatz nicht enthält, werden als nicht verfügbar markiert, statt erraten zu werden.',
+    relatedTypes: 'Eingeordnet unter',
+    saveToList: 'Zu meiner Liste hinzufügen',
+    removeFromList: 'Aus meiner Liste entfernen',
+    savedToList: 'Auf meiner Liste',
+    notFoundTitle: 'Kein solcher Eintrag',
+    notFoundBody: 'Diese Kennung ist nicht im Index. Sie könnte im offiziellen Register existieren – dort danach suchen.',
+  },
+  myList: {
+    navLabel: 'Meine Liste',
+    title: 'Meine Liste',
+    eyebrow: 'Termin vorbereiten',
+    intro: 'Ihre gespeicherten Einträge, auf einer Seite gesammelt. Hier ist nichts eine Empfehlung – es ist Ihre eigene Auswahl offizieller Einträge, so aufbereitet, dass Sie sie ausdrucken und mit Ihrem Behandlungsteam durchgehen können.',
+    empty: 'Ihre Liste ist leer.',
+    emptyHint: 'Öffnen Sie einen Eintrag und wählen Sie „Zu meiner Liste hinzufügen“, um ihn hier zu sammeln.',
+    count: '{n} Einträge gespeichert',
+    print: 'Diese Seite drucken',
+    clearAll: 'Liste leeren',
+    clearConfirm: 'Alle gespeicherten Einträge entfernen?',
+    remove: 'Entfernen',
+    printedOn: 'Gedruckt am {date}',
+    printIntro: 'Offizielle Registereinträge, gesammelt von TrialBeacon. Jede Kennung lässt sich direkt im Quellregister nachschlagen.',
+    questionsTitle: 'Fragen, die Sie stellen könnten',
+    questionsIntro: 'Angelehnt an die Fragenlisten des US National Cancer Institute und der US Food & Drug Administration für Personen, die ein klinisches Studie erwägen.',
+    questions: [
+      'Ist diese Studie relevant für meine Diagnose, mein Stadium und meine bisherige Behandlung?',
+      'Was ist der Zweck dieser Studie, und was ist bereits bekannt?',
+      'Welche Untersuchungen oder Eingriffe sind vorgesehen, und wie oft?',
+      'Welche Kosten trägt die Studie, welche nicht?',
+      'Wie sind die möglichen Risiken und Nebenwirkungen im Vergleich zu meiner aktuellen Behandlung?',
+      'Kann ich die Studie jederzeit verlassen, und was passiert dann?',
+      'An wen wende ich mich, wenn etwas schiefgeht?',
+      'Gibt es eine für mich regelmäßig erreichbare Studienstelle?',
+    ],
+    notesLabel: 'Notizen',
+    disclaimerPrint: 'TrialBeacon ist ein Informationsindex, kein medizinischer Dienst. Er empfiehlt, bewertet oder unterstützt keine Studie. Entscheidungen zur Behandlung liegen bei Ihnen und Ihren Ärztinnen und Ärzten.',
+  },
+  safety: {
+    navLabel: 'Vor Kontaktaufnahme mit einer Studie',
+    eyebrow: 'Veröffentlichte Hinweise',
+    title: 'Vor Kontaktaufnahme mit einer Studie',
+    intro: 'Die folgenden Punkte stammen aus Leitfäden öffentlicher Gesundheitsbehörden für Personen, die ein klinisches Studie erwägen. Sie werden wiedergegeben, weil Menschen auf der Suche nach späten Behandlungslinien häufig von Angeboten kontaktiert werden, die keine offiziellen Studien sind. Nichts hier ist eine Empfehlung für Ihre Behandlung.',
+    checksTitle: 'Was offizielle Leitfäden zu prüfen raten',
+    checks: [
+      {
+        title: 'Eine registrierte Studie hat eine Registriernummer',
+        body: 'Interventionelle Studien werden in der Regel vor der Aufnahme registriert und tragen eine öffentliche Kennung wie eine NCT-, EudraCT/CTIS- oder ChiCTR-Nummer. Wird keine Kennung genannt, lässt sich die Studie nicht gegen ein öffentliches Register prüfen.',
+      },
+      {
+        title: 'Ethische Genehmigung ist keine Option',
+        body: 'Aufsichtsbehörden verlangen eine Prüfung durch eine Ethikkommission oder Institutional Review Board, bevor Personen aufgenommen werden. Das Studienteam kann Ihnen sagen, welche Stelle das Protokoll geprüft hat.',
+      },
+      {
+        title: 'Einverständnis ist ein Dokument, kein Gespräch',
+        body: 'Sie sollten ein schriftliches Aufklärungsformular erhalten, das Zweck, Abläufe, Risiken und Ihr Recht auf jederzeitigen Widerruf beschreibt, und Zeit zum Lesen bekommen.',
+      },
+      {
+        title: 'Fragen Sie genau, wer was bezahlt',
+        body: 'Prüfpräparate werden in der Regel vom Sponsor gestellt, während Routineversorgung darüber hinaus gehen kann. Öffentliche Leitfäden raten einhellig, diese Kostenaufteilung schriftlich zu erhalten, bevor Sie etwas zusagen.',
+      },
+      {
+        title: 'Sicherheit ist ein Warnsignal',
+        body: 'Eine Studie existiert, weil die Antwort noch nicht bekannt ist. Garantierte Heilungen, geheime Protokolle und Druck, schnell zu entscheiden, passen nicht zur Arbeitsweise registrierter Forschung.',
+      },
+    ],
+    sourcesTitle: 'Die originalen Leitfäden lesen',
+    sourcesIntro: 'Dies sind die öffentlichen Seiten, aus denen die Punkte oben stammen. Wir verlinken dorthin, statt weiter zu umschreiben.',
+    reportTitle: 'Wenn etwas falsch wirkt',
+    reportBody: 'Bedenken zu einer Studie können bei der Aufsichtsbehörde der betreffenden Rechtsprechung oder bei der im Aufklärungsformular genannten Ethikkommission geäußert werden.',
+  },
+  locale: {
+    label: 'Sprache',
+  },
+  dataStatus: {
+    live: 'Studiendatensätze live über die öffentliche API von ClinicalTrials.gov abgerufen.',
+    snapshot:
+      'Anzeige des verifizierten Snapshots der am {date} indexierten offiziellen Datensätze. Jeder Link öffnet die live Originalseite.',
+  },
+  cancers: {
+    lung: { label: 'Lungenkrebs', descriptor: 'Einschließlich NSCLC und SCLC' },
+    breast: { label: 'Brustkrebs', descriptor: 'Alle Subtypen, einschl. HR+, HER2+, TNBC' },
+    colorectal: { label: 'Darmkrebs', descriptor: 'Dick- und Enddarmkrebs' },
+    liver: { label: 'Leberkrebs', descriptor: 'Einschl. hepatozelluläres Karzinom (HCC)' },
+    gastric: { label: 'Magenkrebs', descriptor: 'Magen und gastroösophagealer Übergang' },
+    pancreatic: { label: 'Bauchspeicheldrüsenkrebs', descriptor: 'Einschl. duktales Pankreasadenokarzinom' },
+    prostate: { label: 'Prostatakrebs', descriptor: 'Einschl. kastrationsresistente Erkrankung' },
+    ovarian: { label: 'Eierstockkrebs', descriptor: 'Einschl. platinresistente Erkrankung' },
+    esophageal: { label: 'Speiseröhrenkrebs', descriptor: 'Plattenepithel- und Adenokarzinom' },
+    lymphoma: { label: 'Lymphom', descriptor: 'Hodgkin- und Non-Hodgkin-Lymphom' },
+  },
+};

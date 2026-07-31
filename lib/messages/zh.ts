@@ -1,0 +1,438 @@
+import type { Messages } from './en';
+
+export const zh: Messages = {
+  nav: {
+    cancerTypes: '癌症类型',
+    afterCare: '保守 / 缓和治疗后',
+    changeTracker: '变更追踪',
+    sources: '数据来源',
+    alerts: '每周提醒',
+    getWeekly: '获取每周更新',
+    toggleMenu: '切换导航菜单',
+    myList: '我的清单',
+    safety: '联系研究前',
+  },
+  common: {
+    noMedicalAdvice: '不含医疗建议',
+    noRecommendations: '不推荐任何治疗',
+    freeToUse: '免费使用',
+    viewAllTypes: '查看全部类型',
+    openView: '打开此视图',
+    allTypes: '全部类型',
+    allRegions: '全部地区',
+    searchAria: '搜索官方记录',
+    searchPlaceholder: '按关键词、NCT 编号、分期搜索…',
+    searchButton: '搜索',
+    viewOriginal: '查看原文',
+    noRecordsMatch: '没有符合此视图的记录',
+    openRegistries:
+      '换一个筛选条件，或从「数据来源」页直接进入各官方登记平台。',
+    continuouslyUpdated: '持续更新中',
+    readFullDisclaimer: '阅读完整免责声明',
+    recordsIndexed: '已收录 {n} 条记录',
+    advancedLaterLine: '{n} 条晚期 / 后线',
+    details: '详情',
+    back: '返回',
+  },
+  home: {
+    eyebrow: '独立 · 中立 · 可追溯',
+    title1: '来自官方来源的可靠更新。',
+    title2: '仅此而已。',
+    subtitle:
+      'TrialBeacon 是一个安静的索引，汇集了来自美国、欧洲和中国的公开临床试验、指南索引与监管公告——每一条都直接链接到原始页面。',
+    afterCareTitle: '保守 / 缓和治疗后',
+    afterCareBody:
+      '一个专门视图，汇集涉及晚期、复发或后线疾病以及支持治疗的官方记录——为那些被建议考虑保守或缓和治疗、却仍想了解公开登记中还有什么的人而设。',
+    afterCareCta: '打开此视图',
+    browseTitle: '按癌症类型浏览',
+    browseSub: '每个页面并列展示来自美国、欧洲和中国的官方记录。',
+    principlesTitle: '本网站如何运作',
+    principles: {
+      official: {
+        title: '仅来自官方来源',
+        body: '每一条都直接链接到 ClinicalTrials.gov、FDA、NCCN、EMA、CTIS、ESMO、CDE、NMPA 或 ChiCTR。内容均非我们撰写。',
+      },
+      noRec: {
+        title: '不做推荐',
+        body: '我们从不排序、评价或建议任何治疗。标题均按官方记录原文呈现。',
+      },
+      threeRegions: {
+        title: '三大地区并排呈现',
+        body: '美国、欧洲与中国并列展示，方便你比较各官方系统登记了什么。',
+      },
+      traceable: {
+        title: '始终可追溯',
+        body: '每张卡片只做一件事：一键带你前往原始官方页面，让你自行核实。',
+      },
+    },
+    sourcesTitle: '每条记录都可追溯至以下官方来源之一',
+    sourcesSub: '快照核验于 {date}。了解记录的收集方式，请见「数据来源」页。',
+    sourcesCta: '数据来源与方法',
+  },
+  cancersIndex: {
+    eyebrow: '浏览',
+    title: '癌症类型',
+    subtitle:
+      '每个页面汇集某一种癌症的公开记录——临床试验登记、指南索引与监管公告——来自美国、欧洲和中国的官方来源。每条均链接到原始页面。',
+  },
+  cancerDetail: {
+    advancedViewCta: '晚期 / 后线视图',
+    indexed: '目前在三个地区共收录 {n} 条官方记录。',
+  },
+  afterCare: {
+    eyebrow: '专门视图',
+    title: '保守 / 缓和治疗后',
+    intro:
+      '本视图筛选那些自身描述涉及晚期、转移、复发或复发病、后线治疗，或支持与姑息治疗的官方记录。它存在的原因只有一个：如果你被建议考虑保守或缓和治疗，却仍想了解官方登记平台目前登记了什么，可以在这里——冷静地、集中地、始终经由原始来源——浏览一遍。',
+    pleaseRead: '请先阅读以下说明。',
+    pleaseReadBody:
+      '一条记录出现在此处，不代表它适合、可用或适用于任何个人。是否收录仅依据官方记录中的措辞，绝不代表本网站的某种判断。请就你看到的任何内容与主治医生讨论。',
+  },
+  changes: {
+    eyebrow: '有何变化',
+    title: '变更追踪',
+    intro:
+      '对官方登记平台变动的事实记录：在所选时间窗口内新登记、被修订或已停止招募的记录。状态标签直接取自登记平台。',
+    lastNDays: '最近 {n} 天',
+    changesSince: '自 {date} 起共 {n} 条变更',
+    noChangesTitle: '该时间窗口内没有记录的变更',
+    noChangesBody: '试试 14 天窗口，或按癌症类型浏览完整列表。',
+    groups: {
+      new: {
+        heading: '新登记',
+        sub: '在此窗口内首次发布的记录',
+      },
+      updated: {
+        heading: '近期更新',
+        sub: '官方页面被修订的既有记录',
+      },
+      closed: {
+        heading: '不再招募',
+        sub: '状态显示招募已结束的记录',
+      },
+    },
+  },
+  search: {
+    eyebrow: '搜索',
+    title: '搜索已索引的记录',
+    intro:
+      '对索引记录的标题与标识进行纯关键词搜索。如需完整、最新的搜索，官方登记平台仍是权威来源——每条结果都直接链接过去。',
+    results: '“{query}” 匹配到 {n} 条记录',
+    quickEntries: '快速入口',
+  },
+  alerts: {
+    eyebrow: '免费',
+    title: '每周提醒',
+    intro:
+      '如果现在你最不想做的事就是去刷网站，那就让更新来找你。每周一次，我们发送一封极简邮件，列出你关注的话题中新索引的官方记录——仅此而已。',
+    whatYouGet: [
+      '每周一封纯文本邮件——不多一封',
+      '只含官方记录链接，附来源与日期',
+      '最多可选 3 种癌症类型',
+      '美国、欧洲、中国来源，按需选择',
+      '一键退订，邮件内随时可退',
+    ],
+    form: {
+      emailLabel: '电子邮箱',
+      emailPlaceholder: 'you@example.com',
+      cancerLegend: '关注的癌症类型',
+      selectedCount: '已选 {n}/{max} 项',
+      regionsLegend: '地区',
+      subscribe: '订阅每周更新',
+      submitting: '保存中…',
+      savedTitle: '订阅已保存',
+      savedBody:
+        '你将每周收到一封纯文本邮件，仅包含你所选话题的官方记录链接。你可以随时通过任意一封邮件退订。',
+      errorNetwork: '网络错误，请重试。',
+      finePrint:
+        '每周一封邮件，仅含链接，无追踪像素，可随时退订。你的地址仅用于此提醒，绝不共享。',
+    },
+  },
+  sources: {
+    eyebrow: '透明度',
+    title: '数据来源与方法',
+    intro:
+      'TrialBeacon 上的一切都可追溯至下列官方来源之一。本页准确说明记录的收集方式，以及本网站对记录做了什么、没做什么。',
+    kind: {
+      registry: '临床试验登记平台',
+      regulator: '药品监管机构',
+      guidelines: '临床指南（公开页面）',
+    },
+    methodologyTitle: '方法说明',
+    method: {
+      where: {
+        title: '记录从何而来',
+        body: '试验记录取自 ClinicalTrials.gov 公开 API v2。欧洲与中国的条目是对 EMA、CTIS、ESMO、CDE、NMPA 与 ChiCTR 维护的官方登记平台及公开列表的策展链接。TrialBeacon 不抓取受限内容，也不托管任何文件副本。',
+      },
+      what: {
+        title: '展示什么',
+        body: '每条记录展示：来源发布的标题、来源名称、地区、记录类型，以及登记平台提供的分期与状态，还有官方日期。这就是全部数据——没有评论层。',
+      },
+      absent: {
+        title: '刻意省略的内容',
+        body: '没有疗效声明，没有排名，没有匹配，没有「相关度」评分，没有编辑摘要。任何评价或宣传某种治疗的措辞都不会出现在本网站。',
+      },
+      afterCare: {
+        title: '「保守 / 缓和治疗后」视图如何构建',
+        body: '一条记录只有在自身官方标题或范围提及晚期、转移、复发或复发病、后线治疗，或支持与姑息治疗时，才会出现在该视图中。筛选基于词汇、完全透明——绝非某种判断。',
+      },
+      freshness: {
+        title: '时效',
+        body: '实时登记查询缓存一小时。若实时 API 不可达，网站将提供其上一次核验的快照（当前为 {date}），并在页面上注明。链接始终打开实时的官方记录。',
+      },
+      corrections: {
+        title: '更正',
+        body: '若某条记录链接到错误页面，或误述了来源提供的字段，一经发现即会更正。原始登记页面始终是权威版本。',
+      },
+    },
+  },
+  about: {
+    eyebrow: '关于',
+    title: 'TrialBeacon 是什么——以及不是什么',
+    p1:
+      '当有人被告知保守或缓和治疗是推荐路径时，许多人仍想弄清一件简单的事：公开记录里有什么新东西吗？要回答这个问题，如今意味着在多种语言、多个登记平台间奔波，周围满是营销、解读和情绪化的内容。',
+    p2:
+      'TrialBeacon 的存在就是为了卸下这个负担。它汇集来自美国、欧洲和中国官方来源的公开临床试验、指南索引与监管公告链接，并呈现在一个冷静、极简的地方。每条记录展示标题、来源、日期，以及通往原始页面的链接。仅此而已。',
+    isTitle: 'TrialBeacon 是',
+    is: [
+      '公开官方信息的中立索引',
+      '一个并排查看美国、欧洲、中国官方来源的窗口',
+      '一份记录官方登记平台近期变动的日志',
+      '一条通往每条记录原始页面的直达路径',
+    ],
+    isNotTitle: 'TrialBeacon 不是',
+    isNot: [
+      '它不提供任何形式的医疗建议',
+      '它不推荐、排序或评价任何治疗或试验',
+      '它不为患者匹配试验',
+      '它不解读、总结或评论官方记录',
+      '它不承载广告或赞助内容',
+    ],
+    principlesTitle: '原则',
+    neutralityLabel: '中立。',
+    neutralityBody:
+      '标题按官方记录原文呈现。任何评价或宣传某种治疗的措辞都不会出现在本网站——无论记录还是界面文案。',
+    traceabilityLabel: '可追溯。',
+    traceabilityBody:
+      '每条记录都带有一个一键直达原始官方页面的链接。若一条记录无法追溯，就不会被列出。',
+    restraintLabel: '克制。',
+    restraintBody:
+      '核心索引免费，并将一直免费。若日后增加可选的付费功能，也绝不会包含广告、推荐或利用情绪的内容。信任是这个项目唯一的资产。',
+    sourcesCta: '数据来源与方法',
+    disclaimerCta: '完整免责声明',
+  },
+  disclaimer: {
+    eyebrow: '请阅读',
+    title: '完整免责声明',
+    intro:
+      '本页直白地说明 TrialBeacon 做了什么，以及它所能负责任地提供的边界。本声明的简短版本出现在网站每个页面以及每封邮件中。',
+    compact:
+      'TrialBeacon 不提供医疗建议，也不推荐、排序或评价任何治疗或试验。请就你在此看到的任何信息与你的医生讨论，并始终以原始官方页面为准。',
+    bannerTitle: '本网站不提供医疗建议',
+    bannerBody:
+      'TrialBeacon 仅聚合公开官方信息的链接。它不推荐、排序或评价任何治疗、试验或药物，此处任何内容都不暗示对任何人适用。请就你看到的任何内容与主治医生讨论，并始终以原始官方页面为准——记录会随时间变化。',
+    sections: {
+      noAdvice: {
+        heading: '不含医疗建议',
+        body: 'TrialBeacon 是一个信息索引。本网站的任何内容——包括任何记录的存在、排序、措辞或归类——都不构成医疗建议、医疗意见、诊断，或对任何治疗、临床试验、药物或机构的推荐或不推荐。关于治疗的决定，应始终与了解个人情况的合格医疗专业人员共同做出。',
+      },
+      noRelationship: {
+        heading: '不构成医患关系',
+        body: '使用本网站不会建立任何形式的专业或照护关系。TrialBeacon 不了解任何访客的医疗情况，也无法评估其所链接内容的适用性。',
+      },
+      accuracy: {
+        heading: '准确性与完整性',
+        body: '记录复制自官方公开来源，并链接回那些来源。官方记录会随时间变化；本网站的页面可能滞后于原文。原始官方页面始终是权威版本。TrialBeacon 不保证完整性——某条记录在此缺失，不代表它不存在。',
+      },
+      eligibility: {
+        heading: '适用性与可用性',
+        body: '一条出现在本索引中的临床试验，不代表它对任何特定个人开放、适用或可用。适用性完全由官方方案定义，并由试验团队判定。如需联系方式，可在原始登记页面获取。',
+      },
+      thirdParty: {
+        heading: '第三方网站',
+        body: '链接指向由各国政府、机构及组织运营的网站，它们完全独立于 TrialBeacon。其内容、可用性及政策由各自主导。',
+      },
+      wellbeing: {
+        heading: '情绪健康',
+        body: '在重病期间阅读试验登记可能令人疲惫。本网站刻意保持极简，让查看只需几分钟而非数小时。如果这里的信息引发了疑问，最有用的下一步是与治疗团队沟通——带上链接，去问。',
+      },
+    },
+  },
+  unsubscribe: {
+    eyebrow: '每周提醒',
+    title: '退订',
+    intro: '输入你订阅时使用的地址，它就会从每周提醒名单中移除。无需其他确认。',
+    emailLabel: '电子邮箱',
+    emailPlaceholder: 'you@example.com',
+    button: '退订',
+    submitting: '移除中…',
+    doneTitle: '已退订',
+    doneMsgRemoved: '你的订阅已移除。你将不会再收到邮件。',
+    doneMsgNone: '未找到该地址的有效订阅。无论哪种情况，你都不会再收到邮件。',
+    finePrint: '无需确认，也无疑问。你的地址会立即从存储中移除。',
+  },
+  notFound: {
+    eyebrow: '404',
+    title: '此页面不存在',
+    body: '地址可能已变更。本网站的一切都可通过下方页面到达。',
+    home: '首页',
+    cancers: '癌症类型',
+    search: '搜索',
+  },
+  footer: {
+    tagline: '来自官方来源的可靠更新。仅此而已。',
+    desc: '一个中立的链接聚合器，汇集来自美国、欧洲和中国的公开临床试验、指南索引与监管公告。',
+    browse: '浏览',
+    about: '关于',
+    stayInformed: '保持关注',
+    legal:
+      'TrialBeacon 是一个独立的信息索引。它与 ClinicalTrials.gov、FDA、NCCN、EMA、ESMO、CDE、NMPA、ChiCTR 或本网站提及的任何其他机构均无隶属或背书关系。所有商标归各自所有者所有。记录按官方登记原文复制；请始终以原始页面为准，其自索引以来可能已有变化。',
+  },
+  badge: {
+    change: {
+      new: '新登记',
+      updated: '记录已更新',
+      closed: '不再招募',
+    },
+    type: {
+      trial: '临床试验',
+      regulatory: '监管',
+      guideline: '指南',
+      registry: '登记平台',
+    },
+  },
+  region: {
+    US: '美国',
+    EU: '欧洲',
+    CN: '中国',
+    OTHER: '其他地区',
+    all: '全部地区',
+  },
+  filters: {
+    heading: '筛选',
+    openOnly: '仅显示招募中',
+    openOnlyHint: '保留官方状态为招募中、尚未招募或邀请入组的记录。',
+    phase: '分期',
+    allPhases: '全部分期',
+    clear: '清除筛选',
+    showing: '显示 {total} 条中的 {n} 条',
+    noMatch: '没有符合这些筛选条件的记录。',
+    noMatchHint: '清除一个筛选条件以扩大视图。',
+  },
+  trial: {
+    breadcrumb: '记录',
+    officialRecordTitle: '官方记录',
+    identifiers: '标识',
+    viewOnRegistry: '打开官方记录',
+    viewOnRegistryHint: '登记页面是权威版本，自本索引收录以来可能已有变化。',
+    locations: '招募地点',
+    locationsCount: '{n} 个国家/地区',
+    locationsUnavailable: '此记录的离线基线未包含地点。请打开官方记录查看当前站点列表。',
+    interventions: '研究中的干预措施',
+    sponsor: '主要申办方',
+    enrollment: '目标入组人数',
+    enrollmentValue: '{n} 名参与者',
+    studyType: '研究类型',
+    phase: '分期',
+    status: '状态',
+    firstPosted: '首次发布',
+    lastUpdate: '登记平台最后更新',
+    eligibility: '入选标准',
+    eligibilityIntro: '按官方记录原文复制。入选由研究团队决定，而非本页面。',
+    eligibilityUnavailable: '入选标准未包含在此记录的离线基线中。完整内容发布于官方记录。',
+    ageRange: '年龄',
+    sex: '性别',
+    contact: '研究联系人',
+    contactAvailable: '官方记录列出了研究联系人。联系方式发布于该处，本页面有意不复制。',
+    contactUnavailable: '官方记录未列出公开联系人。',
+    notProvided: '官方记录未提供',
+    baselineNotice: '此视图基于 {date} 索引的离线基线构建。基线未包含的字段将标记为不可用，而非猜测。',
+    relatedTypes: '收录于',
+    saveToList: '加入我的清单',
+    removeFromList: '从我的清单移除',
+    savedToList: '已在我的清单',
+    notFoundTitle: '无此记录',
+    notFoundBody: '该标识不在索引中。它可能存在于官方登记平台——请在那里搜索。',
+  },
+  myList: {
+    navLabel: '我的清单',
+    title: '我的清单',
+    eyebrow: '为就诊做准备',
+    intro: '你保存的记录集中在一页。这里没有任何推荐——只是你自己的官方条目清单，排版便于打印，可与照护团队一起过一遍。',
+    empty: '你的清单是空的。',
+    emptyHint: '打开任意记录，选择「加入我的清单」即可在此收集。',
+    count: '已保存 {n} 条记录',
+    print: '打印此页',
+    clearAll: '清空清单',
+    clearConfirm: '移除所有已保存的记录？',
+    remove: '移除',
+    printedOn: '打印于 {date}',
+    printIntro: '从 TrialBeacon 收集的官方登记条目。每个标识均可在来源登记平台直接查询。',
+    questionsTitle: '你可能想问的问题',
+    questionsIntro: '改编自美国国家癌症研究所与美国食品药品监督管理局为考虑参加临床试验的人士发布的问题清单。',
+    questions: [
+      '这项研究是否与我的诊断、分期和既往治疗相关？',
+      '本研究的目的为何，目前已知什么？',
+      '涉及哪些检查或操作，频率如何？',
+      '哪些费用由研究承担，哪些不在此列？',
+      '与我现在的治疗相比，可能的风险与副作用是什么？',
+      '我是否可以随时退出研究，退出后会怎样？',
+      '若出现意外，我应联系谁？',
+      '是否有足够近的站点可供我定期前往？',
+    ],
+    notesLabel: '备注',
+    disclaimerPrint: 'TrialBeacon 是一个信息索引，而非医疗服务。它不推荐、排序或背书任何研究。治疗决定属于你和你的临床医生。',
+  },
+  safety: {
+    navLabel: '联系研究前',
+    eyebrow: '已发布的防护要点',
+    title: '联系研究前',
+    intro: '以下要点摘自公共卫生机构为考虑参加临床试验的人士发布的指南。之所以转载，是因为寻找后线方案的人常被非官方研究的不正规服务接触。此处任何内容都不是针对你治疗的建议。',
+    checksTitle: '官方指南建议核查的事项',
+    checks: [
+      {
+        title: '已登记的研究有登记编号',
+        body: '干预性研究通常在入组前登记，并带有公开标识，如 NCT、EudraCT/CTIS 或 ChiCTR 编号。若未提供标识，该研究无法在公共登记平台核实。',
+      },
+      {
+        title: '伦理审查并非可有可无',
+        body: '监管机构要求在纳入受试者之前，须经伦理委员会或机构审查委员会审查。研究团队可以告诉你由哪个机构审查了方案。',
+      },
+      {
+        title: '知情同意是一份文件，而非一次对话',
+        body: '你应收到一份书面同意书，说明目的、操作、风险以及你随时退出的权利，并应有时间阅读。',
+      },
+      {
+        title: '务必问清由谁支付什么费用',
+        body: '试验用药品通常由申办方提供，而常规护理费用可能不在其列。公开指南一致认为，你应在同意任何安排前，以书面形式获得费用划分。',
+      },
+      {
+        title: '打包票是警示信号',
+        body: '试验之所以存在，是因为答案尚未可知。保证治愈、秘方，以及催促你尽快决定，都与已登记研究的运作方式不符。',
+      },
+    ],
+    sourcesTitle: '阅读原始指南',
+    sourcesIntro: '以下是上述要点的来源公开页面。我们直接链接，不再进一步转述。',
+    reportTitle: '若发现可疑之处',
+    reportBody: '对研究的疑虑可向相关辖区的监管机构，或同意书中列明的伦理委员会提出。',
+  },
+  locale: {
+    label: '语言',
+  },
+  dataStatus: {
+    live: '试验记录实时取自 ClinicalTrials.gov 公开 API。',
+    snapshot: '显示 {date} 索引的官方记录核验快照。每个链接都打开实时的原始页面。',
+  },
+  cancers: {
+    lung: { label: '肺癌', descriptor: '含非小细胞与小细胞肺癌' },
+    breast: { label: '乳腺癌', descriptor: '所有亚型，含 HR+、HER2+、三阴性' },
+    colorectal: { label: '结直肠癌', descriptor: '结肠与直肠癌' },
+    liver: { label: '肝癌', descriptor: '含肝细胞癌（HCC）' },
+    gastric: { label: '胃癌', descriptor: '胃及胃食管结合部' },
+    pancreatic: { label: '胰腺癌', descriptor: '含胰腺导管腺癌' },
+    ovarian: { label: '卵巢癌', descriptor: '含铂耐药' },
+    esophageal: { label: '食管癌', descriptor: '鳞癌与腺癌' },
+    prostate: { label: '前列腺癌', descriptor: '含去势抵抗性' },
+    lymphoma: { label: '淋巴瘤', descriptor: '霍奇金与非霍奇金淋巴瘤' },
+  },
+};

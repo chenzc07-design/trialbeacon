@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" role="img" aria-label="">
+  <defs>
+    <linearGradient id="riBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#eef4fa"/>
+    </linearGradient>
+    <pattern id="riDots" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#1e3350" fill-opacity="0.05"/>
+    </pattern>
+  </defs>
+
+  <rect width="720" height="420" rx="18" fill="url(#riBg)"/>
+  <rect width="720" height="420" rx="18" fill="url(#riDots)"/>
+
+  <!-- convergence lines to a central beacon -->
+  <g stroke="#1e3350" stroke-opacity="0.16" stroke-width="1.6" fill="none">
+    <path d="M120 110 L360 210"/>
+    <path d="M600 96 L360 210"/>
+    <path d="M150 330 L360 210"/>
+    <path d="M600 320 L360 210"/>
+  </g>
+
+  <!-- three region nodes -->
+  <g font-family="Inter, system-ui, sans-serif">
+    <g>
+      <circle cx="120" cy="110" r="30" fill="#eef5fc" stroke="#1d4e7e" stroke-opacity="0.4" stroke-width="1.5"/>
+      <text x="120" y="116" text-anchor="middle" font-size="20" font-weight="600" fill="#1d4e7e">US</text>
+    </g>
+    <g>
+      <circle cx="600" cy="96" r="30" fill="#eef6f2" stroke="#2e5747" stroke-opacity="0.4" stroke-width="1.5"/>
+      <text x="600" y="102" text-anchor="middle" font-size="20" font-weight="600" fill="#2e5747">EU</text>
+    </g>
+    <g>
+      <circle cx="150" cy="330" r="30" fill="#f9f3ea" stroke="#6e4a24" stroke-opacity="0.4" stroke-width="1.5"/>
+      <text x="150" y="336" text-anchor="middle" font-size="20" font-weight="600" fill="#6e4a24">CN</text>
+    </g>
+    <g>
+      <circle cx="600" cy="320" r="30" fill="#eef5fc" stroke="#1d4e7e" stroke-opacity="0.4" stroke-width="1.5"/>
+      <text x="600" y="326" text-anchor="middle" font-size="20" font-weight="600" fill="#1d4e7e">US</text>
+    </g>
+  </g>
+
+  <!-- central beacon -->
+  <g transform="translate(360 210)" fill="none" stroke="#1e3350" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M0 34 L34 0 L68 34 L34 68 Z"/>
+    <path d="M34 19 L34 49"/>
+    <path d="M19 34 L49 34"/>
+  </g>
+</svg>

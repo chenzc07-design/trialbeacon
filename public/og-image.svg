@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="TrialBeacon">
+  <defs>
+    <linearGradient id="ogBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#eaf1f8"/>
+    </linearGradient>
+    <radialGradient id="ogGlow" cx="0.85" cy="0.2" r="0.7">
+      <stop offset="0" stop-color="#dce8f4"/>
+      <stop offset="1" stop-color="#eef4fa" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#ogBg)"/>
+  <rect width="1200" height="630" fill="url(#ogGlow)"/>
+
+  <!-- beacon mark -->
+  <g transform="translate(96 250)" fill="none" stroke="#1e3350" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M0 60 L60 0 L120 60 L60 120 Z"/>
+    <path d="M60 34 L60 86"/>
+    <path d="M34 60 L86 60"/>
+  </g>
+
+  <text x="262" y="300" font-family="Inter, system-ui, sans-serif" font-size="40" font-weight="600" fill="#1e3350">TrialBeacon</text>
+
+  <text x="96" y="408" font-family="Inter, system-ui, sans-serif" font-size="62" font-weight="700" fill="#15263c">Trusted updates from</text>
+  <text x="96" y="478" font-family="Inter, system-ui, sans-serif" font-size="62" font-weight="700" fill="#1e4f7e">official sources.</text>
+  <text x="98" y="528" font-family="Inter, system-ui, sans-serif" font-size="30" font-weight="400" fill="#5a6b80">Nothing more.</text>
+</svg>

@@ -1,0 +1,476 @@
+// English — source of truth for the TrialBeacon message catalogue.
+// Every other locale (zh, fr, de, ja, ko) mirrors this exact shape.
+// Strings may contain {placeholders}; {n|one|many} selects by count.
+
+export const en = {
+  nav: {
+    cancerTypes: 'Cancer types',
+    afterCare: 'After Conservative / Palliative Care',
+    changeTracker: 'Change Tracker',
+    sources: 'Sources',
+    alerts: 'Weekly Alerts',
+    getWeekly: 'Get weekly updates',
+    toggleMenu: 'Toggle navigation menu',
+    myList: 'My list',
+    safety: 'Before you contact a study',
+  },
+  common: {
+    noMedicalAdvice: 'No medical advice',
+    noRecommendations: 'No treatment recommendations',
+    freeToUse: 'Free to use',
+    viewAllTypes: 'View all types',
+    openView: 'Open this view',
+    allTypes: 'All types',
+    allRegions: 'All regions',
+    searchAria: 'Search official records',
+    searchPlaceholder: 'Search by keyword, NCT number, phase…',
+    searchButton: 'Search',
+    viewOriginal: 'View original',
+    noRecordsMatch: 'No records match this view',
+    openRegistries: 'Try a different filter, or open the official registries directly from the Sources page.',
+    continuouslyUpdated: 'Continuously updated',
+    readFullDisclaimer: 'Read the full disclaimer',
+    recordsIndexed: '{n} records indexed',
+    advancedLaterLine: '{n} advanced / later-line',
+    details: 'Details',
+    back: 'Back',
+  },
+  home: {
+    eyebrow: 'Independent · Neutral · Traceable',
+    title1: 'Trusted updates from official sources.',
+    title2: 'Nothing more.',
+    subtitle:
+      'TrialBeacon is a quiet index of publicly listed clinical trials, guideline indexes and regulatory notices from the United States, Europe and China — with a direct link to the original page for every single entry.',
+    afterCareTitle: 'After Conservative / Palliative Care',
+    afterCareBody:
+      'A dedicated view of official records related to advanced, recurrent or later-line disease and supportive care — for people who were told to consider conservative or palliative care and still want to see what is publicly listed.',
+    afterCareCta: 'Open this view',
+    browseTitle: 'Browse by cancer type',
+    browseSub: 'Each page lists official records from the US, Europe and China side by side.',
+    principlesTitle: 'How this site works',
+    principles: {
+      official: {
+        title: 'Official sources only',
+        body: 'Every entry links directly to ClinicalTrials.gov, FDA, NCCN, EMA, CTIS, ESMO, CDE, NMPA or ChiCTR. Nothing is written by us.',
+      },
+      noRec: {
+        title: 'No recommendations',
+        body: 'We never rank, evaluate or suggest treatments. Titles are reproduced verbatim from the official record.',
+      },
+      threeRegions: {
+        title: 'Three regions, side by side',
+        body: 'United States, Europe and China presented together, so you can compare what each official system lists.',
+      },
+      traceable: {
+        title: 'Traceable, always',
+        body: 'Every card has one job: take you to the original official page in one click, so you can verify everything yourself.',
+      },
+    },
+    sourcesTitle: 'Every record traces back to one of these official sources',
+    sourcesSub: 'Snapshot verified on {date}. Read how records are collected on the Sources page.',
+    sourcesCta: 'Sources & methodology',
+  },
+  cancersIndex: {
+    eyebrow: 'Browse',
+    title: 'Cancer types',
+    subtitle:
+      'Each page aggregates publicly listed records for one cancer type — clinical trial registrations, guideline indexes and regulatory notices — from official sources in the United States, Europe and China. Every entry links to the original page.',
+  },
+  cancerDetail: {
+    advancedViewCta: 'Advanced / later-line view',
+    indexed: '{n} official records currently indexed across three regions.',
+  },
+  afterCare: {
+    eyebrow: 'Dedicated view',
+    title: 'After Conservative / Palliative Care',
+    intro:
+      'This view filters official records whose own descriptions refer to advanced, metastatic, recurrent or relapsed disease, later treatment lines, or supportive and palliative care. It exists for one reason: if you were told to consider conservative or palliative care and still want to see what official registries currently list, you can scan it here — calmly, in one place, and always via the original source.',
+    pleaseRead: 'Please read this first.',
+    pleaseReadBody:
+      'A record appearing here does not mean it is suitable, available or appropriate for any individual. Inclusion is based only on wording in the official record — never on any judgement by this site. Discuss anything you find with your treating doctor.',
+  },
+  changes: {
+    eyebrow: 'What changed',
+    title: 'Change Tracker',
+    intro:
+      'A factual log of movement in the official registries: records that were newly listed, revised, or closed to enrolment within the selected window. Status labels are taken directly from the registry.',
+    lastNDays: 'Last {n} days',
+    changesSince: '{n} changes since {date}',
+    noChangesTitle: 'No recorded changes in this window',
+    noChangesBody: 'Try the 14-day window, or browse the full lists by cancer type.',
+    groups: {
+      new: {
+        heading: 'Newly listed',
+        sub: 'Records first posted within this window',
+      },
+      updated: {
+        heading: 'Recently updated',
+        sub: 'Existing records whose official page was revised',
+      },
+      closed: {
+        heading: 'No longer open',
+        sub: 'Records whose status indicates enrolment has ended',
+      },
+    },
+  },
+  search: {
+    eyebrow: 'Search',
+    title: 'Search indexed records',
+    intro:
+      'Plain keyword search over the titles and identifiers of indexed records. For a complete, always-current search, the official registries remain the reference — every result links there directly.',
+    results: '{n|record|records} matching “{query}”',
+    quickEntries: 'Quick entries',
+  },
+  alerts: {
+    eyebrow: 'Free',
+    title: 'Weekly Alerts',
+    intro:
+      'If checking websites is the last thing you want to do right now, let the update come to you. Once a week, we send a single minimal email listing official records newly indexed for the topics you follow — nothing else.',
+    whatYouGet: [
+      'One plain email per week — no more',
+      'Only links to official records, with source and date',
+      'Up to 3 cancer types of your choice',
+      'US, European and Chinese sources, as you prefer',
+      'Unsubscribe with one click, from any email',
+    ],
+    form: {
+      emailLabel: 'Email address',
+      emailPlaceholder: 'you@example.com',
+      cancerLegend: 'Cancer types to follow',
+      selectedCount: '{n}/{max} selected',
+      regionsLegend: 'Regions',
+      subscribe: 'Subscribe to weekly updates',
+      submitting: 'Saving…',
+      savedTitle: 'Subscription saved',
+      savedBody:
+        'You will receive one plain email per week containing only links to official records for the topics you chose. You can unsubscribe from any email at any time.',
+      errorNetwork: 'Network error. Please try again.',
+      finePrint:
+        'One email per week, links only, no tracking pixels, unsubscribe anytime. Your address is used solely for this alert and is never shared.',
+    },
+  },
+  sources: {
+    eyebrow: 'Transparency',
+    title: 'Sources & methodology',
+    intro:
+      'Everything on TrialBeacon can be traced to one of the official sources below. This page explains exactly how records are collected and what the site does — and does not — do with them.',
+    kind: {
+      registry: 'Clinical trial registry',
+      regulator: 'Medicines regulator',
+      guidelines: 'Clinical guidelines (public pages)',
+    },
+    methodologyTitle: 'Methodology',
+    method: {
+      where: {
+        title: 'Where records come from',
+        body: 'Trial records are retrieved from the ClinicalTrials.gov public API v2. European and Chinese entries are curated links to the official registers and public lists maintained by EMA, CTIS, ESMO, CDE, NMPA and ChiCTR. TrialBeacon does not scrape restricted content and does not host copies of any document.',
+      },
+      what: {
+        title: 'What is shown',
+        body: 'For each record: the title as published by the source, the source name, the region, the record type, the phase and status where the registry provides them, and the official date. That is the entire dataset — there is no commentary layer.',
+      },
+      absent: {
+        title: 'What is deliberately absent',
+        body: 'No effectiveness claims, no rankings, no matching, no “relevance” scores, no editorial summaries. Wording that evaluates or promotes a treatment does not appear on this site.',
+      },
+      afterCare: {
+        title: 'How the after-care view is built',
+        body: 'A record appears in the After Conservative / Palliative Care view only when its own official title or scope refers to advanced, metastatic, recurrent or relapsed disease, later treatment lines, or supportive and palliative care. The filter is lexical and transparent — never a judgement.',
+      },
+      freshness: {
+        title: 'Freshness',
+        body: 'Live registry queries are cached for one hour. If the live API is unreachable, the site serves its last verified snapshot (currently {date}) and says so on the page. Links always open the live official record.',
+      },
+      corrections: {
+        title: 'Corrections',
+        body: 'If any entry links to the wrong page or misstates a source-provided field, it will be corrected as soon as it is identified. The original registry page is always the authoritative version.',
+      },
+    },
+  },
+  about: {
+    eyebrow: 'About',
+    title: 'What TrialBeacon is — and what it is not',
+    p1:
+      'When someone is told that conservative or palliative care is the recommended path, many still want to know one simple thing: is there anything new in the public record? Answering that question today means navigating several registries in several languages, surrounded by marketing, interpretation and emotionally loaded content.',
+    p2:
+      'TrialBeacon exists to remove that burden. It collects links to publicly listed clinical trials, guideline indexes and regulatory notices from official sources in the United States, Europe and China, and presents them in one calm, minimal place. Each entry shows a title, a source, a date and a link to the original page. That is all.',
+    isTitle: 'TrialBeacon is',
+    is: [
+      'A neutral index of publicly available official information',
+      'A way to see US, European and Chinese official sources side by side',
+      'A log of what changed in official registries recently',
+      'A direct route to the original page for every single entry',
+    ],
+    isNotTitle: 'TrialBeacon is not',
+    isNot: [
+      'It does not provide medical advice of any kind',
+      'It does not recommend, rank or evaluate treatments or trials',
+      'It does not match patients to trials',
+      'It does not interpret, summarise or editorialise official records',
+      'It does not host advertising or sponsored content',
+    ],
+    principlesTitle: 'Principles',
+    neutralityLabel: 'Neutrality.',
+    neutralityBody:
+      'Titles are reproduced verbatim from official records. Words that evaluate or promote a treatment do not appear on this site — in records or in interface copy.',
+    traceabilityLabel: 'Traceability.',
+    traceabilityBody:
+      'Every entry carries a one-click link to its original official page. If a record cannot be traced, it is not listed.',
+    restraintLabel: 'Restraint.',
+    restraintBody:
+      'The core index is free and will remain free. If optional paid features are added later, they will never include advertising, recommendations or content that plays on emotion. Trust is the only asset this project has.',
+    sourcesCta: 'Sources & methodology',
+    disclaimerCta: 'Full disclaimer',
+  },
+  disclaimer: {
+    eyebrow: 'Please read',
+    title: 'Full disclaimer',
+    intro:
+      'This page states plainly what TrialBeacon does and the limits of what it can responsibly offer. A short version of this notice appears on every page of the site and in every email.',
+    compact:
+      'TrialBeacon does not provide medical advice and does not recommend, rank or evaluate any treatment or trial. Please discuss any information you find here with your doctor, and always rely on the original official page.',
+    bannerTitle: 'This site does not provide medical advice',
+    bannerBody:
+      'TrialBeacon only aggregates links to publicly available official information. It does not recommend, rank or evaluate any treatment, trial or medicine, and nothing here implies suitability for any individual. Please discuss anything you find with your treating doctor, and always rely on the original official page — records change over time.',
+    sections: {
+      noAdvice: {
+        heading: 'No medical advice',
+        body: 'TrialBeacon is an information index. Nothing on this site — including the presence, ordering, wording or categorisation of any record — constitutes medical advice, a medical opinion, a diagnosis, or a recommendation for or against any treatment, clinical trial, medicine or provider. Decisions about care should always be made together with a qualified medical professional who knows the individual situation.',
+      },
+      noRelationship: {
+        heading: 'No doctor–patient relationship',
+        body: 'Using this site does not create any form of professional or care relationship. TrialBeacon has no knowledge of any visitor’s medical circumstances and cannot assess suitability of anything it links to.',
+      },
+      accuracy: {
+        heading: 'Accuracy and completeness',
+        body: 'Records are reproduced from official public sources and linked back to those sources. Official records change over time; a page here may lag the original. The original official page is always the authoritative version. TrialBeacon does not guarantee completeness — absence of a record here does not mean it does not exist.',
+      },
+      eligibility: {
+        heading: 'Eligibility and availability',
+        body: 'A clinical trial appearing in this index does not mean it is open, appropriate or available to any specific person. Eligibility is defined solely by the official protocol and determined by the trial team. Contact information, when needed, is available on the original registry page.',
+      },
+      thirdParty: {
+        heading: 'Third-party sites',
+        body: 'Links lead to websites operated by governments, agencies and organisations that are entirely independent of TrialBeacon. Their content, availability and policies are their own.',
+      },
+      wellbeing: {
+        heading: 'Emotional wellbeing',
+        body: 'Reading trial registries during serious illness can be draining. This site is intentionally minimal so that checking it takes minutes, not hours. If the information here raises questions, the most useful next step is a conversation with the treating team — bring links, and ask.',
+      },
+    },
+  },
+  unsubscribe: {
+    eyebrow: 'Weekly Alerts',
+    title: 'Unsubscribe',
+    intro:
+      'Enter the address you subscribed with and it will be removed from the weekly alert list. There is nothing else to confirm.',
+    emailLabel: 'Email address',
+    emailPlaceholder: 'you@example.com',
+    button: 'Unsubscribe',
+    submitting: 'Removing…',
+    doneTitle: 'Unsubscribed',
+    doneMsgRemoved:
+      'Your subscription has been removed. You will not receive further emails.',
+    doneMsgNone:
+      'No active subscription was found for this address. Either way, you will not receive further emails.',
+    finePrint:
+      'No confirmation step and no questions asked. Your address is removed from the store immediately.',
+  },
+  notFound: {
+    eyebrow: '404',
+    title: 'This page does not exist',
+    body:
+      'The address may have changed. Everything on this site is reachable from the pages below.',
+    home: 'Home',
+    cancers: 'Cancer types',
+    search: 'Search',
+  },
+  footer: {
+    tagline: 'Trusted updates from official sources. Nothing more.',
+    desc:
+      'A neutral link aggregator for publicly listed clinical trials, guideline indexes and regulatory notices from the United States, Europe and China.',
+    browse: 'Browse',
+    about: 'About',
+    stayInformed: 'Stay informed',
+    legal:
+      'TrialBeacon is an independent information index. It is not affiliated with, or endorsed by, ClinicalTrials.gov, the FDA, NCCN, EMA, ESMO, CDE, NMPA, ChiCTR or any other organisation referenced on this site. All trademarks belong to their respective owners. Records are reproduced verbatim from official registries; always rely on the original page, which may have changed since it was indexed here.',
+  },
+  badge: {
+    change: {
+      new: 'Newly listed',
+      updated: 'Record updated',
+      closed: 'No longer open',
+    },
+    type: {
+      trial: 'Clinical trial',
+      regulatory: 'Regulatory',
+      guideline: 'Guideline',
+      registry: 'Registry',
+    },
+  },
+  region: {
+    US: 'United States',
+    EU: 'Europe',
+    CN: 'China',
+    OTHER: 'Other regions',
+    all: 'All regions',
+  },
+  filters: {
+    heading: 'Filter',
+    openOnly: 'Open to enrolment only',
+    openOnlyHint:
+      'Keeps records whose official status is recruiting, not yet recruiting, or enrolling by invitation.',
+    phase: 'Phase',
+    allPhases: 'All phases',
+    clear: 'Clear filters',
+    showing: 'Showing {n} of {total}',
+    noMatch: 'No records match these filters.',
+    noMatchHint: 'Clear one filter to widen the view.',
+  },
+  trial: {
+    breadcrumb: 'Record',
+    officialRecordTitle: 'Official record',
+    identifiers: 'Identifier',
+    viewOnRegistry: 'Open the official record',
+    viewOnRegistryHint:
+      'The registry page is the authoritative version and may have changed since it was indexed here.',
+    locations: 'Recruiting locations',
+    locationsCount: '{n|country|countries}',
+    locationsUnavailable:
+      'Locations are not included in the offline baseline for this record. Open the official record to see the current site list.',
+    interventions: 'Interventions studied',
+    sponsor: 'Lead sponsor',
+    enrollment: 'Target enrolment',
+    enrollmentValue: '{n} participants',
+    studyType: 'Study type',
+    phase: 'Phase',
+    status: 'Status',
+    firstPosted: 'First posted',
+    lastUpdate: 'Last updated on the registry',
+    eligibility: 'Eligibility criteria',
+    eligibilityIntro:
+      'Reproduced verbatim from the official record. Eligibility is decided by the study team, never by this page.',
+    eligibilityUnavailable:
+      'Eligibility criteria are not included in the offline baseline for this record. They are published in full on the official record.',
+    ageRange: 'Age',
+    sex: 'Sex',
+    contact: 'Study contact',
+    contactAvailable:
+      'The official record lists a study contact. Contact details are published there and are intentionally not copied to this page.',
+    contactUnavailable:
+      'No public contact is listed on the official record.',
+    notProvided: 'Not provided in the official record',
+    baselineNotice:
+      'This view is built from the offline baseline indexed on {date}. Fields that the baseline does not carry are marked as unavailable rather than guessed.',
+    relatedTypes: 'Indexed under',
+    saveToList: 'Add to my list',
+    removeFromList: 'Remove from my list',
+    savedToList: 'In my list',
+    notFoundTitle: 'No such record',
+    notFoundBody:
+      'This identifier is not in the index. It may exist on the official registry — search for it there.',
+  },
+  myList: {
+    navLabel: 'My list',
+    title: 'My list',
+    eyebrow: 'Prepare for an appointment',
+    intro:
+      'Records you saved, collected on one page. Nothing here is a recommendation — it is your own shortlist of official entries, formatted so you can print it and go through it with your care team.',
+    empty: 'Your list is empty.',
+    emptyHint:
+      'Open any record and choose "Add to my list" to collect it here.',
+    count: '{n|record|records} saved',
+    print: 'Print this page',
+    clearAll: 'Clear the list',
+    clearConfirm: 'Remove all saved records?',
+    remove: 'Remove',
+    printedOn: 'Printed on {date}',
+    printIntro:
+      'Official register entries collected from TrialBeacon. Each identifier can be looked up directly on the source registry.',
+    questionsTitle: 'Questions you may want to ask',
+    questionsIntro:
+      'Adapted from the question lists published by the U.S. National Cancer Institute and the U.S. Food & Drug Administration for people considering a clinical trial.',
+    questions: [
+      'Is this study relevant to my diagnosis, stage and prior treatment?',
+      'What is the purpose of this study, and what is already known?',
+      'What tests or procedures would be involved, and how often?',
+      'Which costs are covered by the study, and which are not?',
+      'What are the possible risks and side effects compared with my current care?',
+      'Can I leave the study at any point, and what happens if I do?',
+      'Who do I contact if something goes wrong?',
+      'Is there a site near enough for me to attend regularly?',
+    ],
+    notesLabel: 'Notes',
+    disclaimerPrint:
+      'TrialBeacon is an information index, not a medical service. It does not recommend, rank or endorse any study. Decisions about treatment belong to you and your clinicians.',
+  },
+  safety: {
+    navLabel: 'Before you contact a study',
+    eyebrow: 'Published safeguards',
+    title: 'Before you contact a study',
+    intro:
+      'Points below are drawn from guidance published by public health bodies for people considering a clinical trial. They are reproduced because people looking for later-line options are frequently approached by services that are not official studies. Nothing here is advice about your treatment.',
+    checksTitle: 'What official guidance says to check',
+    checks: [
+      {
+        title: 'A registered study has a registry number',
+        body:
+          'Interventional studies are normally registered before enrolment and carry a public identifier such as an NCT, EudraCT/CTIS or ChiCTR number. If no identifier is offered, the study cannot be verified against a public registry.',
+      },
+      {
+        title: 'Ethics approval is not optional',
+        body:
+          'Regulators require review by an ethics committee or institutional review board before people can be enrolled. A study team can tell you which body reviewed the protocol.',
+      },
+      {
+        title: 'Informed consent is a document, not a conversation',
+        body:
+          'You should receive a written consent form describing the purpose, procedures, risks and your right to withdraw at any time, and be given time to read it.',
+      },
+      {
+        title: 'Ask precisely who pays for what',
+        body:
+          'Investigational products are typically provided by the sponsor, while routine care costs may not be. Public guidance is consistent that you should get the cost split in writing before agreeing to anything.',
+      },
+      {
+        title: 'Certainty is a warning sign',
+        body:
+          'A trial exists because the answer is not yet known. Guaranteed cures, secret protocols, and pressure to decide quickly are inconsistent with how registered research works.',
+      },
+    ],
+    sourcesTitle: 'Read the original guidance',
+    sourcesIntro:
+      'These are the public pages the points above are drawn from. We link out rather than paraphrase further.',
+    reportTitle: 'If something looks wrong',
+    reportBody:
+      'Concerns about a study can be raised with the regulator in the relevant jurisdiction, or with the ethics committee named in the consent document.',
+  },
+  locale: {
+    label: 'Language',
+  },
+  dataStatus: {
+    live: 'Trial records retrieved live from the ClinicalTrials.gov public API.',
+    snapshot:
+      'Showing the verified snapshot of official records indexed on {date}. Every link opens the live original page.',
+  },
+  // Localised cancer type names + descriptors (slug-keyed).
+  cancers: {
+    lung: { label: 'Lung Cancer', descriptor: 'Including NSCLC and SCLC' },
+    breast: { label: 'Breast Cancer', descriptor: 'All subtypes, incl. HR+, HER2+, TNBC' },
+    colorectal: { label: 'Colorectal Cancer', descriptor: 'Colon and rectal cancer' },
+    liver: { label: 'Liver Cancer', descriptor: 'Incl. hepatocellular carcinoma (HCC)' },
+    gastric: { label: 'Gastric Cancer', descriptor: 'Stomach and gastroesophageal junction' },
+    pancreatic: { label: 'Pancreatic Cancer', descriptor: 'Incl. pancreatic ductal adenocarcinoma' },
+    prostate: { label: 'Prostate Cancer', descriptor: 'Incl. castration-resistant disease' },
+    ovarian: { label: 'Ovarian Cancer', descriptor: 'Incl. platinum-resistant disease' },
+    esophageal: { label: 'Esophageal Cancer', descriptor: 'Squamous cell and adenocarcinoma' },
+    lymphoma: { label: 'Lymphoma', descriptor: 'Hodgkin and non-Hodgkin lymphoma' },
+  },
+};
+
+type CancerName = { label: string; descriptor: string };
+
+/** `cancers` is keyed by slug and indexed at runtime, so widen it to a Record. */
+export type Messages = Omit<typeof en, 'cancers'> & {
+  cancers: Record<string, CancerName>;
+};

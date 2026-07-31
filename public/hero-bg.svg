@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" role="img" aria-label="">
+  <defs>
+    <linearGradient id="hBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.55" stop-color="#f4f8fc"/>
+      <stop offset="1" stop-color="#eaf1f8"/>
+    </linearGradient>
+    <radialGradient id="hGlow" cx="0.82" cy="0.18" r="0.65">
+      <stop offset="0" stop-color="#dce8f4"/>
+      <stop offset="0.45" stop-color="#e9f1f8" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#eef4fa" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="hDots" width="34" height="34" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.1" fill="#1e3350" fill-opacity="0.06"/>
+    </pattern>
+    <linearGradient id="hArc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1e3350" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#1e3350" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1440" height="900" fill="url(#hBg)"/>
+  <rect width="1440" height="900" fill="url(#hDots)"/>
+  <rect width="1440" height="900" fill="url(#hGlow)"/>
+
+  <!-- calm concentric "beacon" arcs, top-right, very low saturation -->
+  <g fill="none" stroke="url(#hArc)" stroke-width="1.4">
+    <circle cx="1180" cy="150" r="120"/>
+    <circle cx="1180" cy="150" r="210"/>
+    <circle cx="1180" cy="150" r="300"/>
+    <circle cx="1180" cy="150" r="392"/>
+    <circle cx="1180" cy="150" r="486"/>
+  </g>
+
+  <!-- a single soft beacon line -->
+  <g stroke="#1e3350" stroke-opacity="0.10" stroke-width="1.2" fill="none">
+    <path d="M1180 150 L980 470"/>
+    <path d="M1180 150 L1290 470"/>
+    <path d="M1180 150 L760 600"/>
+  </g>
+
+  <!-- faint horizon baseline -->
+  <path d="M0 720 C 360 690 760 760 1080 712 C 1240 688 1360 700 1440 690" fill="none" stroke="#1e3350" stroke-opacity="0.05" stroke-width="1.4"/>
+</svg>

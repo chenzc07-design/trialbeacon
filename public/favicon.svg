@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="TrialBeacon">
+  <rect width="64" height="64" rx="14" fill="#1e3350"/>
+  <g transform="translate(32 32)" fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M0 17 L17 0 L34 17 L17 34 Z"/>
+    <path d="M17 10 L17 24"/>
+    <path d="M10 17 L24 17"/>
+  </g>
+</svg>
