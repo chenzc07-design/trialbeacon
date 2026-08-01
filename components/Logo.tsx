@@ -7,11 +7,11 @@ export function BeaconMark({ className = 'h-7 w-7' }: { className?: string }) {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <circle cx="16" cy="7" r="2" fill="#E2A6A6" stroke="none" />
-        <path d="M16 9.5 V18" />
-        <path d="M11 25 L16 18 L21 25" />
-        <path d="M12.5 13.5 A6 6 0 0 1 19.5 13.5" strokeWidth={1.5} />
-        <path d="M14 11 A3.5 3.5 0 0 1 18 11" strokeWidth={1.5} />
+        <path d="M13 11 L19 11 L22.5 27 L9.5 27 Z" />
+        <path d="M12.3 14 L19.7 14" strokeWidth={1.5} />
+        <path d="M12.5 9 A4 4 0 0 1 19.5 9" strokeWidth={1.5} />
+        <path d="M10.5 9 A6 6 0 0 1 21.5 9" strokeWidth={1.5} />
+        <circle cx="16" cy="9" r="2" fill="#E2A6A6" stroke="none" />
       </g>
     </svg>
   );
