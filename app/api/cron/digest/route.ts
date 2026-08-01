@@ -1,8 +1,13 @@
-import { NextResponse } from 'next/server';
-import { subscriptionStore } from '@/lib/subscriptions';
+import { NextRequest, NextResponse } from 'next/server';
+import { store } from '@/lib/subscriptions';
 import { renderWeeklyDigest } from '@/lib/email';
 import { sendEmail, isEmailConfigured } from '@/lib/mailer';
-import { getCancerFeed, windowStartISO } from '@/lib/data';
+import { getCancerFeed, getChangeTracker, windowStartISO } from '@/lib/data';
+import {
+  sendWecomMarkdown,
+  renderWecomDigest,
+  isWecomConfigured,
+} from '@/lib/wecom';
 import { getCancer } from '@/lib/cancers';
 import type { UpdateItem } from '@/lib/types';
 
@@ -13,30 +18,36 @@ export const maxDuration = 60;
  * Weekly digest job.
  *
  * Trigger once a week from any scheduler (Vercel Cron, GitHub Actions,
- * systemd timer, cron + curl). Protect it with CRON_SECRET.
+ * systemd timer, curl). Protect with CRON_SECRET. With no provider configured
+ * it runs in dry-run mode and returns the rendered payloads for verification.
  *
- *   vercel.json:
+ * Responsibilities:
+ *   1. Email every CONFIRMED subscriber a minimal digest of new official
+ *      records for the cancer types + regions they follow.
+ *   2. Push one 企业微信 group message summarising recent registry changes.
+ *
+ * vercel.json:
  *   { "crons": [{ "path": "/api/cron/digest", "schedule": "0 8 * * 1" }] }
- *
- * With no email provider configured the route runs in dry-run mode and
- * returns the rendered payloads, so the pipeline can be verified end to end
- * before any address is contacted.
  */
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const secret = process.env.CRON_SECRET;
   if (secret) {
-    const auth = request.headers.get('authorization');
-    if (auth !== `Bearer ${secret}`) {
+    const provided =
+      request.nextUrl.searchParams.get('secret') ??
+      request.headers.get('authorization')?.replace(/^Bearer\s+/i, '') ??
+      '';
+    if (provided !== secret) {
       return NextResponse.json({ error: 'Unauthorized.' }, { status: 401 });
     }
   }
 
-  const { searchParams } = new URL(request.url);
-  const dryRun = searchParams.get('dryRun') === '1' || !isEmailConfigured();
-  const siteUrl = process.env.SITE_URL ?? 'https://trialbeacon.example.com';
+  const dryRun = !isEmailConfigured() && !isWecomConfigured();
+  const siteUrl = process.env.SITE_URL ?? 'https://trialbeacon.vercel.app';
   const since = windowStartISO(7);
 
-  const subscribers = await subscriptionStore.list();
+  // Only email people who completed double opt-in.
+  const subscribers = (await store.list()).filter((s) => s.confirmed);
+
   const results: {
     email: string;
     itemCount: number;
@@ -63,7 +74,7 @@ export async function GET(request: Request) {
           (i) =>
             i.date !== null &&
             i.date >= since &&
-            sub.regions.includes(i.region)
+            (sub.regions.length === 0 || sub.regions.includes(i.region))
         )
       );
     }
@@ -81,16 +92,27 @@ export async function GET(request: Request) {
     });
 
     let sent = false;
-    if (!dryRun) {
+    if (isEmailConfigured()) {
       sent = await sendEmail({ to: sub.email, subject, text });
     }
 
-    results.push({
-      email: sub.email,
-      itemCount: unique.length,
-      subject,
-      sent,
+    results.push({ email: sub.email, itemCount: unique.length, subject, sent });
+  }
+
+  // ---- 企业微信 group push (single message) ----
+  let wecomOk = false;
+  if (isWecomConfigured()) {
+    const changes = await getChangeTracker(7);
+    const flat: UpdateItem[] = changes.groups
+      .filter((g) => g.kind !== 'closed')
+      .flatMap((g) => g.items);
+    const content = renderWecomDigest({
+      heading: `TrialBeacon 近 7 天官方记录更新（${changes.total} 条）`,
+      items: flat,
+      unsubscribeNote:
+        '来源：ClinicalTrials.gov / CDE / EMA 等官方登记平台。详情以原文为准。',
     });
+    wecomOk = (await sendWecomMarkdown(content)).ok;
   }
 
   return NextResponse.json({
@@ -98,6 +120,13 @@ export async function GET(request: Request) {
     dryRun,
     since,
     subscribers: subscribers.length,
+    emailsSent: results.filter((r) => r.sent).length,
+    emailsFailed: results.filter((r) => !r.sent && r.itemCount >= 0).length,
+    emailConfigured: isEmailConfigured(),
+    wecomConfigured: isWecomConfigured(),
+    wecomOk,
     results,
   });
 }
+
+export const POST = GET;
