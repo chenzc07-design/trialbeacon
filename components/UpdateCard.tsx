@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import type { ReactNode } from 'react';
 import type { UpdateItem, Region } from '@/lib/types';
 import { SOURCES } from '@/lib/sources';
 import { useI18n } from './I18nProvider';
@@ -13,6 +14,7 @@ import {
   ChangeBadge,
 } from './badges';
 import { SaveToListButton } from './SaveToListButton';
+import { buildHighlightRegex } from '@/lib/keywords';
 
 function formatDate(iso: string, locale: string): string {
   const d = new Date(`${iso}T00:00:00Z`);
@@ -24,12 +26,43 @@ function formatDate(iso: string, locale: string): string {
   });
 }
 
+/**
+ * Wraps any keyword matches in the title with a <mark> so a reader can scan
+ * which records are advanced / metastatic / later-line / palliative. The text
+ * is never altered — only the matching substrings are visually highlighted.
+ */
+function highlightTitle(title: string, keywords?: string[]) {
+  const re = buildHighlightRegex(keywords ?? []);
+  if (!re) return title;
+  const out: (string | ReactNode)[] = [];
+  let last = 0;
+  let m: RegExpExecArray | null;
+  let i = 0;
+  while ((m = re.exec(title)) !== null) {
+    if (m.index > last) out.push(title.slice(last, m.index));
+    out.push(
+      <mark
+        key={i++}
+        className="rounded bg-[#fdeccb] px-0.5 text-[#7a4a12]"
+      >
+        {m[0]}
+      </mark>
+    );
+    last = m.index + m[0].length;
+    if (m[0].length === 0) re.lastIndex++; // guard against zero-width
+  }
+  if (last < title.length) out.push(title.slice(last));
+  return out;
+}
+
 export function UpdateCard({
   item,
   changeKind,
+  keywords,
 }: {
   item: UpdateItem;
   changeKind?: 'new' | 'updated' | 'closed';
+  keywords?: string[];
 }) {
   const { locale, messages: m } = useI18n();
   const source = SOURCES[item.source];
@@ -56,7 +89,7 @@ export function UpdateCard({
           className="transition-colors hover:text-navy-700"
           aria-label={`${m.common.details}: ${item.title}`}
         >
-          {item.title}
+          {highlightTitle(item.title, keywords)}
         </Link>
       </h3>
 
@@ -103,9 +136,11 @@ export function UpdateCard({
 export function UpdateList({
   items,
   changeKind,
+  keywords,
 }: {
   items: UpdateItem[];
   changeKind?: 'new' | 'updated' | 'closed';
+  keywords?: string[];
 }) {
   const { messages: m } = useI18n();
   if (items.length === 0) {
@@ -135,7 +170,12 @@ export function UpdateList({
   return (
     <div className="grid gap-3">
       {items.map((item) => (
-        <UpdateCard key={item.id} item={item} changeKind={changeKind} />
+        <UpdateCard
+          key={item.id}
+          item={item}
+          changeKind={changeKind}
+          keywords={keywords}
+        />
       ))}
     </div>
   );
