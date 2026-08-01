@@ -53,3 +53,42 @@ export function renderWeeklyDigest(opts: {
     text: lines.join('\n'),
   };
 }
+
+/**
+ * Double opt-in confirmation email.
+ *
+ * Sent once, immediately after a subscription is created. Contains one link
+ * that flips the subscriber to `confirmed: true`. Nothing else is asked for.
+ */
+export function renderConfirmEmail(opts: {
+  confirmUrl: string;
+  siteUrl: string;
+}): { subject: string; text: string } {
+  const { confirmUrl, siteUrl } = opts;
+  const lines: string[] = [];
+  lines.push('Confirm your TrialBeacon weekly alerts');
+  lines.push('');
+  lines.push(
+    'You (or someone using this address) asked to receive a weekly email'
+  );
+  lines.push('listing newly indexed official cancer-trial records.');
+  lines.push('');
+  lines.push(`Confirm here: ${confirmUrl}`);
+  lines.push('');
+  lines.push(
+    'If you did not request this, ignore this email — nothing will be sent'
+  );
+  lines.push('and your address will not be kept.');
+  lines.push('');
+  lines.push(
+    'TrialBeacon does not provide medical advice and does not recommend, rank'
+  );
+  lines.push('or evaluate any treatment or trial. Always rely on the original page.');
+  lines.push('');
+  lines.push(`TrialBeacon: ${siteUrl}`);
+
+  return {
+    subject: 'Confirm your TrialBeacon weekly alerts',
+    text: lines.join('\n'),
+  };
+}
