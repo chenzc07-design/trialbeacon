@@ -1,14 +1,15 @@
-import { promises as fs } from 'fs';
-import path from 'path';
 import type { Region } from './types';
 
 /**
  * Subscription storage adapter.
  *
- * The default implementation persists to a JSON file so the free tier works
- * out of the box on a single server. To move to a database or an email
- * service (e.g. Postgres + Resend/Postmark), implement `SubscriptionStore`
- * and swap the export at the bottom — no route or UI changes required.
+ * The default implementation uses an in-memory Map so the free tier works
+ * out of the box on serverless platforms (Vercel functions have a read-only
+ * filesystem, so a JSON-on-disk store cannot persist). Data is ephemeral —
+ * it is lost on every cold start — which is acceptable for an information
+ * aggregator demo. To move to durable storage (Vercel KV, Postgres, etc.),
+ * implement `SubscriptionStore` and swap the export at the bottom; no
+ * route or UI changes required.
  */
 export interface Subscription {
   id: string;
@@ -38,88 +39,76 @@ export interface SubscriptionStore {
   count(): Promise<number>;
 }
 
-const DATA_DIR = process.env.TRIALBEACON_DATA_DIR ?? path.join(process.cwd(), '.data');
-const DATA_FILE = path.join(DATA_DIR, 'subscriptions.json');
+// Module-scoped Map: persists across requests within a single warm serverless
+// instance and is wiped on cold starts. Sufficient for a demo aggregator.
+const memory = new Map<string, Subscription>();
 
-async function readAll(): Promise<Subscription[]> {
-  try {
-    const raw = await fs.readFile(DATA_FILE, 'utf8');
-    return JSON.parse(raw) as Subscription[];
-  } catch {
-    return [];
-  }
+function token(): string {
+  // crypto is available globally in the Next.js runtime; this helper tolerates
+  // any environment that exposes it differently.
+  const g = globalThis as { crypto?: { randomUUID?: () => string } };
+  return (
+    g.crypto?.randomUUID?.() ??
+    Math.random().toString(36).slice(2) + Date.now().toString(36)
+  );
 }
 
-async function writeAll(subs: Subscription[]): Promise<void> {
-  await fs.mkdir(DATA_DIR, { recursive: true });
-  await fs.writeFile(DATA_FILE, JSON.stringify(subs, null, 2), 'utf8');
-}
-
-class FileSubscriptionStore implements SubscriptionStore {
+class MemorySubscriptionStore implements SubscriptionStore {
   async upsert(
     sub: Omit<Subscription, 'id' | 'createdAt' | 'confirmed' | 'token'>
   ): Promise<Subscription> {
-    const subs = await readAll();
     const email = sub.email.toLowerCase();
-    const existing = subs.find((s) => s.email === email);
+    const existing = memory.get(email);
     if (existing) {
       existing.cancers = sub.cancers;
       existing.regions = sub.regions;
-      existing.token ||= crypto.randomUUID();
-      await writeAll(subs);
+      existing.token ||= token();
       return existing;
     }
     const created: Subscription = {
-      id: crypto.randomUUID(),
+      id: token(),
       email,
       cancers: sub.cancers,
       regions: sub.regions,
       createdAt: new Date().toISOString(),
       confirmed: false,
-      token: crypto.randomUUID(),
+      token: token(),
     };
-    subs.push(created);
-    await writeAll(subs);
+    memory.set(email, created);
     return created;
   }
 
   async remove(email: string): Promise<boolean> {
-    const subs = await readAll();
-    const next = subs.filter((s) => s.email !== email.toLowerCase());
-    if (next.length === subs.length) return false;
-    await writeAll(next);
-    return true;
+    return memory.delete(email.toLowerCase());
   }
 
   async find(email: string): Promise<Subscription | null> {
-    const subs = await readAll();
-    return subs.find((s) => s.email === email.toLowerCase()) ?? null;
+    return memory.get(email.toLowerCase()) ?? null;
   }
 
-  async findByToken(token: string): Promise<Subscription | null> {
-    const subs = await readAll();
-    return subs.find((s) => s.token === token) ?? null;
+  async findByToken(t: string): Promise<Subscription | null> {
+    for (const s of memory.values()) if (s.token === t) return s;
+    return null;
   }
 
-  async confirm(token: string): Promise<Subscription | null> {
-    const subs = await readAll();
-    const found = subs.find((s) => s.token === token);
-    if (!found) return null;
-    found.confirmed = true;
-    await writeAll(subs);
-    return found;
+  async confirm(t: string): Promise<Subscription | null> {
+    for (const s of memory.values()) if (s.token === t) {
+      s.confirmed = true;
+      return s;
+    }
+    return null;
   }
 
   async list(): Promise<Subscription[]> {
-    return readAll();
+    return Array.from(memory.values());
   }
 
   async count(): Promise<number> {
-    return (await readAll()).length;
+    return memory.size;
   }
 }
 
-export const subscriptionStore: SubscriptionStore = new FileSubscriptionStore();
+export const subscriptionStore: SubscriptionStore = new MemorySubscriptionStore();
 
 export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 export const MAX_CANCERS = 3;
