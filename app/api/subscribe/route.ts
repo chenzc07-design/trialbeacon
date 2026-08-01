@@ -1,14 +1,13 @@
 import { NextResponse } from 'next/server';
-import {
-  subscriptionStore,
-  EMAIL_PATTERN,
-  MAX_CANCERS,
-} from '@/lib/subscriptions';
+import { store, EMAIL_PATTERN, MAX_CANCERS } from '@/lib/subscriptions';
+import { sendEmail, isEmailConfigured } from '@/lib/mailer';
+import { renderConfirmEmail } from '@/lib/email';
 import { CANCERS } from '@/lib/cancers';
 import type { Region } from '@/lib/types';
 
 const VALID_SLUGS = new Set(CANCERS.map((c) => c.slug));
 const VALID_REGIONS = new Set(['US', 'EU', 'CN']);
+const SITE_URL = process.env.SITE_URL ?? 'https://trialbeacon.vercel.app';
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -53,17 +52,27 @@ export async function POST(request: Request) {
       : []
   ) as Region[];
 
-  const sub = await subscriptionStore.upsert({
+  const sub = await store.upsert({
     email,
     cancers: cancerList,
     regions: regionList.length ? regionList : ['US', 'EU', 'CN'],
   });
 
-  // Email delivery integration point:
-  // when an email provider is configured, send the double opt-in
-  // confirmation here (see lib/email.ts for the weekly digest template).
+  // Double opt-in: send a confirmation email only when a provider is set.
+  // Until confirmed, the subscriber receives nothing (the digest job skips
+  // unconfirmed addresses).
+  let confirmSent = false;
+  if (isEmailConfigured()) {
+    const { subject, text } = renderConfirmEmail({
+      confirmUrl: `${SITE_URL}/api/confirm?token=${sub.token}`,
+      siteUrl: SITE_URL,
+    });
+    confirmSent = await sendEmail({ to: sub.email, subject, text });
+  }
+
   return NextResponse.json({
     ok: true,
+    confirmSent,
     subscription: { cancers: sub.cancers, regions: sub.regions },
   });
 }
@@ -77,6 +86,6 @@ export async function DELETE(request: Request) {
       { status: 400 }
     );
   }
-  const removed = await subscriptionStore.remove(email);
+  const removed = await store.remove(email);
   return NextResponse.json({ ok: true, removed });
 }
