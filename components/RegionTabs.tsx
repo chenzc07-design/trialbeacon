@@ -5,6 +5,7 @@ import type { UpdateItem, Region } from '@/lib/types';
 import { UpdateList } from './UpdateCard';
 import { useI18n } from './I18nProvider';
 import { t } from '@/lib/i18n-runtime';
+import { KEYWORDS, KEYWORD_LABELS, KEYWORD_HEADING } from '@/lib/keywords';
 
 const REGION_ORDER: Region[] = ['US', 'EU', 'CN', 'OTHER'];
 
@@ -39,10 +40,13 @@ const PHASE_ORDER = [
  * slower and would lose scroll position.
  */
 export function RegionTabs({ items }: { items: UpdateItem[] }) {
-  const { messages: m } = useI18n();
+  const { locale, messages: m } = useI18n();
   const [tab, setTab] = useState<Region | 'ALL'>('ALL');
   const [openOnly, setOpenOnly] = useState(false);
   const [phase, setPhase] = useState<string>('');
+  const [keywords, setKeywords] = useState<string[]>([]);
+
+  const keywordLabels = KEYWORD_LABELS[locale] ?? KEYWORD_LABELS.en;
 
   const counts = useMemo(() => {
     const c: Record<string, number> = {
@@ -90,7 +94,13 @@ export function RegionTabs({ items }: { items: UpdateItem[] }) {
     })),
   ];
 
-  const filtered = openOnly || phase !== '';
+  const filtered = openOnly || phase !== '' || keywords.length > 0;
+
+  function toggleKeyword(id: string) {
+    setKeywords((prev) =>
+      prev.includes(id) ? prev.filter((k) => k !== id) : [...prev, id]
+    );
+  }
 
   return (
     <div>
@@ -165,12 +175,39 @@ export function RegionTabs({ items }: { items: UpdateItem[] }) {
             onClick={() => {
               setOpenOnly(false);
               setPhase('');
+              setKeywords([]);
             }}
             className="text-xs font-medium text-navy-700 underline-offset-2 hover:underline"
           >
             {m.filters.clear}
           </button>
         ) : null}
+      </div>
+
+      {/* Transparent keyword highlight — never removes a record, only marks
+          the matching words inside each title. */}
+      <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-2">
+        <span className="text-[12px] font-medium text-slateish-500">
+          {KEYWORD_HEADING[locale] ?? KEYWORD_HEADING.en}:
+        </span>
+        {KEYWORDS.map((k) => {
+          const active = keywords.includes(k.id);
+          return (
+            <button
+              key={k.id}
+              type="button"
+              aria-pressed={active}
+              onClick={() => toggleKeyword(k.id)}
+              className={`chip transition-colors ${
+                active
+                  ? 'border-[#e0a94a] bg-[#fdeccb] text-[#7a4a12]'
+                  : 'border-slateish-200 bg-white text-slateish-600 hover:border-navy-300'
+              }`}
+            >
+              {keywordLabels[k.id] ?? k.id}
+            </button>
+          );
+        })}
       </div>
 
       <div className="mt-4" role="tabpanel">
@@ -180,7 +217,7 @@ export function RegionTabs({ items }: { items: UpdateItem[] }) {
             <p className="mt-1 text-sm text-slateish-500">{m.filters.noMatchHint}</p>
           </div>
         ) : (
-          <UpdateList items={visible} />
+          <UpdateList items={visible} keywords={keywords} />
         )}
       </div>
     </div>
