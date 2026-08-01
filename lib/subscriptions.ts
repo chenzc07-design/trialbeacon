@@ -112,3 +112,120 @@ export const subscriptionStore: SubscriptionStore = new MemorySubscriptionStore(
 
 export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 export const MAX_CANCERS = 3;
+
+/**
+ * Persistent store backed by Upstash Redis over its REST API.
+ *
+ * Zero new dependencies — it is plain `fetch`, so it works on any serverless
+ * runtime without adding an SDK. It activates automatically when both
+ * `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are set; otherwise
+ * the module keeps using the in-memory store. On Vercel, wire these two
+ * environment variables (from an Upstash Redis instance) and subscriptions
+ * survive cold starts.
+ */
+const KV_URL = process.env.UPSTASH_REDIS_REST_URL;
+const KV_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+function subKey(email: string): string {
+  return `tb:sub:${email.toLowerCase()}`;
+}
+function tokKey(token: string): string {
+  return `tb:tok:${token}`;
+}
+const INDEX_KEY = 'tb:subs';
+
+async function upstash(commands: [string, ...string[]][]): Promise<unknown[]> {
+  const res = await fetch(KV_URL!, {
+    method: 'POST',
+    headers: {
+      authorization: `Bearer ${KV_TOKEN}`,
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({ commands }),
+    signal: AbortSignal.timeout(8000),
+  });
+  const json = (await res.json()) as { result?: unknown[] };
+  return json.result ?? [];
+}
+
+class KvSubscriptionStore implements SubscriptionStore {
+  async upsert(
+    sub: Omit<Subscription, 'id' | 'createdAt' | 'confirmed' | 'token'>
+  ): Promise<Subscription> {
+    const email = sub.email.toLowerCase();
+    const existing = await this.find(email);
+    const created: Subscription = existing
+      ? { ...existing, cancers: sub.cancers, regions: sub.regions }
+      : {
+          id: token(),
+          email,
+          cancers: sub.cancers,
+          regions: sub.regions,
+          createdAt: new Date().toISOString(),
+          confirmed: false,
+          token: token(),
+        };
+    const cmds: [string, ...string[]][] = [
+      ['SET', subKey(email), JSON.stringify(created)],
+      ['SET', tokKey(created.token), email],
+      ['SADD', INDEX_KEY, email],
+    ];
+    await upstash(cmds);
+    return created;
+  }
+
+  async remove(email: string): Promise<boolean> {
+    const e = email.toLowerCase();
+    const found = await this.find(e);
+    const cmds: [string, ...string[]][] = [
+      ['SREM', INDEX_KEY, e],
+      ['DEL', subKey(e)],
+    ];
+    if (found) cmds.push(['DEL', tokKey(found.token)]);
+    await upstash(cmds);
+    return true;
+  }
+
+  async find(email: string): Promise<Subscription | null> {
+    const res = await upstash([['GET', subKey(email.toLowerCase())]]);
+    const raw = res[0];
+    return raw ? (JSON.parse(String(raw)) as Subscription) : null;
+  }
+
+  async findByToken(t: string): Promise<Subscription | null> {
+    const res = await upstash([['GET', tokKey(t)]]);
+    const email = res[0];
+    if (!email) return null;
+    return this.find(String(email));
+  }
+
+  async confirm(t: string): Promise<Subscription | null> {
+    const sub = await this.findByToken(t);
+    if (!sub) return null;
+    const confirmed = { ...sub, confirmed: true };
+    await upstash([
+      ['SET', subKey(sub.email), JSON.stringify(confirmed)],
+    ]);
+    return confirmed;
+  }
+
+  async list(): Promise<Subscription[]> {
+    const res = await upstash([['SMEMBERS', INDEX_KEY]]);
+    const emails = (res[0] as string[]) ?? [];
+    const subs: Subscription[] = [];
+    for (const e of emails) {
+      const s = await this.find(e);
+      if (s) subs.push(s);
+    }
+    return subs;
+  }
+
+  async count(): Promise<number> {
+    const res = await upstash([['SCARD', INDEX_KEY]]);
+    return Number(res[0] ?? 0);
+  }
+}
+
+// Prefer durable storage when configured; fall back to the ephemeral store.
+export const store: SubscriptionStore =
+  KV_URL && KV_TOKEN ? new KvSubscriptionStore() : new MemorySubscriptionStore();
