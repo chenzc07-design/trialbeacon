@@ -53,19 +53,33 @@ export function PhaseBadge({ phase }: { phase?: string }) {
   );
 }
 
+/**
+ * Solid colour blocks keyed by official status. A filled block reads at a
+ * glance and never competes with the neutral copy elsewhere on the card.
+ * Colours are chosen for clear categorical distinction, not for alarm.
+ */
+const STATUS_STYLES: Record<string, string> = {
+  recruiting: 'bg-[#1f8a5b] text-white',
+  'not yet recruiting': 'bg-[#2f6fb0] text-white',
+  'enrolling by invitation': 'bg-[#0f8f8f] text-white',
+  'active, not recruiting': 'bg-[#c08a1e] text-white',
+  completed: 'bg-[#5b6b7e] text-white',
+  suspended: 'bg-[#b4543a] text-white',
+  terminated: 'bg-[#b4543a] text-white',
+  withdrawn: 'bg-[#b4543a] text-white',
+};
+
 export function StatusBadge({ status }: { status?: string }) {
   if (!status) return null;
+  const key = status.trim().toLowerCase();
   const open = /recruiting|enrolling/i.test(status) && !/not yet/i.test(status);
+  const style =
+    STATUS_STYLES[key] ??
+    (open
+      ? 'bg-[#1f8a5b] text-white'
+      : 'bg-[#5b6b7e] text-white');
   return (
-    <span
-      className={`chip ${
-        open
-          ? 'border-[#cfe0d9] bg-[#eef6f2] text-[#2e5747]'
-          : 'border-slateish-200 bg-slateish-100 text-slateish-600'
-      }`}
-    >
-      {status}
-    </span>
+    <span className={`chip font-medium ${style}`}>{status}</span>
   );
 }
 
