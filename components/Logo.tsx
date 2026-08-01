@@ -1,41 +1,29 @@
 export function BeaconMark({ className = 'h-7 w-7' }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 32 32"
-      fill="none"
-      className={className}
-      aria-hidden="true"
-    >
-      <rect x="1" y="1" width="30" height="30" rx="8" fill="#1e3350" />
-      <path
-        d="M16 7v4"
-        stroke="#9bb8d8"
-        strokeWidth="2"
+    <svg viewBox="0 0 32 32" fill="none" className={className} aria-hidden="true">
+      <g
+        stroke="currentColor"
+        strokeWidth={2}
         strokeLinecap="round"
-      />
-      <path
-        d="M9.5 9.5l2.8 2.8M22.5 9.5l-2.8 2.8"
-        stroke="#6892c1"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <circle cx="16" cy="17.5" r="3.2" fill="#fff" />
-      <path
-        d="M11 25.5c1.2-2.6 2.9-4 5-4s3.8 1.4 5 4"
-        stroke="#c6d7ea"
-        strokeWidth="2"
-        strokeLinecap="round"
-        fill="none"
-      />
+        strokeLinejoin="round"
+      >
+        <circle cx="16" cy="7" r="2" fill="#E2A6A6" stroke="none" />
+        <path d="M16 9.5 V18" />
+        <path d="M11 25 L16 18 L21 25" />
+        <path d="M12.5 13.5 A6 6 0 0 1 19.5 13.5" strokeWidth={1.5} />
+        <path d="M14 11 A3.5 3.5 0 0 1 18 11" strokeWidth={1.5} />
+      </g>
     </svg>
   );
 }
 
-export function Wordmark() {
+export function Wordmark({ className }: { className?: string }) {
   return (
-    <span className="flex items-center gap-2.5">
+    <span
+      className={`flex items-center gap-2.5 text-navy-900 ${className ?? ''}`}
+    >
       <BeaconMark />
-      <span className="text-[17px] font-semibold tracking-tight text-ink-950">
+      <span className="text-[17px] font-semibold tracking-tight">
         TrialBeacon
       </span>
     </span>
