@@ -1,8 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="TrialBeacon">
-  <rect width="64" height="64" rx="14" fill="#1e3350"/>
-  <g transform="translate(32 32)" fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round">
-    <path d="M0 17 L17 0 L34 17 L17 34 Z"/>
-    <path d="M17 10 L17 24"/>
-    <path d="M10 17 L24 17"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" role="img" aria-label="TrialBeacon">
+  <g stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="16" cy="7" r="2" fill="#E2A6A6" stroke="none" />
+    <path d="M16 9.5 V18" />
+    <path d="M11 25 L16 18 L21 25" />
+    <path d="M12.5 13.5 A6 6 0 0 1 19.5 13.5" stroke-width="1.5" />
+    <path d="M14 11 A3.5 3.5 0 0 1 18 11" stroke-width="1.5" />
   </g>
 </svg>
