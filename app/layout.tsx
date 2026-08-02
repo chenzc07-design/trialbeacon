@@ -4,10 +4,10 @@ import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { I18nProvider } from '@/components/I18nProvider';
 import { getServerMessages } from '@/lib/i18n-server';
-import { siteJsonLd } from '@/lib/seo';
+import { siteJsonLd, hreflangAll } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://trialbeacon.example.com'),
+  metadataBase: new URL(process.env.SITE_URL ?? 'https://trialbeacon.vercel.app'),
   title: {
     default: 'TrialBeacon — Trusted updates from official sources',
     template: '%s · TrialBeacon',
@@ -25,8 +25,19 @@ export const metadata: Metadata = {
     'cancer information index',
   ],
   robots: { index: true, follow: true },
+  alternates: {
+    canonical: '/',
+    languages: hreflangAll('/'),
+  },
+  verification: {
+    google: 'mhnpXD5iQdPIaRnpvi4pCTtFy9DzphgCV9tKk8Atxac',
+    other: {
+      'msvalidate.01': process.env.BING_SITE_VERIFICATION || '',
+    },
+  },
   icons: {
     icon: '/favicon.svg',
+    apple: '/apple-touch-icon.png',
   },
   openGraph: {
     title: 'TrialBeacon — Trusted updates from official sources',
