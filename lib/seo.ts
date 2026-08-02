@@ -2,7 +2,27 @@ import { CANCERS, getCancer } from '@/lib/cancers';
 
 /** Canonical site origin. Override with SITE_URL in production. */
 export const SITE_URL =
-  process.env.SITE_URL ?? 'https://trialbeacon.example.com';
+  process.env.SITE_URL ?? 'https://trialbeacon.vercel.app';
+
+/**
+ * Hreflang alternates for a given path.
+ *
+ * TrialBeacon uses a cookie-based locale switcher (not URL-based i18n), so
+ * every locale is served from the same URL. Each language therefore points
+ * back to that same path, with `x-default` as the fallback Google uses when
+ * no explicit language match is found.
+ */
+export function hreflangAll(path: string): Record<string, string> {
+  return {
+    en: path,
+    zh: path,
+    fr: path,
+    de: path,
+    ja: path,
+    ko: path,
+    'x-default': path,
+  };
+}
 
 /** JSON-LD for the whole site: a neutral WebSite + independent Organisation. */
 export function siteJsonLd() {
@@ -67,6 +87,7 @@ export function sitemapRoutes(): { path: string; changeFreq: string; priority: n
     { path: '/search', changeFreq: 'weekly', priority: 0.5 },
     { path: '/sources', changeFreq: 'monthly', priority: 0.6 },
     { path: '/about', changeFreq: 'monthly', priority: 0.5 },
+    { path: '/app', changeFreq: 'monthly', priority: 0.5 },
     { path: '/disclaimer', changeFreq: 'monthly', priority: 0.4 },
     { path: '/alerts', changeFreq: 'monthly', priority: 0.6 },
     ...CANCERS.map((c) => ({
