@@ -5,6 +5,7 @@ import { baselineCancerStats, SNAPSHOT_DATE } from '@/lib/data';
 import { SOURCES } from '@/lib/sources';
 import { SearchBox } from '@/components/SearchBox';
 import { FreshnessBadge } from '@/components/FreshnessBadge';
+import { DeviceText } from '@/components/DeviceText';
 import { t, getServerMessages } from '@/lib/i18n-server';
 
 const PRINCIPLE_ICONS = [
@@ -93,17 +94,22 @@ export default async function HomePage() {
             <div>
               <p className="label-eyebrow">{m.home.eyebrow}</p>
 
-              {/* One H1, adapts by device: full version on desktop, short on mobile */}
-              <h1 className="mt-4 text-[26px] font-semibold leading-tight tracking-tight text-ink-950 sm:text-[40px] sm:leading-[1.16]">
-                <span className="hidden sm:block">{m.home.title1}</span>
-                <span className="sm:hidden">{m.home.title1Short}</span>
-              </h1>
+              {/* One H1 — only ONE of the two strings is ever in the DOM.
+                  Desktop shows the full version, mobile the short one. */}
+              <DeviceText
+                as="h1"
+                desktop={m.home.title1}
+                mobile={m.home.title1Short}
+                className="mt-4 text-[26px] font-semibold leading-tight tracking-tight text-ink-950 sm:text-[40px] sm:leading-[1.16]"
+              />
 
-              {/* One subtitle block, adapts by device to match the title */}
-              <p className="mt-5 max-w-xl text-[14px] leading-relaxed text-slateish-600 sm:text-[15px]">
-                <span className="hidden sm:block">{m.home.subtitle}</span>
-                <span className="sm:hidden">{m.home.subtitleShort}</span>
-              </p>
+              {/* One subtitle — same device-aware, single-string behaviour. */}
+              <DeviceText
+                as="p"
+                desktop={m.home.subtitle}
+                mobile={m.home.subtitleShort}
+                className="mt-5 max-w-xl text-[14px] leading-relaxed text-slateish-600 sm:text-[15px]"
+              />
 
               {m.home.subtitleNo ? (
                 <p className="mt-3 max-w-xl text-[13px] font-medium leading-relaxed text-slateish-500">
