@@ -5,7 +5,6 @@ import { baselineCancerStats, SNAPSHOT_DATE } from '@/lib/data';
 import { SOURCES } from '@/lib/sources';
 import { SearchBox } from '@/components/SearchBox';
 import { FreshnessBadge } from '@/components/FreshnessBadge';
-import { HeroIllustration } from '@/components/HeroIllustration';
 import { t, getServerMessages } from '@/lib/i18n-server';
 
 const PRINCIPLE_ICONS = [
@@ -50,8 +49,8 @@ const PRINCIPLE_ICONS = [
 
 const PRINCIPLE_KEYS = ['official', 'noRec', 'threeRegions', 'traceable'] as const;
 
-// Image-led sections restored from the pre-optimization design.
-// Only neutral, non-feature imagery is used here (see note in final summary).
+// Image-led sections restored from the pre-optimization design, using the
+// full provided image set (hero photo + steps + tools + trust + gallery + QR).
 const STEPS = [
   {
     n: 1,
@@ -98,6 +97,44 @@ const GALLERY = [
   { img: '/tb-patient-story.png', cap: 'Patients, supported at home' },
   { img: '/tb-empowerment.png', cap: 'You, in control of the search' },
   { img: '/tb-hospital.png', cap: 'Trials, run at trusted centers' },
+];
+
+const TOOLS = [
+  {
+    img: '/tb-drug-decoder.png',
+    title: 'Drug Decoder',
+    body: 'Plain-English profiles for cancer drugs — what each one does, key trial results and approval history, sourced from official labels.',
+  },
+  {
+    img: '/tb-treatment-arcs.png',
+    title: 'Treatment Arcs',
+    body: 'See a month-by-month timeline of what to expect on a therapy, which labs to ask about, and when to talk to your specialist.',
+  },
+  {
+    img: '/tb-match-me.png',
+    title: 'Match Me',
+    body: 'Enter your age, location and treatment history. We surface the publicly listed trials that fit your profile first.',
+  },
+  {
+    img: '/tb-med-check.png',
+    title: 'Medication conflict checker',
+    body: 'Check which of your current medications might conflict with a trial’s listed eligibility criteria — before you ask your team.',
+  },
+  {
+    img: '/tb-drug-compare.png',
+    title: 'Drug comparison charts',
+    body: 'Compare approved drugs for the same cancer side by side — mechanism, dosing, side effects and trial data in one view.',
+  },
+  {
+    img: '/tb-genetics.png',
+    title: 'Genetics & testing',
+    body: 'Understand how your mutation type affects eligibility, and find CLIA-certified testing labs from the official registry.',
+  },
+  {
+    img: '/tb-ai-tech.png',
+    title: 'AI that speaks your language',
+    body: 'Eligibility criteria are written for review boards. Our AI rewrites them so you can tell in seconds whether a record might apply to you.',
+  },
 ];
 
 const SOURCES_PILLS = Object.values(SOURCES).map((s) => ({
@@ -206,7 +243,14 @@ export default async function HomePage() {
 
             <div className="relative">
               <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[28px] shadow-card-hover ring-1 ring-ink-950/10">
-                <HeroIllustration />
+                <Image
+                  src="/tb-hero.png"
+                  alt="Hands cupping a source of light — a symbol of care"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
+                />
               </div>
               <div className="mt-5 flex items-center gap-3 rounded-2xl bg-white p-4 shadow-card-hover ring-1 ring-slateish-200">
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-ink-900 text-white">
@@ -379,6 +423,37 @@ export default async function HomePage() {
                 </p>
               </div>
             </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* ============== Tools / feature modules ============== */}
+      <section className="container-page mt-16">
+        <div className="text-center">
+          <p className="label-eyebrow mx-auto">More than a search box</p>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight">
+            Tools built around the official record
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-sm text-slateish-500">
+            TrialBeacon brings scattered government and regulatory data together in one quiet,
+            plain-language place — for the people who actually need it.
+          </p>
+        </div>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {TOOLS.map((tool) => (
+            <div key={tool.title} className="card flex flex-col p-5">
+              <div className="relative mb-4 aspect-[16/10] w-full overflow-hidden rounded-xl bg-slateish-100">
+                <Image
+                  src={tool.img}
+                  alt=""
+                  fill
+                  sizes="(max-width: 640px) 100vw, 33vw"
+                  className="object-cover"
+                />
+              </div>
+              <h3 className="text-base font-semibold text-ink-950">{tool.title}</h3>
+              <p className="mt-1.5 text-[13px] leading-relaxed text-slateish-600">{tool.body}</p>
+            </div>
           ))}
         </div>
       </section>
