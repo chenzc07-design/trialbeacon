@@ -5,7 +5,6 @@ import { baselineCancerStats, SNAPSHOT_DATE } from '@/lib/data';
 import { SOURCES } from '@/lib/sources';
 import { SearchBox } from '@/components/SearchBox';
 import { FreshnessBadge } from '@/components/FreshnessBadge';
-import { DeviceText } from '@/components/DeviceText';
 import { t, getServerMessages } from '@/lib/i18n-server';
 
 const PRINCIPLE_ICONS = [
@@ -94,22 +93,18 @@ export default async function HomePage() {
             <div>
               <p className="label-eyebrow">{m.home.eyebrow}</p>
 
-              {/* One H1 — only ONE of the two strings is ever in the DOM.
-                  Desktop shows the full version, mobile the short one. */}
-              <DeviceText
-                as="h1"
-                desktop={m.home.title1}
-                mobile={m.home.title1Short}
-                className="mt-4 text-[26px] font-semibold leading-tight tracking-tight text-ink-950 sm:text-[40px] sm:leading-[1.16]"
-              />
+              {/* Title: both strings exist in the DOM but only one is shown via CSS.
+                  Desktop (≥768px) shows the full version; mobile (<768px) the short one. */}
+              <h1 className="mt-4 text-[26px] font-semibold leading-tight tracking-tight text-ink-950 md:text-[40px] md:leading-[1.16]">
+                <span className="hidden md:block">{m.home.title1}</span>
+                <span className="md:hidden">{m.home.title1Short}</span>
+              </h1>
 
-              {/* One subtitle — same device-aware, single-string behaviour. */}
-              <DeviceText
-                as="p"
-                desktop={m.home.subtitle}
-                mobile={m.home.subtitleShort}
-                className="mt-5 max-w-xl text-[14px] leading-relaxed text-slateish-600 sm:text-[15px]"
-              />
+              {/* Subtitle: same CSS-only show/hide, no concatenation. */}
+              <p className="mt-5 max-w-xl text-[14px] leading-relaxed text-slateish-600 md:text-[15px]">
+                <span className="hidden md:block">{m.home.subtitle}</span>
+                <span className="md:hidden">{m.home.subtitleShort}</span>
+              </p>
 
               {m.home.subtitleNo ? (
                 <p className="mt-3 max-w-xl text-[13px] font-medium leading-relaxed text-slateish-500">
