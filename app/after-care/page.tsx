@@ -47,6 +47,10 @@ export default async function AfterCarePage({
       />
 
       <div className="container-page py-10 sm:py-12">
+        <div className="mb-4">
+          <FreshnessBadge />
+        </div>
+
         {/* Mobile short intro — hidden on sm+ */}
         <p className="mb-4 text-sm leading-relaxed text-slateish-600 sm:hidden">
           {m.afterCare.introMobile}
@@ -90,7 +94,6 @@ export default async function AfterCarePage({
 
         <div className="mt-5 flex flex-wrap items-center gap-3">
           <DataStatus live={feed.live} />
-          <FreshnessBadge />
         </div>
 
         <div className="mt-5">

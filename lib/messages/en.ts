@@ -54,22 +54,22 @@ export const en = {
     title1Short: 'Told to consider conservative care and still want to see the official record yourself.',
     title2: '',
     subtitle:
-      'TrialBeacon indexes publicly listed clinical trial registrations, guideline indexes and regulatory notices from the United States, Europe and China for advanced, metastatic, relapsed, later-line and supportive / palliative care — with a direct link to the original page for every entry.',
+      'TrialBeacon does one thing: it gathers publicly listed clinical-trial registrations, guideline indexes and regulatory notices from the United States, Europe and China that relate to advanced / recurrent / later-line / supportive care, and provides direct links to the original sources. No recommendations, no ranking, no interpretation.',
     subtitleShort:
-      'Publicly listed records for advanced, metastatic, relapsed, later-line and supportive / palliative care from the US, Europe and China — each entry linking to the original page.',
+      'It simply gathers publicly listed advanced / recurrent / later-line official records from the US, Europe and China, and provides links to the originals. No recommendations, no interpretation.',
     // Rendered as its own line under the subtitle, both desktop and mobile.
-    subtitleNo: 'No recommendations. No ranking. No interpretation.',
+    subtitleNo: '',
     // Hero primary action. Long label on desktop, short label on mobile.
     heroCta: 'Open the After Conservative / Palliative Care view',
     heroCtaShort: 'Open After Care view',
-    heroCtaSecondary: 'Browse by cancer type',
+    heroCtaSecondary: 'Or browse all records by cancer type',
     badgeVerbatim: 'Verbatim from the source',
     badgeRegions: 'US · Europe · China official records',
     afterCareTitle: 'After Conservative / Palliative Care',
     afterCareKicker: 'Dedicated view',
     afterCareBody:
-      'Only official entries that themselves refer to advanced, metastatic, relapsed, refractory, later-line or supportive / palliative care.',
-    afterCareNotRec: 'It is not advice, and it does not select trials for any individual.',
+      'This view only includes public records whose official title or scope explicitly mention advanced, metastatic, recurrent, refractory, later-line treatment, or supportive / palliative care. It is not advice, and it does not filter for "what fits you" — it simply gathers the literally relevant official entries in one place so you can check the originals yourself.',
+    afterCareNotRec: '',
     afterCareCta: 'Open this view',
     afterCareFoot:
       'Whether a record is still open, current, or appropriate for any individual can only be confirmed by the official source and your treating doctor.',
@@ -90,7 +90,7 @@ export const en = {
       },
       threeRegions: {
         title: 'Three regions, side by side',
-        body: 'United States, Europe and China presented together, so you can compare what each official system lists.',
+        body: 'The United States, Europe and China are shown side by side, so you can view directly what each official system lists.',
       },
       traceable: {
         title: 'Traceable, always',
@@ -117,9 +117,9 @@ export const en = {
     eyebrow: 'Dedicated view',
     title: 'After Conservative / Palliative Care',
     introDesktop:
-      'This view only collects official entries that themselves refer to advanced, metastatic, relapsed, refractory, later-line or supportive / palliative care. It exists for one reason: if you were told to consider conservative or palliative care and still want to see what is publicly listed, you can scan it here — calmly, in one place, and always via the original source.',
+      'This view includes only public records whose official title or study scope explicitly states advanced, metastatic, recurrent, refractory, later-line, supportive care, or palliative. TrialBeacon makes no screening judgment, matching, or recommendation — it simply gathers the literally relevant official entries together and provides direct links to the originals. Whether a record is still open, or relevant to any individual situation, should be determined from the official original and your physician’s judgment.',
     introMobile:
-      'Only official entries that themselves mention advanced, metastatic, relapsed, refractory, later-line or supportive / palliative care — for people who were told to consider conservative or palliative care and still want to see what is publicly listed.',
+      'Includes only public records whose official title explicitly mentions advanced / recurrent / later-line / supportive care. No recommendations, no matching — only links to the originals. Defer to the official page and your physician’s judgment.',
     pleaseRead: 'Please read this first.',
     pleaseReadBody:
       'A record appearing here does not mean it is open, available or appropriate for any individual. Inclusion is based only on wording in the official record — never on any judgement by this site. Discuss anything you find with your treating doctor.',

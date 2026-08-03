@@ -111,9 +111,11 @@ export default async function HomePage() {
                 {m.home.subtitleShort}
               </p>
 
-              <p className="mt-3 max-w-xl text-[13px] font-medium leading-relaxed text-slateish-500">
-                {m.home.subtitleNo}
-              </p>
+              {m.home.subtitleNo ? (
+                <p className="mt-3 max-w-xl text-[13px] font-medium leading-relaxed text-slateish-500">
+                  {m.home.subtitleNo}
+                </p>
+              ) : null}
 
               {/* Primary action — the After Care view is the point of the site. */}
               <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:items-center">
@@ -145,6 +147,10 @@ export default async function HomePage() {
                 <span>{m.common.noRecommendations}</span>
                 <span aria-hidden="true" className="h-1 w-1 rounded-full bg-slateish-300" />
                 <span>{m.common.freeToUse}</span>
+              </div>
+
+              <div className="mt-4">
+                <FreshnessBadge />
               </div>
             </div>
 
@@ -200,9 +206,11 @@ export default async function HomePage() {
               <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slateish-600">
                 {m.home.afterCareBody}
               </p>
-              <p className="mt-1.5 max-w-2xl text-xs leading-relaxed text-slateish-500">
-                {m.home.afterCareNotRec}
-              </p>
+              {m.home.afterCareNotRec ? (
+                <p className="mt-1.5 max-w-2xl text-xs leading-relaxed text-slateish-500">
+                  {m.home.afterCareNotRec}
+                </p>
+              ) : null}
               <p className="mt-3 max-w-2xl text-[11px] leading-relaxed text-slateish-400">
                 {m.home.afterCareFoot}
               </p>
