@@ -14,7 +14,7 @@ import type { Region } from './types';
 export interface Subscription {
   id: string;
   email: string;
-  cancers: string[]; // max 3 slugs
+  cancers: string[]; // slugs, capped at MAX_CANCERS
   regions: Region[];
   createdAt: string;
   confirmed: boolean; // double opt-in flag, set by the confirmation endpoint
@@ -39,9 +39,22 @@ export interface SubscriptionStore {
   count(): Promise<number>;
 }
 
-// Module-scoped Map: persists across requests within a single warm serverless
-// instance and is wiped on cold starts. Sufficient for a demo aggregator.
-const memory = new Map<string, Subscription>();
+/*
+ * Fallback store, used only when Upstash is not configured.
+ *
+ * It hangs off globalThis on purpose. Each route is bundled separately (and
+ * on Vercel runs as its own function), so a plain module-level Map gives
+ * /api/subscribe and /api/cron/digest two different Maps and the digest job
+ * sees nobody. globalThis at least keeps them together inside one warm
+ * process. It is still wiped on cold starts — configure
+ * UPSTASH_REDIS_REST_URL / _TOKEN for anything durable.
+ */
+const globalForSubs = globalThis as typeof globalThis & {
+  __tbSubscriptions?: Map<string, Subscription>;
+};
+const memory: Map<string, Subscription> =
+  globalForSubs.__tbSubscriptions ?? new Map<string, Subscription>();
+globalForSubs.__tbSubscriptions = memory;
 
 function token(): string {
   // crypto is available globally in the Next.js runtime; this helper tolerates
@@ -111,7 +124,13 @@ class MemorySubscriptionStore implements SubscriptionStore {
 export const subscriptionStore: SubscriptionStore = new MemorySubscriptionStore();
 
 export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-export const MAX_CANCERS = 3;
+
+/**
+ * Free-tier follow limit. Single source of truth shared with the account UI
+ * so the form and the API can never disagree about what is accepted. A paid
+ * tier would raise this per subscription rather than changing the constant.
+ */
+export { ALERT_FREE_LIMIT as MAX_CANCERS } from './auth-shared';
 
 /**
  * Persistent store backed by Upstash Redis over its REST API.
@@ -134,17 +153,24 @@ function tokKey(token: string): string {
 }
 const INDEX_KEY = 'tb:subs';
 
+/**
+ * Upstash REST pipeline: POST /pipeline with a bare array of command arrays.
+ * The response is one `{ result }` object per command, in order.
+ */
 async function upstash(commands: [string, ...string[]][]): Promise<unknown[]> {
-  const res = await fetch(KV_URL!, {
+  const base = KV_URL!.replace(/\/+$/, '');
+  const res = await fetch(`${base}/pipeline`, {
     method: 'POST',
     headers: {
       authorization: `Bearer ${KV_TOKEN}`,
       'content-type': 'application/json',
     },
-    body: JSON.stringify({ commands }),
+    body: JSON.stringify(commands),
     signal: AbortSignal.timeout(8000),
   });
-  const json = (await res.json()) as { result?: unknown[] };
+  if (!res.ok) throw new Error(`upstash_${res.status}`);
+  const json = (await res.json()) as { result?: unknown }[] | { result?: unknown[] };
+  if (Array.isArray(json)) return json.map((r) => r.result);
   return json.result ?? [];
 }
 

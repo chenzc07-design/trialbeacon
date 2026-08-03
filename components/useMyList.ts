@@ -1,57 +1,126 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-
-const STORAGE_KEY = 'tb_mylist';
+import { useAuth } from '@/components/AuthProvider';
+import {
+  MYLIST_CHANGE_EVENT,
+  readMyListStorage,
+  writeMyListStorage,
+} from '@/lib/mylist-storage';
 
 /** Reads the saved-record ids from localStorage. Safe during SSR. */
-export function readMyList(): string[] {
-  if (typeof window === 'undefined') return [];
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    const arr = raw ? JSON.parse(raw) : [];
-    return Array.isArray(arr) ? arr.filter((x) => typeof x === 'string') : [];
-  } catch {
-    return [];
-  }
-}
+export const readMyList = readMyListStorage;
 
-function writeMyList(ids: string[]) {
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
-  // Let every open view (e.g. the My list page) refresh in place.
-  window.dispatchEvent(new CustomEvent('tb-mylist-change'));
-}
+const writeMyList = writeMyListStorage;
 
 /**
- * Small client store for the visitor's saved records. Backed by localStorage so
- * the list survives reloads, and kept in sync across tabs/components via an
- * event. No data ever leaves the browser.
+ * Client store for the visitor's saved records. Backed by localStorage
+ * (so the list survives reloads without an account) and, when signed in,
+ * synced to the server.
  */
 export function useMyList() {
+  const { user, refresh } = useAuth();
   const [ids, setIds] = useState<string[]>([]);
+  const [synced, setSynced] = useState(false);
 
+  // Initial read from localStorage.
   useEffect(() => {
     setIds(readMyList());
     const on = () => setIds(readMyList());
-    window.addEventListener('tb-mylist-change', on);
-    return () => window.removeEventListener('tb-mylist-change', on);
+    window.addEventListener(MYLIST_CHANGE_EVENT, on);
+    return () => window.removeEventListener(MYLIST_CHANGE_EVENT, on);
   }, []);
+
+  // On sign-in: merge local + server (union), then push union to server.
+  useEffect(() => {
+    if (!user) return;
+    let cancelled = false;
+    (async () => {
+      const local = readMyList();
+      const server = user.myList ?? [];
+      const merged = Array.from(new Set([...local, ...server]));
+      if (merged.length !== server.length) {
+        try {
+          await fetch('/api/auth/mylist', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ op: 'set', myList: merged }),
+          });
+        } catch {
+          /* ignore */
+        }
+        await refresh();
+      }
+      if (!cancelled && merged.join('|') !== readMyList().join('|')) {
+        writeMyList(merged);
+        setSynced(true);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
 
   const has = useCallback((id: string) => ids.includes(id), [ids]);
 
-  const toggle = useCallback((id: string) => {
-    const list = readMyList();
-    const next = list.includes(id)
-      ? list.filter((x) => x !== id)
-      : [...list, id];
-    writeMyList(next);
-  }, []);
+  const toggle = useCallback(
+    async (id: string) => {
+      const list = readMyList();
+      const next = list.includes(id)
+        ? list.filter((x) => x !== id)
+        : [...list, id];
+      writeMyList(next);
+      if (user) {
+        try {
+          await fetch('/api/auth/mylist', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ op: next.includes(id) ? 'add' : 'remove', id }),
+          });
+        } catch {
+          /* ignore */
+        }
+        await refresh();
+      }
+    },
+    [user, refresh]
+  );
 
-  const remove = useCallback((id: string) => {
-    writeMyList(readMyList().filter((x) => x !== id));
-  }, []);
+  const remove = useCallback(
+    async (id: string) => {
+      writeMyList(readMyList().filter((x) => x !== id));
+      if (user) {
+        try {
+          await fetch('/api/auth/mylist', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ op: 'remove', id }),
+          });
+        } catch {
+          /* ignore */
+        }
+        await refresh();
+      }
+    },
+    [user, refresh]
+  );
 
-  const clear = useCallback(() => writeMyList([]), []);
+  const clear = useCallback(async () => {
+    writeMyList([]);
+    if (user) {
+      try {
+        await fetch('/api/auth/mylist', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ op: 'clear' }),
+        });
+      } catch {
+        /* ignore */
+      }
+      await refresh();
+    }
+  }, [user, refresh]);
 
-  return { ids, has, toggle, remove, clear };
+  return { ids, has, toggle, remove, clear, synced, signedIn: !!user };
 }

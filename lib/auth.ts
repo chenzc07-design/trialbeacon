@@ -1,0 +1,468 @@
+/**
+ * Server-side auth.
+ *
+ * Design constraint that shapes everything below: on Vercel every route
+ * handler is its own serverless function with its own memory. A module-level
+ * Map written by /api/auth/start is simply not visible to /api/auth/verify.
+ * So nothing here relies on shared process memory.
+ *
+ *   - Identity is DERIVED from the email (HMAC), not stored.
+ *   - The session cookie carries the identity and is HMAC-signed.
+ *   - The email code is DERIVED from (email, 10-minute window), so any
+ *     instance can verify a code any other instance issued.
+ *   - Preferences (follow list, alert settings) live in a second signed
+ *     cookie by default, and additionally in Upstash Redis when
+ *     UPSTASH_REDIS_REST_URL / _TOKEN are set — that is what makes the
+ *     settings follow you to another device.
+ *
+ * No new dependencies: node:crypto and fetch only.
+ */
+import crypto from 'node:crypto';
+import { cookies, headers } from 'next/headers';
+import type { Region } from './types';
+import {
+  SESSION_COOKIE,
+  SESSION_TTL_DAYS,
+  CODE_TTL_MIN,
+  FREE_FOLLOW_LIMIT,
+  ALERT_FREE_LIMIT,
+} from './auth-shared';
+
+export {
+  SESSION_COOKIE,
+  SESSION_TTL_DAYS,
+  CODE_TTL_MIN,
+  FREE_FOLLOW_LIMIT,
+  ALERT_FREE_LIMIT,
+};
+
+export const PREFS_COOKIE = 'tb_prefs';
+export const CHALLENGE_COOKIE = 'tb_chal';
+
+/** Hard cap so the prefs cookie can never approach the 4 KB browser limit. */
+export const MY_LIST_MAX = 200;
+
+const SECRET =
+  process.env.AUTH_SECRET ||
+  // Stable dev fallback so signing works without env. In production
+  // AUTH_SECRET MUST be set, otherwise sessions are forgeable.
+  'tb-dev-secret-do-not-use-in-prod-0000000000000000';
+
+export function isAuthSecretConfigured(): boolean {
+  return Boolean(process.env.AUTH_SECRET);
+}
+
+/* ------------------------------------------------------------------ types */
+
+export interface Prefs {
+  myList: string[];
+  alertCancers: string[];
+  alertRegions: Region[];
+  alertEnabled: boolean;
+}
+
+export interface User extends Prefs {
+  id: string;
+  email: string;
+  emailLower: string;
+  provider: 'email' | 'google';
+}
+
+export function defaultPrefs(): Prefs {
+  return {
+    myList: [],
+    alertCancers: [],
+    alertRegions: ['US', 'EU', 'CN'],
+    alertEnabled: false,
+  };
+}
+
+/* --------------------------------------------------------------- signing */
+
+function b64url(buf: Buffer): string {
+  return buf.toString('base64').replace(/=+$/, '').replace(/\+/g, '-').replace(/\//g, '_');
+}
+function b64urlDecode(s: string): Buffer {
+  s = s.replace(/-/g, '+').replace(/_/g, '/');
+  while (s.length % 4) s += '=';
+  return Buffer.from(s, 'base64');
+}
+
+function sign(payload: object): string {
+  const body = b64url(Buffer.from(JSON.stringify(payload)));
+  const mac = b64url(crypto.createHmac('sha256', SECRET).update(body).digest());
+  return `${body}.${mac}`;
+}
+
+function unsign<T>(token: string | undefined): T | null {
+  if (!token) return null;
+  const [body, mac] = token.split('.');
+  if (!body || !mac) return null;
+  const expected = b64url(crypto.createHmac('sha256', SECRET).update(body).digest());
+  if (expected.length !== mac.length) return null;
+  if (!crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(mac))) return null;
+  try {
+    return JSON.parse(b64urlDecode(body).toString('utf8')) as T;
+  } catch {
+    return null;
+  }
+}
+
+/* -------------------------------------------------------------- identity */
+
+/**
+ * Deterministic, non-reversible user id. Two sign-ins with the same address
+ * always land on the same account without any lookup table.
+ */
+export function uidForEmail(email: string): string {
+  return crypto
+    .createHmac('sha256', SECRET)
+    .update(`uid:${email.toLowerCase()}`)
+    .digest('hex')
+    .slice(0, 32);
+}
+
+/* ------------------------------------------------------------ email code */
+
+const CODE_WINDOW_MS = CODE_TTL_MIN * 60 * 1000;
+
+function codeForWindow(emailLower: string, w: number): string {
+  const mac = crypto
+    .createHmac('sha256', SECRET)
+    .update(`code:${emailLower}:${w}`)
+    .digest();
+  return String(mac.readUInt32BE(0) % 1_000_000).padStart(6, '0');
+}
+
+/**
+ * Returns the code currently valid for this address. Deliberately stateless:
+ * the same value is recomputed at verification time.
+ */
+export function createEmailCode(email: string): { code: string; expires: number } {
+  const emailLower = email.toLowerCase();
+  const w = Math.floor(Date.now() / CODE_WINDOW_MS);
+  // Verification accepts the current and previous window, so the code stops
+  // working two window boundaries from now — report that, not the next tick.
+  return { code: codeForWindow(emailLower, w), expires: (w + 2) * CODE_WINDOW_MS };
+}
+
+/**
+ * Accepts the current and the previous window, so a code handed out at
+ * 09:59:59 is still usable at 10:05 rather than expiring a second later.
+ */
+export function verifyEmailCode(email: string, code: string): boolean {
+  const emailLower = email.toLowerCase();
+  const given = code.trim();
+  if (!/^\d{6}$/.test(given)) return false;
+  const w = Math.floor(Date.now() / CODE_WINDOW_MS);
+  const a = codeForWindow(emailLower, w);
+  const b = codeForWindow(emailLower, w - 1);
+  // Constant-time compare against both candidates.
+  const eq = (x: string) =>
+    x.length === given.length &&
+    crypto.timingSafeEqual(Buffer.from(x), Buffer.from(given));
+  return eq(a) || eq(b);
+}
+
+/* ------------------------------------------------- challenge (attempts) */
+
+interface Challenge {
+  e: string; // emailLower
+  n: number; // attempts used
+  exp: number;
+}
+
+export function issueChallengeCookie(email: string): CookieSpec {
+  const payload: Challenge = {
+    e: email.toLowerCase(),
+    n: 0,
+    exp: Date.now() + CODE_WINDOW_MS * 2,
+  };
+  return cookieSpec(CHALLENGE_COOKIE, sign(payload), CODE_TTL_MIN * 2 * 60);
+}
+
+export async function readChallenge(): Promise<Challenge | null> {
+  const c = await cookies();
+  const ch = unsign<Challenge>(c.get(CHALLENGE_COOKIE)?.value);
+  if (!ch || Date.now() > ch.exp) return null;
+  return ch;
+}
+
+export function bumpChallengeCookie(ch: Challenge): CookieSpec {
+  return cookieSpec(
+    CHALLENGE_COOKIE,
+    sign({ ...ch, n: ch.n + 1 }),
+    Math.max(1, Math.floor((ch.exp - Date.now()) / 1000))
+  );
+}
+
+export const CHALLENGE_MAX_ATTEMPTS = 5;
+
+/* --------------------------------------------------------------- cookies */
+
+export interface CookieSpec {
+  name: string;
+  value: string;
+  options: {
+    httpOnly: true;
+    sameSite: 'lax';
+    secure: boolean;
+    path: string;
+    maxAge: number;
+  };
+}
+
+function cookieSpec(name: string, value: string, maxAgeSeconds: number): CookieSpec {
+  return {
+    name,
+    value,
+    options: {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      path: '/',
+      maxAge: maxAgeSeconds,
+    },
+  };
+}
+
+interface SessionPayload {
+  uid: string;
+  email: string;
+  provider: 'email' | 'google';
+  iat: number;
+  exp: number;
+}
+
+export function issueSessionCookie(
+  email: string,
+  provider: 'email' | 'google'
+): CookieSpec {
+  const iat = Date.now();
+  const exp = iat + SESSION_TTL_DAYS * 24 * 60 * 60 * 1000;
+  const payload: SessionPayload = {
+    uid: uidForEmail(email),
+    email,
+    provider,
+    iat,
+    exp,
+  };
+  return cookieSpec(
+    SESSION_COOKIE,
+    sign(payload),
+    SESSION_TTL_DAYS * 24 * 60 * 60
+  );
+}
+
+export function clearSessionCookie(): CookieSpec {
+  return cookieSpec(SESSION_COOKIE, '', 0);
+}
+export function clearPrefsCookie(): CookieSpec {
+  return cookieSpec(PREFS_COOKIE, '', 0);
+}
+export function clearChallengeCookie(): CookieSpec {
+  return cookieSpec(CHALLENGE_COOKIE, '', 0);
+}
+
+/* ---------------------------------------------------- preference storage */
+
+const KV_URL = process.env.UPSTASH_REDIS_REST_URL;
+const KV_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+/** True when settings can follow the person to another device. */
+export function isSyncConfigured(): boolean {
+  return Boolean(KV_URL && KV_TOKEN);
+}
+
+/**
+ * Upstash REST pipeline. The multi-command endpoint is `/pipeline` and it
+ * takes a bare array of command arrays; posting that shape to the base URL
+ * is read as one malformed command, which is why this must not be
+ * "simplified" back.
+ */
+async function upstash(commands: [string, ...string[]][]): Promise<unknown[]> {
+  const base = KV_URL!.replace(/\/+$/, '');
+  const res = await fetch(`${base}/pipeline`, {
+    method: 'POST',
+    headers: {
+      authorization: `Bearer ${KV_TOKEN}`,
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify(commands),
+    signal: AbortSignal.timeout(8000),
+  });
+  if (!res.ok) throw new Error(`upstash_${res.status}`);
+  const json = (await res.json()) as { result?: unknown }[] | { result?: unknown[] };
+  if (Array.isArray(json)) return json.map((r) => r.result);
+  return json.result ?? [];
+}
+
+function prefsKey(uid: string) {
+  return `tb:prefs:${uid}`;
+}
+
+async function readRemotePrefs(uid: string): Promise<Prefs | null> {
+  if (!isSyncConfigured()) return null;
+  try {
+    const res = await upstash([['GET', prefsKey(uid)]]);
+    const raw = res[0];
+    return raw ? (JSON.parse(String(raw)) as Prefs) : null;
+  } catch {
+    return null;
+  }
+}
+
+async function writeRemotePrefs(uid: string, p: Prefs): Promise<void> {
+  if (!isSyncConfigured()) return;
+  try {
+    await upstash([['SET', prefsKey(uid), JSON.stringify(p)]]);
+  } catch {
+    /* cookie copy is still authoritative for this device */
+  }
+}
+
+async function deleteRemotePrefs(uid: string): Promise<void> {
+  if (!isSyncConfigured()) return;
+  try {
+    await upstash([['DEL', prefsKey(uid)]]);
+  } catch {
+    /* nothing further we can do from here */
+  }
+}
+
+interface PrefsCookiePayload extends Prefs {
+  uid: string;
+}
+
+function sanitizePrefs(p: Partial<Prefs> | null | undefined): Prefs {
+  const d = defaultPrefs();
+  if (!p) return d;
+  const regions = Array.isArray(p.alertRegions)
+    ? (p.alertRegions.filter(
+        (r) => r === 'US' || r === 'EU' || r === 'CN' || r === 'OTHER'
+      ) as Region[])
+    : d.alertRegions;
+  return {
+    myList: Array.isArray(p.myList)
+      ? Array.from(new Set(p.myList.filter((x) => typeof x === 'string'))).slice(
+          0,
+          MY_LIST_MAX
+        )
+      : d.myList,
+    alertCancers: Array.isArray(p.alertCancers)
+      ? p.alertCancers.filter((x) => typeof x === 'string').slice(0, ALERT_FREE_LIMIT)
+      : d.alertCancers,
+    alertRegions: regions.length ? regions : d.alertRegions,
+    alertEnabled: typeof p.alertEnabled === 'boolean' ? p.alertEnabled : d.alertEnabled,
+  };
+}
+
+export function prefsCookie(uid: string, p: Prefs): CookieSpec {
+  const payload: PrefsCookiePayload = { uid, ...sanitizePrefs(p) };
+  return cookieSpec(PREFS_COOKIE, sign(payload), SESSION_TTL_DAYS * 24 * 60 * 60);
+}
+
+/**
+ * Preferences left on this device for a given account, read without needing
+ * a session. Sign-in uses this: at that moment the session cookie does not
+ * exist yet, so getCurrentUser() would return null and a returning visitor
+ * would find an empty follow list.
+ */
+export async function readPrefsForUid(uid: string): Promise<Prefs | null> {
+  const c = await cookies();
+  const local = unsign<PrefsCookiePayload>(c.get(PREFS_COOKIE)?.value);
+  if (!local || local.uid !== uid) return null;
+  return sanitizePrefs(local);
+}
+
+/**
+ * The preferences to restore when somebody signs in: whatever the sync store
+ * holds, otherwise whatever this device kept, otherwise defaults.
+ */
+export async function resolvePrefsOnSignIn(uid: string): Promise<Prefs> {
+  const remote = await readRemotePrefs(uid);
+  if (remote) return sanitizePrefs(remote);
+  return (await readPrefsForUid(uid)) ?? defaultPrefs();
+}
+
+/* ------------------------------------------------------------ current user */
+
+async function readSession(): Promise<SessionPayload | null> {
+  const c = await cookies();
+  const s = unsign<SessionPayload>(c.get(SESSION_COOKIE)?.value);
+  if (!s || !s.uid || !s.email) return null;
+  if (Date.now() > s.exp) return null;
+  return s;
+}
+
+/**
+ * Resolves the signed-in person. Remote prefs win when the sync store is
+ * configured, otherwise the signed cookie on this device is used.
+ */
+export async function getCurrentUser(): Promise<User | null> {
+  const s = await readSession();
+  if (!s) return null;
+
+  const remote = await readRemotePrefs(s.uid);
+  let prefs: Prefs;
+  if (remote) {
+    prefs = sanitizePrefs(remote);
+  } else {
+    const c = await cookies();
+    const local = unsign<PrefsCookiePayload>(c.get(PREFS_COOKIE)?.value);
+    prefs = sanitizePrefs(local && local.uid === s.uid ? local : null);
+  }
+
+  return {
+    id: s.uid,
+    email: s.email,
+    emailLower: s.email.toLowerCase(),
+    provider: s.provider,
+    ...prefs,
+  };
+}
+
+/**
+ * Persists preferences everywhere available and hands back the cookie the
+ * route must attach to its response.
+ */
+export async function savePrefs(uid: string, next: Prefs): Promise<{
+  prefs: Prefs;
+  cookie: CookieSpec;
+}> {
+  const clean = sanitizePrefs(next);
+  await writeRemotePrefs(uid, clean);
+  return { prefs: clean, cookie: prefsCookie(uid, clean) };
+}
+
+export async function erasePrefs(uid: string): Promise<void> {
+  await deleteRemotePrefs(uid);
+}
+
+/* ------------------------------------------------------- IP rate limiting */
+
+/*
+ * Best-effort only. Each serverless instance keeps its own bucket, so this
+ * slows down casual abuse rather than preventing a distributed attempt. The
+ * per-session challenge counter above is the meaningful limit.
+ */
+const ipBuckets = new Map<string, { n: number; until: number }>();
+
+export function checkIpRate(ip: string, max = 6, windowMs = 10 * 60 * 1000): boolean {
+  const now = Date.now();
+  const b = ipBuckets.get(ip);
+  if (!b || b.until < now) {
+    ipBuckets.set(ip, { n: 1, until: now + windowMs });
+    return true;
+  }
+  if (b.n >= max) return false;
+  b.n += 1;
+  return true;
+}
+
+export async function clientIp(): Promise<string> {
+  const h = await headers();
+  return (
+    h.get('x-forwarded-for')?.split(',')[0].trim() || h.get('x-real-ip') || 'local'
+  );
+}

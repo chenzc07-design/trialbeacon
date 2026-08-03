@@ -87,8 +87,8 @@ export function sitemapRoutes(): { path: string; changeFreq: string; priority: n
     { path: '/search', changeFreq: 'weekly', priority: 0.5 },
     { path: '/sources', changeFreq: 'monthly', priority: 0.6 },
     { path: '/about', changeFreq: 'monthly', priority: 0.5 },
-    { path: '/app', changeFreq: 'monthly', priority: 0.5 },
     { path: '/disclaimer', changeFreq: 'monthly', priority: 0.4 },
+    { path: '/safety', changeFreq: 'monthly', priority: 0.4 },
     { path: '/alerts', changeFreq: 'monthly', priority: 0.6 },
     ...CANCERS.map((c) => ({
       path: `/cancers/${c.slug}`,

@@ -28,7 +28,11 @@ export function SiteFooter() {
     },
     {
       heading: m.footer.stayInformed,
-      links: [{ href: '/alerts', label: m.nav.alerts }],
+      links: [
+        { href: '/alerts', label: m.nav.alerts },
+        { href: '/my-list', label: m.nav.myList },
+        { href: '/account', label: m.nav.account },
+      ],
     },
   ];
 

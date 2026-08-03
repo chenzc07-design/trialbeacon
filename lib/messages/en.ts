@@ -5,14 +5,17 @@
 export const en = {
   nav: {
     cancerTypes: 'Cancer types',
-    afterCare: 'After Conservative / Palliative Care',
+    afterCare: 'After Care',
     changeTracker: 'Change Tracker',
     sources: 'Sources',
-    alerts: 'Weekly Alerts',
+    alerts: 'Alerts',
     getWeekly: 'Get weekly updates',
     toggleMenu: 'Toggle navigation menu',
     myList: 'My list',
     safety: 'Before you contact a study',
+    signIn: 'Sign in',
+    signOut: 'Sign out',
+    account: 'Account',
   },
   common: {
     noMedicalAdvice: 'No medical advice',
@@ -34,19 +37,47 @@ export const en = {
     advancedLaterLine: '{n} advanced / later-line',
     details: 'Details',
     back: 'Back',
+    lastVerified: 'Last verified {date}',
+    stale7d: 'Verification is more than 7 days old',
+    sortBy: 'Sort by',
+    sortRecent: 'Most recent',
+    sortTitle: 'Title (A–Z)',
+    sortPhase: 'Phase',
   },
   home: {
     eyebrow: 'Independent · Neutral · Traceable',
-    title1: 'Trusted updates from official sources.',
-    title2: 'Nothing more.',
+    metaTitle: 'TrialBeacon — official public records for advanced and later-line cancer care',
+    metaDescription: 'Publicly listed clinical trial registrations, guideline indexes and regulatory notices from official sources in the United States, Europe and China, including records for advanced, metastatic, relapsed, later-line and supportive / palliative care. Every entry links to the original page. No recommendations, no ranking, no interpretation.',
+    // Desktop long title (hidden on small screens via CSS).
+    title1: 'Told to consider conservative or palliative care and still want to see the official public record yourself.',
+    // Mobile short title.
+    title1Short: 'Told to consider conservative care and still want to see the official record yourself.',
+    title2: '',
     subtitle:
-      'TrialBeacon is a quiet index of publicly listed clinical trials, guideline indexes and regulatory notices from the United States, Europe and China — with a direct link to the original page for every single entry.',
+      'TrialBeacon indexes publicly listed clinical trial registrations, guideline indexes and regulatory notices from the United States, Europe and China for advanced, metastatic, relapsed, later-line and supportive / palliative care — with a direct link to the original page for every entry.',
+    subtitleShort:
+      'Publicly listed records for advanced, metastatic, relapsed, later-line and supportive / palliative care from the US, Europe and China — each entry linking to the original page.',
+    // Rendered as its own line under the subtitle, both desktop and mobile.
+    subtitleNo: 'No recommendations. No ranking. No interpretation.',
+    // Hero primary action. Long label on desktop, short label on mobile.
+    heroCta: 'Open the After Conservative / Palliative Care view',
+    heroCtaShort: 'Open After Care view',
+    heroCtaSecondary: 'Browse by cancer type',
+    badgeVerbatim: 'Verbatim from the source',
+    badgeRegions: 'US · Europe · China official records',
     afterCareTitle: 'After Conservative / Palliative Care',
+    afterCareKicker: 'Dedicated view',
     afterCareBody:
-      'A dedicated view of official records related to advanced, recurrent or later-line disease and supportive care — for people who were told to consider conservative or palliative care and still want to see what is publicly listed.',
+      'Only official entries that themselves refer to advanced, metastatic, relapsed, refractory, later-line or supportive / palliative care.',
+    afterCareNotRec: 'It is not advice, and it does not select trials for any individual.',
     afterCareCta: 'Open this view',
-    browseTitle: 'Browse by cancer type',
-    browseSub: 'Each page lists official records from the US, Europe and China side by side.',
+    afterCareFoot:
+      'Whether a record is still open, current, or appropriate for any individual can only be confirmed by the official source and your treating doctor.',
+    cancerListTitle: 'Browse by cancer type',
+    cancerListSub:
+      'If you want to see all publicly listed records for a specific cancer type (any stage), enter here.',
+    cancerListCta: 'Or browse all records by cancer type',
+    browseAllTypes: 'Browse all cancer types',
     principlesTitle: 'How this site works',
     principles: {
       official: {
@@ -69,6 +100,8 @@ export const en = {
     sourcesTitle: 'Every record traces back to one of these official sources',
     sourcesSub: 'Snapshot verified on {date}. Read how records are collected on the Sources page.',
     sourcesCta: 'Sources & methodology',
+    freshnessTitle: 'Data freshness',
+    freshnessBody: 'Records are retrieved live from the public APIs where possible, or from the last verified snapshot.',
   },
   cancersIndex: {
     eyebrow: 'Browse',
@@ -83,11 +116,110 @@ export const en = {
   afterCare: {
     eyebrow: 'Dedicated view',
     title: 'After Conservative / Palliative Care',
-    intro:
-      'This view filters official records whose own descriptions refer to advanced, metastatic, recurrent or relapsed disease, later treatment lines, or supportive and palliative care. It exists for one reason: if you were told to consider conservative or palliative care and still want to see what official registries currently list, you can scan it here — calmly, in one place, and always via the original source.',
+    introDesktop:
+      'This view only collects official entries that themselves refer to advanced, metastatic, relapsed, refractory, later-line or supportive / palliative care. It exists for one reason: if you were told to consider conservative or palliative care and still want to see what is publicly listed, you can scan it here — calmly, in one place, and always via the original source.',
+    introMobile:
+      'Only official entries that themselves mention advanced, metastatic, relapsed, refractory, later-line or supportive / palliative care — for people who were told to consider conservative or palliative care and still want to see what is publicly listed.',
     pleaseRead: 'Please read this first.',
     pleaseReadBody:
-      'A record appearing here does not mean it is suitable, available or appropriate for any individual. Inclusion is based only on wording in the official record — never on any judgement by this site. Discuss anything you find with your treating doctor.',
+      'A record appearing here does not mean it is open, available or appropriate for any individual. Inclusion is based only on wording in the official record — never on any judgement by this site. Discuss anything you find with your treating doctor.',
+    foot:
+      'Whether a record is still open, current, or appropriate for any individual can only be confirmed by the official source and your treating doctor.',
+    openBtn: 'Open this view',
+  },
+  auth: {
+    title: 'Sign in to TrialBeacon',
+    eyebrow: 'Account',
+    intro:
+      'Signing in only saves your follow list and alert preferences across devices. It does not change any medical judgement on this site, and it does not make any record more or less appropriate for you.',
+    emailTab: 'Email',
+    googleTab: 'Google',
+    emailLabel: 'Email address',
+    emailPlaceholder: 'you@example.com',
+    codeLabel: '6-digit code',
+    codePlaceholder: 'Enter the code we sent',
+    sendCode: 'Send code',
+    sending: 'Sending…',
+    resend: 'Resend code',
+    verify: 'Verify and sign in',
+    verifying: 'Verifying…',
+    codeHint: 'We just sent a 6-digit code to your email. It expires in 10 minutes.',
+    codeSent: 'Code sent. Check your inbox (and spam folder).',
+    googleBtn: 'Continue with Google',
+    signedInAs: 'Signed in as {email}',
+    signOutCta: 'Sign out',
+    signedInTitle: 'You are signed in',
+    signedInBody:
+      'Your follow list and weekly alert preferences will sync to this device automatically.',
+    errorNetwork: 'Network error. Please try again.',
+    errorInvalid: 'That code is incorrect or has expired. Request a new one.',
+    errorNoCode: 'Click "Send code" first.',
+    errorEmail: 'Please enter a valid email address.',
+    errorEmailUnavailable:
+      'Email codes cannot be sent right now. Use Continue with Google, or try again later.',
+    errorRateLimited: 'Too many attempts. Please wait a few minutes and try again.',
+    privacyTitle: 'What is stored',
+    privacyBody:
+      'Your email address and a one-way hash of it. Your selected cancer types for alerts. Your saved records. Nothing else. You can sign out and erase everything at any time from the account page.',
+    dismiss: 'Not now',
+  },
+  account: {
+    title: 'Account',
+    emailLabel: 'Email',
+    listTitle: 'My follow list',
+    listHint:
+      'Records you have saved are listed here, synced across devices. Nothing here is a recommendation.',
+    alertsTitle: 'Weekly alert preferences',
+    alertsHint:
+      'Free accounts may follow up to {max} cancer type. You can change this at any time.',
+    alertsCount: 'Following {n} of {max} cancer type',
+    notSignedIn: 'You are not signed in.',
+    signInCta: 'Sign in or create an account',
+    signOutCta: 'Sign out',
+    saved: 'Synced just now',
+    freeLimit: 'Free accounts may follow up to {max} cancer type. Subscribe to follow more.',
+    eraseTitle: 'Erase everything',
+    eraseHint: 'Deletes your saved records and alert settings from our store and from this browser, then signs you out. This cannot be undone.',
+    eraseCta: 'Erase my data',
+    eraseConfirmCta: 'Confirm — erase now',
+    eraseCancel: 'Cancel',
+    erasing: 'Erasing…',
+  },
+  alerts: {
+    eyebrow: 'Free',
+    title: 'Weekly Alerts',
+    intro:
+      'If checking websites is the last thing you want to do right now, let the update come to you. Once a week, we send a single minimal email listing official records newly indexed for the topics you follow — nothing else.',
+    whatYouGet: [
+      'One plain email per week — no more',
+      'Only links to official records, with source and date',
+      'One cancer type of your choice on the free plan',
+      'US, European and Chinese sources, as you prefer',
+      'Unsubscribe with one click, from any email',
+    ],
+    form: {
+      emailLabel: 'Email address',
+      emailPlaceholder: 'you@example.com',
+      cancerLegend: 'Cancer types to follow',
+      selectedCount: '{n}/{max} selected',
+      regionsLegend: 'Regions',
+      subscribe: 'Subscribe to weekly updates',
+      submitting: 'Saving…',
+      savedTitle: 'Subscription saved',
+      savedBody:
+        'You will receive one plain email per week containing only links to official records for the topics you chose. You can unsubscribe from any email at any time.',
+      errorNetwork: 'Network error. Please try again.',
+      finePrint:
+        'One email per week, links only, no tracking pixels, unsubscribe anytime. Your address is used solely for this alert and is never shared.',
+      signInPrompt: 'Sign in to manage alert preferences across devices.',
+    },
+    freeLimitNote: 'Without an account you can follow up to {max} cancer type. Sign in for the same free limit, sync across devices, and receive future paid-tier extensions.',
+  },
+  follow: {
+    add: 'Add to my follow list',
+    remove: 'Remove from my follow list',
+    saved: 'In my follow list',
+    signInToSave: 'Sign in to save across devices',
   },
   changes: {
     eyebrow: 'What changed',
@@ -120,34 +252,6 @@ export const en = {
       'Plain keyword search over the titles and identifiers of indexed records. For a complete, always-current search, the official registries remain the reference — every result links there directly.',
     results: '{n|record|records} matching “{query}”',
     quickEntries: 'Quick entries',
-  },
-  alerts: {
-    eyebrow: 'Free',
-    title: 'Weekly Alerts',
-    intro:
-      'If checking websites is the last thing you want to do right now, let the update come to you. Once a week, we send a single minimal email listing official records newly indexed for the topics you follow — nothing else.',
-    whatYouGet: [
-      'One plain email per week — no more',
-      'Only links to official records, with source and date',
-      'Up to 3 cancer types of your choice',
-      'US, European and Chinese sources, as you prefer',
-      'Unsubscribe with one click, from any email',
-    ],
-    form: {
-      emailLabel: 'Email address',
-      emailPlaceholder: 'you@example.com',
-      cancerLegend: 'Cancer types to follow',
-      selectedCount: '{n}/{max} selected',
-      regionsLegend: 'Regions',
-      subscribe: 'Subscribe to weekly updates',
-      submitting: 'Saving…',
-      savedTitle: 'Subscription saved',
-      savedBody:
-        'You will receive one plain email per week containing only links to official records for the topics you chose. You can unsubscribe from any email at any time.',
-      errorNetwork: 'Network error. Please try again.',
-      finePrint:
-        'One email per week, links only, no tracking pixels, unsubscribe anytime. Your address is used solely for this alert and is never shared.',
-    },
   },
   sources: {
     eyebrow: 'Transparency',
@@ -322,6 +426,9 @@ export const en = {
       'Keeps records whose official status is recruiting, not yet recruiting, or enrolling by invitation.',
     phase: 'Phase',
     allPhases: 'All phases',
+    afterCareOnly: 'Advanced / later-line records only',
+    afterCareOnlyHint:
+      'Keeps records whose official text mentions advanced, metastatic, relapsed, refractory, later-line, or supportive / palliative settings.',
     clear: 'Clear filters',
     showing: 'Showing {n} of {total}',
     noMatch: 'No records match these filters.',
@@ -465,8 +572,10 @@ export const en = {
     ovarian: { label: 'Ovarian Cancer', descriptor: 'Incl. platinum-resistant disease' },
     esophageal: { label: 'Esophageal Cancer', descriptor: 'Squamous cell and adenocarcinoma' },
     lymphoma: { label: 'Lymphoma', descriptor: 'Hodgkin and non-Hodgkin lymphoma' },
+    leukemia: { label: 'Leukemia', descriptor: 'Including acute and chronic leukemias' },
   },
 };
+
 
 type CancerName = { label: string; descriptor: string };
 

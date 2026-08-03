@@ -3,6 +3,7 @@ import './globals.css';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { I18nProvider } from '@/components/I18nProvider';
+import { AuthProvider } from '@/components/AuthProvider';
 import { getServerMessages } from '@/lib/i18n-server';
 import { siteJsonLd, hreflangAll } from '@/lib/seo';
 
@@ -73,9 +74,11 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd()) }}
         />
         <I18nProvider locale={locale} messages={messages}>
-          <SiteHeader />
-          <main className="flex-1">{children}</main>
-          <SiteFooter />
+          <AuthProvider>
+            <SiteHeader />
+            <main className="flex-1">{children}</main>
+            <SiteFooter />
+          </AuthProvider>
         </I18nProvider>
       </body>
     </html>

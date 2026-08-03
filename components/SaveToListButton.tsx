@@ -43,7 +43,7 @@ export function SaveToListButton({
             <path d="M8 4v8M4 8h8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
           )}
         </svg>
-        {saved ? m.trial.savedToList : m.trial.saveToList}
+        {saved ? m.follow.saved : m.follow.add}
       </span>
     </button>
   );

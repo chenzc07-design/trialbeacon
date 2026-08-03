@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { baselineCancerStats } from '@/lib/data';
 import { PageHero } from '@/components/PageHero';
+import { FreshnessBadge } from '@/components/FreshnessBadge';
 import { BeaconMotif } from '@/components/Motifs';
 import { t, getServerMessages } from '@/lib/i18n-server';
 
@@ -32,6 +33,9 @@ export default async function CancersPage() {
       />
 
       <div className="container-page py-10 sm:py-12">
+      <div className="mb-5">
+        <FreshnessBadge />
+      </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {stats.map((c) => (
           <Link

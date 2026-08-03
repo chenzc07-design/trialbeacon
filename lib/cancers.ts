@@ -81,6 +81,15 @@ export const CANCERS: CancerType[] = [
     afterCareTerms: 'relapsed OR refractory',
     image: '/cancer-lymphoma.png',
   },
+  {
+    slug: 'leukemia',
+    label: 'Leukemia',
+    descriptor: 'Including acute and chronic leukemias',
+    ctgovCond: 'leukemia',
+    afterCareTerms:
+      'refractory OR relapsed OR "second line" OR "salvage"',
+    image: '/cancer-leukemia.png',
+  },
 ];
 
 export function getCancer(slug: string): CancerType | undefined {

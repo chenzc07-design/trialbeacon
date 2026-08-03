@@ -41,7 +41,11 @@ export async function POST(request: Request) {
   }
   if (cancerList.length > MAX_CANCERS) {
     return NextResponse.json(
-      { error: `You can follow up to ${MAX_CANCERS} cancer types.` },
+      {
+        error: `You can follow up to ${MAX_CANCERS} cancer ${
+          MAX_CANCERS === 1 ? 'type' : 'types'
+        }.`,
+      },
       { status: 400 }
     );
   }

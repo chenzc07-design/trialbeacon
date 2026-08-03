@@ -6,6 +6,7 @@ import { CANCERS, getCancer } from '@/lib/cancers';
 import { getCancerFeed } from '@/lib/data';
 import { RegionTabs } from '@/components/RegionTabs';
 import { DataStatus } from '@/components/DataStatus';
+import { FreshnessBadge } from '@/components/FreshnessBadge';
 import { Disclaimer } from '@/components/Disclaimer';
 import { PageHero } from '@/components/PageHero';
 import { t, getServerMessages } from '@/lib/i18n-server';
@@ -88,8 +89,9 @@ export default async function CancerDetailPage({
         </Link>
       </div>
 
-      <div className="mt-5">
+      <div className="mt-5 flex flex-wrap items-center gap-3">
         <DataStatus live={feed.live} />
+        <FreshnessBadge />
       </div>
 
       <div className="mt-5">

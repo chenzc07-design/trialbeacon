@@ -84,6 +84,42 @@
   }
 }
 
+/*
+ * Touch targets.
+ *
+ * Buttons sit at 40px and filter chips at ~18px, both under the 44px that
+ * fingers need. Rather than enlarging them everywhere (which would change
+ * the desktop layout), the hit area is grown only on coarse pointers:
+ * min-height on buttons, and an invisible ::after that extends each chip's
+ * tappable box beyond its painted border. Appearance is untouched.
+ */
+@media (pointer: coarse) {
+  .btn,
+  button[type='button'],
+  button[type='submit'] {
+    min-height: 44px;
+  }
+
+  .chip {
+    position: relative;
+  }
+
+  .chip::after {
+    content: '';
+    position: absolute;
+    inset: -13px -6px;
+  }
+
+  /* Inline text links inside prose keep their size; standalone nav links
+     get the same breathing room as buttons. */
+  header nav a,
+  footer nav a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
 @layer utilities {
   .clamp-2 {
     display: -webkit-box;

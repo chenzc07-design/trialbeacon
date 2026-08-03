@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getChangeTracker } from '@/lib/data';
 import { UpdateList } from '@/components/UpdateCard';
 import { DataStatus } from '@/components/DataStatus';
+import { FreshnessBadge } from '@/components/FreshnessBadge';
 import { Disclaimer } from '@/components/Disclaimer';
 import { PageHero } from '@/components/PageHero';
 import { RssMotif } from '@/components/Motifs';
@@ -67,8 +68,9 @@ export default async function ChangesPage({
         </p>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-4 flex flex-wrap items-center gap-3">
         <DataStatus live={tracker.live} />
+        <FreshnessBadge />
       </div>
 
       {tracker.groups.length === 0 ? (

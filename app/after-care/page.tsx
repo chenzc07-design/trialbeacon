@@ -7,6 +7,7 @@ import { DataStatus } from '@/components/DataStatus';
 import { Disclaimer } from '@/components/Disclaimer';
 import { PageHero } from '@/components/PageHero';
 import { FilterMotif } from '@/components/Motifs';
+import { FreshnessBadge } from '@/components/FreshnessBadge';
 import { getServerMessages } from '@/lib/i18n-server';
 
 export const revalidate = 3600;
@@ -15,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const { messages: m } = await getServerMessages();
   return {
     title: m.afterCare.title,
-    description: m.afterCare.intro,
+    description: m.afterCare.introDesktop,
   };
 }
 
@@ -37,7 +38,7 @@ export default async function AfterCarePage({
       <PageHero
         eyebrow={m.afterCare.eyebrow}
         title={m.afterCare.title}
-        intro={m.afterCare.intro}
+        intro={m.afterCare.introDesktop}
         meta={
           <div className="hidden text-slateish-400 sm:block">
             <FilterMotif className="h-16 w-16 text-navy-200" />
@@ -46,53 +47,65 @@ export default async function AfterCarePage({
       />
 
       <div className="container-page py-10 sm:py-12">
-      <div className="rounded-card border border-slateish-200 bg-white p-4">
-        <p className="text-xs leading-relaxed text-slateish-500">
-          <strong className="font-semibold text-ink-800">
-            {m.afterCare.pleaseRead}
-          </strong>{' '}
-          {m.afterCare.pleaseReadBody}
+        {/* Mobile short intro — hidden on sm+ */}
+        <p className="mb-4 text-sm leading-relaxed text-slateish-600 sm:hidden">
+          {m.afterCare.introMobile}
         </p>
-      </div>
 
-      {/* Cancer filter */}
-      <div className="mt-6 flex flex-wrap gap-1.5" aria-label="Filter by cancer type">
-        <Link
-          href="/after-care"
-          className={`chip ${
-            !cancer
-              ? 'border-navy-700 bg-navy-800 text-white'
-              : 'border-slateish-200 bg-white text-slateish-600 hover:border-navy-300'
-          }`}
-        >
-          {m.common.allTypes}
-        </Link>
-        {CANCERS.map((c) => (
+        <div className="rounded-card border border-slateish-200 bg-white p-4">
+          <p className="text-xs leading-relaxed text-slateish-500">
+            <strong className="font-semibold text-ink-800">
+              {m.afterCare.pleaseRead}
+            </strong>{' '}
+            {m.afterCare.pleaseReadBody}
+          </p>
+        </div>
+
+        {/* Cancer filter */}
+        <div className="mt-6 flex flex-wrap gap-1.5" aria-label="Filter by cancer type">
           <Link
-            key={c.slug}
-            href={`/after-care?cancer=${c.slug}`}
+            href="/after-care"
             className={`chip ${
-              cancer?.slug === c.slug
+              !cancer
                 ? 'border-navy-700 bg-navy-800 text-white'
                 : 'border-slateish-200 bg-white text-slateish-600 hover:border-navy-300'
             }`}
           >
-            {m.cancers[c.slug].label}
+            {m.common.allTypes}
           </Link>
-        ))}
-      </div>
+          {CANCERS.map((c) => (
+            <Link
+              key={c.slug}
+              href={`/after-care?cancer=${c.slug}`}
+              className={`chip ${
+                cancer?.slug === c.slug
+                  ? 'border-navy-700 bg-navy-800 text-white'
+                  : 'border-slateish-200 bg-white text-slateish-600 hover:border-navy-300'
+              }`}
+            >
+              {m.cancers[c.slug].label}
+            </Link>
+          ))}
+        </div>
 
-      <div className="mt-5">
-        <DataStatus live={feed.live} />
-      </div>
+        <div className="mt-5 flex flex-wrap items-center gap-3">
+          <DataStatus live={feed.live} />
+          <FreshnessBadge />
+        </div>
 
-      <div className="mt-5">
-        <RegionTabs items={feed.items} />
-      </div>
+        <div className="mt-5">
+          <RegionTabs items={feed.items} />
+        </div>
 
-      <div className="mt-10">
-        <Disclaimer />
-      </div>
+        <div className="mt-8 rounded-card border border-slateish-200 bg-white p-4">
+          <p className="text-xs leading-relaxed text-slateish-500">
+            {m.afterCare.foot}
+          </p>
+        </div>
+
+        <div className="mt-10">
+          <Disclaimer />
+        </div>
       </div>
     </>
   );

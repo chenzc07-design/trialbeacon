@@ -33,17 +33,30 @@ const PHASE_ORDER = [
   'Not applicable',
 ];
 
+type SortKey = 'recent' | 'title' | 'phase';
+
+function phaseRank(p?: string): number {
+  const i = PHASE_ORDER.indexOf(p ?? '');
+  return i === -1 ? PHASE_ORDER.length : i;
+}
+
 /**
- * Region tabs plus the two filters people actually reach for: whether a study
- * is still open, and which phase it is in. Filtering happens client-side
- * because the whole result set is already on the page — a round trip would be
- * slower and would lose scroll position.
+ * Region tabs plus the filters people actually reach for: whether a study is
+ * still open, which phase it is in, and whether the official wording places it
+ * in an advanced / later-line setting. Filtering happens client-side because
+ * the whole result set is already on the page — a round trip would be slower
+ * and would lose scroll position.
+ *
+ * Default order is most-recently-updated first, so the top of the list is
+ * always the part of the record set that moved last.
  */
 export function RegionTabs({ items }: { items: UpdateItem[] }) {
   const { locale, messages: m } = useI18n();
   const [tab, setTab] = useState<Region | 'ALL'>('ALL');
   const [openOnly, setOpenOnly] = useState(false);
+  const [afterCareOnly, setAfterCareOnly] = useState(false);
   const [phase, setPhase] = useState<string>('');
+  const [sort, setSort] = useState<SortKey>('recent');
   const [keywords, setKeywords] = useState<string[]>([]);
 
   const keywordLabels = KEYWORD_LABELS[locale] ?? KEYWORD_LABELS.en;
@@ -76,14 +89,42 @@ export function RegionTabs({ items }: { items: UpdateItem[] }) {
     });
   }, [items]);
 
+  // Only worth offering the after-care filter when the set is actually mixed —
+  // on the After Care view every record already qualifies.
+  const mixedAfterCare = useMemo(() => {
+    let yes = 0;
+    for (const i of items) if (i.afterCare) yes += 1;
+    return yes > 0 && yes < items.length;
+  }, [items]);
+
   const visible = useMemo(() => {
-    return items.filter((i) => {
+    const kept = items.filter((i) => {
       if (tab !== 'ALL' && !inRegion(i, tab)) return false;
       if (openOnly && !isOpen(i)) return false;
+      if (afterCareOnly && !i.afterCare) return false;
       if (phase && i.phase !== phase) return false;
       return true;
     });
-  }, [items, tab, openOnly, phase]);
+    const sorted = [...kept];
+    if (sort === 'title') {
+      sorted.sort((a, b) => a.title.localeCompare(b.title, locale));
+    } else if (sort === 'phase') {
+      sorted.sort((a, b) => {
+        const d = phaseRank(a.phase) - phaseRank(b.phase);
+        return d !== 0 ? d : a.title.localeCompare(b.title, locale);
+      });
+    } else {
+      // Most recent first. Records with no date are "continuously updated"
+      // live sources; they sit at the end rather than pretending to be new.
+      sorted.sort((a, b) => {
+        if (a.date === b.date) return a.title.localeCompare(b.title, locale);
+        if (!a.date) return 1;
+        if (!b.date) return -1;
+        return a.date < b.date ? 1 : -1;
+      });
+    }
+    return sorted;
+  }, [items, tab, openOnly, afterCareOnly, phase, sort, locale]);
 
   // Only offer region tabs that actually contain something.
   const tabs: { key: Region | 'ALL'; label: string }[] = [
@@ -94,7 +135,8 @@ export function RegionTabs({ items }: { items: UpdateItem[] }) {
     })),
   ];
 
-  const filtered = openOnly || phase !== '' || keywords.length > 0;
+  const filtered =
+    openOnly || afterCareOnly || phase !== '' || keywords.length > 0 || sort !== 'recent';
 
   function toggleKeyword(id: string) {
     setKeywords((prev) =>
@@ -147,6 +189,18 @@ export function RegionTabs({ items }: { items: UpdateItem[] }) {
           <span title={m.filters.openOnlyHint}>{m.filters.openOnly}</span>
         </label>
 
+        {mixedAfterCare ? (
+          <label className="flex cursor-pointer items-center gap-2 text-[13px] text-slateish-600">
+            <input
+              type="checkbox"
+              checked={afterCareOnly}
+              onChange={(e) => setAfterCareOnly(e.target.checked)}
+              className="h-4 w-4 rounded border-slateish-300 text-navy-700 focus:ring-navy-500"
+            />
+            <span title={m.filters.afterCareOnlyHint}>{m.filters.afterCareOnly}</span>
+          </label>
+        ) : null}
+
         {phases.length > 1 ? (
           <label className="flex items-center gap-2 text-[13px] text-slateish-600">
             <span>{m.filters.phase}</span>
@@ -165,6 +219,19 @@ export function RegionTabs({ items }: { items: UpdateItem[] }) {
           </label>
         ) : null}
 
+        <label className="flex items-center gap-2 text-[13px] text-slateish-600">
+          <span>{m.common.sortBy}</span>
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value as SortKey)}
+            className="rounded-lg border border-slateish-300 bg-white px-2.5 py-1.5 text-[13px] text-ink-900 focus:border-navy-400 focus:outline-none focus:ring-1 focus:ring-navy-400"
+          >
+            <option value="recent">{m.common.sortRecent}</option>
+            <option value="title">{m.common.sortTitle}</option>
+            <option value="phase">{m.common.sortPhase}</option>
+          </select>
+        </label>
+
         <span className="text-xs tabular-nums text-slateish-500">
           {t(m, 'filters.showing', { n: visible.length, total: items.length })}
         </span>
@@ -174,7 +241,9 @@ export function RegionTabs({ items }: { items: UpdateItem[] }) {
             type="button"
             onClick={() => {
               setOpenOnly(false);
+              setAfterCareOnly(false);
               setPhase('');
+              setSort('recent');
               setKeywords([]);
             }}
             className="text-xs font-medium text-navy-700 underline-offset-2 hover:underline"
