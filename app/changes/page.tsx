@@ -4,7 +4,6 @@ import { getChangeTracker } from '@/lib/data';
 import { UpdateList } from '@/components/UpdateCard';
 import { DataStatus } from '@/components/DataStatus';
 import { FreshnessBadge } from '@/components/FreshnessBadge';
-import { Disclaimer } from '@/components/Disclaimer';
 import { PageHero } from '@/components/PageHero';
 import { RssMotif } from '@/components/Motifs';
 import { t, getServerMessages } from '@/lib/i18n-server';
@@ -106,10 +105,6 @@ export default async function ChangesPage({
           ))}
         </div>
       )}
-
-      <div className="mt-10">
-        <Disclaimer />
-      </div>
       </div>
     </>
   );

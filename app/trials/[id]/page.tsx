@@ -8,7 +8,6 @@ import type { UpdateItem } from '@/lib/types';
 import { getServerMessages, t } from '@/lib/i18n-server';
 import { RegionBadge, SourceBadge, TypeBadge, PhaseBadge, StatusBadge } from '@/components/badges';
 import { SaveToListButton } from '@/components/SaveToListButton';
-import { Disclaimer } from '@/components/Disclaimer';
 
 function fmtDate(iso: string | null | undefined, locale: string): string {
   if (!iso) return '';
@@ -284,10 +283,6 @@ export default async function TrialDetailPage({
             ) : null}
           </dl>
         </section>
-
-        <div className="mt-6">
-          <Disclaimer />
-        </div>
       </div>
     </>
   );

@@ -4,7 +4,6 @@ import { searchBaseline } from '@/lib/data';
 import { CANCERS } from '@/lib/cancers';
 import { SearchBox } from '@/components/SearchBox';
 import { UpdateList } from '@/components/UpdateCard';
-import { Disclaimer } from '@/components/Disclaimer';
 import { PageHero } from '@/components/PageHero';
 import { CompassMotif } from '@/components/Motifs';
 import { t, getServerMessages } from '@/lib/i18n-server';
@@ -76,10 +75,6 @@ export default async function SearchPage({
           </div>
         </div>
       )}
-
-      <div className="mt-12">
-        <Disclaimer compact />
-      </div>
       </div>
     </>
   );

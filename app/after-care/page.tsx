@@ -4,7 +4,6 @@ import { getAfterCareFeed, getCancerFeed } from '@/lib/data';
 import { getCancer, CANCERS } from '@/lib/cancers';
 import { RegionTabs } from '@/components/RegionTabs';
 import { DataStatus } from '@/components/DataStatus';
-import { Disclaimer } from '@/components/Disclaimer';
 import { PageHero } from '@/components/PageHero';
 import { FilterMotif } from '@/components/Motifs';
 import { FreshnessBadge } from '@/components/FreshnessBadge';
@@ -104,10 +103,6 @@ export default async function AfterCarePage({
           <p className="text-xs leading-relaxed text-slateish-500">
             {m.afterCare.foot}
           </p>
-        </div>
-
-        <div className="mt-10">
-          <Disclaimer />
         </div>
       </div>
     </>

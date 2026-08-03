@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { PageHero } from '@/components/PageHero';
 import { ShieldMotif } from '@/components/Motifs';
-import { Disclaimer } from '@/components/Disclaimer';
 import { getServerMessages } from '@/lib/i18n-server';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -118,10 +117,6 @@ export default async function SafetyPage() {
             {m.safety.reportBody}
           </p>
         </section>
-
-        <div className="mt-10">
-          <Disclaimer />
-        </div>
       </div>
     </>
   );

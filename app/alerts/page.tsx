@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { AlertsForm } from '@/components/AlertsForm';
-import { Disclaimer } from '@/components/Disclaimer';
 import { PageHero } from '@/components/PageHero';
 import { MailMotif } from '@/components/Motifs';
 import { getServerMessages } from '@/lib/i18n-server';
@@ -53,10 +52,6 @@ export default async function AlertsPage() {
               </li>
             ))}
           </ul>
-
-          <div className="mt-8">
-            <Disclaimer compact />
-          </div>
         </div>
 
         <AlertsForm />
