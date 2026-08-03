@@ -5,6 +5,7 @@ import { baselineCancerStats, SNAPSHOT_DATE } from '@/lib/data';
 import { SOURCES } from '@/lib/sources';
 import { SearchBox } from '@/components/SearchBox';
 import { FreshnessBadge } from '@/components/FreshnessBadge';
+import { HeroIllustration } from '@/components/HeroIllustration';
 import { t, getServerMessages } from '@/lib/i18n-server';
 
 const PRINCIPLE_ICONS = [
@@ -87,8 +88,12 @@ export default async function HomePage() {
   return (
     <>
       {/* ============== Hero (desktop + mobile) ============== */}
-      <section className="relative overflow-hidden border-b border-slateish-200 bg-gradient-to-b from-navy-50/50 via-white to-white">
-        <div className="container-page py-12 sm:py-20">
+      <section className="relative overflow-hidden border-b border-slateish-200 bg-gradient-to-b from-slateish-50 via-white to-white">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-[url('/hero-bg.svg')] bg-cover bg-center opacity-60"
+        />
+        <div className="container-page relative py-14 sm:py-24">
           <div className="grid items-start gap-10 lg:grid-cols-2">
             <div>
               <p className="label-eyebrow">{m.home.eyebrow}</p>
@@ -150,19 +155,20 @@ export default async function HomePage() {
             </div>
 
             <div className="relative">
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[28px] shadow-card-hover">
-                <Image
-                  src="/tb-hero.png"
-                  alt=""
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
-                />
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[28px] shadow-card-hover ring-1 ring-ink-950/10">
+                <HeroIllustration />
               </div>
-              <div className="mt-4 flex items-center gap-3 rounded-2xl bg-white p-4 shadow-card-hover">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-navy-50 text-xl">
-                  🛡️
+              <div className="mt-5 flex items-center gap-3 rounded-2xl bg-white p-4 shadow-card-hover ring-1 ring-slateish-200">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-ink-900 text-white">
+                  <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true" fill="none">
+                    <path
+                      d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      fill="none"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
                 </span>
                 <div>
                   <div className="text-sm font-semibold text-ink-950">{m.home.badgeVerbatim}</div>
@@ -174,22 +180,27 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ============== After Care — the absolute hero block ============== */}
-      <section className="container-page mt-8 sm:mt-10">
+      {/* ============== After Care — dedicated view ============== */}
+      <section className="container-page mt-10 sm:mt-14">
         <Link
           href="/after-care"
-          className="card-interactive group flex flex-col gap-5 border-navy-100 bg-gradient-to-br from-navy-50/70 via-white to-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7"
+          className="card-interactive group flex flex-col gap-5 overflow-hidden border-l-4 border-l-ink-900 border-navy-100 bg-gradient-to-br from-navy-50/70 via-white to-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8"
           aria-label={m.home.afterCareTitle}
         >
           <div className="flex items-start gap-4">
-            <span className="mt-0.5 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-navy-700 text-white">
-              <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true">
+            <span className="mt-0.5 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-ink-900 text-white">
+              <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true" fill="none">
                 <path
-                  d="M12 21c-4.5-3-8-6.2-8-10a5 5 0 019-3 5 5 0 019 3c0 3.8-3.5 7-8 10l-1 .7-1-.7z"
+                  d="M7 21h10a3 3 0 003-3V6a3 3 0 00-3-3H7a3 3 0 00-3 3v12a3 3 0 003 3z"
                   stroke="currentColor"
                   strokeWidth="1.6"
-                  fill="none"
                   strokeLinejoin="round"
+                />
+                <path
+                  d="M8 7h8M8 11h8M8 15h5"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
                 />
               </svg>
             </span>
@@ -226,8 +237,8 @@ export default async function HomePage() {
         </Link>
       </section>
 
-      {/* ============== Cancer types — de-emphasised, just an entry ============== */}
-      <section className="container-page mt-12">
+      {/* ============== Cancer types — clean card index ============== */}
+      <section className="container-page mt-16">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <h2 className="text-base font-semibold tracking-tight text-ink-950">
@@ -240,14 +251,14 @@ export default async function HomePage() {
           </Link>
         </div>
 
-        <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {stats.map((c) => (
             <Link
               key={c.slug}
               href={`/cancers/${c.slug}`}
-              className="card-interactive group flex items-center gap-3 p-3 sm:p-4"
+              className="card-interactive group flex items-center gap-4 p-4"
             >
-              <div className="relative h-14 w-20 shrink-0 overflow-hidden rounded-lg bg-slateish-100">
+              <div className="relative h-14 w-20 shrink-0 overflow-hidden rounded-lg bg-slateish-100 ring-1 ring-slateish-200/60">
                 <Image
                   src={c.image}
                   alt=""
@@ -289,7 +300,7 @@ export default async function HomePage() {
       </section>
 
       {/* ============== Sources strip ============== */}
-      <section className="container-page mt-14">
+      <section className="container-page mt-16">
         <div className="card p-6 sm:p-7">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
@@ -327,20 +338,20 @@ export default async function HomePage() {
       </section>
 
       {/* ============== Principles ============== */}
-      <section className="container-page mt-14">
+      <section className="container-page mt-16">
         <h2 className="text-lg font-semibold tracking-tight">{m.home.principlesTitle}</h2>
-        <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {PRINCIPLE_KEYS.map((key, i) => (
-            <div key={key} className="card p-5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-navy-50 text-navy-700">
+            <div key={key} className="card p-6">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-navy-50 text-navy-700">
                 <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
                   {PRINCIPLE_ICONS[i]}
                 </svg>
               </span>
-              <h3 className="mt-3.5 text-sm font-semibold text-ink-950">
+              <h3 className="mt-4 text-sm font-semibold text-ink-950">
                 {m.home.principles[key].title}
               </h3>
-              <p className="mt-1.5 text-[13px] leading-relaxed text-slateish-600">
+              <p className="mt-2 text-[13px] leading-relaxed text-slateish-600">
                 {m.home.principles[key].body}
               </p>
             </div>
@@ -349,7 +360,7 @@ export default async function HomePage() {
       </section>
 
       {/* ============== Get the app ============== */}
-      <section className="container-page mt-14">
+      <section className="container-page mt-16 mb-10">
         <div className="card flex flex-col items-center gap-4 p-8 text-center">
           <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-navy-50 text-2xl">📱</span>
           <h2 className="text-xl font-semibold tracking-tight text-ink-950">Take TrialBeacon with you</h2>
