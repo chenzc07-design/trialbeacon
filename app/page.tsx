@@ -50,6 +50,56 @@ const PRINCIPLE_ICONS = [
 
 const PRINCIPLE_KEYS = ['official', 'noRec', 'threeRegions', 'traceable'] as const;
 
+// Image-led sections restored from the pre-optimization design.
+// Only neutral, non-feature imagery is used here (see note in final summary).
+const STEPS = [
+  {
+    n: 1,
+    img: '/tb-search.png',
+    title: 'Search your condition',
+    body: 'Type your diagnosis or browse 10+ cancer types. Each page pulls in clinical trial registrations, guideline indexes and regulatory notices from official sources.',
+  },
+  {
+    n: 2,
+    img: '/tb-consult.png',
+    title: 'Understand the landscape',
+    body: 'See what is publicly listed for your cancer type — including advanced, recurrent or later-line options — with a direct link to the original page for every entry.',
+  },
+  {
+    n: 3,
+    img: '/tb-community.png',
+    title: 'Find what fits you',
+    body: 'Share the official records with your care team. Every entry links straight to its source so you and your doctor can verify it together.',
+  },
+];
+
+const TRUST = [
+  {
+    img: '/tb-data-source.png',
+    title: 'Real-time official data',
+    body: 'Every trial comes directly from ClinicalTrials.gov, the EU register and Chinese regulatory sources. No third-party data brokers, no reselling.',
+  },
+  {
+    img: '/tb-privacy.png',
+    title: 'Your data stays yours',
+    body: 'We do not track you across the web, build advertising profiles from your health searches, or sell your data. No login required.',
+  },
+  {
+    img: '/tb-free-use.png',
+    title: 'Free for every patient & caregiver',
+    body: '100% free, forever. Sponsors never influence what we list. Your health is personal — and your search history should be too.',
+  },
+];
+
+const GALLERY = [
+  { img: '/tb-research.png', cap: 'Breakthroughs, studied in the lab' },
+  { img: '/tb-medical-team.png', cap: 'Care teams, coordinating together' },
+  { img: '/tb-innovation.png', cap: 'Precision medicine, moving forward' },
+  { img: '/tb-patient-story.png', cap: 'Patients, supported at home' },
+  { img: '/tb-empowerment.png', cap: 'You, in control of the search' },
+  { img: '/tb-hospital.png', cap: 'Trials, run at trusted centers' },
+];
+
 const SOURCES_PILLS = Object.values(SOURCES).map((s) => ({
   id: s.id,
   label: s.label,
@@ -237,6 +287,40 @@ export default async function HomePage() {
         </Link>
       </section>
 
+      {/* ============== How it works ============== */}
+      <section className="container-page mt-16">
+        <div className="text-center">
+          <p className="label-eyebrow mx-auto">How TrialBeacon works</p>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight">Three steps to the official record</h2>
+          <p className="mx-auto mt-3 max-w-2xl text-sm text-slateish-500">
+            We never rank, evaluate or suggest treatments. Titles are reproduced verbatim from the
+            official record — so you always see what is actually listed.
+          </p>
+        </div>
+        <div className="mt-8 grid gap-4 sm:grid-cols-3">
+          {STEPS.map((s) => (
+            <div key={s.n} className="card overflow-hidden">
+              <div className="relative aspect-[3/2] w-full overflow-hidden bg-slateish-100">
+                <Image
+                  src={s.img}
+                  alt=""
+                  fill
+                  sizes="(max-width: 640px) 100vw, 33vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="p-5">
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-navy-50 text-sm font-semibold text-navy-700">
+                  {s.n}
+                </span>
+                <h3 className="mt-3 text-base font-semibold text-ink-950">{s.title}</h3>
+                <p className="mt-1.5 text-[13px] leading-relaxed text-slateish-600">{s.body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* ============== Cancer types — clean card index ============== */}
       <section className="container-page mt-16">
         <div className="flex flex-wrap items-end justify-between gap-3">
@@ -299,6 +383,44 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ============== Built for patients / trust ============== */}
+      <section className="mt-16 bg-ink-950">
+        <div className="container-page py-16">
+          <div className="text-center">
+            <p className="label-eyebrow mx-auto !text-navy-300">Built for patients, by design</p>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+              Honest by architecture
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-sm text-slateish-300">
+              Most cancer information is scattered across journals, pharma sites and dense government
+              databases. TrialBeacon brings it together — with guardrails that protect you.
+            </p>
+          </div>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {TRUST.map((item) => (
+              <div
+                key={item.title}
+                className="overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10"
+              >
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-white/5">
+                  <Image
+                    src={item.img}
+                    alt=""
+                    fill
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-5">
+                  <h3 className="text-base font-semibold text-white">{item.title}</h3>
+                  <p className="mt-1.5 text-[13px] leading-relaxed text-slateish-300">{item.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ============== Sources strip ============== */}
       <section className="container-page mt-16">
         <div className="card p-6 sm:p-7">
@@ -354,6 +476,39 @@ export default async function HomePage() {
               <p className="mt-2 text-[13px] leading-relaxed text-slateish-600">
                 {m.home.principles[key].body}
               </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ============== Behind the records — gallery ============== */}
+      <section className="container-page mt-16">
+        <div className="text-center">
+          <p className="label-eyebrow mx-auto">Behind every record</p>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight">
+            The science &amp; people behind the index
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-sm text-slateish-500">
+            Every listing traces back to researchers, clinicians, regulators and the patients
+            themselves. TrialBeacon quietly stitches their public work into one place.
+          </p>
+        </div>
+        <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {GALLERY.map((g) => (
+            <div
+              key={g.img}
+              className="group relative aspect-[4/3] overflow-hidden rounded-2xl shadow-card"
+            >
+              <Image
+                src={g.img}
+                alt=""
+                fill
+                sizes="(max-width: 640px) 100vw, 33vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+              />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink-950/70 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <span className="text-sm font-semibold text-white">{g.cap}</span>
+              </div>
             </div>
           ))}
         </div>
