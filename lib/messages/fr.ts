@@ -332,7 +332,7 @@ export const fr: Messages = {
     search: 'Recherche',
   },
   footer: {
-    tagline: 'Des mises à jour fiables issues des sources officielles. Rien de plus.',
+    tagline: 'Registres publics officiels pour les soins avancés et en ligne ultérieure. Rien de plus.',
     desc: 'Un agrégateur de liens neutre pour les essais cliniques publics, index de recommandations et avis réglementaires des États-Unis, de l’Europe et de la Chine.',
     browse: 'Parcourir',
     about: 'À propos',

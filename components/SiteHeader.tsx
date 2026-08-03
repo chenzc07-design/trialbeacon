@@ -66,7 +66,7 @@ export function SiteHeader() {
           <Wordmark />
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-1 md:flex" aria-label="Primary">
           {NAV.map((item) => {
             if (item.dropdown === 'cancers') {
               return (
@@ -141,7 +141,7 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="hidden items-center gap-2 lg:flex">
+        <div className="hidden items-center gap-2 md:flex">
           <LocaleSwitcher />
           {status === 'signed-in' && user ? (
             <div className="relative" ref={accountRef}>
@@ -222,7 +222,7 @@ export function SiteHeader() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="rounded-lg border border-slateish-300 p-2 lg:hidden"
+          className="rounded-lg border border-slateish-300 p-2 md:hidden"
           aria-expanded={open}
           aria-label={m.nav.toggleMenu}
         >
@@ -238,7 +238,7 @@ export function SiteHeader() {
 
       {open ? (
         <nav
-          className="border-t border-slateish-200 bg-white px-5 py-3 lg:hidden"
+          className="border-t border-slateish-200 bg-white px-5 py-3 md:hidden"
           aria-label="Mobile"
         >
           <div className="grid gap-1">

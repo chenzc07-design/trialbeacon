@@ -332,7 +332,7 @@ export const de: Messages = {
     search: 'Suche',
   },
   footer: {
-    tagline: 'Verlässliche Updates aus offiziellen Quellen. Nichts weiter.',
+    tagline: 'Offizielle öffentliche Register für fortgeschrittene und spätere Versorgungslinien. Mehr nicht.',
     desc: 'Ein neutraler Link-Aggregator für öffentlich gelistete klinische Studien, Leitlinien-Verzeichnisse und behördliche Mitteilungen aus den Vereinigten Staaten, Europa und China.',
     browse: 'Durchsuchen',
     about: 'Über',

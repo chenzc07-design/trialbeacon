@@ -390,7 +390,7 @@ export const en = {
     search: 'Search',
   },
   footer: {
-    tagline: 'Trusted updates from official sources. Nothing more.',
+    tagline: 'Official public records for advanced and later-line care. Nothing more.',
     desc:
       'A neutral link aggregator for publicly listed clinical trials, guideline indexes and regulatory notices from the United States, Europe and China.',
     browse: 'Browse',

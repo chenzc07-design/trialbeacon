@@ -93,22 +93,16 @@ export default async function HomePage() {
             <div>
               <p className="label-eyebrow">{m.home.eyebrow}</p>
 
-              {/* Desktop long title */}
-              <h1 className="mt-4 hidden text-[32px] font-semibold leading-tight tracking-tight text-ink-950 sm:block sm:text-[40px] sm:leading-[1.16]">
-                {m.home.title1}
-              </h1>
-              {/* Mobile short title */}
-              <h1 className="mt-4 text-[26px] font-semibold leading-tight tracking-tight text-ink-950 sm:hidden">
-                {m.home.title1Short}
+              {/* One H1, adapts by device: full version on desktop, short on mobile */}
+              <h1 className="mt-4 text-[26px] font-semibold leading-tight tracking-tight text-ink-950 sm:text-[40px] sm:leading-[1.16]">
+                <span className="hidden sm:block">{m.home.title1}</span>
+                <span className="sm:hidden">{m.home.title1Short}</span>
               </h1>
 
-              {/* Desktop subtitle */}
-              <p className="mt-5 hidden max-w-xl text-[15px] leading-relaxed text-slateish-600 sm:block">
-                {m.home.subtitle}
-              </p>
-              {/* Mobile subtitle (shorter) */}
-              <p className="mt-4 block max-w-xl text-[14px] leading-relaxed text-slateish-600 sm:hidden">
-                {m.home.subtitleShort}
+              {/* One subtitle block, adapts by device to match the title */}
+              <p className="mt-5 max-w-xl text-[14px] leading-relaxed text-slateish-600 sm:text-[15px]">
+                <span className="hidden sm:block">{m.home.subtitle}</span>
+                <span className="sm:hidden">{m.home.subtitleShort}</span>
               </p>
 
               {m.home.subtitleNo ? (

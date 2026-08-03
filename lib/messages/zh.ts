@@ -332,7 +332,7 @@ export const zh: Messages = {
     search: '搜索',
   },
   footer: {
-    tagline: '来自官方来源的可靠更新。仅此而已。',
+    tagline: '晚期与后线治疗的官方公开记录，仅此而已。',
     desc: '一个中立的链接聚合器，汇集来自美国、欧洲和中国的公开临床试验、指南索引与监管公告。',
     browse: '浏览',
     about: '关于',

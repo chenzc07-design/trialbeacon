@@ -10,7 +10,7 @@ import { siteJsonLd, hreflangAll } from '@/lib/seo';
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.SITE_URL ?? 'https://trialbeacon.vercel.app'),
   title: {
-    default: 'TrialBeacon — Trusted updates from official sources',
+    default: 'TrialBeacon — official public records for advanced and later-line care',
     template: '%s · TrialBeacon',
   },
   description:
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     apple: '/apple-touch-icon.png',
   },
   openGraph: {
-    title: 'TrialBeacon — Trusted updates from official sources',
+    title: 'TrialBeacon — official public records for advanced and later-line care',
     description:
       'A neutral index of publicly listed clinical trials, guidelines and regulatory notices from the US, Europe and China.',
     type: 'website',
