@@ -475,6 +475,12 @@ export const zh: Messages = {
     selectAll: '全选当前显示',
     clearSelection: '清除选择',
     generate: '生成沟通清单',
+    openPrint: '打开可打印版本',
+    generating: '生成中…',
+    popupBlocked:
+      '浏览器拦截了新窗口。请允许本站点弹出窗口后重试，或直接点击“生成沟通清单”下载文件。',
+    printFallback:
+      '无法在此生成 PDF，已改为打开可打印版本，你可以在那里打印或另存为 PDF。',
     exportList: '导出为沟通清单',
     useFilter: '使用当前筛选结果生成',
     limitNote: '未登录：每份清单最多 {max} 条。登录后可导出更多。',

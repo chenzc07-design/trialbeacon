@@ -9,8 +9,9 @@ import { t } from '@/lib/i18n-runtime';
 import {
   FREE_EXPORT_LIMIT,
   SIGNED_IN_EXPORT_LIMIT,
-  launchDiscussionList,
+  openDiscussionListPrint,
 } from '@/lib/discussion-list';
+import { downloadDiscussionListPdf } from '@/lib/discussion-pdf';
 import { KEYWORDS, KEYWORD_LABELS, KEYWORD_HEADING } from '@/lib/keywords';
 
 const REGION_ORDER: Region[] = ['US', 'EU', 'CN', 'OTHER'];
@@ -67,6 +68,7 @@ export function RegionTabs({
   const { status } = useAuth();
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [notice, setNotice] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
 
   function toggleSelect(id: string) {
     setSelectedIds((prev) => {
@@ -78,16 +80,49 @@ export function RegionTabs({
   }
 
   /** Build the list from the selected records (mode A) or the current
-   *  filtered view (mode B), cap by auth state, and open the print page. */
-  function launch(chosen: UpdateItem[]) {
+   *  filtered view (mode B), then download a real PDF directly. Falls back to
+   *  the printable page if the in-browser PDF engine is unavailable. */
+  async function onDownload(chosen: UpdateItem[]) {
     if (chosen.length === 0) return;
-    const res = launchDiscussionList(chosen, {
+    setBusy(true);
+    try {
+      const res = await downloadDiscussionListPdf({
+        items: chosen,
+        signedIn: status === 'signed-in',
+        locale,
+        messages: m,
+      });
+      setNotice(
+        res.truncated
+          ? t(m, 'discussionList.limitExceeded', { max: res.limit })
+          : null
+      );
+    } catch {
+      const res = openDiscussionListPrint(chosen, {
+        signedIn: status === 'signed-in',
+      });
+      setNotice(
+        res.blocked
+          ? t(m, 'discussionList.popupBlocked')
+          : t(m, 'discussionList.printFallback')
+      );
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  /** Open the printable page in a new tab (secondary option). */
+  function onOpenPrint(chosen: UpdateItem[]) {
+    if (chosen.length === 0) return;
+    const res = openDiscussionListPrint(chosen, {
       signedIn: status === 'signed-in',
     });
     setNotice(
-      res.truncated
-        ? t(m, 'discussionList.limitExceeded', { max: res.limit })
-        : null
+      res.blocked
+        ? t(m, 'discussionList.popupBlocked')
+        : res.truncated
+          ? t(m, 'discussionList.limitExceeded', { max: res.limit })
+          : null
     );
   }
   const [tab, setTab] = useState<Region | 'ALL'>('ALL');
@@ -163,6 +198,13 @@ export function RegionTabs({
     }
     return sorted;
   }, [items, tab, openOnly, afterCareOnly, phase, sort, locale]);
+
+  // Only currently-visible, checked records count / get exported — a record
+  // the user filtered away never leaks into the output.
+  const selectedVisible = useMemo(
+    () => visible.filter((i) => selectedIds.has(i.id)),
+    [visible, selectedIds]
+  );
 
   // Only offer region tabs that actually contain something.
   const tabs: { key: Region | 'ALL'; label: string }[] = [
@@ -330,7 +372,7 @@ export function RegionTabs({
             </div>
             <div className="flex flex-wrap items-center gap-2">
               <span className="rounded-md bg-white px-2 py-1 text-xs tabular-nums text-slateish-500">
-                {t(m, 'discussionList.selectedCount', { n: selectedIds.size })}
+                {t(m, 'discussionList.selectedCount', { n: selectedVisible.length })}
               </span>
               <button
                 type="button"
@@ -354,16 +396,27 @@ export function RegionTabs({
           <div className="mt-3 flex flex-wrap items-center gap-2">
             <button
               type="button"
-              onClick={() => launch(items.filter((i) => selectedIds.has(i.id)))}
-              disabled={selectedIds.size === 0}
+              onClick={() => onDownload(selectedVisible)}
+              disabled={selectedVisible.length === 0 || busy}
               className="btn-primary text-[13px]"
             >
-              {m.discussionList.generate}
+              {busy ? m.discussionList.generating : m.discussionList.generate}
             </button>
+            {selectedVisible.length > 0 ? (
+              <button
+                type="button"
+                onClick={() => onOpenPrint(selectedVisible)}
+                disabled={busy}
+                className="btn border border-slateish-300 bg-white px-4 py-2.5 text-[13px] text-ink-800 hover:border-navy-300 hover:bg-navy-50"
+              >
+                {m.discussionList.openPrint}
+              </button>
+            ) : null}
             {filtered && visible.length > 0 ? (
               <button
                 type="button"
-                onClick={() => launch(visible)}
+                onClick={() => onDownload(visible)}
+                disabled={busy}
                 className="btn border border-slateish-300 bg-white px-4 py-2.5 text-[13px] text-ink-800 hover:border-navy-300 hover:bg-navy-50"
               >
                 {m.discussionList.useFilter}

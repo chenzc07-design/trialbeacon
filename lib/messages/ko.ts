@@ -475,6 +475,12 @@ export const ko: Messages = {
     selectAll: '표시된 항목 모두 선택',
     clearSelection: '선택 지우기',
     generate: '상담 목록 만들기',
+    openPrint: '인쇄용 버전 열기',
+    generating: '생성 중…',
+    popupBlocked:
+      '브라우저가 새 창을 차단했습니다. 이 사이트의 팝업을 허용한 후 다시 시도하거나, “상담 목록 만들기”를 클릭해 파일을 바로 다운로드하세요.',
+    printFallback:
+      '이 환경에서 PDF를 만들 수 없어 인쇄용 버전을 열었습니다. 그곳에서 인쇄하거나 PDF로 저장하세요.',
     exportList: '상담 목록으로 내보내기',
     useFilter: '현재 필터 결과 사용',
     limitNote:

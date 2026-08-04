@@ -69,17 +69,20 @@ export interface LaunchResult {
   limit: number;
   truncated: boolean;
   count: number;
+  /** True when the browser blocked the new window (popup blockers). */
+  blocked: boolean;
 }
 
 /**
- * Cap a set of records by the visitor's auth state, store them for the
- * printable page, and open that page in a new tab. Returns what happened so
- * callers can surface a "only the first N were included" notice.
+ * Open the printable discussion-list page in a new tab. The capped records are
+ * passed in the URL (?d=…) so the page works reliably across tabs, in private
+ * mode, and when sessionStorage is unavailable — no fragile storage hand-off.
  *
- * Client-only (touches window / sessionStorage). Safe to call from any
- * event handler in a browser context.
+ * Returns what happened so callers can surface a "only the first N were
+ * included" or "popup blocked" notice. Client-only (touches window). Safe to
+ * call from any user-gesture event handler.
  */
-export function launchDiscussionList(
+export function openDiscussionListPrint(
   items: UpdateItem[],
   opts: { signedIn: boolean }
 ): LaunchResult {
@@ -88,21 +91,30 @@ export function launchDiscussionList(
   const capped = truncated ? items.slice(0, limit) : items;
   const payload = capped.map(buildDiscussionItem);
 
-  if (typeof window !== 'undefined') {
-    try {
-      window.sessionStorage.setItem(
-        DISCUSSION_STORAGE_KEY,
-        JSON.stringify(payload)
-      );
-    } catch {
-      /* storage unavailable — the print page will simply show an empty state */
-    }
-    try {
-      window.open('/discussion-list', '_blank', 'noopener,noreferrer');
-    } catch {
-      /* popup blocked — ignore */
-    }
+  if (typeof window === 'undefined') {
+    return { limit, truncated, count: payload.length, blocked: false };
   }
 
-  return { limit, truncated, count: payload.length };
+  const encoded = encodeURIComponent(JSON.stringify(payload));
+  const url = `/discussion-list?d=${encoded}`;
+
+  let blocked = false;
+  try {
+    const win = window.open(url, '_blank', 'noopener,noreferrer');
+    if (!win) blocked = true;
+  } catch {
+    blocked = true;
+  }
+
+  // Keep a sessionStorage fallback for any old bookmarks of the bare route.
+  try {
+    window.sessionStorage.setItem(
+      DISCUSSION_STORAGE_KEY,
+      JSON.stringify(payload)
+    );
+  } catch {
+    /* storage unavailable — the URL param is the source of truth anyway */
+  }
+
+  return { limit, truncated, count: payload.length, blocked };
 }

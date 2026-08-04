@@ -569,6 +569,12 @@ export const en = {
     selectAll: 'Select all shown',
     clearSelection: 'Clear selection',
     generate: 'Generate discussion list',
+    openPrint: 'Open printable version',
+    generating: 'Generating…',
+    popupBlocked:
+      'The browser blocked the new window. Allow pop-ups for this site and try again, or use “Generate discussion list” to download the file directly.',
+    printFallback:
+      'The PDF could not be built here, so the printable version opened instead — you can print it or save it as a PDF from there.',
     exportList: 'Export as discussion list',
     useFilter: 'Use current filter results',
     limitNote:

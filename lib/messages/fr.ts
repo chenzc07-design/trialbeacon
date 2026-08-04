@@ -475,6 +475,12 @@ export const fr: Messages = {
     selectAll: 'Tout sélectionner (affiché)',
     clearSelection: 'Effacer la sélection',
     generate: 'Générer la liste de discussion',
+    openPrint: 'Ouvrir la version imprimable',
+    generating: 'Génération…',
+    popupBlocked:
+      'Le navigateur a bloqué la nouvelle fenêtre. Autorisez les pop-ups pour ce site et réessayez, ou cliquez sur « Générer la liste de discussion » pour télécharger le fichier directement.',
+    printFallback:
+      'Le PDF n’a pas pu être généré ici ; la version imprimable s’est ouverte à la place — vous pouvez l’imprimer ou l’enregistrer en PDF depuis là.',
     exportList: 'Exporter comme liste de discussion',
     useFilter: 'Utiliser les résultats du filtre actuel',
     limitNote:

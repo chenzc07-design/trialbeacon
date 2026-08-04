@@ -41,10 +41,19 @@ export default function DiscussionListPage() {
   useEffect(() => {
     let data: DiscussionItem[] = [];
     try {
-      const raw = window.sessionStorage.getItem(DISCUSSION_STORAGE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw);
+      // Primary source: the ?d= URL param (works across tabs / private mode).
+      const params = new URLSearchParams(window.location.search);
+      const d = params.get('d');
+      if (d) {
+        const parsed = JSON.parse(decodeURIComponent(d));
         if (Array.isArray(parsed)) data = parsed as DiscussionItem[];
+      } else {
+        // Fallback for any old bookmarks of the bare route.
+        const raw = window.sessionStorage.getItem(DISCUSSION_STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) data = parsed as DiscussionItem[];
+        }
       }
     } catch {
       data = [];

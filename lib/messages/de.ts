@@ -475,6 +475,12 @@ export const de: Messages = {
     selectAll: 'Alle angezeigten auswählen',
     clearSelection: 'Auswahl löschen',
     generate: 'Gesprächsliste erstellen',
+    openPrint: 'Druckversion öffnen',
+    generating: 'Wird erstellt…',
+    popupBlocked:
+      'Der Browser hat das neue Fenster blockiert. Erlauben Sie Pop-ups für diese Seite und versuchen Sie es erneut, oder klicken Sie auf „Gesprächsliste erstellen“, um die Datei direkt herunterzuladen.',
+    printFallback:
+      'Das PDF konnte hier nicht erstellt werden; stattdessen wurde die Druckversion geöffnet — dort können Sie sie ausdrucken oder als PDF speichern.',
     exportList: 'Als Gesprächsliste exportieren',
     useFilter: 'Aktuelle Filterergebnisse verwenden',
     limitNote:

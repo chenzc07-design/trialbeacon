@@ -475,6 +475,12 @@ export const ja: Messages = {
     selectAll: '表示中のすべてを選択',
     clearSelection: '選択をクリア',
     generate: '話し合いリストを作成',
+    openPrint: '印刷用バージョンを開く',
+    generating: '生成中…',
+    popupBlocked:
+      'ブラウザーが新しいウィンドウをブロックしました。このサイトのポップアップを許可して再度お試しいただくか、「話し合いリストを作成」をクリックしてファイルを直接ダウンロードしてください。',
+    printFallback:
+      'この環境では PDF を作成できなかったため、印刷用バージョンを開きました。そちらで印刷するか PDF として保存してください。',
     exportList: '話し合いリストとして書き出す',
     useFilter: '現在のフィルター結果を使用',
     limitNote:

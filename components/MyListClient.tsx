@@ -8,7 +8,7 @@ import { useMyList } from '@/components/useMyList';
 import { useI18n } from '@/components/I18nProvider';
 import { useAuth } from '@/components/AuthProvider';
 import { t } from '@/lib/i18n-runtime';
-import { launchDiscussionList } from '@/lib/discussion-list';
+import { downloadDiscussionListPdf } from '@/lib/discussion-pdf';
 import { RegionBadge, SourceBadge, TypeBadge, StatusBadge } from '@/components/badges';
 
 const NOTES_KEY = 'tb_mylist_notes';
@@ -19,9 +19,30 @@ export function MyListClient() {
   const { ids, remove, clear } = useMyList();
   const [today, setToday] = useState('');
   const [notes, setNotes] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [notice, setNotice] = useState<string | null>(null);
 
-  function onExportList() {
-    launchDiscussionList(items, { signedIn: status === 'signed-in' });
+  async function onExportList() {
+    if (items.length === 0) return;
+    setBusy(true);
+    setNotice(null);
+    try {
+      const res = await downloadDiscussionListPdf({
+        items,
+        signedIn: status === 'signed-in',
+        locale,
+        messages: m,
+      });
+      setNotice(
+        res.truncated
+          ? t(m, 'discussionList.limitExceeded', { max: res.limit })
+          : null
+      );
+    } catch {
+      setNotice(t(m, 'discussionList.printFallback'));
+    } finally {
+      setBusy(false);
+    }
   }
 
   useEffect(() => {
@@ -103,9 +124,10 @@ export function MyListClient() {
           <button
             type="button"
             onClick={onExportList}
-            className="btn border border-slateish-300 bg-white px-4 py-2.5 text-[13px] text-ink-800 hover:border-navy-300 hover:bg-navy-50"
+            disabled={busy}
+            className="btn border border-slateish-300 bg-white px-4 py-2.5 text-[13px] text-ink-800 hover:border-navy-300 hover:bg-navy-50 disabled:opacity-60"
           >
-            {m.discussionList.exportList}
+            {busy ? m.discussionList.generating : m.discussionList.exportList}
           </button>
           <button
             type="button"
@@ -115,6 +137,9 @@ export function MyListClient() {
             {m.myList.clearAll}
           </button>
         </div>
+        {notice ? (
+          <p className="mt-2 text-[12px] font-medium text-[#7a4a12]">{notice}</p>
+        ) : null}
         <Link href="/safety" className="no-print link-underline mt-3 inline-block text-[13px]">
           {m.nav.safety} →
         </Link>
