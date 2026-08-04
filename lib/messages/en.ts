@@ -646,6 +646,68 @@ export const en = {
     proBadge: 'Pro report',
     proCta: 'Upgrade for a detailed visit-prep report',
   },
+  pricing: {
+    nav: 'Discussion List Pro',
+    // ----- /pro page -----
+    eyebrow: 'Optional paid feature',
+    title: 'Discussion List Pro',
+    subtitle:
+      'Optional tools that save time organising public official records. They do not rank, recommend, or change anything — they only make the list faster to prepare.',
+    disclaimer:
+      'This is a paid convenience feature. TrialBeacon still provides no medical advice, recommendations, or matching. The free plan stays available.',
+    whatYouGetTitle: 'What you get',
+    whatYouGet: [
+      'Unlimited discussion-list generations while your plan is active',
+      'Follow-list export — turn your saved records into one list',
+      'Optional weekly digest email of your organised lists',
+    ],
+    whatYouDontTitle: 'What you do NOT get',
+    whatYouDont: [
+      'No medical advice, recommendations, or suitability judgement',
+      'No ranking, scoring, or “best match” for any record',
+      'No change to which public records are shown',
+    ],
+    singleTitle: 'Single unlock',
+    singlePrice: '$4.9',
+    singleDesc: 'One full discussion list (up to 10 records). No account change needed.',
+    monthlyTitle: 'Monthly Pro',
+    monthlyPrice: '$6.9',
+    monthlyPer: ' / month',
+    monthlyDesc:
+      'Unlimited generations for one month, follow-list export, and an optional weekly digest email.',
+    payWithPaypal: 'Pay with PayPal',
+    paypalUnavailable: 'PayPal is not configured yet. Please check back soon.',
+    comingSoon: 'Coming soon',
+    otherMethodsTitle: 'Other payment methods',
+    otherMethodsNote: 'WeChat Pay and Alipay are coming soon.',
+    alreadyPro: 'Your Discussion List Pro is active until {date}.',
+    manageTitle: 'Manage your plan',
+    manageCancel: 'Cancel subscription',
+    manageNote:
+      'Cancelling stops future renewals. Your Pro access continues until the current period ends.',
+    // ----- inline upgrade prompts (neutral) -----
+    upgradeCta: 'Upgrade for more',
+    freeDailyUsed:
+      'You have used your free discussion list for today. Upgrade for more, or try again tomorrow.',
+    freeListTooLarge:
+      'This list has more than {max} records. Upgrade to include up to 10, or reduce the selection.',
+    // ----- result pages -----
+    successTitle: "You're all set",
+    successBodyPro:
+      'Your Discussion List Pro is now active. Generate as many lists as you need this month.',
+    successBodySingle:
+      'Your single unlock has been added — you can now generate one full list (up to 10 records).',
+    successCta: 'Generate a discussion list',
+    cancelTitle: 'Payment not completed',
+    cancelBody: 'No charge was made. You can try again whenever you are ready.',
+    errorTitle: 'Something went wrong',
+    errorBody: 'We could not confirm your payment. Please try again or contact support.',
+    retry: 'Try again',
+    backHome: 'Back to home',
+    // ----- privacy -----
+    statNote:
+      'Anonymous usage only — no personal health information is collected or stored.',
+  },
   // Localised cancer type names + descriptors (slug-keyed).
   cancers: {
     lung: { label: 'Lung Cancer', descriptor: 'Including NSCLC and SCLC' },

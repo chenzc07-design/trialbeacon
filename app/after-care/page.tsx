@@ -5,6 +5,7 @@ import { getCancer, CANCERS } from '@/lib/cancers';
 import { RegionTabs } from '@/components/RegionTabs';
 import { DataStatus } from '@/components/DataStatus';
 import { PageHero } from '@/components/PageHero';
+import { StatsPing } from '@/components/StatsPing';
 import { FilterMotif } from '@/components/Motifs';
 import { FreshnessBadge } from '@/components/FreshnessBadge';
 import { DiscussionPrompt } from '@/components/DiscussionPrompt';
@@ -35,6 +36,7 @@ export default async function AfterCarePage({
 
   return (
     <>
+      <StatsPing event="view_aftercare" />
       <PageHero
         eyebrow={m.afterCare.eyebrow}
         title={m.afterCare.title}

@@ -586,4 +586,61 @@ export const fr: Messages = {
       descriptor: 'Leucémies aiguës et chroniques',
     },
   },
+  pricing: {
+    nav: 'Discussion List Pro',
+    eyebrow: 'Fonctionnalité payante optionnelle',
+    title: 'Discussion List Pro',
+    subtitle:
+      'Des outils optionnels qui font gagner du temps pour organiser les registres officiels publics. Ils ne classent, ne recommandent ni ne modifient rien — ils ne font que préparer la liste plus vite.',
+    disclaimer:
+      'Ceci est une fonctionnalité payante de convenance. TrialBeacon ne fournit toujours aucun conseil médical, aucune recommandation ni aucun appariement. L’offre gratuite reste disponible.',
+    whatYouGetTitle: 'Ce que vous obtenez',
+    whatYouGet: [
+      'Générations illimitées de listes tant que votre offre est active',
+      'Export de la liste de suivi — transformez vos enregistrements sauvegardés en une liste',
+      'E-mail récapitulatif hebdomadaire optionnel de vos listes organisées',
+    ],
+    whatYouDontTitle: 'Ce que vous n’obtenez pas',
+    whatYouDont: [
+      'Aucun conseil médical, recommandation ou jugement d’adéquation',
+      'Aucun classement, score ou « meilleure correspondance » pour un enregistrement',
+      'Aucun changement dans les registres publics affichés',
+    ],
+    singleTitle: 'Déblocage unique',
+    singlePrice: '$4.9',
+    singleDesc: 'Une liste complète (jusqu’à 10 enregistrements). Aucun changement de compte requis.',
+    monthlyTitle: 'Pro mensuel',
+    monthlyPrice: '$6.9',
+    monthlyPer: ' / mois',
+    monthlyDesc:
+      'Générations illimitées pendant un mois, export de la liste de suivi et e-mail récapitulatif hebdomadaire optionnel.',
+    payWithPaypal: 'Payer avec PayPal',
+    paypalUnavailable: 'PayPal n’est pas encore configuré. Revenez bientôt.',
+    comingSoon: 'Bientôt disponible',
+    otherMethodsTitle: 'Autres moyens de paiement',
+    otherMethodsNote: 'WeChat Pay et Alipay seront bientôt disponibles.',
+    alreadyPro: 'Votre Discussion List Pro est active jusqu’au {date}.',
+    manageTitle: 'Gérer votre offre',
+    manageCancel: 'Annuler l’abonnement',
+    manageNote:
+      'L’annulation arrête les renouvellements futurs. Votre accès Pro continue jusqu’à la fin de la période en cours.',
+    upgradeCta: 'Passer à la version supérieure',
+    freeDailyUsed:
+      'Vous avez utilisé votre liste gratuite du jour. Passez à la version supérieure pour plus, ou réessayez demain.',
+    freeListTooLarge:
+      'Cette liste comporte plus de {max} enregistrements. Passez à la version supérieure pour inclure jusqu’à 10, ou réduisez la sélection.',
+    successTitle: 'C’est prêt',
+    successBodyPro:
+      'Votre Discussion List Pro est maintenant active. Générez autant de listes que nécessaire ce mois-ci.',
+    successBodySingle:
+      'Votre déblocage unique a été ajouté — vous pouvez maintenant générer une liste complète (jusqu’à 10 enregistrements).',
+    successCta: 'Générer une liste',
+    cancelTitle: 'Paiement non terminé',
+    cancelBody: 'Aucun débit n’a été effectué. Vous pouvez réessayer quand vous le souhaitez.',
+    errorTitle: 'Une erreur est survenue',
+    errorBody: 'Nous n’avons pas pu confirmer votre paiement. Veuillez réessayer ou contacter le support.',
+    retry: 'Réessayer',
+    backHome: 'Retour à l’accueil',
+    statNote: 'Utilisation anonyme uniquement — aucune information de santé personnelle n’est collectée ou stockée.',
+  },
 };

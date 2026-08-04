@@ -8,6 +8,7 @@ import type { UpdateItem } from '@/lib/types';
 import { getServerMessages, t } from '@/lib/i18n-server';
 import { RegionBadge, SourceBadge, TypeBadge, PhaseBadge, StatusBadge } from '@/components/badges';
 import { SaveToListButton } from '@/components/SaveToListButton';
+import { ViewOriginalLink } from '@/components/ViewOriginalLink';
 
 function fmtDate(iso: string | null | undefined, locale: string): string {
   if (!iso) return '';
@@ -124,12 +125,10 @@ export default async function TrialDetailPage({
           </h1>
 
           <div className="mt-5 flex flex-wrap items-center gap-2">
-            <a
+            <ViewOriginalLink
               href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn bg-white px-4 py-2.5 text-navy-900 hover:bg-navy-50"
               title={m.trial.viewOnRegistryHint}
+              className="btn bg-white px-4 py-2.5 text-navy-900 hover:bg-navy-50"
             >
               {m.trial.viewOnRegistry}
               <svg className="h-3.5 w-3.5" viewBox="0 0 12 12" fill="none" aria-hidden="true">
@@ -141,7 +140,7 @@ export default async function TrialDetailPage({
                   strokeLinejoin="round"
                 />
               </svg>
-            </a>
+            </ViewOriginalLink>
             <SaveToListButton id={item.id} />
             <Link
               href={backHref}

@@ -8,6 +8,7 @@ import { RegionTabs } from '@/components/RegionTabs';
 import { DataStatus } from '@/components/DataStatus';
 import { FreshnessBadge } from '@/components/FreshnessBadge';
 import { PageHero } from '@/components/PageHero';
+import { StatsPing } from '@/components/StatsPing';
 import { t, getServerMessages } from '@/lib/i18n-server';
 
 export const revalidate = 3600;
@@ -45,6 +46,7 @@ export default async function CancerDetailPage({
 
   return (
     <>
+      <StatsPing event="view_cancer" />
       <PageHero
         eyebrow={m.cancersIndex.title}
         title={m.cancers[slug].label}

@@ -7,11 +7,24 @@ import { useI18n } from './I18nProvider';
 import { PageHero } from './PageHero';
 import { CANCERS } from '@/lib/cancers';
 import { ALERT_FREE_LIMIT } from '@/lib/auth-shared';
+import { t } from '@/lib/i18n-runtime';
+
+function fmtDate(ms: number, locale: string): string {
+  try {
+    return new Date(ms).toLocaleDateString(locale, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
+  } catch {
+    return '';
+  }
+}
 
 const DEFAULT_REGIONS = ['US', 'EU', 'CN'];
 
 export function AccountClient() {
-  const { messages: m } = useI18n();
+  const { messages: m, locale } = useI18n();
   const { user, signOut, eraseAll, openSignIn, refresh, status } = useAuth();
   const [saving, setSaving] = useState(false);
   const [savedAt, setSavedAt] = useState<string | null>(null);
@@ -19,6 +32,7 @@ export function AccountClient() {
   const [regions, setRegions] = useState<string[]>(DEFAULT_REGIONS);
   const [confirmErase, setConfirmErase] = useState(false);
   const [erasing, setErasing] = useState(false);
+  const [cancelling, setCancelling] = useState(false);
 
   const userId = user?.id ?? null;
 
@@ -97,8 +111,24 @@ export function AccountClient() {
       });
       await refresh();
       setSavedAt(new Date().toLocaleTimeString());
+      // Anonymous usage stat — no health information is sent.
+      fetch('/api/stats', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ event: 'alerts_subscribe' }),
+      }).catch(() => undefined);
     } finally {
       setSaving(false);
+    }
+  };
+
+  const cancelPro = async () => {
+    setCancelling(true);
+    try {
+      await fetch('/api/paypal/cancel', { method: 'POST' });
+      await refresh();
+    } finally {
+      setCancelling(false);
     }
   };
 
@@ -235,6 +265,38 @@ export function AccountClient() {
           <button type="button" onClick={signOut} className="btn-secondary text-[13px]">
             {m.account.signOutCta}
           </button>
+        </div>
+
+        {/* Discussion List Pro / subscription management */}
+        <div className="mt-6 card p-6">
+          <h2 className="text-base font-semibold text-ink-950">
+            {m.pricing.manageTitle}
+          </h2>
+          {user.plan === 'pro' && (user.proUntil ?? 0) > Date.now() ? (
+            <>
+              <p className="mt-1 text-sm text-slateish-600">
+                {t(m, 'pricing.alreadyPro', { date: fmtDate(user.proUntil!, locale) })}
+              </p>
+              <p className="mt-2 text-[12px] leading-relaxed text-slateish-500">
+                {m.pricing.manageNote}
+              </p>
+              <button
+                type="button"
+                onClick={cancelPro}
+                disabled={cancelling}
+                className="btn-secondary mt-3 text-[13px]"
+              >
+                {cancelling ? m.alerts.form.submitting : m.pricing.manageCancel}
+              </button>
+            </>
+          ) : (
+            <>
+              <p className="mt-1 text-sm text-slateish-600">{m.pricing.disclaimer}</p>
+              <Link href="/pro" className="btn-primary mt-3 inline-flex text-[13px]">
+                {m.pricing.upgradeCta}
+              </Link>
+            </>
+          )}
         </div>
 
         <div className="mt-8 rounded-2xl border border-[#e8c9c9] bg-[#faf7f6] p-5">

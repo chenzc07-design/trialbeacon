@@ -2,7 +2,10 @@ node_modules/
 .next/
 .vercel/
 .data/
-.env*
+# Ignore real env files but keep the documented example
+.env
+.env.*
+!.env.example
 *.log
 npm-debug.log*
 .pnpm-debug.log*

@@ -586,4 +586,61 @@ export const de: Messages = {
       descriptor: 'Akute und chronische Leukämien',
     },
   },
+  pricing: {
+    nav: 'Discussion List Pro',
+    eyebrow: 'Optionale kostenpflichtige Funktion',
+    title: 'Discussion List Pro',
+    subtitle:
+      'Optionale Werkzeuge, die Zeit beim Organisieren öffentlicher amtlicher Registereinträge sparen. Sie bewerten, empfehlen oder ändern nichts — sie bereiten die Liste nur schneller vor.',
+    disclaimer:
+      'Dies ist ein kostenpflichtiges Komfortfeature. TrialBeacon gibt nach wie vor keinen medizinischen Rat, keine Empfehlungen und kein Matching. Der kostenlose Tarif bleibt verfügbar.',
+    whatYouGetTitle: 'Was Sie erhalten',
+    whatYouGet: [
+      'Unbegrenzte Listengenerierungen, solange Ihr Tarif aktiv ist',
+      'Export der Merkliste — verwandeln Sie gespeicherte Einträge in eine Liste',
+      'Optionale wöchentliche Zusammenfassungs-E-Mail Ihrer Listen',
+    ],
+    whatYouDontTitle: 'Was Sie nicht erhalten',
+    whatYouDont: [
+      'Keinen medizinischen Rat, keine Empfehlungen, kein Eignungsurteil',
+      'Keine Rangfolge, Bewertung oder „beste Übereinstimmung“ für einen Eintrag',
+      'Keine Änderung der angezeigten öffentlichen Einträge',
+    ],
+    singleTitle: 'Einmaliges Freischalten',
+    singlePrice: '$4.9',
+    singleDesc: 'Eine vollständige Liste (bis zu 10 Einträge). Keine Kontoänderung nötig.',
+    monthlyTitle: 'Pro monatlich',
+    monthlyPrice: '$6.9',
+    monthlyPer: ' / Monat',
+    monthlyDesc:
+      'Unbegrenzte Generierungen für einen Monat, Merklisten-Export und optionale wöchentliche Zusammenfassungs-E-Mail.',
+    payWithPaypal: 'Mit PayPal bezahlen',
+    paypalUnavailable: 'PayPal ist noch nicht konfiguriert. Schauen Sie bald wieder.',
+    comingSoon: 'Bald verfügbar',
+    otherMethodsTitle: 'Andere Zahlungsmethoden',
+    otherMethodsNote: 'WeChat Pay und Alipay sind bald verfügbar.',
+    alreadyPro: 'Ihr Discussion List Pro ist aktiv bis {date}.',
+    manageTitle: 'Tarif verwalten',
+    manageCancel: 'Abonnement kündigen',
+    manageNote:
+      'Kündigen stoppt zukünftige Verlängerungen. Ihr Pro-Zugang läuft bis zum Ende des aktuellen Zeitraums weiter.',
+    upgradeCta: 'Upgrade für mehr',
+    freeDailyUsed:
+      'Sie haben Ihre kostenlose Liste für heute verbraucht. Führen Sie ein Upgrade durch, oder versuchen Sie es morgen erneut.',
+    freeListTooLarge:
+      'Diese Liste hat mehr als {max} Einträge. Führen Sie ein Upgrade durch, um bis zu 10 einzuschließen, oder verringern Sie die Auswahl.',
+    successTitle: 'Alles bereit',
+    successBodyPro:
+      'Ihr Discussion List Pro ist jetzt aktiv. Generieren Sie so viele Listen, wie Sie diesen Monat benötigen.',
+    successBodySingle:
+      'Ihr einmaliges Freischalten wurde hinzugefügt — Sie können jetzt eine vollständige Liste (bis zu 10 Einträge) generieren.',
+    successCta: 'Liste generieren',
+    cancelTitle: 'Zahlung nicht abgeschlossen',
+    cancelBody: 'Es wurde keine Zahlung vorgenommen. Sie können es jederzeit erneut versuchen.',
+    errorTitle: 'Etwas ist schiefgelaufen',
+    errorBody: 'Wir konnten Ihre Zahlung nicht bestätigen. Bitte versuchen Sie es erneut oder kontaktieren Sie den Support.',
+    retry: 'Erneut versuchen',
+    backHome: 'Zurück zur Startseite',
+    statNote: 'Nur anonyme Nutzung — es werden keine persönlichen Gesundheitsdaten erhoben oder gespeichert.',
+  },
 };

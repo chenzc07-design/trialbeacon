@@ -20,6 +20,9 @@ export interface AuthUser {
   alertCancers: string[];
   alertRegions: ('US' | 'EU' | 'CN')[];
   alertEnabled: boolean;
+  plan: 'free' | 'pro';
+  proUntil: number;
+  paypalSubscriptionId?: string;
 }
 
 interface AuthState {

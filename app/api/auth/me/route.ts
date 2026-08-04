@@ -15,6 +15,9 @@ export async function GET() {
       alertCancers: u.alertCancers,
       alertRegions: u.alertRegions,
       alertEnabled: u.alertEnabled,
+      plan: u.plan,
+      proUntil: u.proUntil,
+      paypalSubscriptionId: u.paypalSubscriptionId,
     },
   });
 }

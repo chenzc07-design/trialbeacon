@@ -26,6 +26,7 @@ import {
   CODE_TTL_MIN,
   FREE_FOLLOW_LIMIT,
   ALERT_FREE_LIMIT,
+  ANON_UID,
 } from './auth-shared';
 
 export {
@@ -34,6 +35,7 @@ export {
   CODE_TTL_MIN,
   FREE_FOLLOW_LIMIT,
   ALERT_FREE_LIMIT,
+  ANON_UID,
 };
 
 export const PREFS_COOKIE = 'tb_prefs';
@@ -59,6 +61,18 @@ export interface Prefs {
   alertCancers: string[];
   alertRegions: Region[];
   alertEnabled: boolean;
+  /** 'free' unless a single-unlock or subscription entitlement is active. */
+  plan: 'free' | 'pro';
+  /** Epoch ms when the current Pro entitlement lapses (0 = none). */
+  proUntil: number;
+  /** Remaining single-unlock credits (each unlocks one full list). */
+  unlockCredits: number;
+  /** 'YYYY-MM-DD' (UTC) of the day the current generation count covers. */
+  genDate: string;
+  /** Discussion-list generations performed on `genDate`. */
+  genCount: number;
+  /** PayPal subscription id, when a recurring plan is active. */
+  paypalSubscriptionId?: string;
 }
 
 export interface User extends Prefs {
@@ -74,6 +88,12 @@ export function defaultPrefs(): Prefs {
     alertCancers: [],
     alertRegions: ['US', 'EU', 'CN'],
     alertEnabled: false,
+    plan: 'free',
+    proUntil: 0,
+    unlockCredits: 0,
+    genDate: '',
+    genCount: 0,
+    paypalSubscriptionId: undefined,
   };
 }
 
@@ -342,6 +362,9 @@ function sanitizePrefs(p: Partial<Prefs> | null | undefined): Prefs {
         (r) => r === 'US' || r === 'EU' || r === 'CN' || r === 'OTHER'
       ) as Region[])
     : d.alertRegions;
+  const proUntil = typeof p.proUntil === 'number' && p.proUntil > 0 ? p.proUntil : 0;
+  const plan =
+    p.plan === 'pro' && proUntil > Date.now() ? 'pro' : 'free';
   return {
     myList: Array.isArray(p.myList)
       ? Array.from(new Set(p.myList.filter((x) => typeof x === 'string'))).slice(
@@ -354,7 +377,38 @@ function sanitizePrefs(p: Partial<Prefs> | null | undefined): Prefs {
       : d.alertCancers,
     alertRegions: regions.length ? regions : d.alertRegions,
     alertEnabled: typeof p.alertEnabled === 'boolean' ? p.alertEnabled : d.alertEnabled,
+    plan,
+    proUntil,
+    unlockCredits:
+      typeof p.unlockCredits === 'number' && p.unlockCredits >= 0
+        ? Math.floor(p.unlockCredits)
+        : 0,
+    genDate: typeof p.genDate === 'string' ? p.genDate : '',
+    genCount:
+      typeof p.genCount === 'number' && p.genCount >= 0 ? Math.floor(p.genCount) : 0,
+    paypalSubscriptionId:
+      typeof p.paypalSubscriptionId === 'string' && p.paypalSubscriptionId.length > 0
+        ? p.paypalSubscriptionId
+        : undefined,
   };
+}
+
+/** True while a Pro subscription / entitlement is currently active. */
+export function isProActive(p: Prefs): boolean {
+  return p.plan === 'pro' && p.proUntil > Date.now();
+}
+
+/**
+ * Resolves the prefs + identity for the current request without requiring a
+ * session. Signed-in callers use their derived uid; everyone else falls back
+ * to the anonymous `tb_prefs` cookie so the daily generation cap still works
+ * for visitors who never sign in. Used by the quota + entitlement checks.
+ */
+export async function getRequestPrefs(): Promise<{ uid: string; prefs: Prefs }> {
+  const user = await getCurrentUser();
+  if (user) return { uid: user.id, prefs: sanitizePrefs(user) };
+  const local = await readPrefsForUid(ANON_UID);
+  return { uid: ANON_UID, prefs: local ?? defaultPrefs() };
 }
 
 export function prefsCookie(uid: string, p: Prefs): CookieSpec {
@@ -465,4 +519,34 @@ export async function clientIp(): Promise<string> {
   return (
     h.get('x-forwarded-for')?.split(',')[0].trim() || h.get('x-real-ip') || 'local'
   );
+}
+
+/* --------------------------------------------------------- tiny KV counter */
+
+/**
+ * Increment a counter in the sync store. Returns null when sync is not
+ * configured (callers fall back to in-memory). Used by the anonymous stats
+ * module so it can reuse the same Redis when available.
+ */
+export async function kvIncr(key: string, by = 1): Promise<number | null> {
+  if (!isSyncConfigured()) return null;
+  try {
+    const res = await upstash([['INCRBY', key, String(by)]]);
+    const raw = res[0];
+    return typeof raw === 'number' ? raw : Number(raw ?? 0);
+  } catch {
+    return null;
+  }
+}
+
+export async function kvGet(key: string): Promise<number> {
+  if (!isSyncConfigured()) return 0;
+  try {
+    const res = await upstash([['GET', key]]);
+    const raw = res[0];
+    const n = raw == null ? 0 : Number(raw);
+    return Number.isFinite(n) ? n : 0;
+  } catch {
+    return 0;
+  }
 }

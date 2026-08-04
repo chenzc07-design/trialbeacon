@@ -9,6 +9,8 @@ import { useI18n } from '@/components/I18nProvider';
 import { useAuth } from '@/components/AuthProvider';
 import { t } from '@/lib/i18n-runtime';
 import { downloadDiscussionListPdf } from '@/lib/discussion-pdf';
+import { requestQuota } from '@/lib/quota-client';
+import { ProUpgradePrompt } from '@/components/ProUpgradePrompt';
 import { RegionBadge, SourceBadge, TypeBadge, StatusBadge } from '@/components/badges';
 
 const NOTES_KEY = 'tb_mylist_notes';
@@ -21,12 +23,28 @@ export function MyListClient() {
   const [notes, setNotes] = useState('');
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
+  const [upgradeMsg, setUpgradeMsg] = useState<string | null>(null);
 
   async function onExportList() {
     if (items.length === 0) return;
     setBusy(true);
     setNotice(null);
+    setUpgradeMsg(null);
     try {
+      const q = await requestQuota(items.length, true);
+      if (!q.allowed) {
+        setUpgradeMsg(
+          q.reason === 'genLimit'
+            ? t(m, 'pricing.freeListTooLarge', { max: q.genLimit })
+            : m.pricing.freeDailyUsed
+        );
+        return;
+      }
+      fetch('/api/stats', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ event: 'select_generate' }),
+      }).catch(() => undefined);
       const res = await downloadDiscussionListPdf({
         items,
         signedIn: status === 'signed-in',
@@ -137,6 +155,9 @@ export function MyListClient() {
             {m.myList.clearAll}
           </button>
         </div>
+        {upgradeMsg ? (
+          <ProUpgradePrompt message={upgradeMsg} />
+        ) : null}
         {notice ? (
           <p className="mt-2 text-[12px] font-medium text-[#7a4a12]">{notice}</p>
         ) : null}

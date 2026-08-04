@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { UpdateItem, Region } from '@/lib/types';
 import { UpdateList } from './UpdateCard';
 import { useI18n } from './I18nProvider';
@@ -12,6 +12,8 @@ import {
   openDiscussionListPrint,
 } from '@/lib/discussion-list';
 import { downloadDiscussionListPdf } from '@/lib/discussion-pdf';
+import { requestQuota } from '@/lib/quota-client';
+import { ProUpgradePrompt } from './ProUpgradePrompt';
 import { KEYWORDS, KEYWORD_LABELS, KEYWORD_HEADING } from '@/lib/keywords';
 
 const REGION_ORDER: Region[] = ['US', 'EU', 'CN', 'OTHER'];
@@ -69,6 +71,26 @@ export function RegionTabs({
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [notice, setNotice] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [upgradeMsg, setUpgradeMsg] = useState<string | null>(null);
+  const [dailyExhausted, setDailyExhausted] = useState(false);
+
+  // Reflect the free daily limit so the inline upgrade hint can show even
+  // before the user clicks. Read-only check; never consumes a generation.
+  useEffect(() => {
+    if (status === 'unknown') return;
+    let active = true;
+    requestQuota(1, false)
+      .then((q) => {
+        if (!active) return;
+        setDailyExhausted(
+          q.plan === 'free' && q.dailyRemaining <= 0 && q.unlockCredits <= 0
+        );
+      })
+      .catch(() => undefined);
+    return () => {
+      active = false;
+    };
+  }, [status]);
 
   function toggleSelect(id: string) {
     setSelectedIds((prev) => {
@@ -81,11 +103,23 @@ export function RegionTabs({
 
   /** Build the list from the selected records (mode A) or the current
    *  filtered view (mode B), then download a real PDF directly. Falls back to
-   *  the printable page if the in-browser PDF engine is unavailable. */
+   *  the printable page if the in-browser PDF engine is unavailable. The
+   *  daily / record quota is checked (and consumed) before any generation. */
   async function onDownload(chosen: UpdateItem[]) {
     if (chosen.length === 0) return;
     setBusy(true);
+    setUpgradeMsg(null);
     try {
+      const q = await requestQuota(chosen.length, true);
+      if (!q.allowed) {
+        setUpgradeMsg(
+          q.reason === 'genLimit'
+            ? t(m, 'pricing.freeListTooLarge', { max: q.genLimit })
+            : m.pricing.freeDailyUsed
+        );
+        return;
+      }
+      ping('select_generate');
       const res = await downloadDiscussionListPdf({
         items: chosen,
         signedIn: status === 'signed-in',
@@ -111,19 +145,50 @@ export function RegionTabs({
     }
   }
 
-  /** Open the printable page in a new tab (secondary option). */
+  /** Open the printable page in a new tab (secondary option). Gated the same
+   *  way as the direct download so the free daily limit is respected. */
   function onOpenPrint(chosen: UpdateItem[]) {
     if (chosen.length === 0) return;
-    const res = openDiscussionListPrint(chosen, {
-      signedIn: status === 'signed-in',
-    });
-    setNotice(
-      res.blocked
-        ? t(m, 'discussionList.popupBlocked')
-        : res.truncated
-          ? t(m, 'discussionList.limitExceeded', { max: res.limit })
-          : null
-    );
+    setUpgradeMsg(null);
+    requestQuota(chosen.length, true)
+      .then((q) => {
+        if (!q.allowed) {
+          setUpgradeMsg(
+            q.reason === 'genLimit'
+              ? t(m, 'pricing.freeListTooLarge', { max: q.genLimit })
+              : m.pricing.freeDailyUsed
+          );
+          return;
+        }
+        ping('select_generate');
+        const res = openDiscussionListPrint(chosen, {
+          signedIn: status === 'signed-in',
+        });
+        setNotice(
+          res.blocked
+            ? t(m, 'discussionList.popupBlocked')
+            : res.truncated
+              ? t(m, 'discussionList.limitExceeded', { max: res.limit })
+              : null
+        );
+      })
+      .catch(() => {
+        const res = openDiscussionListPrint(chosen, {
+          signedIn: status === 'signed-in',
+        });
+        setNotice(
+          res.blocked ? t(m, 'discussionList.popupBlocked') : null
+        );
+      });
+  }
+
+  /** Fire an anonymous usage event (no health info). Best-effort. */
+  function ping(event: string) {
+    fetch('/api/stats', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ event }),
+    }).catch(() => undefined);
   }
   const [tab, setTab] = useState<Region | 'ALL'>('ALL');
   const [openOnly, setOpenOnly] = useState(false);
@@ -430,6 +495,16 @@ export function RegionTabs({
                 status === 'signed-in' ? SIGNED_IN_EXPORT_LIMIT : FREE_EXPORT_LIMIT,
             })}
           </p>
+          {upgradeMsg ? (
+            <ProUpgradePrompt message={upgradeMsg} />
+          ) : dailyExhausted ? (
+            <p className="mt-1 text-[11px] font-medium text-[#7a4a12]">
+              {m.pricing.freeDailyUsed}{' '}
+              <a href="/pro" className="underline hover:text-[#5e3610]">
+                {m.pricing.upgradeCta}
+              </a>
+            </p>
+          ) : null}
           {notice ? (
             <p className="mt-1 text-[11px] font-medium text-[#7a4a12]">{notice}</p>
           ) : null}

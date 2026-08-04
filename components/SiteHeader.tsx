@@ -46,6 +46,7 @@ export function SiteHeader() {
     },
     { href: '/alerts', label: m.nav.alerts },
     { href: '/sources', label: m.nav.sources },
+    { href: '/pro', label: m.pricing.nav },
   ];
 
   const SECONDARY = [
@@ -197,6 +198,19 @@ export function SiteHeader() {
                   >
                     {m.nav.alerts}
                   </Link>
+                  <Link
+                    href="/pro"
+                    className="flex items-center justify-between rounded-lg px-3 py-2 text-sm text-ink-900 hover:bg-slateish-50"
+                    role="menuitem"
+                  >
+                    <span>{m.pricing.nav}</span>
+                    {user.plan === 'pro' && (user.proUntil ?? 0) > Date.now() ? (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-[#eef6f2] px-1.5 py-0.5 text-[10px] font-medium text-[#2e5747]">
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#3f8f6b]" />
+                        Pro
+                      </span>
+                    ) : null}
+                  </Link>
                   <button
                     type="button"
                     onClick={signOut}
@@ -287,6 +301,13 @@ export function SiteHeader() {
                   className="rounded-lg px-3 py-2.5 text-sm font-medium text-slateish-600 hover:bg-slateish-100"
                 >
                   {m.nav.account}
+                </Link>
+                <Link
+                  href="/pro"
+                  onClick={() => setOpen(false)}
+                  className="rounded-lg px-3 py-2.5 text-sm font-medium text-slateish-600 hover:bg-slateish-100"
+                >
+                  {m.pricing.nav}
                 </Link>
                 <button
                   type="button"
