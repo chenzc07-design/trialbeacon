@@ -582,56 +582,69 @@ export const en = {
     limitExceeded:
       'Only the first {max} records were included. Sign in to export more.',
     selectRecord: 'Select this record',
-    // Printable list.
-    header: 'TrialBeacon · Public records organiser',
+    // ----- PDF / printable checklist -----
+    // Pinned header on every printed / PDF page.
+    pageHeaderBrand: 'TrialBeacon · Public records organiser',
+    pageHeaderTag: 'Organises public official records only — not medical advice',
+    // First page.
     title: 'Doctor discussion reference list',
-    subtitle: '(organises public official records only)',
+    introHeading: 'About this list:',
+    introBody:
+      'This list is generated from public records the user selected themselves. It only gathers official titles, sources and registration identifiers so they can be checked against the originals with the treating doctor. It makes no recommendation, match or suitability judgement.',
+    generatedDate: 'Generated on {date}',
     recordCount: '{n|record|records} organised',
-    generatedOn: 'Generated on {date}',
-    fieldTitle: 'Official title (verbatim)',
+    // Required category label on every entry.
+    typeTrial: '【Trial record】',
+    typeGuideline: '【Guideline / public regulatory information】',
+    // Field labels.
+    fieldTitle: 'Official title',
     fieldSource: 'Source',
+    fieldId: 'Registration no.',
     fieldRegion: 'Region',
     fieldStatus: 'Status',
-    fieldPhase: 'Phase',
-    fieldStudyType: 'Study type',
-    fieldEnrollment: 'Target enrolment',
-    fieldLocations: 'Recruiting locations',
-    fieldFirstPosted: 'First posted',
-    fieldUpdated: 'Last updated',
-    fieldContact: 'Public contact listed',
-    fieldNct: 'Identifier',
+    fieldDate: 'Date',
+    fieldGuideType: 'Type',
+    // Neutral, fixed notes — verbatim, no evaluation.
+    trialNote:
+      'Note: this is a public clinical-trial registration. Whether it is still open or relevant to any individual should be confirmed from the official original and the doctor’s judgement.',
+    guideNote:
+      'Note: this is an entry point to public guidance or regulatory information, not a personal treatment plan.',
+    verifyById: 'Verify using the registration number on the official site.',
     notProvided: 'Not provided',
     fieldLink: 'Original link',
-    linkPrompt: 'Please visit the original link',
-    footerDisclaimer:
-      'This list only organises the titles and links of public official records. It is not medical advice, a recommendation, or a suitability judgement. Always discuss with your treating doctor and rely on the original official page.',
-    dataNotice:
-      'Generated from public official records. Please verify on the original page, which may have changed since this list was created.',
-    generatedAt: 'Generated at {datetime}',
-    pageNofM: 'Page {n} of {m}',
-    proBadge: 'Pro report',
-    proCta: 'Upgrade for a detailed visit-prep report',
-    // Empty state when opened with no records.
-    emptyTitle: 'No records to organise',
-    emptyBody:
-      'Go back to a record list, select some entries (or use a filter), then generate the list again.',
-    backLink: 'Back to record lists',
+    // Guideline / regulatory type values.
+    guideTypeGuideline: 'Guideline index',
+    guideTypeRegulatory: 'Regulatory information',
     // Neutral question prompt (teaches how to ask, gives no answers).
-    promptHeading: 'Questions you might ask',
+    promptHeading:
+      'Ways to open the conversation with your doctor (reference only, not advice)',
     promptIntro:
       'A template only — it teaches how to ask, and gives no answers. Adapt these to your own situation.',
     promptCopy: 'Copy questions',
     promptCopied: 'Copied',
     promptLines: [
-      'Are these records still open to enrolment?',
-      'From the public information, do they have any literal points of relevance to my diagnosis, stage, or prior treatment?',
-      'What examinations or procedures does each study involve, and how often?',
-      'Which costs are covered by the study and which are not?',
-      'What are the possible risks and side effects compared with my current treatment?',
-      'Can I leave the study at any time, and what happens if I do?',
-      'If I want to learn more, who should I contact and how?',
-      'Is there a study site close enough for me to travel to regularly?',
+      'Are these public records still searchable or open to enrolment?',
+      'From the literal wording of the public titles, is there any point relevant to the current situation?',
+      'If there is something relevant, what should I ask you about next?',
+      'For symptoms, pain or supportive care, is there a public guideline worth prioritising as a reference?',
     ],
+    promptFoot:
+      'These are only examples to help you start a conversation. They are not medical advice. All decisions should be made together with your treating doctor.',
+    // Pinned footer on every printed / PDF page.
+    footer:
+      'This list only organises the titles and source information of public official records. It is not medical advice, a recommendation or a suitability judgement. Rely on the official original and your treating doctor’s judgement. TrialBeacon has no affiliation with or endorsement by any registry.',
+    // Empty state when opened with no records.
+    emptyTitle: 'No records to organise',
+    emptyBody:
+      'Go back to a record list, select some entries (or use a filter), then generate the list again.',
+    backLink: 'Back to record lists',
+    // Retained for structural compatibility (not shown in the neutral list).
+    pageNofM: 'Page {n} of {m}',
+    generatedAt: 'Generated at {datetime}',
+    dataNotice:
+      'Generated from public official records. Please verify on the original page, which may have changed since this list was created.',
+    proBadge: 'Pro report',
+    proCta: 'Upgrade for a detailed visit-prep report',
   },
   // Localised cancer type names + descriptors (slug-keyed).
   cancers: {

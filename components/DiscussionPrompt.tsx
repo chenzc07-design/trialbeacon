@@ -44,6 +44,9 @@ export function DiscussionPrompt({ compact = false }: { compact?: boolean }) {
           <li key={i}>{line}</li>
         ))}
       </ol>
+      <p className="mt-3 text-[12px] leading-relaxed text-slateish-500">
+        {m.discussionList.promptFoot}
+      </p>
       <button
         type="button"
         onClick={onCopy}

@@ -10,21 +10,25 @@ import {
   discussionFilename,
   regionDisplay,
   localizeStatus,
-  localizePhase,
-  localizeStudyType,
+  guideTypeLabel,
 } from '@/lib/discussion-list';
 import { DiscussionPrompt } from '@/components/DiscussionPrompt';
-import { summariseCountries } from '@/lib/regions';
 
-function fmtDate(iso: string, locale: string): string {
+/** Locale-neutral YYYY-MM-DD (matches the printable spec). */
+function fmtYMD(d: Date): string {
+  const y = d.getFullYear();
+  const mo = String(d.getMonth() + 1).padStart(2, '0');
+  const da = String(d.getDate()).padStart(2, '0');
+  return `${y}-${mo}-${da}`;
+}
+
+function fmtYMDfromISO(iso?: string): string | null {
+  if (!iso) return null;
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
+  if (m) return `${m[1]}-${m[2]}-${m[3]}`;
   const d = new Date(`${iso}T00:00:00Z`);
   if (Number.isNaN(d.getTime())) return iso;
-  return d.toLocaleDateString(locale, {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    timeZone: 'UTC',
-  });
+  return fmtYMD(d);
 }
 
 export default function DiscussionListPage() {
@@ -77,11 +81,7 @@ export default function DiscussionListPage() {
     );
   }
 
-  const today = new Date().toLocaleDateString(locale, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+  const ymd = fmtYMD(new Date());
 
   return (
     <main className="dl-page">
@@ -98,7 +98,7 @@ export default function DiscussionListPage() {
           {m.discussionList.backLink}
         </Link>
         <span className="text-xs text-slateish-500">
-          {m.discussionList.footerDisclaimer}
+          {m.discussionList.footer}
         </span>
       </div>
 
@@ -106,95 +106,114 @@ export default function DiscussionListPage() {
           Uses a <div>, not <header>, so the global print rule that hides
           the site chrome does not remove it. */}
       <div className="dl-header">
-        <p className="dl-header-brand">{m.discussionList.header}</p>
-        <p className="dl-header-meta">
-          {t(m, 'discussionList.generatedOn', { date: today })} ·{' '}
-          {t(m, 'discussionList.recordCount', { n: items.length })}
-        </p>
+        <p className="dl-header-brand">{m.discussionList.pageHeaderBrand}</p>
+        <p className="dl-header-tag">{m.discussionList.pageHeaderTag}</p>
       </div>
 
       <div className="dl-body">
         <h1 className="dl-title">{m.discussionList.title}</h1>
-        <p className="dl-subtitle">{m.discussionList.subtitle}</p>
+        <p className="dl-intro">
+          <span className="dl-intro-h">{m.discussionList.introHeading}</span>
+          {m.discussionList.introBody}
+        </p>
+        <div className="dl-meta-top">
+          <span>
+            {t(m, 'discussionList.generatedDate', { date: ymd })}
+          </span>
+          <span>
+            {t(m, 'discussionList.recordCount', { n: items.length })}
+          </span>
+        </div>
 
         <ol className="dl-items">
-          {items.map((it, idx) => {
+          {items.map((it) => {
+            const isTrial = it.recordType === 'trial';
+            const tag = isTrial
+              ? m.discussionList.typeTrial
+              : m.discussionList.typeGuideline;
             const status = localizeStatus(it.status, locale);
-            const phase = localizePhase(it.phase, locale);
-            const studyType = localizeStudyType(it.studyType, locale);
             const region = regionDisplay(it, m);
-            const locations =
-              it.countries && it.countries.length > 0
-                ? summariseCountries(it.countries, 3)
-                : null;
+            const dateStr =
+              fmtYMDfromISO(it.firstPosted) ??
+              fmtYMDfromISO(it.date ?? undefined);
+            const gType = guideTypeLabel(it.guideKind, m);
 
             return (
-              <li key={it.id} className="dl-item">
-                <div className="dl-item-head">
-                  <span className="dl-num">{idx + 1}</span>
-                  <div className="dl-item-head-text">
-                    <div className="dl-nct">{it.id}</div>
-                    <div className="dl-item-title">{it.title}</div>
+              <li
+                key={it.id}
+                className={
+                  isTrial ? 'dl-item dl-item-trial' : 'dl-item dl-item-guide'
+                }
+              >
+                <div className="dl-rectag">{tag}</div>
+                <div className="dl-block">
+                  <div className="dl-row dl-row-title">
+                    <span className="dl-k">
+                      {m.discussionList.fieldTitle}：
+                    </span>
                   </div>
-                </div>
-                <div className="dl-meta">
-                  <div className="dl-meta-line dl-source-line">
-                    <span className="dl-meta-label">
+                  <div className="dl-title-val">{it.title}</div>
+
+                  <div className="dl-row">
+                    <span className="dl-k">
                       {m.discussionList.fieldSource}：
                     </span>
                     <span className="dl-source">{it.source}</span>
-                    <span className="dl-meta-sep">|</span>
-                    <span className="dl-meta-label">
-                      {m.discussionList.fieldRegion}：
-                    </span>
-                    <span>{region}</span>
                   </div>
-                  <div className="dl-meta-line dl-chips">
-                    {status && <span className="dl-chip">{status}</span>}
-                    {phase && (
-                      <>
-                        <span className="dl-meta-dot">·</span>
-                        <span className="dl-chip">{phase}</span>
-                      </>
-                    )}
-                    {studyType && (
-                      <>
-                        <span className="dl-meta-dot">·</span>
-                        <span className="dl-chip">{studyType}</span>
-                      </>
-                    )}
-                    {it.enrollment != null && (
-                      <>
-                        <span className="dl-meta-dot">·</span>
-                        <span className="dl-chip">
-                          {m.discussionList.fieldEnrollment} {it.enrollment}
+
+                  {isTrial ? (
+                    <>
+                      <div className="dl-row">
+                        <span className="dl-k">
+                          {m.discussionList.fieldId}：
                         </span>
-                      </>
-                    )}
-                  </div>
-                  {locations && (
-                    <div className="dl-meta-line">
-                      <span className="dl-meta-label">
-                        {m.discussionList.fieldLocations}：
-                      </span>
-                      <span>{locations}</span>
-                    </div>
+                        <span className="dl-id">{it.id}</span>
+                      </div>
+                      <div className="dl-row">
+                        <span className="dl-k">
+                          {m.discussionList.fieldRegion}：
+                        </span>
+                        <span>{region}</span>
+                      </div>
+                      {status && (
+                        <div className="dl-row">
+                          <span className="dl-k">
+                            {m.discussionList.fieldStatus}：
+                          </span>
+                          <span>{status}</span>
+                        </div>
+                      )}
+                      {dateStr && (
+                        <div className="dl-row">
+                          <span className="dl-k">
+                            {m.discussionList.fieldDate}：
+                          </span>
+                          <span>{dateStr}</span>
+                        </div>
+                      )}
+                      <div className="dl-note-inline">
+                        {m.discussionList.trialNote}
+                      </div>
+                      <div className="dl-verify">
+                        {m.discussionList.verifyById}
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="dl-row">
+                        <span className="dl-k">
+                          {m.discussionList.fieldGuideType}：
+                        </span>
+                        <span>{gType}</span>
+                      </div>
+                      <div className="dl-note-inline">
+                        {m.discussionList.guideNote}
+                      </div>
+                    </>
                   )}
-                  {it.date && (
-                    <div className="dl-meta-line">
-                      <span className="dl-meta-label">
-                        {m.discussionList.fieldUpdated}：
-                      </span>
-                      <span>{fmtDate(it.date, locale)}</span>
-                    </div>
-                  )}
-                  {it.hasPublicContact && (
-                    <div className="dl-meta-line dl-contact">
-                      {m.discussionList.fieldContact}
-                    </div>
-                  )}
-                  <div className="dl-meta-line dl-link-line">
-                    <span className="dl-meta-label">
+
+                  <div className="dl-link-muted">
+                    <span className="dl-k">
                       {m.discussionList.fieldLink}：
                     </span>
                     <a
@@ -205,9 +224,6 @@ export default function DiscussionListPage() {
                     >
                       {it.url}
                     </a>
-                    <span className="dl-linkprompt">
-                      （{m.discussionList.linkPrompt}）
-                    </span>
                   </div>
                 </div>
               </li>
@@ -220,7 +236,7 @@ export default function DiscussionListPage() {
 
       {/* Fixed footer disclaimer on every printed page (uses a <div>,
           not <footer>, so the global print-chrome rule keeps it). */}
-      <div className="dl-footer">{m.discussionList.footerDisclaimer}</div>
+      <div className="dl-footer">{m.discussionList.footer}</div>
     </main>
   );
 }

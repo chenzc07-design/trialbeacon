@@ -10,6 +10,17 @@ import type { Locale } from './i18n-runtime';
 import type { Messages } from './messages/en';
 import { summariseCountries } from './regions';
 
+/**
+ * The two — and only two — record categories the neutral checklist supports.
+ * Every record MUST carry one of these labels so a clinician (and the user)
+ * can tell a clinical-trial registration apart from a public guideline or
+ * regulatory entry at a glance. Nothing is ever mixed or left unlabelled.
+ */
+export type RecordType = 'trial' | 'guideline';
+
+/** The kind of a guideline/regulatory entry, drives the "类型" line. */
+export type GuideKind = 'guidelines' | 'regulator';
+
 /** The source-faithful shape stored for the printable list. */
 export interface DiscussionItem {
   id: string;
@@ -17,6 +28,10 @@ export interface DiscussionItem {
   title: string;
   /** Resolved source label, e.g. "ClinicalTrials.gov". */
   source: string;
+  /** Required, never-missing category label. */
+  recordType: RecordType;
+  /** For guideline/regulatory entries: guidelines vs regulator. */
+  guideKind?: GuideKind;
   region: Region;
   /** All region buckets the record covers, when known. */
   regions?: Region[];
@@ -57,10 +72,21 @@ export const SIGNED_IN_EXPORT_LIMIT = 50;
 
 /** Map an official record into the export shape. No transformation of meaning. */
 export function buildDiscussionItem(item: UpdateItem): DiscussionItem {
+  const meta = SOURCES[item.source];
+  const recordType: RecordType =
+    item.type === 'regulatory' || item.type === 'guideline'
+      ? 'guideline'
+      : 'trial';
+  const guideKind: GuideKind | undefined =
+    meta?.kind === 'guidelines' || meta?.kind === 'regulator'
+      ? meta.kind
+      : undefined;
   return {
     id: item.id,
     title: item.title,
-    source: SOURCES[item.source]?.label ?? item.source,
+    source: meta?.label ?? item.source,
+    recordType,
+    guideKind,
     region: item.region,
     regions: item.regions,
     status: item.status,
@@ -80,6 +106,17 @@ export function buildDiscussionItem(item: UpdateItem): DiscussionItem {
     date: item.date ?? null,
     url: item.url,
   };
+}
+
+/** Localised "类型" line for a guideline/regulatory entry. */
+export function guideTypeLabel(
+  kind: GuideKind | undefined,
+  m: Messages
+): string | undefined {
+  if (!kind) return undefined;
+  return kind === 'guidelines'
+    ? m.discussionList.guideTypeGuideline
+    : m.discussionList.guideTypeRegulatory;
 }
 
 /** Localised status strings for the Chinese UI. */

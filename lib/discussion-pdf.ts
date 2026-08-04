@@ -4,36 +4,35 @@
 // visitor gets the file directly. The list content is rendered into an
 // off-screen DOM node using the same neutral markup as the printable page,
 // captured with html2canvas, then laid out into an A4 jsPDF document with the
-// disclaimer pinned to the bottom of EVERY page.
+// brand header and disclaimer pinned to the top and bottom of EVERY page.
 //
 // Chinese / non-Latin text is rasterised by the browser (no font embedding
 // needed), so it renders exactly as on screen. The module never ranks,
 // recommends, scores, interprets, or adds any analysis — only the source
-// fields are reproduced.
+// fields are reproduced, each record clearly labelled as a trial registration
+// or a guideline / regulatory entry.
 
 import type { UpdateItem } from './types';
 import {
   buildDiscussionItem,
+  guideTypeLabel,
   type DiscussionItem,
   discussionFilename,
   regionDisplay,
   localizeStatus,
-  localizePhase,
-  localizeStudyType,
   FREE_EXPORT_LIMIT,
   SIGNED_IN_EXPORT_LIMIT,
 } from './discussion-list';
 import { t } from './i18n-runtime';
 import type { Locale } from './i18n-runtime';
 import type { Messages } from './messages/en';
-import { summariseCountries } from './regions';
 
 export interface DiscussionPdfInput {
   items: UpdateItem[];
   signedIn: boolean;
   locale: Locale;
   messages: Messages;
-  /** Reserved for a future paid tier; "pro" adds detail fields and comparison. */
+  /** Reserved for a future paid tier. The neutral list never shows upsell. */
   variant?: 'free' | 'pro';
 }
 
@@ -57,182 +56,142 @@ function escapeHtml(s: string): string {
   );
 }
 
-function fmtDate(iso: string, locale: string): string {
-  const d = new Date(`${iso}T00:00:00Z`);
-  if (Number.isNaN(d.getTime())) return iso;
-  return d.toLocaleDateString(locale, {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    timeZone: 'UTC',
-  });
+/** Locale-neutral YYYY-MM-DD (matches the printable spec). */
+function fmtYMD(d: Date): string {
+  const y = d.getFullYear();
+  const mo = String(d.getMonth() + 1).padStart(2, '0');
+  const da = String(d.getDate()).padStart(2, '0');
+  return `${y}-${mo}-${da}`;
 }
 
-function fmtDatetime(locale: string): string {
-  return new Date().toLocaleString(locale, {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    timeZoneName: 'short',
-  });
+function fmtYMDfromISO(iso?: string): string | null {
+  if (!iso) return null;
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
+  if (m) return `${m[1]}-${m[2]}-${m[3]}`;
+  const d = new Date(`${iso}T00:00:00Z`);
+  if (Number.isNaN(d.getTime())) return iso;
+  return fmtYMD(d);
 }
 
 /** Build the off-screen HTML for capture. Reuses the .dl-* classes. */
-function renderListHtml(
-  data: DiscussionItem[],
-  locale: Locale,
-  m: Messages,
-  variant: 'free' | 'pro'
-): string {
-  const today = new Date().toLocaleDateString(locale, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-  const generatedAt = fmtDatetime(locale);
+function renderListHtml(data: DiscussionItem[], locale: Locale, m: Messages): string {
+  const ymd = fmtYMD(new Date());
 
   const items = data
-    .map((it, i) => {
-      const status = localizeStatus(it.status, locale);
-      const phase = localizePhase(it.phase, locale);
-      const studyType = localizeStudyType(it.studyType, locale);
-      const enrollment =
-        it.enrollment != null ? String(it.enrollment) : null;
-      const region = regionDisplay(it, m);
-      const locations =
-        it.countries && it.countries.length > 0
-          ? summariseCountries(it.countries, 3)
-          : null;
+    .map((it) => {
+      const isTrial = it.recordType === 'trial';
+      const tag = isTrial
+        ? m.discussionList.typeTrial
+        : m.discussionList.typeGuideline;
 
-      const chips: string[] = [];
-      if (status)
-        chips.push(`<span class="dl-chip">${escapeHtml(status)}</span>`);
-      if (phase)
-        chips.push(`<span class="dl-chip">${escapeHtml(phase)}</span>`);
-      if (studyType)
-        chips.push(`<span class="dl-chip">${escapeHtml(studyType)}</span>`);
-      if (enrollment)
-        chips.push(
-          `<span class="dl-chip">${escapeHtml(m.discussionList.fieldEnrollment)} ${escapeHtml(
-            enrollment
-          )}</span>`
+      const titleBlock = `
+        <div class="dl-row dl-row-title"><span class="dl-k">${escapeHtml(
+          m.discussionList.fieldTitle
+        )}：</span></div>
+        <div class="dl-title-val">${escapeHtml(it.title)}</div>`;
+
+      const linkBlock = `<div class="dl-link-muted"><span class="dl-k">${escapeHtml(
+        m.discussionList.fieldLink
+      )}：</span><a class="dl-link" data-url="${escapeHtml(
+        it.url
+      )}">${escapeHtml(it.url)}</a></div>`;
+
+      if (isTrial) {
+        const status = localizeStatus(it.status, locale);
+        const region = regionDisplay(it, m);
+        const dateStr = fmtYMDfromISO(it.firstPosted) ?? fmtYMDfromISO(it.date ?? undefined);
+
+        const rows: string[] = [];
+        rows.push(
+          `<div class="dl-row"><span class="dl-k">${escapeHtml(
+            m.discussionList.fieldSource
+          )}：</span><span class="dl-source">${escapeHtml(it.source)}</span></div>`
         );
-      const chipsHtml = chips.join('<span class="dl-meta-dot">·</span>');
+        rows.push(
+          `<div class="dl-row"><span class="dl-k">${escapeHtml(
+            m.discussionList.fieldId
+          )}：</span><span class="dl-id">${escapeHtml(it.id)}</span></div>`
+        );
+        rows.push(
+          `<div class="dl-row"><span class="dl-k">${escapeHtml(
+            m.discussionList.fieldRegion
+          )}：</span><span>${escapeHtml(region)}</span></div>`
+        );
+        if (status)
+          rows.push(
+            `<div class="dl-row"><span class="dl-k">${escapeHtml(
+              m.discussionList.fieldStatus
+            )}：</span><span>${escapeHtml(status)}</span></div>`
+          );
+        if (dateStr)
+          rows.push(
+            `<div class="dl-row"><span class="dl-k">${escapeHtml(
+              m.discussionList.fieldDate
+            )}：</span><span>${escapeHtml(dateStr)}</span></div>`
+          );
 
-      // Pro-only fields are rendered only when explicitly requested and only
-      // when the source actually provides them.
-      const proRows: string[] = [];
-      if (variant === 'pro') {
-        if (it.interventions && it.interventions.length > 0) {
-          proRows.push(
-            `<div class="dl-meta-line"><span class="dl-meta-label">${escapeHtml(
-              m.trial.interventions
-            )}：</span><span>${escapeHtml(
-              summariseCountries(it.interventions, 4)
-            )}</span></div>`
-          );
-        }
-        if (it.sponsor) {
-          proRows.push(
-            `<div class="dl-meta-line"><span class="dl-meta-label">${escapeHtml(
-              m.trial.sponsor
-            )}：</span><span>${escapeHtml(it.sponsor)}</span></div>`
-          );
-        }
-        if (it.ageRange || it.sex) {
-          const parts = [it.ageRange, it.sex].filter(Boolean) as string[];
-          proRows.push(
-            `<div class="dl-meta-line"><span class="dl-meta-label">${escapeHtml(
-              m.trial.eligibility
-            )}：</span><span>${escapeHtml(parts.join(' · '))}</span></div>`
-          );
-        }
+        return `
+        <li class="dl-item dl-item-trial">
+          <div class="dl-rectag">${escapeHtml(tag)}</div>
+          <div class="dl-block">
+            ${titleBlock}
+            ${rows.join('')}
+            <div class="dl-note-inline">${escapeHtml(m.discussionList.trialNote)}</div>
+            <div class="dl-verify">${escapeHtml(m.discussionList.verifyById)}</div>
+            ${linkBlock}
+          </div>
+        </li>`;
       }
 
+      // Guideline / regulatory entry.
+      const gType = guideTypeLabel(it.guideKind, m) ?? '';
+      const rows: string[] = [];
+      rows.push(
+        `<div class="dl-row"><span class="dl-k">${escapeHtml(
+          m.discussionList.fieldSource
+        )}：</span><span class="dl-source">${escapeHtml(it.source)}</span></div>`
+      );
+      rows.push(
+        `<div class="dl-row"><span class="dl-k">${escapeHtml(
+          m.discussionList.fieldGuideType
+        )}：</span><span>${escapeHtml(gType)}</span></div>`
+      );
+
       return `
-      <li class="dl-item">
-        <div class="dl-item-head">
-          <span class="dl-num">${i + 1}</span>
-          <div class="dl-item-head-text">
-            <div class="dl-nct">${escapeHtml(it.id)}</div>
-            <div class="dl-item-title">${escapeHtml(it.title)}</div>
+        <li class="dl-item dl-item-guide">
+          <div class="dl-rectag">${escapeHtml(tag)}</div>
+          <div class="dl-block">
+            ${titleBlock}
+            ${rows.join('')}
+            <div class="dl-note-inline">${escapeHtml(m.discussionList.guideNote)}</div>
+            ${linkBlock}
           </div>
-        </div>
-        <div class="dl-meta">
-          <div class="dl-meta-line dl-source-line">
-            <span class="dl-meta-label">${escapeHtml(
-              m.discussionList.fieldSource
-            )}：</span>
-            <span class="dl-source">${escapeHtml(it.source)}</span>
-            <span class="dl-meta-sep">|</span>
-            <span class="dl-meta-label">${escapeHtml(
-              m.discussionList.fieldRegion
-            )}：</span>
-            <span>${escapeHtml(region)}</span>
-          </div>
-          ${chipsHtml ? `<div class="dl-meta-line dl-chips">${chipsHtml}</div>` : ''}
-          ${locations ? `<div class="dl-meta-line"><span class="dl-meta-label">${escapeHtml(m.discussionList.fieldLocations)}：</span><span>${escapeHtml(locations)}</span></div>` : ''}
-          ${it.date ? `<div class="dl-meta-line"><span class="dl-meta-label">${escapeHtml(m.discussionList.fieldUpdated)}：</span><span>${escapeHtml(fmtDate(it.date, locale))}</span></div>` : ''}
-          ${it.hasPublicContact ? `<div class="dl-meta-line dl-contact">${escapeHtml(m.discussionList.fieldContact)}</div>` : ''}
-          ${proRows.join('')}
-          <div class="dl-meta-line dl-link-line">
-            <span class="dl-meta-label">${escapeHtml(
-              m.discussionList.fieldLink
-            )}：</span>
-            <span class="dl-link" data-url="${escapeHtml(it.url)}">${escapeHtml(
-              it.url
-            )}</span>
-            <span class="dl-linkprompt">（${escapeHtml(
-              m.discussionList.linkPrompt
-            )}）</span>
-          </div>
-        </div>
-      </li>`;
+        </li>`;
     })
     .join('');
 
   const prompt = `
     <section class="dl-prompt">
-      <h2 class="dl-prompt-heading">${escapeHtml(
-        m.discussionList.promptHeading
-      )}</h2>
-      <p class="dl-prompt-intro">${escapeHtml(
-        m.discussionList.promptIntro
-      )}</p>
+      <h2 class="dl-prompt-heading">${escapeHtml(m.discussionList.promptHeading)}</h2>
       <ol class="dl-prompt-list">
-        ${m.discussionList.promptLines
-          .map((l) => `<li>${escapeHtml(l)}</li>`)
-          .join('')}
+        ${m.discussionList.promptLines.map((l) => `<li>${escapeHtml(l)}</li>`).join('')}
       </ol>
+      <p class="dl-prompt-foot">${escapeHtml(m.discussionList.promptFoot)}</p>
     </section>`;
 
-  const proCta =
-    variant === 'free'
-      ? `<div class="dl-pro-cta">${escapeHtml(
-          m.discussionList.proBadge
-        )} · ${escapeHtml(m.discussionList.proCta)}</div>`
-      : '';
-
   return `
-    <div class="dl-header" style="margin-bottom:10px;">
-      <p class="dl-header-brand">${escapeHtml(m.discussionList.header)}</p>
-      <p class="dl-header-meta">${t(m, 'discussionList.generatedOn', {
-        date: today,
-      })} · ${t(m, 'discussionList.recordCount', { n: data.length })}${
-        variant === 'pro'
-          ? ` · <span class="dl-pro-badge">${escapeHtml(
-              m.discussionList.proBadge
-            )}</span>`
-          : ''
-      }</p>
+    <div class="dl-title">${escapeHtml(m.discussionList.title)}</div>
+    <div class="dl-intro"><span class="dl-intro-h">${escapeHtml(
+      m.discussionList.introHeading
+    )}</span>${escapeHtml(m.discussionList.introBody)}</div>
+    <div class="dl-meta-top">
+      <span>${escapeHtml(t(m, 'discussionList.generatedDate', { date: ymd }))}</span>
+      <span>${escapeHtml(
+        t(m, 'discussionList.recordCount', { n: data.length })
+      )}</span>
     </div>
-    <h1 class="dl-title">${escapeHtml(m.discussionList.title)}</h1>
-    <p class="dl-subtitle">${escapeHtml(m.discussionList.subtitle)}</p>
     <ol class="dl-items">${items}</ol>
     ${prompt}
-    ${proCta}
   `;
 }
 
@@ -245,7 +204,6 @@ function renderListHtml(
 export async function downloadDiscussionListPdf(
   input: DiscussionPdfInput
 ): Promise<DiscussionPdfResult> {
-  const variant = input.variant ?? 'free';
   const limit = input.signedIn ? SIGNED_IN_EXPORT_LIMIT : FREE_EXPORT_LIMIT;
   const truncated = input.items.length > limit;
   const capped = truncated ? input.items.slice(0, limit) : input.items;
@@ -273,18 +231,15 @@ export async function downloadDiscussionListPdf(
   host.style.fontFamily =
     'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif';
   host.innerHTML = `
-    <div id="pdf-content" style="padding:40px 44px 28px;">
-      ${renderListHtml(data, input.locale, input.messages, variant)}
+    <div id="pdf-header" style="padding:0 44px 8px;">
+      <div class="dl-pdf-brand">${escapeHtml(input.messages.discussionList.pageHeaderBrand)}</div>
+      <div class="dl-pdf-tag">${escapeHtml(input.messages.discussionList.pageHeaderTag)}</div>
     </div>
-    <div id="pdf-footer" class="dl-footer" style="padding:10px 44px 14px;margin:0;">
-      <div>${escapeHtml(input.messages.discussionList.footerDisclaimer)}</div>
-      <div style="margin-top:4px;">${escapeHtml(
-        t(input.messages, 'discussionList.dataNotice', {})
-      )} · ${escapeHtml(
-        t(input.messages, 'discussionList.generatedAt', {
-          datetime: fmtDatetime(input.locale),
-        })
-      )}</div>
+    <div id="pdf-content" style="padding:14px 44px 12px;">
+      ${renderListHtml(data, input.locale, input.messages)}
+    </div>
+    <div id="pdf-footer" class="dl-footer" style="padding:8px 44px 12px;margin:0;">
+      <div>${escapeHtml(input.messages.discussionList.footer)}</div>
     </div>
   `;
   document.body.appendChild(host);
@@ -298,7 +253,8 @@ export async function downloadDiscussionListPdf(
 
     const contentEl = host.querySelector<HTMLElement>('#pdf-content');
     const footerEl = host.querySelector<HTMLElement>('#pdf-footer');
-    if (!contentEl || !footerEl) {
+    const headerEl = host.querySelector<HTMLElement>('#pdf-header');
+    if (!contentEl || !footerEl || !headerEl) {
       throw new Error('PDF render nodes missing');
     }
 
@@ -309,6 +265,12 @@ export async function downloadDiscussionListPdf(
       useCORS: true,
     });
     const footerCanvas = await html2canvas(footerEl, {
+      scale: 2,
+      backgroundColor: '#ffffff',
+      logging: false,
+      useCORS: true,
+    });
+    const headerCanvas = await html2canvas(headerEl, {
       scale: 2,
       backgroundColor: '#ffffff',
       logging: false,
@@ -338,9 +300,9 @@ export async function downloadDiscussionListPdf(
     const margin = 36;
     const contentW = pageW - margin * 2;
 
-    // Footer is pinned to the bottom of every page.
+    const headerH = (headerCanvas.height / headerCanvas.width) * contentW;
     const footerH = (footerCanvas.height / footerCanvas.width) * contentW;
-    const top = margin;
+    const top = margin + headerH + 6;
     const bottom = pageH - margin - footerH - 8;
     const availH = bottom - top;
 
@@ -378,6 +340,15 @@ export async function downloadDiscussionListPdf(
       const pageImg = pageCanvas.toDataURL('image/jpeg', 0.95);
 
       if (!first) pdf.addPage();
+      // Pinned header at the top of every page.
+      pdf.addImage(
+        headerCanvas.toDataURL('image/jpeg', 0.95),
+        'JPEG',
+        margin,
+        margin,
+        contentW,
+        headerH
+      );
       pdf.addImage(pageImg, 'JPEG', margin, top, contentW, sliceH);
       pdf.addImage(
         footerCanvas.toDataURL('image/jpeg', 0.95),
