@@ -2,14 +2,15 @@
 //
 // This module ONLY organises public official records into a printable list.
 // It never ranks, recommends, scores, interprets, or adds any analysis. The
-// exported fields are limited to what the source already publishes: title,
-// source, region, status/phase/date, and the original link.
+// exported fields are limited to what the source already publishes.
 
 import type { Region, UpdateItem } from './types';
 import { SOURCES } from './sources';
 import type { Locale } from './i18n-runtime';
+import type { Messages } from './messages/en';
+import { summariseCountries } from './regions';
 
-/** The minimal, source-faithful shape stored for the printable list. */
+/** The source-faithful shape stored for the printable list. */
 export interface DiscussionItem {
   id: string;
   /** Official title, reproduced verbatim. */
@@ -21,6 +22,26 @@ export interface DiscussionItem {
   regions?: Region[];
   status?: string;
   phase?: string;
+  /** Study type as published, e.g. "Interventional". */
+  studyType?: string;
+  /** Target enrolment count as published. */
+  enrollment?: number;
+  /** ISO date the record was first posted, when known. */
+  firstPosted?: string;
+  /** Recruiting countries as published. */
+  countries?: string[];
+  /** Whether the official record lists a public contact. */
+  hasPublicContact?: boolean;
+  /** Reserved for a future "pro" report: lead sponsor name. */
+  sponsor?: string;
+  /** Reserved for a future "pro" report: interventions as published. */
+  interventions?: string[];
+  /** Reserved for a future "pro" report: verbatim eligibility criteria. */
+  eligibility?: string;
+  /** Reserved for a future "pro" report: published age range. */
+  ageRange?: string;
+  /** Reserved for a future "pro" report: published sex eligibility. */
+  sex?: string;
   /** ISO date of the most recent official update, or null. */
   date: string | null;
   /** Direct link to the original official page. */
@@ -44,21 +65,104 @@ export function buildDiscussionItem(item: UpdateItem): DiscussionItem {
     regions: item.regions,
     status: item.status,
     phase: item.phase,
+    studyType: item.studyType,
+    enrollment: item.enrollment,
+    firstPosted: item.firstPosted,
+    countries: item.countries,
+    hasPublicContact: item.hasPublicContact,
+    // Pro-only fields: pass through when available, but the free UI does not
+    // render them yet.
+    sponsor: item.sponsor,
+    interventions: item.interventions,
+    eligibility: item.eligibility,
+    ageRange: item.ageRange,
+    sex: item.sex,
     date: item.date ?? null,
     url: item.url,
   };
 }
 
-/** Format the region coverage for the list, using all known buckets. */
-export function regionLabel(item: {
-  region: Region;
-  regions?: Region[];
-}): string {
+/** Localised status strings for the Chinese UI. */
+const STATUS_ZH: Record<string, string> = {
+  Recruiting: '招募中',
+  'Not yet recruiting': '尚未招募',
+  'Enrolling by invitation': '邀请入组',
+  'Active, not recruiting': '进行中，不再招募',
+  Suspended: '暂停',
+  Terminated: '已终止',
+  Completed: '已完成',
+  Withdrawn: '已撤回',
+  Withheld: '未公开',
+  'Unknown status': '状态未知',
+};
+
+/** Localised phase strings for the Chinese UI. */
+const PHASE_ZH: Record<string, string> = {
+  'Early Phase 1': '早期 I 期',
+  'Phase 1': 'I 期',
+  'Phase 2': 'II 期',
+  'Phase 3': 'III 期',
+  'Phase 4': 'IV 期',
+  'Not applicable': '不适用',
+};
+
+/** Localised study-type strings for the Chinese UI. */
+const STUDY_TYPE_ZH: Record<string, string> = {
+  Interventional: '干预性研究',
+  Observational: '观察性研究',
+};
+
+/** Translate a source status label for the current locale. */
+export function localizeStatus(
+  status: string | undefined,
+  locale: Locale
+): string | undefined {
+  if (!status) return undefined;
+  if (locale !== 'zh') return status;
+  return STATUS_ZH[status] ?? status;
+}
+
+/** Translate a source phase label for the current locale. */
+export function localizePhase(
+  phase: string | undefined,
+  locale: Locale
+): string | undefined {
+  if (!phase) return phase;
+  if (locale !== 'zh') return phase;
+  const parts = phase.split('/').map((p) => PHASE_ZH[p.trim()] ?? p.trim());
+  return parts.join('/');
+}
+
+/** Translate a source study-type label for the current locale. */
+export function localizeStudyType(
+  type: string | undefined,
+  locale: Locale
+): string | undefined {
+  if (!type) return type;
+  if (locale !== 'zh') return type;
+  return STUDY_TYPE_ZH[type] ?? type;
+}
+
+/**
+ * Format the region coverage for the list, localised and using country details
+ * when they make the label more informative.
+ *
+ * For records that recruit outside the tracked jurisdictions (OTHER), we show
+ * the actual published countries instead of the vague "Other" bucket.
+ */
+export function regionDisplay(
+  item: { region: Region; regions?: Region[]; countries?: string[] },
+  messages: Messages
+): string {
   const buckets = item.regions?.length ? item.regions : [item.region];
+  const hasOther = buckets.includes('OTHER');
+  if (item.countries && item.countries.length > 0 && hasOther) {
+    return summariseCountries(item.countries, 3);
+  }
   const seen = new Set<string>();
   const labels: string[] = [];
   for (const r of buckets) {
-    const label = regionShort(r);
+    const label = messages.region[r];
     if (seen.has(label)) continue;
     seen.add(label);
     labels.push(label);
@@ -98,6 +202,9 @@ export interface LaunchResult {
  * passed in the URL (?d=…) so the page works reliably across tabs, in private
  * mode, and when sessionStorage is unavailable — no fragile storage hand-off.
  *
+ * When the payload (e.g. with country arrays) would make the URL too long for
+ * some browsers, we fall back to sessionStorage and open the bare route.
+ *
  * Returns what happened so callers can surface a "only the first N were
  * included" or "popup blocked" notice. Client-only (touches window). Safe to
  * call from any user-gesture event handler.
@@ -120,8 +227,19 @@ export function openDiscussionListPrint(
 
   let blocked = false;
   try {
-    const win = window.open(url, '_blank', 'noopener,noreferrer');
-    if (!win) blocked = true;
+    if (url.length > 3000) {
+      // Keep the payload in sessionStorage and open the bare route; the page
+      // reads storage as a fallback.
+      window.sessionStorage.setItem(
+        DISCUSSION_STORAGE_KEY,
+        JSON.stringify(payload)
+      );
+      const win = window.open('/discussion-list', '_blank', 'noopener,noreferrer');
+      if (!win) blocked = true;
+    } else {
+      const win = window.open(url, '_blank', 'noopener,noreferrer');
+      if (!win) blocked = true;
+    }
   } catch {
     blocked = true;
   }

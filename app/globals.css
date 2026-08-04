@@ -231,7 +231,13 @@
 .dl-item-head {
   display: flex;
   gap: 10px;
-  align-items: baseline;
+  align-items: flex-start;
+}
+
+.dl-item-head-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .dl-num {
@@ -239,6 +245,15 @@
   font-size: 10pt;
   font-weight: 700;
   color: #64748b;
+  line-height: 1.4;
+}
+
+.dl-nct {
+  font-size: 9pt;
+  font-weight: 500;
+  color: #64748b;
+  font-family: Arial, Helvetica, 'Segoe UI', sans-serif;
+  letter-spacing: 0.02em;
 }
 
 .dl-item-title {
@@ -250,35 +265,121 @@
 
 .dl-meta {
   margin: 6px 0 0 22px;
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  row-gap: 2px;
-  column-gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
   font-size: 9.5pt;
+  line-height: 1.45;
 }
 
-.dl-meta-row {
-  display: contents;
+.dl-meta-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 4px;
+  color: #0f1b2d;
 }
 
-.dl-meta dt {
+.dl-meta-label {
   color: #64748b;
+  flex: none;
 }
 
-.dl-meta dd {
-  margin: 0;
-  color: #0f172a;
-  word-break: break-word;
+.dl-meta-sep {
+  margin: 0 8px;
+  color: #94a3b8;
+}
+
+.dl-meta-dot {
+  margin: 0 6px;
+  color: #94a3b8;
+}
+
+.dl-chip {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Source labels and URLs are rendered in a Latin-only font stack so that
+   CJK fallback fonts do not insert extra side-bearings around dots and
+   slashes (e.g. "ClinicalTrials.gov" or "https://clinicaltrials.gov/..."). */
+.dl-source,
+.dl-link {
+  font-family: Arial, Helvetica, 'Segoe UI', sans-serif;
+  word-break: keep-all;
+  white-space: nowrap;
 }
 
 .dl-link {
   color: #134e4a;
   text-decoration: underline;
   text-decoration-color: #94a3b8;
+  word-break: break-all;
+  white-space: normal;
+}
+
+.dl-source {
+  display: inline-block;
 }
 
 .dl-linkprompt {
   color: #64748b;
+}
+
+.dl-contact {
+  color: #64748b;
+  font-style: italic;
+}
+
+.dl-prompt {
+  margin-top: 22px;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 14px;
+}
+
+.dl-prompt-heading {
+  margin: 0 0 4px;
+  font-size: 12pt;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.dl-prompt-intro {
+  margin: 0 0 8px;
+  font-size: 9.5pt;
+  color: #64748b;
+}
+
+.dl-prompt-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 10pt;
+  line-height: 1.6;
+  color: #0f1b2d;
+}
+
+.dl-prompt-list li {
+  margin-bottom: 6px;
+}
+
+.dl-pro-cta {
+  margin-top: 18px;
+  padding: 10px 14px;
+  border: 1px dashed #94a3b8;
+  border-radius: 6px;
+  font-size: 9.5pt;
+  color: #64748b;
+  text-align: center;
+}
+
+.dl-pro-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: #f1f5f9;
+  font-size: 8.5pt;
+  font-weight: 600;
+  color: #475569;
 }
 
 .dl-footer {

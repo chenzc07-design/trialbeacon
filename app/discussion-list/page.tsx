@@ -8,9 +8,13 @@ import {
   DISCUSSION_STORAGE_KEY,
   type DiscussionItem,
   discussionFilename,
-  regionLabel,
+  regionDisplay,
+  localizeStatus,
+  localizePhase,
+  localizeStudyType,
 } from '@/lib/discussion-list';
 import { DiscussionPrompt } from '@/components/DiscussionPrompt';
+import { summariseCountries } from '@/lib/regions';
 
 function fmtDate(iso: string, locale: string): string {
   const d = new Date(`${iso}T00:00:00Z`);
@@ -21,16 +25,6 @@ function fmtDate(iso: string, locale: string): string {
     day: 'numeric',
     timeZone: 'UTC',
   });
-}
-
-/** Only the source-provided fields, joined — no interpretation. */
-function statusLine(it: DiscussionItem, locale: string): string {
-  const parts = [
-    it.phase,
-    it.status,
-    it.date ? fmtDate(it.date, locale) : null,
-  ].filter(Boolean);
-  return parts.join(' · ');
 }
 
 export default function DiscussionListPage() {
@@ -124,28 +118,85 @@ export default function DiscussionListPage() {
         <p className="dl-subtitle">{m.discussionList.subtitle}</p>
 
         <ol className="dl-items">
-          {items.map((it, idx) => (
-            <li key={it.id} className="dl-item">
-              <div className="dl-item-head">
-                <span className="dl-num">{idx + 1}</span>
-                <span className="dl-item-title">{it.title}</span>
-              </div>
-              <dl className="dl-meta">
-                <div className="dl-meta-row">
-                  <dt>{m.discussionList.fieldSource}</dt>
-                  <dd><span className="whitespace-nowrap">{it.source}</span></dd>
+          {items.map((it, idx) => {
+            const status = localizeStatus(it.status, locale);
+            const phase = localizePhase(it.phase, locale);
+            const studyType = localizeStudyType(it.studyType, locale);
+            const region = regionDisplay(it, m);
+            const locations =
+              it.countries && it.countries.length > 0
+                ? summariseCountries(it.countries, 3)
+                : null;
+
+            return (
+              <li key={it.id} className="dl-item">
+                <div className="dl-item-head">
+                  <span className="dl-num">{idx + 1}</span>
+                  <div className="dl-item-head-text">
+                    <div className="dl-nct">{it.id}</div>
+                    <div className="dl-item-title">{it.title}</div>
+                  </div>
                 </div>
-                <div className="dl-meta-row">
-                  <dt>{m.discussionList.fieldRegion}</dt>
-                  <dd>{regionLabel(it)}</dd>
-                </div>
-                <div className="dl-meta-row">
-                  <dt>{m.discussionList.fieldStatus}</dt>
-                  <dd>{statusLine(it, locale) || '—'}</dd>
-                </div>
-                <div className="dl-meta-row">
-                  <dt>{m.discussionList.fieldLink}</dt>
-                  <dd>
+                <div className="dl-meta">
+                  <div className="dl-meta-line dl-source-line">
+                    <span className="dl-meta-label">
+                      {m.discussionList.fieldSource}：
+                    </span>
+                    <span className="dl-source">{it.source}</span>
+                    <span className="dl-meta-sep">|</span>
+                    <span className="dl-meta-label">
+                      {m.discussionList.fieldRegion}：
+                    </span>
+                    <span>{region}</span>
+                  </div>
+                  <div className="dl-meta-line dl-chips">
+                    {status && <span className="dl-chip">{status}</span>}
+                    {phase && (
+                      <>
+                        <span className="dl-meta-dot">·</span>
+                        <span className="dl-chip">{phase}</span>
+                      </>
+                    )}
+                    {studyType && (
+                      <>
+                        <span className="dl-meta-dot">·</span>
+                        <span className="dl-chip">{studyType}</span>
+                      </>
+                    )}
+                    {it.enrollment != null && (
+                      <>
+                        <span className="dl-meta-dot">·</span>
+                        <span className="dl-chip">
+                          {m.discussionList.fieldEnrollment} {it.enrollment}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                  {locations && (
+                    <div className="dl-meta-line">
+                      <span className="dl-meta-label">
+                        {m.discussionList.fieldLocations}：
+                      </span>
+                      <span>{locations}</span>
+                    </div>
+                  )}
+                  {it.date && (
+                    <div className="dl-meta-line">
+                      <span className="dl-meta-label">
+                        {m.discussionList.fieldUpdated}：
+                      </span>
+                      <span>{fmtDate(it.date, locale)}</span>
+                    </div>
+                  )}
+                  {it.hasPublicContact && (
+                    <div className="dl-meta-line dl-contact">
+                      {m.discussionList.fieldContact}
+                    </div>
+                  )}
+                  <div className="dl-meta-line dl-link-line">
+                    <span className="dl-meta-label">
+                      {m.discussionList.fieldLink}：
+                    </span>
                     <a
                       href={it.url}
                       target="_blank"
@@ -157,11 +208,11 @@ export default function DiscussionListPage() {
                     <span className="dl-linkprompt">
                       （{m.discussionList.linkPrompt}）
                     </span>
-                  </dd>
+                  </div>
                 </div>
-              </dl>
-            </li>
-          ))}
+              </li>
+            );
+          })}
         </ol>
 
         <DiscussionPrompt />

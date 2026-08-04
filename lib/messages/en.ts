@@ -591,11 +591,26 @@ export const en = {
     fieldTitle: 'Official title (verbatim)',
     fieldSource: 'Source',
     fieldRegion: 'Region',
-    fieldStatus: 'Status / phase / date',
+    fieldStatus: 'Status',
+    fieldPhase: 'Phase',
+    fieldStudyType: 'Study type',
+    fieldEnrollment: 'Target enrolment',
+    fieldLocations: 'Recruiting locations',
+    fieldFirstPosted: 'First posted',
+    fieldUpdated: 'Last updated',
+    fieldContact: 'Public contact listed',
+    fieldNct: 'Identifier',
+    notProvided: 'Not provided',
     fieldLink: 'Original link',
     linkPrompt: 'Please visit the original link',
     footerDisclaimer:
       'This list only organises the titles and links of public official records. It is not medical advice, a recommendation, or a suitability judgement. Always discuss with your treating doctor and rely on the original official page.',
+    dataNotice:
+      'Generated from public official records. Please verify on the original page, which may have changed since this list was created.',
+    generatedAt: 'Generated at {datetime}',
+    pageNofM: 'Page {n} of {m}',
+    proBadge: 'Pro report',
+    proCta: 'Upgrade for a detailed visit-prep report',
     // Empty state when opened with no records.
     emptyTitle: 'No records to organise',
     emptyBody:
@@ -603,14 +618,19 @@ export const en = {
     backLink: 'Back to record lists',
     // Neutral question prompt (teaches how to ask, gives no answers).
     promptHeading: 'Questions you might ask',
-    promptIntro: 'A template only — it teaches how to ask, and gives no answers.',
+    promptIntro:
+      'A template only — it teaches how to ask, and gives no answers. Adapt these to your own situation.',
     promptCopy: 'Copy questions',
     promptCopied: 'Copied',
     promptLines: [
-      'I would like to review a few public official records with you:',
-      '1. Are these records still open to enrolment?',
-      '2. From the public information, do they have any literal points of relevance to my current situation?',
-      '3. If there is a relevant point, what should I understand next?',
+      'Are these records still open to enrolment?',
+      'From the public information, do they have any literal points of relevance to my diagnosis, stage, or prior treatment?',
+      'What examinations or procedures does each study involve, and how often?',
+      'Which costs are covered by the study and which are not?',
+      'What are the possible risks and side effects compared with my current treatment?',
+      'Can I leave the study at any time, and what happens if I do?',
+      'If I want to learn more, who should I contact and how?',
+      'Is there a study site close enough for me to travel to regularly?',
     ],
   },
   // Localised cancer type names + descriptors (slug-keyed).

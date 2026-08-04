@@ -16,19 +16,25 @@ import {
   buildDiscussionItem,
   type DiscussionItem,
   discussionFilename,
-  regionLabel,
+  regionDisplay,
+  localizeStatus,
+  localizePhase,
+  localizeStudyType,
   FREE_EXPORT_LIMIT,
   SIGNED_IN_EXPORT_LIMIT,
 } from './discussion-list';
 import { t } from './i18n-runtime';
 import type { Locale } from './i18n-runtime';
 import type { Messages } from './messages/en';
+import { summariseCountries } from './regions';
 
 export interface DiscussionPdfInput {
   items: UpdateItem[];
   signedIn: boolean;
   locale: Locale;
   messages: Messages;
+  /** Reserved for a future paid tier; "pro" adds detail fields and comparison. */
+  variant?: 'free' | 'pro';
 }
 
 export interface DiscussionPdfResult {
@@ -62,88 +68,171 @@ function fmtDate(iso: string, locale: string): string {
   });
 }
 
-/** Only the source-provided fields, joined — no interpretation. */
-function statusLine(it: DiscussionItem, locale: string): string {
-  const parts = [
-    it.phase,
-    it.status,
-    it.date ? fmtDate(it.date, locale) : null,
-  ].filter(Boolean);
-  return parts.join(' · ');
+function fmtDatetime(locale: string): string {
+  return new Date().toLocaleString(locale, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZoneName: 'short',
+  });
 }
 
 /** Build the off-screen HTML for capture. Reuses the .dl-* classes. */
 function renderListHtml(
   data: DiscussionItem[],
   locale: Locale,
-  m: Messages
+  m: Messages,
+  variant: 'free' | 'pro'
 ): string {
   const today = new Date().toLocaleDateString(locale, {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   });
+  const generatedAt = fmtDatetime(locale);
 
   const items = data
     .map((it, i) => {
-      const status = statusLine(it, locale) || '—';
+      const status = localizeStatus(it.status, locale);
+      const phase = localizePhase(it.phase, locale);
+      const studyType = localizeStudyType(it.studyType, locale);
+      const enrollment =
+        it.enrollment != null ? String(it.enrollment) : null;
+      const region = regionDisplay(it, m);
+      const locations =
+        it.countries && it.countries.length > 0
+          ? summariseCountries(it.countries, 3)
+          : null;
+
+      const chips: string[] = [];
+      if (status)
+        chips.push(`<span class="dl-chip">${escapeHtml(status)}</span>`);
+      if (phase)
+        chips.push(`<span class="dl-chip">${escapeHtml(phase)}</span>`);
+      if (studyType)
+        chips.push(`<span class="dl-chip">${escapeHtml(studyType)}</span>`);
+      if (enrollment)
+        chips.push(
+          `<span class="dl-chip">${escapeHtml(m.discussionList.fieldEnrollment)} ${escapeHtml(
+            enrollment
+          )}</span>`
+        );
+      const chipsHtml = chips.join('<span class="dl-meta-dot">·</span>');
+
+      // Pro-only fields are rendered only when explicitly requested and only
+      // when the source actually provides them.
+      const proRows: string[] = [];
+      if (variant === 'pro') {
+        if (it.interventions && it.interventions.length > 0) {
+          proRows.push(
+            `<div class="dl-meta-line"><span class="dl-meta-label">${escapeHtml(
+              m.trial.interventions
+            )}：</span><span>${escapeHtml(
+              summariseCountries(it.interventions, 4)
+            )}</span></div>`
+          );
+        }
+        if (it.sponsor) {
+          proRows.push(
+            `<div class="dl-meta-line"><span class="dl-meta-label">${escapeHtml(
+              m.trial.sponsor
+            )}：</span><span>${escapeHtml(it.sponsor)}</span></div>`
+          );
+        }
+        if (it.ageRange || it.sex) {
+          const parts = [it.ageRange, it.sex].filter(Boolean) as string[];
+          proRows.push(
+            `<div class="dl-meta-line"><span class="dl-meta-label">${escapeHtml(
+              m.trial.eligibility
+            )}：</span><span>${escapeHtml(parts.join(' · '))}</span></div>`
+          );
+        }
+      }
+
       return `
       <li class="dl-item">
         <div class="dl-item-head">
           <span class="dl-num">${i + 1}</span>
-          <span class="dl-item-title">${escapeHtml(it.title)}</span>
+          <div class="dl-item-head-text">
+            <div class="dl-nct">${escapeHtml(it.id)}</div>
+            <div class="dl-item-title">${escapeHtml(it.title)}</div>
+          </div>
         </div>
-        <dl class="dl-meta">
-          <div class="dl-meta-row">
-            <dt>${m.discussionList.fieldSource}</dt>
-            <dd><span style="white-space:nowrap">${escapeHtml(it.source)}</span></dd>
+        <div class="dl-meta">
+          <div class="dl-meta-line dl-source-line">
+            <span class="dl-meta-label">${escapeHtml(
+              m.discussionList.fieldSource
+            )}：</span>
+            <span class="dl-source">${escapeHtml(it.source)}</span>
+            <span class="dl-meta-sep">|</span>
+            <span class="dl-meta-label">${escapeHtml(
+              m.discussionList.fieldRegion
+            )}：</span>
+            <span>${escapeHtml(region)}</span>
           </div>
-          <div class="dl-meta-row">
-            <dt>${m.discussionList.fieldRegion}</dt>
-            <dd>${regionLabel(it)}</dd>
+          ${chipsHtml ? `<div class="dl-meta-line dl-chips">${chipsHtml}</div>` : ''}
+          ${locations ? `<div class="dl-meta-line"><span class="dl-meta-label">${escapeHtml(m.discussionList.fieldLocations)}：</span><span>${escapeHtml(locations)}</span></div>` : ''}
+          ${it.date ? `<div class="dl-meta-line"><span class="dl-meta-label">${escapeHtml(m.discussionList.fieldUpdated)}：</span><span>${escapeHtml(fmtDate(it.date, locale))}</span></div>` : ''}
+          ${it.hasPublicContact ? `<div class="dl-meta-line dl-contact">${escapeHtml(m.discussionList.fieldContact)}</div>` : ''}
+          ${proRows.join('')}
+          <div class="dl-meta-line dl-link-line">
+            <span class="dl-meta-label">${escapeHtml(
+              m.discussionList.fieldLink
+            )}：</span>
+            <span class="dl-link" data-url="${escapeHtml(it.url)}">${escapeHtml(
+              it.url
+            )}</span>
+            <span class="dl-linkprompt">（${escapeHtml(
+              m.discussionList.linkPrompt
+            )}）</span>
           </div>
-          <div class="dl-meta-row">
-            <dt>${m.discussionList.fieldStatus}</dt>
-            <dd>${escapeHtml(status)}</dd>
-          </div>
-          <div class="dl-meta-row">
-            <dt>${m.discussionList.fieldLink}</dt>
-            <dd>
-              <span class="dl-link" data-url="${escapeHtml(it.url)}">${escapeHtml(it.url)}</span>
-              <span class="dl-linkprompt">（${m.discussionList.linkPrompt}）</span>
-            </dd>
-          </div>
-        </dl>
+        </div>
       </li>`;
     })
     .join('');
 
   const prompt = `
-    <section style="margin-top:22px;border-top:1px solid #e2e8f0;padding-top:14px;">
-      <h2 style="margin:0 0 4px;font-size:12pt;font-weight:600;color:#0f172a;">${escapeHtml(
+    <section class="dl-prompt">
+      <h2 class="dl-prompt-heading">${escapeHtml(
         m.discussionList.promptHeading
       )}</h2>
-      <p style="margin:0 0 8px;font-size:9.5pt;color:#64748b;">${escapeHtml(
+      <p class="dl-prompt-intro">${escapeHtml(
         m.discussionList.promptIntro
       )}</p>
-      <ol style="margin:0;padding-left:18px;font-size:10pt;line-height:1.6;color:#0f1b2d;">
+      <ol class="dl-prompt-list">
         ${m.discussionList.promptLines
-          .map((l) => `<li style="margin-bottom:6px;">${escapeHtml(l)}</li>`)
+          .map((l) => `<li>${escapeHtml(l)}</li>`)
           .join('')}
       </ol>
     </section>`;
+
+  const proCta =
+    variant === 'free'
+      ? `<div class="dl-pro-cta">${escapeHtml(
+          m.discussionList.proBadge
+        )} · ${escapeHtml(m.discussionList.proCta)}</div>`
+      : '';
 
   return `
     <div class="dl-header" style="margin-bottom:10px;">
       <p class="dl-header-brand">${escapeHtml(m.discussionList.header)}</p>
       <p class="dl-header-meta">${t(m, 'discussionList.generatedOn', {
         date: today,
-      })} · ${t(m, 'discussionList.recordCount', { n: data.length })}</p>
+      })} · ${t(m, 'discussionList.recordCount', { n: data.length })}${
+        variant === 'pro'
+          ? ` · <span class="dl-pro-badge">${escapeHtml(
+              m.discussionList.proBadge
+            )}</span>`
+          : ''
+      }</p>
     </div>
     <h1 class="dl-title">${escapeHtml(m.discussionList.title)}</h1>
     <p class="dl-subtitle">${escapeHtml(m.discussionList.subtitle)}</p>
     <ol class="dl-items">${items}</ol>
     ${prompt}
+    ${proCta}
   `;
 }
 
@@ -156,6 +245,7 @@ function renderListHtml(
 export async function downloadDiscussionListPdf(
   input: DiscussionPdfInput
 ): Promise<DiscussionPdfResult> {
+  const variant = input.variant ?? 'free';
   const limit = input.signedIn ? SIGNED_IN_EXPORT_LIMIT : FREE_EXPORT_LIMIT;
   const truncated = input.items.length > limit;
   const capped = truncated ? input.items.slice(0, limit) : input.items;
@@ -184,15 +274,28 @@ export async function downloadDiscussionListPdf(
     'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif';
   host.innerHTML = `
     <div id="pdf-content" style="padding:40px 44px 28px;">
-      ${renderListHtml(data, input.locale, input.messages)}
+      ${renderListHtml(data, input.locale, input.messages, variant)}
     </div>
-    <div id="pdf-footer" class="dl-footer" style="padding:10px 44px 14px;margin:0;">${escapeHtml(
-      input.messages.discussionList.footerDisclaimer
-    )}</div>
+    <div id="pdf-footer" class="dl-footer" style="padding:10px 44px 14px;margin:0;">
+      <div>${escapeHtml(input.messages.discussionList.footerDisclaimer)}</div>
+      <div style="margin-top:4px;">${escapeHtml(
+        t(input.messages, 'discussionList.dataNotice', {})
+      )} · ${escapeHtml(
+        t(input.messages, 'discussionList.generatedAt', {
+          datetime: fmtDatetime(input.locale),
+        })
+      )}</div>
+    </div>
   `;
   document.body.appendChild(host);
 
   try {
+    // Wait for fonts so that CJK fallbacks do not substitute glyphs mid-capture
+    // and create gaps around Latin punctuation (e.g. ClinicalTrials.gov).
+    if (document.fonts && document.fonts.ready) {
+      await document.fonts.ready;
+    }
+
     const contentEl = host.querySelector<HTMLElement>('#pdf-content');
     const footerEl = host.querySelector<HTMLElement>('#pdf-footer');
     if (!contentEl || !footerEl) {
@@ -304,6 +407,17 @@ export async function downloadDiscussionListPdf(
 
       pos += sliceH;
       first = false;
+    }
+
+    // Page numbers: use a numeric format that the default PDF font supports.
+    const totalPages = pdf.getNumberOfPages();
+    for (let i = 1; i <= totalPages; i++) {
+      pdf.setPage(i);
+      pdf.setFontSize(8);
+      pdf.setTextColor(100, 116, 139); // slate-500
+      const label = `${i} / ${totalPages}`;
+      const textW = pdf.getTextWidth(label);
+      pdf.text(label, pageW - margin - textW, pageH - margin + 10);
     }
 
     pdf.save(discussionFilename(input.locale));
