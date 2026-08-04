@@ -8,7 +8,7 @@ import {
   DISCUSSION_STORAGE_KEY,
   type DiscussionItem,
   discussionFilename,
-  regionShort,
+  regionLabel,
 } from '@/lib/discussion-list';
 import { DiscussionPrompt } from '@/components/DiscussionPrompt';
 
@@ -133,11 +133,11 @@ export default function DiscussionListPage() {
               <dl className="dl-meta">
                 <div className="dl-meta-row">
                   <dt>{m.discussionList.fieldSource}</dt>
-                  <dd>{it.source}</dd>
+                  <dd><span className="whitespace-nowrap">{it.source}</span></dd>
                 </div>
                 <div className="dl-meta-row">
                   <dt>{m.discussionList.fieldRegion}</dt>
-                  <dd>{regionShort(it.region)}</dd>
+                  <dd>{regionLabel(it)}</dd>
                 </div>
                 <div className="dl-meta-row">
                   <dt>{m.discussionList.fieldStatus}</dt>

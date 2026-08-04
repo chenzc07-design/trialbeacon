@@ -17,6 +17,8 @@ export interface DiscussionItem {
   /** Resolved source label, e.g. "ClinicalTrials.gov". */
   source: string;
   region: Region;
+  /** All region buckets the record covers, when known. */
+  regions?: Region[];
   status?: string;
   phase?: string;
   /** ISO date of the most recent official update, or null. */
@@ -39,11 +41,29 @@ export function buildDiscussionItem(item: UpdateItem): DiscussionItem {
     title: item.title,
     source: SOURCES[item.source]?.label ?? item.source,
     region: item.region,
+    regions: item.regions,
     status: item.status,
     phase: item.phase,
     date: item.date ?? null,
     url: item.url,
   };
+}
+
+/** Format the region coverage for the list, using all known buckets. */
+export function regionLabel(item: {
+  region: Region;
+  regions?: Region[];
+}): string {
+  const buckets = item.regions?.length ? item.regions : [item.region];
+  const seen = new Set<string>();
+  const labels: string[] = [];
+  for (const r of buckets) {
+    const label = regionShort(r);
+    if (seen.has(label)) continue;
+    seen.add(label);
+    labels.push(label);
+  }
+  return labels.join(' / ');
 }
 
 /** Short region label used on the list, matching the spec (US / EU / China). */

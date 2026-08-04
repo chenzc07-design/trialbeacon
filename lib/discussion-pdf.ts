@@ -16,7 +16,7 @@ import {
   buildDiscussionItem,
   type DiscussionItem,
   discussionFilename,
-  regionShort,
+  regionLabel,
   FREE_EXPORT_LIMIT,
   SIGNED_IN_EXPORT_LIMIT,
 } from './discussion-list';
@@ -96,11 +96,11 @@ function renderListHtml(
         <dl class="dl-meta">
           <div class="dl-meta-row">
             <dt>${m.discussionList.fieldSource}</dt>
-            <dd>${escapeHtml(it.source)}</dd>
+            <dd><span style="white-space:nowrap">${escapeHtml(it.source)}</span></dd>
           </div>
           <div class="dl-meta-row">
             <dt>${m.discussionList.fieldRegion}</dt>
-            <dd>${regionShort(it.region)}</dd>
+            <dd>${regionLabel(it)}</dd>
           </div>
           <div class="dl-meta-row">
             <dt>${m.discussionList.fieldStatus}</dt>
@@ -109,7 +109,7 @@ function renderListHtml(
           <div class="dl-meta-row">
             <dt>${m.discussionList.fieldLink}</dt>
             <dd>
-              <span class="dl-link">${escapeHtml(it.url)}</span>
+              <span class="dl-link" data-url="${escapeHtml(it.url)}">${escapeHtml(it.url)}</span>
               <span class="dl-linkprompt">（${m.discussionList.linkPrompt}）</span>
             </dd>
           </div>
@@ -212,6 +212,23 @@ export async function downloadDiscussionListPdf(
       useCORS: true,
     });
 
+    // Capture link bounding boxes so we can overlay real PDF hyperlink
+    // annotations on top of the rasterised URLs.
+    const contentRect = contentEl.getBoundingClientRect();
+    const linkEls = Array.from(host.querySelectorAll<HTMLElement>('.dl-link'));
+    const links = linkEls
+      .map((el) => {
+        const rect = el.getBoundingClientRect();
+        return {
+          url: el.getAttribute('data-url') || el.innerText,
+          x: rect.left - contentRect.left,
+          y: rect.top - contentRect.top,
+          w: rect.width,
+          h: rect.height,
+        };
+      })
+      .filter((l) => l.url && l.w > 0 && l.h > 0);
+
     const pdf = new jsPDF({ unit: 'pt', format: 'a4' });
     const pageW = pdf.internal.pageSize.getWidth();
     const pageH = pdf.internal.pageSize.getHeight();
@@ -267,6 +284,23 @@ export async function downloadDiscussionListPdf(
         contentW,
         footerH
       );
+
+      // Overlay clickable link annotations for any URL that appears on this page.
+      for (const l of links) {
+        const linkTop = l.y / pxPerPt;
+        const linkBottom = (l.y + l.h) / pxPerPt;
+        const overlapTop = Math.max(linkTop, pos);
+        const overlapBottom = Math.min(linkBottom, pos + sliceH);
+        if (overlapBottom > overlapTop + 0.5) {
+          pdf.link(
+            margin + l.x / pxPerPt,
+            top + (overlapTop - pos),
+            l.w / pxPerPt,
+            overlapBottom - overlapTop,
+            { url: l.url }
+          );
+        }
+      }
 
       pos += sliceH;
       first = false;
