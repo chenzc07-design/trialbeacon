@@ -7,6 +7,7 @@ import { DataStatus } from '@/components/DataStatus';
 import { PageHero } from '@/components/PageHero';
 import { FilterMotif } from '@/components/Motifs';
 import { FreshnessBadge } from '@/components/FreshnessBadge';
+import { DiscussionPrompt } from '@/components/DiscussionPrompt';
 import { getServerMessages } from '@/lib/i18n-server';
 
 export const revalidate = 3600;
@@ -96,13 +97,17 @@ export default async function AfterCarePage({
         </div>
 
         <div className="mt-5">
-          <RegionTabs items={feed.items} />
+          <RegionTabs items={feed.items} selectable />
         </div>
 
         <div className="mt-8 rounded-card border border-slateish-200 bg-white p-4">
           <p className="text-xs leading-relaxed text-slateish-500">
             {m.afterCare.foot}
           </p>
+        </div>
+
+        <div className="mt-6">
+          <DiscussionPrompt />
         </div>
       </div>
     </>

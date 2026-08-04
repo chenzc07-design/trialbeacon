@@ -467,6 +467,49 @@ export const ko: Messages = {
     live: '임상시험 기록은 ClinicalTrials.gov 공개 API에서 실시간으로 가져옵니다.',
     snapshot: '{date}에 색인된 공식 기록의 확인된 스냅샷을 표시합니다. 모든 링크는 실시간 원본 페이지를 엽니다.',
   },
+  discussionList: {
+    launcherHeading: '상담 목록 만들기',
+    launcherSub:
+      '진료 시에 가지고 갈 공개 공식 기록을 선택한 다음 목록을 만드세요. 순위나 추천은 하지 않습니다 — 목록은 제목과 링크만 정리합니다.',
+    selectedCount: '{n}개 선택됨',
+    selectAll: '표시된 항목 모두 선택',
+    clearSelection: '선택 지우기',
+    generate: '상담 목록 만들기',
+    exportList: '상담 목록으로 내보내기',
+    useFilter: '현재 필터 결과 사용',
+    limitNote:
+      '로그인 안 됨 — 목록당 최대 {max}개. 로그인하면 더 많이 내보낼 수 있습니다.',
+    limitExceeded:
+      '처음 {max}개만 포함했습니다. 로그인하면 더 많이 내보낼 수 있습니다.',
+    selectRecord: '이 기록 선택',
+    header: 'TrialBeacon · 공개 기록 정리',
+    title: '의사와의 상담 참고 목록',
+    subtitle: '(공개 공식 기록만 정리)',
+    recordCount: '{n}개 정리됨',
+    generatedOn: '생성일 {date}',
+    fieldTitle: '공식 제목 (원문 그대로)',
+    fieldSource: '출처',
+    fieldRegion: '지역',
+    fieldStatus: '상태 / 단계 / 날짜',
+    fieldLink: '원문 링크',
+    linkPrompt: '원문 링크를 방문하세요',
+    footerDisclaimer:
+      '이 목록은 공개 공식 기록의 제목과 링크만 정리합니다. 의학적 조언이나 추천, 적합성 판단이 아닙니다. 반드시 담당 의사와 상의하고 공식 원문 페이지를 따르세요.',
+    emptyTitle: '정리할 기록이 없습니다',
+    emptyBody:
+      '기록 목록으로 돌아가 항목을 선택(또는 필터 사용)한 다음 목록을 다시 만드세요.',
+    backLink: '기록 목록으로 돌아가기',
+    promptHeading: '물어볼 질문',
+    promptIntro: '질문 템플릿일 뿐입니다 — 질문하는 법만 알려주고 답은 주지 않습니다.',
+    promptCopy: '질문 복사',
+    promptCopied: '복사됨',
+    promptLines: [
+      '몇 가지 공개 공식 기록을 선생님과 함께 확인하고 싶습니다:',
+      '1. 이 기록들은 아직 모집 중입니까?',
+      '2. 공개 정보상, 현재 저의 상황과 문면상 관련이 있는 부분이 있습니까?',
+      '3. 관련 부분이 있다면, 다음으로 무엇을 알아봐야 합니까?',
+    ],
+  },
   cancers: {
     lung: {
       label: '폐암',

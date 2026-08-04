@@ -6,16 +6,23 @@ import type { UpdateItem } from '@/lib/types';
 import { findBaselineItem } from '@/lib/data';
 import { useMyList } from '@/components/useMyList';
 import { useI18n } from '@/components/I18nProvider';
+import { useAuth } from '@/components/AuthProvider';
 import { t } from '@/lib/i18n-runtime';
+import { launchDiscussionList } from '@/lib/discussion-list';
 import { RegionBadge, SourceBadge, TypeBadge, StatusBadge } from '@/components/badges';
 
 const NOTES_KEY = 'tb_mylist_notes';
 
 export function MyListClient() {
   const { locale, messages: m } = useI18n();
+  const { status } = useAuth();
   const { ids, remove, clear } = useMyList();
   const [today, setToday] = useState('');
   const [notes, setNotes] = useState('');
+
+  function onExportList() {
+    launchDiscussionList(items, { signedIn: status === 'signed-in' });
+  }
 
   useEffect(() => {
     setToday(
@@ -92,6 +99,13 @@ export function MyListClient() {
               />
             </svg>
             {m.myList.print}
+          </button>
+          <button
+            type="button"
+            onClick={onExportList}
+            className="btn border border-slateish-300 bg-white px-4 py-2.5 text-[13px] text-ink-800 hover:border-navy-300 hover:bg-navy-50"
+          >
+            {m.discussionList.exportList}
           </button>
           <button
             type="button"

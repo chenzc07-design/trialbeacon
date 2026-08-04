@@ -467,6 +467,50 @@ export const fr: Messages = {
     live: 'Enregistrements d’essais récupérés en direct depuis l’API publique de ClinicalTrials.gov.',
     snapshot: 'Affichage de l’instantané vérifié des enregistrements officiels indexés le {date}. Chaque lien ouvre la page d’origine en direct.',
   },
+  discussionList: {
+    launcherHeading: 'Créer une liste de discussion',
+    launcherSub:
+      'Sélectionnez les entrées officielles publiques que vous souhaitez emporter à votre rendez-vous, puis générez une liste. Rien n’est classé ni recommandé — la liste ne reproduit que des titres et des liens.',
+    selectedCount: '{n} sélectionné(s)',
+    selectAll: 'Tout sélectionner (affiché)',
+    clearSelection: 'Effacer la sélection',
+    generate: 'Générer la liste de discussion',
+    exportList: 'Exporter comme liste de discussion',
+    useFilter: 'Utiliser les résultats du filtre actuel',
+    limitNote:
+      'Non connecté — maximum {max} entrées par liste. Connectez-vous pour exporter davantage.',
+    limitExceeded:
+      'Seules les {max} premières entrées ont été incluses. Connectez-vous pour exporter davantage.',
+    selectRecord: 'Sélectionner cette entrée',
+    header: 'TrialBeacon · Organisation de registres publics',
+    title: 'Liste de référence pour la discussion avec le médecin',
+    subtitle: '(organise uniquement des registres officiels publics)',
+    recordCount: '{n|entrée|entrées} organisée(s)',
+    generatedOn: 'Généré le {date}',
+    fieldTitle: 'Titre officiel (verbatim)',
+    fieldSource: 'Source',
+    fieldRegion: 'Région',
+    fieldStatus: 'Statut / phase / date',
+    fieldLink: 'Lien original',
+    linkPrompt: 'Veuillez consulter le lien original',
+    footerDisclaimer:
+      'Cette liste organise uniquement les titres et les liens des registres officiels publics. Elle ne constitue ni un avis médical, ni une recommandation, ni un jugement d’adéquation. Discutez-en toujours avec votre médecin traitant et reposez-vous sur la page officielle d’origine.',
+    emptyTitle: 'Aucune entrée à organiser',
+    emptyBody:
+      'Revenez à une liste d’enregistrements, sélectionnez des entrées (ou utilisez un filtre), puis régénérez la liste.',
+    backLink: 'Retour aux listes d’enregistrements',
+    promptHeading: 'Questions que vous pourriez poser',
+    promptIntro:
+      'Un modèle uniquement — il apprend à poser des questions, sans donner de réponses.',
+    promptCopy: 'Copier les questions',
+    promptCopied: 'Copié',
+    promptLines: [
+      'Je souhaiterais revoir avec vous quelques entrées officielles publiques :',
+      '1. Ces entrées sont-elles encore ouvertes au recrutement ?',
+      '2. D’après les informations publiques, présentent-elles un lien littéral avec ma situation actuelle ?',
+      '3. S’il y a un point pertinent, que dois-je comprendre ensuite ?',
+    ],
+  },
   cancers: {
     lung: {
       label: 'Cancer du poumon',

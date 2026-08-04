@@ -4,7 +4,13 @@ import { useMemo, useState } from 'react';
 import type { UpdateItem, Region } from '@/lib/types';
 import { UpdateList } from './UpdateCard';
 import { useI18n } from './I18nProvider';
+import { useAuth } from './AuthProvider';
 import { t } from '@/lib/i18n-runtime';
+import {
+  FREE_EXPORT_LIMIT,
+  SIGNED_IN_EXPORT_LIMIT,
+  launchDiscussionList,
+} from '@/lib/discussion-list';
 import { KEYWORDS, KEYWORD_LABELS, KEYWORD_HEADING } from '@/lib/keywords';
 
 const REGION_ORDER: Region[] = ['US', 'EU', 'CN', 'OTHER'];
@@ -50,8 +56,40 @@ function phaseRank(p?: string): number {
  * Default order is most-recently-updated first, so the top of the list is
  * always the part of the record set that moved last.
  */
-export function RegionTabs({ items }: { items: UpdateItem[] }) {
+export function RegionTabs({
+  items,
+  selectable = false,
+}: {
+  items: UpdateItem[];
+  selectable?: boolean;
+}) {
   const { locale, messages: m } = useI18n();
+  const { status } = useAuth();
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [notice, setNotice] = useState<string | null>(null);
+
+  function toggleSelect(id: string) {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
+
+  /** Build the list from the selected records (mode A) or the current
+   *  filtered view (mode B), cap by auth state, and open the print page. */
+  function launch(chosen: UpdateItem[]) {
+    if (chosen.length === 0) return;
+    const res = launchDiscussionList(chosen, {
+      signedIn: status === 'signed-in',
+    });
+    setNotice(
+      res.truncated
+        ? t(m, 'discussionList.limitExceeded', { max: res.limit })
+        : null
+    );
+  }
   const [tab, setTab] = useState<Region | 'ALL'>('ALL');
   const [openOnly, setOpenOnly] = useState(false);
   const [afterCareOnly, setAfterCareOnly] = useState(false);
@@ -279,6 +317,72 @@ export function RegionTabs({ items }: { items: UpdateItem[] }) {
         })}
       </div>
 
+      {selectable ? (
+        <div className="mt-4 rounded-card border border-slateish-200 bg-slateish-50/70 p-4">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div className="max-w-xl">
+              <p className="text-[13px] font-semibold text-ink-900">
+                {m.discussionList.launcherHeading}
+              </p>
+              <p className="mt-0.5 text-xs leading-relaxed text-slateish-600">
+                {m.discussionList.launcherSub}
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="rounded-md bg-white px-2 py-1 text-xs tabular-nums text-slateish-500">
+                {t(m, 'discussionList.selectedCount', { n: selectedIds.size })}
+              </span>
+              <button
+                type="button"
+                onClick={() => setSelectedIds(new Set(visible.map((i) => i.id)))}
+                disabled={visible.length === 0}
+                className="btn border border-slateish-300 bg-white px-3 py-1.5 text-[12px] text-slateish-700 hover:border-navy-300 hover:bg-navy-50 disabled:opacity-50"
+              >
+                {m.discussionList.selectAll}
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedIds(new Set())}
+                disabled={selectedIds.size === 0}
+                className="btn border border-slateish-300 bg-white px-3 py-1.5 text-[12px] text-slateish-700 hover:border-navy-300 hover:bg-navy-50 disabled:opacity-50"
+              >
+                {m.discussionList.clearSelection}
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => launch(items.filter((i) => selectedIds.has(i.id)))}
+              disabled={selectedIds.size === 0}
+              className="btn-primary text-[13px]"
+            >
+              {m.discussionList.generate}
+            </button>
+            {filtered && visible.length > 0 ? (
+              <button
+                type="button"
+                onClick={() => launch(visible)}
+                className="btn border border-slateish-300 bg-white px-4 py-2.5 text-[13px] text-ink-800 hover:border-navy-300 hover:bg-navy-50"
+              >
+                {m.discussionList.useFilter}
+              </button>
+            ) : null}
+          </div>
+
+          <p className="mt-2 text-[11px] leading-relaxed text-slateish-400">
+            {t(m, 'discussionList.limitNote', {
+              max:
+                status === 'signed-in' ? SIGNED_IN_EXPORT_LIMIT : FREE_EXPORT_LIMIT,
+            })}
+          </p>
+          {notice ? (
+            <p className="mt-1 text-[11px] font-medium text-[#7a4a12]">{notice}</p>
+          ) : null}
+        </div>
+      ) : null}
+
       <div className="mt-4" role="tabpanel">
         {visible.length === 0 && items.length > 0 ? (
           <div className="card px-6 py-14 text-center">
@@ -286,7 +390,12 @@ export function RegionTabs({ items }: { items: UpdateItem[] }) {
             <p className="mt-1 text-sm text-slateish-500">{m.filters.noMatchHint}</p>
           </div>
         ) : (
-          <UpdateList items={visible} keywords={keywords} />
+          <UpdateList
+            items={visible}
+            keywords={keywords}
+            selectedIds={selectable ? selectedIds : undefined}
+            onToggleSelect={selectable ? toggleSelect : undefined}
+          />
         )}
       </div>
     </div>

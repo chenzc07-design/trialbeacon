@@ -467,6 +467,49 @@ export const ja: Messages = {
     live: '試験記録は ClinicalTrials.gov の公開 API からリアルタイムで取得しています。',
     snapshot: '{date} に収録された公式記録の検証済みスナップショットを表示しています。各リンクは最新の原文ページを開きます。',
   },
+  discussionList: {
+    launcherHeading: '話し合いリストを作成',
+    launcherSub:
+      '診察時に持参したい公開公式記録を選択し、リストを作成します。順位付けや推奨は一切行いません——リストはタイトルとリンクのみを整理します。',
+    selectedCount: '{n} 件選択中',
+    selectAll: '表示中のすべてを選択',
+    clearSelection: '選択をクリア',
+    generate: '話し合いリストを作成',
+    exportList: '話し合いリストとして書き出す',
+    useFilter: '現在のフィルター結果を使用',
+    limitNote:
+      'ログインなし — 1リストにつき最大 {max} 件。ログインするとより多く書き出せます。',
+    limitExceeded:
+      '最初の {max} 件のみを含めました。ログインするとより多く書き出せます。',
+    selectRecord: 'この記録を選択',
+    header: 'TrialBeacon · 公開記録の整理',
+    title: '医師との話し合い参考リスト',
+    subtitle: '（公開公式記録のみを整理）',
+    recordCount: '{n} 件を整理',
+    generatedOn: '作成日 {date}',
+    fieldTitle: '公式タイトル（そのまま）',
+    fieldSource: '出典',
+    fieldRegion: '地域',
+    fieldStatus: 'ステータス / フェーズ / 日付',
+    fieldLink: '原文リンク',
+    linkPrompt: '原文リンクを開いてください',
+    footerDisclaimer:
+      '本リストは公開公式記録のタイトルとリンクのみを整理するものです。医療アドバイス、推奨、適合判断にはなりません。必ず担当医と話し合い、公式原文ページを参照してください。',
+    emptyTitle: '整理する記録がありません',
+    emptyBody:
+      '記録リストに戻り、項目を選択（またはフィルターを使用）してから、再度リストを作成してください。',
+    backLink: '記録リストに戻る',
+    promptHeading: '尋ねる質問',
+    promptIntro: 'あくまで雛形です——質問のしかたを教え、答えは用意しません。',
+    promptCopy: '質問をコピー',
+    promptCopied: 'コピーしました',
+    promptLines: [
+      'いくつかの公開公式記録について、あなたと確認したいと思います：',
+      '1. これらの記録はまだ登録を受け付けていますか？',
+      '2. 公開情報から見て、現在の私の状況と字面的な関連点はありますか？',
+      '3. 関連する点があれば、次に何を理解すべきですか？',
+    ],
+  },
   cancers: {
     lung: {
       label: '肺がん',

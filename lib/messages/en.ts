@@ -560,6 +560,53 @@ export const en = {
     snapshot:
       'Showing the verified snapshot of official records indexed on {date}. Every link opens the live original page.',
   },
+  discussionList: {
+    // Launcher — the selection toolbar shown above record lists.
+    launcherHeading: 'Build a discussion list',
+    launcherSub:
+      'Select the public official records you want to take to your appointment, then generate a list. Nothing is ranked or recommended — the list only reproduces titles and links.',
+    selectedCount: '{n} selected',
+    selectAll: 'Select all shown',
+    clearSelection: 'Clear selection',
+    generate: 'Generate discussion list',
+    exportList: 'Export as discussion list',
+    useFilter: 'Use current filter results',
+    limitNote:
+      'Not signed in — up to {max} records per list. Sign in to export more.',
+    limitExceeded:
+      'Only the first {max} records were included. Sign in to export more.',
+    selectRecord: 'Select this record',
+    // Printable list.
+    header: 'TrialBeacon · Public records organiser',
+    title: 'Doctor discussion reference list',
+    subtitle: '(organises public official records only)',
+    recordCount: '{n|record|records} organised',
+    generatedOn: 'Generated on {date}',
+    fieldTitle: 'Official title (verbatim)',
+    fieldSource: 'Source',
+    fieldRegion: 'Region',
+    fieldStatus: 'Status / phase / date',
+    fieldLink: 'Original link',
+    linkPrompt: 'Please visit the original link',
+    footerDisclaimer:
+      'This list only organises the titles and links of public official records. It is not medical advice, a recommendation, or a suitability judgement. Always discuss with your treating doctor and rely on the original official page.',
+    // Empty state when opened with no records.
+    emptyTitle: 'No records to organise',
+    emptyBody:
+      'Go back to a record list, select some entries (or use a filter), then generate the list again.',
+    backLink: 'Back to record lists',
+    // Neutral question prompt (teaches how to ask, gives no answers).
+    promptHeading: 'Questions you might ask',
+    promptIntro: 'A template only — it teaches how to ask, and gives no answers.',
+    promptCopy: 'Copy questions',
+    promptCopied: 'Copied',
+    promptLines: [
+      'I would like to review a few public official records with you:',
+      '1. Are these records still open to enrolment?',
+      '2. From the public information, do they have any literal points of relevance to my current situation?',
+      '3. If there is a relevant point, what should I understand next?',
+    ],
+  },
   // Localised cancer type names + descriptors (slug-keyed).
   cancers: {
     lung: { label: 'Lung Cancer', descriptor: 'Including NSCLC and SCLC' },

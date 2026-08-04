@@ -467,6 +467,50 @@ export const de: Messages = {
     live: 'Studiendatensätze live über die öffentliche API von ClinicalTrials.gov abgerufen.',
     snapshot: 'Anzeige des verifizierten Snapshots der am {date} indexierten offiziellen Datensätze. Jeder Link öffnet die live Originalseite.',
   },
+  discussionList: {
+    launcherHeading: 'Gesprächsliste erstellen',
+    launcherSub:
+      'Wählen Sie die öffentlichen offiziellen Einträge aus, die Sie zu Ihrem Termin mitnehmen möchten, und erstellen Sie eine Liste. Es wird nichts bewertet oder empfohlen — die Liste gibt nur Titel und Links wieder.',
+    selectedCount: '{n} ausgewählt',
+    selectAll: 'Alle angezeigten auswählen',
+    clearSelection: 'Auswahl löschen',
+    generate: 'Gesprächsliste erstellen',
+    exportList: 'Als Gesprächsliste exportieren',
+    useFilter: 'Aktuelle Filterergebnisse verwenden',
+    limitNote:
+      'Nicht angemeldet — max. {max} Einträge pro Liste. Melden Sie sich an, um mehr zu exportieren.',
+    limitExceeded:
+      'Nur die ersten {max} Einträge wurden übernommen. Melden Sie sich an, um mehr zu exportieren.',
+    selectRecord: 'Diesen Eintrag auswählen',
+    header: 'TrialBeacon · Organisation öffentlicher Registereinträge',
+    title: 'Gesprächs-Referenzliste für den Arztbesuch',
+    subtitle: '(organisiert ausschließlich öffentliche offizielle Einträge)',
+    recordCount: '{n|Eintrag|Einträge} organisiert',
+    generatedOn: 'Erstellt am {date}',
+    fieldTitle: 'Offizieller Titel (wortwörtlich)',
+    fieldSource: 'Quelle',
+    fieldRegion: 'Region',
+    fieldStatus: 'Status / Phase / Datum',
+    fieldLink: 'Original-Link',
+    linkPrompt: 'Bitte den Original-Link öffnen',
+    footerDisclaimer:
+      'Diese Liste organisiert lediglich die Titel und Links öffentlicher offizieller Register. Sie stellt weder eine medizinische Beratung noch eine Empfehlung oder Eignungseinschätzung dar. Besprechen Sie alles mit Ihrem behandelnden Arzt und verlassen Sie sich stets auf die offizielle Originalseite.',
+    emptyTitle: 'Keine Einträge zu organisieren',
+    emptyBody:
+      'Kehren Sie zu einer Eintragsliste zurück, wählen Sie Einträge aus (oder nutzen Sie einen Filter), und erstellen Sie die Liste erneut.',
+    backLink: 'Zurück zu den Eintragslisten',
+    promptHeading: 'Fragen, die Sie stellen könnten',
+    promptIntro:
+      'Nur eine Vorlage — sie zeigt, wie man fragt, und gibt keine Antworten.',
+    promptCopy: 'Fragen kopieren',
+    promptCopied: 'Kopiert',
+    promptLines: [
+      'Ich würde gerne einige öffentliche offizielle Einträge mit Ihnen durchgehen:',
+      '1. Sind diese Einträge noch für die Rekrutierung geöffnet?',
+      '2. Ergeben die öffentlichen Informationen einen unmittelbaren Sachbezug zu meiner aktuellen Situation?',
+      '3. Falls es einen relevanten Punkt gibt, was sollte ich als Nächstes verstehen?',
+    ],
+  },
   cancers: {
     lung: {
       label: 'Lungenkrebs',

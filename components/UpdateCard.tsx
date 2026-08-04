@@ -59,10 +59,14 @@ export function UpdateCard({
   item,
   changeKind,
   keywords,
+  selected,
+  onToggleSelect,
 }: {
   item: UpdateItem;
   changeKind?: 'new' | 'updated' | 'closed';
   keywords?: string[];
+  selected?: boolean;
+  onToggleSelect?: () => void;
 }) {
   const { locale, messages: m } = useI18n();
   const source = SOURCES[item.source];
@@ -70,6 +74,19 @@ export function UpdateCard({
 
   return (
     <article className="card-interactive flex flex-col gap-3 p-4 sm:p-5">
+      {onToggleSelect ? (
+        <label className="flex items-center gap-2 text-[13px] text-slateish-600">
+          <input
+            type="checkbox"
+            checked={!!selected}
+            onChange={onToggleSelect}
+            className="h-4 w-4 rounded border-slateish-300 text-navy-700 focus:ring-navy-500"
+            aria-label={`${m.discussionList.selectRecord}: ${item.title}`}
+          />
+          <span>{m.discussionList.selectRecord}</span>
+        </label>
+      ) : null}
+
       <div className="flex flex-wrap items-center gap-1.5">
         {regions.map((r) => (
           <RegionBadge key={r} region={r} />
@@ -137,10 +154,14 @@ export function UpdateList({
   items,
   changeKind,
   keywords,
+  selectedIds,
+  onToggleSelect,
 }: {
   items: UpdateItem[];
   changeKind?: 'new' | 'updated' | 'closed';
   keywords?: string[];
+  selectedIds?: Set<string>;
+  onToggleSelect?: (id: string) => void;
 }) {
   const { messages: m } = useI18n();
   if (items.length === 0) {
@@ -175,6 +196,10 @@ export function UpdateList({
           item={item}
           changeKind={changeKind}
           keywords={keywords}
+          selected={selectedIds?.has(item.id)}
+          onToggleSelect={
+            onToggleSelect ? () => onToggleSelect(item.id) : undefined
+          }
         />
       ))}
     </div>

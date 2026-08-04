@@ -94,7 +94,7 @@ export default async function CancerDetailPage({
       </div>
 
       <div className="mt-5">
-        <RegionTabs items={feed.items} />
+        <RegionTabs items={feed.items} selectable />
       </div>
       </div>
     </>
