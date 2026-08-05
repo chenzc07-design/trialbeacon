@@ -21,11 +21,22 @@ export function ProPayments() {
   // Plan id is resolved at runtime from the server (env may be set after the
   // client build, so it cannot rely on build-time inlining).
   const [planId, setPlanId] = useState<string | null>(null);
+  const [paypalStatus, setPaypalStatus] = useState<'loading' | 'error' | 'ready'>(
+    'loading'
+  );
   useEffect(() => {
     fetch('/api/paypal/config')
-      .then((r) => r.json())
-      .then((j) => setPlanId(j.planId || null))
-      .catch(() => setPlanId(null));
+      .then(async (r) => {
+        if (!r.ok) throw new Error(`config_${r.status}`);
+        const j = await r.json();
+        if (j.planId) {
+          setPlanId(j.planId);
+          setPaypalStatus('ready');
+        } else {
+          setPaypalStatus('error');
+        }
+      })
+      .catch(() => setPaypalStatus('error'));
   }, []);
 
   return (
@@ -90,9 +101,26 @@ export function ProPayments() {
           {m.pricing.monthlyDesc}
         </p>
         <div className="mt-4 flex-1">
-          {PAYPAL_ON && planId ? (
+          {!PAYPAL_ON ? (
+            <p className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-[12px] text-amber-800">
+              {m.pricing.paypalUnavailable}
+            </p>
+          ) : paypalStatus === 'loading' ? (
+            <p className="rounded-lg border border-slateish-200 bg-slateish-50 px-3 py-2 text-[12px] text-slateish-600">
+              Loading PayPal…
+            </p>
+          ) : paypalStatus === 'error' || !planId ? (
+            <p className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-[12px] text-amber-800">
+              {m.pricing.paypalUnavailable}
+            </p>
+          ) : (
             <PayPalScriptProvider
-              options={{ clientId: CLIENT_ID!, currency: 'USD', intent: 'subscription' }}
+              options={{
+                clientId: CLIENT_ID!,
+                currency: 'USD',
+                intent: 'subscription',
+                vault: true,
+              }}
             >
               <PayPalButtons
                 style={{ layout: 'vertical', label: 'subscribe', height: 44 }}
@@ -117,10 +145,6 @@ export function ProPayments() {
                 }}
               />
             </PayPalScriptProvider>
-          ) : (
-            <p className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-[12px] text-amber-800">
-              {m.pricing.paypalUnavailable}
-            </p>
           )}
         </div>
       </div>
