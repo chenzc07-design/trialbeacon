@@ -7,7 +7,6 @@ import { DataStatus } from '@/components/DataStatus';
 import { PageHero } from '@/components/PageHero';
 import { StatsPing } from '@/components/StatsPing';
 import { FilterMotif } from '@/components/Motifs';
-import { FreshnessBadge } from '@/components/FreshnessBadge';
 import { DiscussionPrompt } from '@/components/DiscussionPrompt';
 import { getServerMessages } from '@/lib/i18n-server';
 
@@ -41,6 +40,7 @@ export default async function AfterCarePage({
         eyebrow={m.afterCare.eyebrow}
         title={m.afterCare.title}
         intro={m.afterCare.introDesktop}
+        freshness
         meta={
           <div className="hidden text-slateish-400 sm:block">
             <FilterMotif className="h-16 w-16 text-navy-200" />
@@ -49,10 +49,6 @@ export default async function AfterCarePage({
       />
 
       <div className="container-page py-10 sm:py-12">
-        <div className="mb-4">
-          <FreshnessBadge />
-        </div>
-
         {/* Mobile short intro — hidden on sm+ */}
         <p className="mb-4 text-sm leading-relaxed text-slateish-600 sm:hidden">
           {m.afterCare.introMobile}
@@ -67,15 +63,15 @@ export default async function AfterCarePage({
           </p>
         </div>
 
-        {/* Cancer filter */}
-        <div className="mt-6 flex flex-wrap gap-1.5" aria-label="Filter by cancer type">
+        {/* Cancer filter — pill buttons. Selected = solid teal; unselected =
+            light outline. Scrolls horizontally on small screens, wraps on sm+. */}
+        <div
+          className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:flex-wrap sm:overflow-visible sm:pb-0"
+          aria-label="Filter by cancer type"
+        >
           <Link
             href="/after-care"
-            className={`chip ${
-              !cancer
-                ? 'border-navy-700 bg-navy-800 text-white'
-                : 'border-slateish-200 bg-white text-slateish-600 hover:border-navy-300'
-            }`}
+            className={`pill ${!cancer ? 'pill-solid' : 'pill-outline'}`}
           >
             {m.common.allTypes}
           </Link>
@@ -83,11 +79,7 @@ export default async function AfterCarePage({
             <Link
               key={c.slug}
               href={`/after-care?cancer=${c.slug}`}
-              className={`chip ${
-                cancer?.slug === c.slug
-                  ? 'border-navy-700 bg-navy-800 text-white'
-                  : 'border-slateish-200 bg-white text-slateish-600 hover:border-navy-300'
-              }`}
+              className={`pill ${cancer?.slug === c.slug ? 'pill-solid' : 'pill-outline'}`}
             >
               {m.cancers[c.slug].label}
             </Link>

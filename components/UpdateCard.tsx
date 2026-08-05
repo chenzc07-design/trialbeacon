@@ -2,20 +2,37 @@
 
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import type { UpdateItem, Region } from '@/lib/types';
+import type { UpdateItem, Region, UpdateType } from '@/lib/types';
 import { SOURCES } from '@/lib/sources';
 import { SNAPSHOT_DATE } from '@/lib/data/trials';
 import { useI18n } from './I18nProvider';
 import {
   RegionBadge,
   SourceBadge,
-  TypeBadge,
   PhaseBadge,
   StatusBadge,
   ChangeBadge,
 } from './badges';
 import { SaveToListButton } from './SaveToListButton';
 import { buildHighlightRegex } from '@/lib/keywords';
+
+/**
+ * The record list exposes exactly two public-facing categories — a clinical
+ * trial registration, or an entry point to public guideline / regulatory
+ * information. Everything else in `UpdateType` (regulatory, guideline,
+ * registry) folds into the second bucket. The colour difference is purely
+ * decorative (trial = quiet gray-blue, guideline = quiet gray-green) and never
+ * implies one is better or more relevant than the other.
+ */
+function typeMeta(type: UpdateType, trialLabel: string, guidelineLabel: string) {
+  const isTrial = type === 'trial';
+  return {
+    label: isTrial ? trialLabel : guidelineLabel,
+    className: isTrial
+      ? 'border-[#c9dcf0] bg-[#eef5fc] text-[#1d4e7e]'
+      : 'border-[#cfe0d9] bg-[#eef6f2] text-[#2e5747]',
+  };
+}
 
 function formatDate(iso: string, locale: string): string {
   const d = new Date(`${iso}T00:00:00Z`);
@@ -72,32 +89,26 @@ export function UpdateCard({
   const { locale, messages: m } = useI18n();
   const source = SOURCES[item.source];
   const regions: Region[] = item.regions?.length ? item.regions : [item.region];
+  const type = typeMeta(
+    item.type,
+    m.discussionList.typeTrial,
+    m.discussionList.typeGuideline
+  );
 
   return (
     <article className="card-interactive flex flex-col gap-3 p-4 sm:p-5">
-      {onToggleSelect ? (
-        <label className="flex items-center gap-2 text-[13px] text-slateish-600">
-          <input
-            type="checkbox"
-            checked={!!selected}
-            onChange={onToggleSelect}
-            className="h-4 w-4 rounded border-slateish-300 text-navy-700 focus:ring-navy-500"
-            aria-label={`${m.discussionList.selectRecord}: ${item.title}`}
-          />
-          <span>{m.discussionList.selectRecord}</span>
-        </label>
-      ) : null}
-
+      {/* Top row — region · source · public category (two types only). */}
       <div className="flex flex-wrap items-center gap-1.5">
         {regions.map((r) => (
           <RegionBadge key={r} region={r} />
         ))}
         <SourceBadge source={item.source} />
-        <TypeBadge type={item.type} />
+        <span className={`chip ${type.className}`}>{type.label}</span>
         {changeKind ? <ChangeBadge kind={changeKind} /> : null}
       </div>
 
-      <h3 className="text-[15px] font-medium leading-snug text-ink-900">
+      {/* Title — kept to a readable 2–3 lines. */}
+      <h3 className="clamp-3 text-[15px] font-medium leading-snug text-ink-900">
         <Link
           href={`/trials/${item.id}${
             item.cancers[0] && item.cancers[0] !== 'all'
@@ -111,15 +122,31 @@ export function UpdateCard({
         </Link>
       </h3>
 
-      <div className="mt-auto flex flex-wrap items-center justify-between gap-x-4 gap-y-2 pt-1">
-        <div className="flex flex-wrap items-center gap-1.5">
-          <PhaseBadge phase={item.phase} />
-          <StatusBadge status={item.status} />
-          <span className="text-xs tabular-nums text-slateish-500">
-            {formatDate(SNAPSHOT_DATE, locale)}
-          </span>
-        </div>
+      {/* Sub-row — Phase · Status · date. */}
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
+        <PhaseBadge phase={item.phase} />
+        <StatusBadge status={item.status} />
+        <span className="text-xs tabular-nums text-slateish-500">
+          {formatDate(SNAPSHOT_DATE, locale)}
+        </span>
+      </div>
 
+      {/* Bottom row — select (when building a list) · add to follow list · view original. */}
+      <div className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-slateish-100 pt-3">
+        {onToggleSelect ? (
+          <label className="flex items-center gap-2 text-[13px] text-slateish-600">
+            <input
+              type="checkbox"
+              checked={!!selected}
+              onChange={onToggleSelect}
+              className="h-4 w-4 rounded border-slateish-300 text-navy-700 focus:ring-navy-500"
+              aria-label={`${m.discussionList.selectRecord}: ${item.title}`}
+            />
+            <span>{m.discussionList.selectRecord}</span>
+          </label>
+        ) : (
+          <span />
+        )}
         <div className="flex flex-wrap items-center gap-2">
           <SaveToListButton id={item.id} />
           <a

@@ -409,20 +409,22 @@ export function RegionTabs({
       </div>
 
       {selectable ? (
-        <div className="mt-4 rounded-card border border-slateish-200 bg-slateish-50/70 p-4">
-          <div className="flex flex-wrap items-start justify-between gap-3">
-            <div className="max-w-xl">
-              <p className="text-[13px] font-semibold text-ink-900">
+        <div className="sticky top-16 z-20 mb-4 rounded-card border border-slateish-200 bg-slateish-50/80 px-4 py-3 shadow-subtle backdrop-blur supports-[backdrop-filter]:bg-slateish-50/70">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+            <div className="flex items-center gap-2">
+              <span className="text-[13px] font-semibold text-ink-900">
                 {m.discussionList.launcherHeading}
-              </p>
-              <p className="mt-0.5 text-xs leading-relaxed text-slateish-600">
-                {m.discussionList.launcherSub}
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-md bg-white px-2 py-1 text-xs tabular-nums text-slateish-500">
+              </span>
+              <span className="rounded-md bg-white px-2 py-0.5 text-xs tabular-nums text-slateish-500 shadow-sm ring-1 ring-slateish-200">
                 {t(m, 'discussionList.selectedCount', { n: selectedVisible.length })}
               </span>
+            </div>
+
+            <p className="hidden max-w-md text-xs leading-relaxed text-slateish-500 lg:block">
+              {m.discussionList.launcherSub}
+            </p>
+
+            <div className="ml-auto flex flex-wrap items-center gap-2">
               <button
                 type="button"
                 onClick={() => setSelectedIds(new Set(visible.map((i) => i.id)))}
@@ -439,38 +441,35 @@ export function RegionTabs({
               >
                 {m.discussionList.clearSelection}
               </button>
+              <button
+                type="button"
+                onClick={() => onDownload(selectedVisible)}
+                disabled={selectedVisible.length === 0 || busy}
+                className="btn-primary text-[13px]"
+              >
+                {busy ? m.discussionList.generating : m.discussionList.generate}
+              </button>
+              {selectedVisible.length > 0 ? (
+                <button
+                  type="button"
+                  onClick={() => onOpenPrint(selectedVisible)}
+                  disabled={busy}
+                  className="btn border border-slateish-300 bg-white px-3 py-1.5 text-[12px] text-ink-800 hover:border-navy-300 hover:bg-navy-50"
+                >
+                  {m.discussionList.openPrint}
+                </button>
+              ) : null}
+              {filtered && visible.length > 0 ? (
+                <button
+                  type="button"
+                  onClick={() => onDownload(visible)}
+                  disabled={busy}
+                  className="btn border border-slateish-300 bg-white px-3 py-1.5 text-[12px] text-ink-800 hover:border-navy-300 hover:bg-navy-50"
+                >
+                  {m.discussionList.useFilter}
+                </button>
+              ) : null}
             </div>
-          </div>
-
-          <div className="mt-3 flex flex-wrap items-center gap-2">
-            <button
-              type="button"
-              onClick={() => onDownload(selectedVisible)}
-              disabled={selectedVisible.length === 0 || busy}
-              className="btn-primary text-[13px]"
-            >
-              {busy ? m.discussionList.generating : m.discussionList.generate}
-            </button>
-            {selectedVisible.length > 0 ? (
-              <button
-                type="button"
-                onClick={() => onOpenPrint(selectedVisible)}
-                disabled={busy}
-                className="btn border border-slateish-300 bg-white px-4 py-2.5 text-[13px] text-ink-800 hover:border-navy-300 hover:bg-navy-50"
-              >
-                {m.discussionList.openPrint}
-              </button>
-            ) : null}
-            {filtered && visible.length > 0 ? (
-              <button
-                type="button"
-                onClick={() => onDownload(visible)}
-                disabled={busy}
-                className="btn border border-slateish-300 bg-white px-4 py-2.5 text-[13px] text-ink-800 hover:border-navy-300 hover:bg-navy-50"
-              >
-                {m.discussionList.useFilter}
-              </button>
-            ) : null}
           </div>
 
           <p className="mt-2 text-[11px] leading-relaxed text-slateish-400">

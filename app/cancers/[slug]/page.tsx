@@ -1,12 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { CANCERS, getCancer } from '@/lib/cancers';
 import { getCancerFeed } from '@/lib/data';
 import { RegionTabs } from '@/components/RegionTabs';
 import { DataStatus } from '@/components/DataStatus';
-import { FreshnessBadge } from '@/components/FreshnessBadge';
 import { PageHero } from '@/components/PageHero';
 import { StatsPing } from '@/components/StatsPing';
 import { t, getServerMessages } from '@/lib/i18n-server';
@@ -51,17 +49,9 @@ export default async function CancerDetailPage({
         eyebrow={m.cancersIndex.title}
         title={m.cancers[slug].label}
         intro={`${m.cancers[slug].descriptor}. ${t(m, 'cancerDetail.indexed', { n: feed.items.length })}`}
+        freshness
         meta={
-          <div className="hidden items-center gap-3 sm:flex">
-            <span className="relative block h-16 w-24 overflow-hidden rounded-xl bg-white/70 ring-1 ring-navy-100">
-              <Image
-                src={cancer.image}
-                alt=""
-                fill
-                sizes="96px"
-                className="object-cover"
-              />
-            </span>
+          <div className="hidden sm:flex">
             <Link
               href={`/after-care?cancer=${slug}`}
               className="btn-secondary text-[13px]"
@@ -92,7 +82,6 @@ export default async function CancerDetailPage({
 
       <div className="mt-5 flex flex-wrap items-center gap-3">
         <DataStatus live={feed.live} />
-        <FreshnessBadge />
       </div>
 
       <div className="mt-5">

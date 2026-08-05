@@ -55,6 +55,21 @@
     @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-md border px-2 py-[3px] text-[11px] font-medium leading-none tracking-wide;
   }
 
+  /* Capsule / pill filter buttons — used for the cancer filter on the After
+     Care and cancer views. Selected = solid teal; unselected = light outline.
+     `shrink-0` lets the row scroll horizontally on small screens. */
+  .pill {
+    @apply inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-3.5 py-1.5 text-[13px] font-medium transition-colors;
+  }
+
+  .pill-solid {
+    @apply border-navy-700 bg-navy-800 text-white hover:bg-navy-900;
+  }
+
+  .pill-outline {
+    @apply border-slateish-300 bg-white text-slateish-700 hover:border-navy-400 hover:text-navy-700;
+  }
+
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-60;
   }

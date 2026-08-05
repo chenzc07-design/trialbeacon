@@ -1,50 +1,36 @@
-import Image from 'next/image';
+import { FreshnessBadge } from './FreshnessBadge';
 
 type Props = {
   eyebrow: string;
   title: string;
   intro?: string;
-  /** extra content (chips, badges) rendered under the intro on the right */
+  /** extra content (chips, badges, CTAs) rendered under the intro on the right */
   meta?: React.ReactNode;
+  /** render the "Last verified" badge in the header (consistent with the homepage) */
+  freshness?: boolean;
 };
 
 /**
- * Inner-page banner. A calm, low-saturation background image with a soft
- * white-to-transparent gradient on the left so the headline always hits AA
- * contrast, regardless of the photo crop.
+ * Inner-page banner. A calm, low-saturation light background with the same
+ * faint geometric texture used on the homepage hero, so every branch page
+ * reads as one family: small label → title → one-line subtitle →
+ * "Last verified" badge. No photographs, no institutional logos.
  *
  * Re-used across /cancers, /after-care, /changes, /search, /alerts,
- * /sources, /about, /disclaimer, /unsubscribe to give the whole site a
- * consistent visual rhythm without resorting to stock photography.
+ * /sources, /about, /disclaimer, /unsubscribe and /pro to give the whole
+ * site a consistent visual rhythm.
  */
-export function PageHero({ eyebrow, title, intro, meta }: Props) {
+export function PageHero({ eyebrow, title, intro, meta, freshness }: Props) {
   return (
     <section
-      className="relative isolate overflow-hidden border-b border-slateish-200/70"
+      className="relative isolate overflow-hidden border-b border-slateish-200 bg-gradient-to-b from-slateish-50 via-white to-white"
       aria-label="Page header"
     >
-      {/* Layered background image — right-aligned focal motif, softens to white on the left */}
+      {/* Faint geometric line-art texture — same motif as the homepage hero,
+          kept very light so the headline always hits AA contrast. */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-[#f5f7fb]"
-      >
-        <Image
-          src="/page-hero-bg.png"
-          alt=""
-          fill
-          priority={false}
-          sizes="100vw"
-          className="object-cover object-right opacity-90"
-        />
-      </div>
-      {/* Soft left scrim — keeps the heading readable */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10"
-        style={{
-          background:
-            'linear-gradient(to right, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.85) 35%, rgba(255,255,255,0.25) 65%, rgba(255,255,255,0) 100%)',
-        }}
+        className="pointer-events-none absolute inset-0 -z-10 bg-[url('/hero-bg.svg')] bg-cover bg-center opacity-60"
       />
 
       <div className="container-page py-10 sm:py-14">
@@ -58,6 +44,11 @@ export function PageHero({ eyebrow, title, intro, meta }: Props) {
               <p className="mt-3 max-w-prose text-sm leading-relaxed text-slateish-600">
                 {intro}
               </p>
+            ) : null}
+            {freshness ? (
+              <div className="mt-4">
+                <FreshnessBadge />
+              </div>
             ) : null}
           </div>
           {meta ? <div className="shrink-0">{meta}</div> : null}
