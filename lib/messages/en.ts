@@ -648,7 +648,7 @@ export const en = {
     proCta: 'Upgrade for a detailed visit-prep report',
   },
   pricing: {
-    nav: 'Discussion List Pro',
+    nav: 'Pro',
     // ----- /pro page -----
     eyebrow: 'Optional paid feature',
     title: 'Discussion List Pro',
