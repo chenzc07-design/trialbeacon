@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { UpdateItem, Region } from '@/lib/types';
 import { UpdateList } from './UpdateCard';
 import { useI18n } from './I18nProvider';
@@ -72,25 +72,9 @@ export function RegionTabs({
   const [notice, setNotice] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [upgradeMsg, setUpgradeMsg] = useState<string | null>(null);
-  const [dailyExhausted, setDailyExhausted] = useState(false);
 
-  // Reflect the free daily limit so the inline upgrade hint can show even
-  // before the user clicks. Read-only check; never consumes a generation.
-  useEffect(() => {
-    if (status === 'unknown') return;
-    let active = true;
-    requestQuota(1, false)
-      .then((q) => {
-        if (!active) return;
-        setDailyExhausted(
-          q.plan === 'free' && q.dailyRemaining <= 0 && q.unlockCredits <= 0
-        );
-      })
-      .catch(() => undefined);
-    return () => {
-      active = false;
-    };
-  }, [status]);
+  // --- daily quota status is now a static hint beside limitNote;
+  //     `requestQuota` effect removed — the /pro link is always visible. ---
 
   function toggleSelect(id: string) {
     setSelectedIds((prev) => {
@@ -493,17 +477,13 @@ export function RegionTabs({
             {t(m, 'discussionList.limitNote', {
               max:
                 status === 'signed-in' ? SIGNED_IN_EXPORT_LIMIT : FREE_EXPORT_LIMIT,
-            })}
+            })}{' '}
+            <a href="/pro" className="font-medium text-navy-700 underline underline-offset-2 hover:text-navy-900">
+              {m.pricing.nav}
+            </a>
           </p>
           {upgradeMsg ? (
             <ProUpgradePrompt message={upgradeMsg} />
-          ) : dailyExhausted ? (
-            <p className="mt-1 text-[11px] font-medium text-[#7a4a12]">
-              {m.pricing.freeDailyUsed}{' '}
-              <a href="/pro" className="underline hover:text-[#5e3610]">
-                {m.pricing.upgradeCta}
-              </a>
-            </p>
           ) : null}
           {notice ? (
             <p className="mt-1 text-[11px] font-medium text-[#7a4a12]">{notice}</p>

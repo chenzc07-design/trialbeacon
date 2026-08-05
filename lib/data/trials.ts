@@ -12,7 +12,7 @@ import type { UpdateItem } from '../types';
  * ClinicalTrials.gov API directly and falls back to this snapshot only if the
  * live request fails, so the site never shows an empty page.
  */
-export const SNAPSHOT_DATE = '2026-07-30';
+export const SNAPSHOT_DATE = '2026-08-05';
 
 export const TRIAL_SNAPSHOT: UpdateItem[] = [
   // ---------------------------------------------------------------- Lung
