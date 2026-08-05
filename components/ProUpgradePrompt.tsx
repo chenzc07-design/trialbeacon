@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useI18n } from './I18nProvider';
+import { t } from '@/lib/i18n-runtime';
 
 /**
  * Neutral inline upgrade prompt shown when a free generation is blocked
@@ -32,15 +33,31 @@ export function ProUpgradePrompt({
       }`}
     >
       <p className="text-[13px] leading-relaxed text-ink-800">
-        {message ?? m.pricing.freeDailyUsed}
+        {message ? (
+          <>
+            {message}{' '}
+            <Link
+              href="/pro"
+              onClick={track}
+              className="font-medium text-navy-700 underline underline-offset-2 hover:text-navy-900"
+            >
+              {m.discussionList.seePro}
+            </Link>
+          </>
+        ) : (
+          <>
+            {t(m, 'pricing.reachedLimitPre')}
+            <Link
+              href="/pro"
+              onClick={track}
+              className="font-medium text-navy-700 underline underline-offset-2 hover:text-navy-900"
+            >
+              {m.discussionList.seePro}
+            </Link>
+            {t(m, 'pricing.reachedLimitPost')}
+          </>
+        )}
       </p>
-      <Link
-        href="/pro"
-        onClick={track}
-        className="btn-primary mt-2 inline-flex text-[13px]"
-      >
-        {m.pricing.upgradeCta}
-      </Link>
     </div>
   );
 }

@@ -483,8 +483,9 @@ export const ko: Messages = {
       '이 환경에서 PDF를 만들 수 없어 인쇄용 버전을 열었습니다. 그곳에서 인쇄하거나 PDF로 저장하세요.',
     exportList: '상담 목록으로 내보내기',
     useFilter: '현재 필터 결과 사용',
-    limitNote:
-      '로그인 안 됨 — 목록당 최대 {max}개. 로그인하면 더 많이 내보낼 수 있습니다.',
+    limitNotePre: '로그인 안 됨 — 목록당 최대 {max}개. 로그인하여 무료 한도를 높이거나, ',
+    seePro: 'see Pro',
+    limitNotePost: '로 더 많이 내보내기.',
     limitExceeded:
       '처음 {max}개만 포함했습니다. 로그인하면 더 많이 내보낼 수 있습니다.',
     selectRecord: '이 기록 선택',
@@ -624,6 +625,8 @@ export const ko: Messages = {
     manageNote: '취소하면 향후 갱신이 중지됩니다. Pro 이용 권한은 현재 기간이 끝날 때까지 유지됩니다.',
     upgradeCta: '더 많은 기능을 위해 업그레이드',
     freeDailyUsed: '오늘의 무료 목록을 모두 사용했습니다. 더 많은 기능을 위해 업그레이드하거나 내일 다시 시도하세요.',
+    reachedLimitPre: '무료 한도에 도달했습니다. ',
+    reachedLimitPost: '로 더 높은 한도 얻기.',
     freeListTooLarge: '이 목록은 {max}개를 초과합니다. 업그레이드하여 최대 10개까지 포함하거나 선택을 줄이세요.',
     successTitle: '준비 완료',
     successBodyPro: 'Discussion List Pro가 활성화되었습니다. 이번 달에는 필요한 만큼 목록을 생성하세요.',

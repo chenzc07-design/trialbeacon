@@ -483,8 +483,9 @@ export const de: Messages = {
       'Das PDF konnte hier nicht erstellt werden; stattdessen wurde die Druckversion geöffnet — dort können Sie sie ausdrucken oder als PDF speichern.',
     exportList: 'Als Gesprächsliste exportieren',
     useFilter: 'Aktuelle Filterergebnisse verwenden',
-    limitNote:
-      'Nicht angemeldet — max. {max} Einträge pro Liste. Melden Sie sich an, um mehr zu exportieren.',
+    limitNotePre: 'Nicht angemeldet — max. {max} Einträge pro Liste. Für höhere kostenlose Limits anmelden, oder ',
+    seePro: 'see Pro',
+    limitNotePost: ' für mehr Exporte.',
     limitExceeded:
       'Nur die ersten {max} Einträge wurden übernommen. Melden Sie sich an, um mehr zu exportieren.',
     selectRecord: 'Diesen Eintrag auswählen',
@@ -627,6 +628,8 @@ export const de: Messages = {
     upgradeCta: 'Upgrade für mehr',
     freeDailyUsed:
       'Sie haben Ihre kostenlose Liste für heute verbraucht. Führen Sie ein Upgrade durch, oder versuchen Sie es morgen erneut.',
+    reachedLimitPre: 'Sie haben das kostenlose Limit erreicht. ',
+    reachedLimitPost: ' für höhere Limits.',
     freeListTooLarge:
       'Diese Liste hat mehr als {max} Einträge. Führen Sie ein Upgrade durch, um bis zu 10 einzuschließen, oder verringern Sie die Auswahl.',
     successTitle: 'Alles bereit',

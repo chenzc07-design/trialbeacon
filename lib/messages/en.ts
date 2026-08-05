@@ -577,8 +577,9 @@ export const en = {
       'The PDF could not be built here, so the printable version opened instead — you can print it or save it as a PDF from there.',
     exportList: 'Export as discussion list',
     useFilter: 'Use current filter results',
-    limitNote:
-      'Not signed in — up to {max} records per list. Sign in to export more.',
+    limitNotePre: 'Not signed in — up to {max} records per list. Sign in for higher free limits, or ',
+    seePro: 'see Pro',
+    limitNotePost: ' for more exports.',
     limitExceeded:
       'Only the first {max} records were included. Sign in to export more.',
     selectRecord: 'Select this record',
@@ -689,6 +690,8 @@ export const en = {
     upgradeCta: 'Upgrade for more',
     freeDailyUsed:
       'You have used your free discussion list for today. Upgrade for more, or try again tomorrow.',
+    reachedLimitPre: 'You have reached the free limit. ',
+    reachedLimitPost: ' for higher limits.',
     freeListTooLarge:
       'This list has more than {max} records. Upgrade to include up to 10, or reduce the selection.',
     // ----- result pages -----

@@ -483,8 +483,9 @@ export const fr: Messages = {
       'Le PDF n’a pas pu être généré ici ; la version imprimable s’est ouverte à la place — vous pouvez l’imprimer ou l’enregistrer en PDF depuis là.',
     exportList: 'Exporter comme liste de discussion',
     useFilter: 'Utiliser les résultats du filtre actuel',
-    limitNote:
-      'Non connecté — maximum {max} entrées par liste. Connectez-vous pour exporter davantage.',
+    limitNotePre: 'Non connecté — maximum {max} entrées par liste. Connectez-vous pour des limites gratuites plus élevées, ou ',
+    seePro: 'see Pro',
+    limitNotePost: ' pour exporter davantage.',
     limitExceeded:
       'Seules les {max} premières entrées ont été incluses. Connectez-vous pour exporter davantage.',
     selectRecord: 'Sélectionner cette entrée',
@@ -627,6 +628,8 @@ export const fr: Messages = {
     upgradeCta: 'Passer à la version supérieure',
     freeDailyUsed:
       'Vous avez utilisé votre liste gratuite du jour. Passez à la version supérieure pour plus, ou réessayez demain.',
+    reachedLimitPre: 'Vous avez atteint la limite gratuite. ',
+    reachedLimitPost: ' pour des limites plus élevées.',
     freeListTooLarge:
       'Cette liste comporte plus de {max} enregistrements. Passez à la version supérieure pour inclure jusqu’à 10, ou réduisez la sélection.',
     successTitle: 'C’est prêt',

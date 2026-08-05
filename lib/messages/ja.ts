@@ -483,8 +483,9 @@ export const ja: Messages = {
       'この環境では PDF を作成できなかったため、印刷用バージョンを開きました。そちらで印刷するか PDF として保存してください。',
     exportList: '話し合いリストとして書き出す',
     useFilter: '現在のフィルター結果を使用',
-    limitNote:
-      'ログインなし — 1リストにつき最大 {max} 件。ログインするとより多く書き出せます。',
+    limitNotePre: 'ログインなし — 1リストにつき最大 {max} 件。ログインで無料上限を引き上げるか、',
+    seePro: 'see Pro',
+    limitNotePost: 'でより多く書き出せます。',
     limitExceeded:
       '最初の {max} 件のみを含めました。ログインするとより多く書き出せます。',
     selectRecord: 'この記録を選択',
@@ -625,6 +626,8 @@ export const ja: Messages = {
       '解約すると今後の更新が停止します。Pro へのアクセスは現在の期間が終わるまで続きます。',
     upgradeCta: 'アップグレードしてさらに',
     freeDailyUsed: '本日の無料リストは既に使い切りました。アップグレードするか、明日またお試しください。',
+    reachedLimitPre: '無料上限に達しました。',
+    reachedLimitPost: 'でより高い上限を。',
     freeListTooLarge:
       'このリストは {max} 件を超えています。アップグレードで最大10件まで含められるほか、選択を減らすこともできます。',
     successTitle: '準備完了',

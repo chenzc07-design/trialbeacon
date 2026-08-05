@@ -99,7 +99,7 @@ export function RegionTabs({
         setUpgradeMsg(
           q.reason === 'genLimit'
             ? t(m, 'pricing.freeListTooLarge', { max: q.genLimit })
-            : m.pricing.freeDailyUsed
+            : null
         );
         return;
       }
@@ -474,13 +474,14 @@ export function RegionTabs({
           </div>
 
           <p className="mt-2 text-[11px] leading-relaxed text-slateish-400">
-            {t(m, 'discussionList.limitNote', {
+            {t(m, 'discussionList.limitNotePre', {
               max:
                 status === 'signed-in' ? SIGNED_IN_EXPORT_LIMIT : FREE_EXPORT_LIMIT,
-            })}{' '}
+            })}
             <a href="/pro" className="font-medium text-navy-700 underline underline-offset-2 hover:text-navy-900">
-              {m.pricing.nav}
+              {m.discussionList.seePro}
             </a>
+            {m.discussionList.limitNotePost}
           </p>
           {upgradeMsg ? (
             <ProUpgradePrompt message={upgradeMsg} />
