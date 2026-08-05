@@ -9,17 +9,7 @@ export const dynamic = 'force-dynamic';
 
 export async function POST() {
   if (!paypalSubscriptionConfigured()) {
-    return NextResponse.json(
-      {
-        error: 'paypal_sub_not_configured',
-        diag: {
-          hasClientId: Boolean(process.env.PAYPAL_CLIENT_ID),
-          hasSecret: Boolean(process.env.PAYPAL_CLIENT_SECRET),
-          hasPlanId: Boolean(process.env.PAYPAL_PLAN_ID),
-        },
-      },
-      { status: 503 }
-    );
+    return NextResponse.json({ error: 'paypal_sub_not_configured' }, { status: 503 });
   }
   try {
     const u = await getCurrentUser();

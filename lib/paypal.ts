@@ -24,7 +24,9 @@ export function paypalClientSecret(): string | undefined {
   return process.env.PAYPAL_CLIENT_SECRET;
 }
 export function paypalPlanId(): string | undefined {
-  return process.env.PAYPAL_PLAN_ID;
+  // PAYPAL_PLAN_ID is the canonical server var; fall back to the public
+  // client-plan id (same value) so a single NEXT_PUBLIC_* entry also works.
+  return process.env.PAYPAL_PLAN_ID || process.env.NEXT_PUBLIC_PAYPAL_PLAN_ID;
 }
 
 /** True when the one-time (Orders) flow can run. */
