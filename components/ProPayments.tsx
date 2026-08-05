@@ -1,11 +1,11 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { useI18n } from './I18nProvider';
 import { WECHAT_ENABLED, ALIPAY_ENABLED } from '@/lib/payments-config';
 
 const CLIENT_ID = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
-const PLAN_ID = process.env.NEXT_PUBLIC_PAYPAL_PLAN_ID;
 const PAYPAL_ON = Boolean(CLIENT_ID);
 
 /**
@@ -18,6 +18,15 @@ const PAYPAL_ON = Boolean(CLIENT_ID);
  */
 export function ProPayments() {
   const { messages: m } = useI18n();
+  // Plan id is resolved at runtime from the server (env may be set after the
+  // client build, so it cannot rely on build-time inlining).
+  const [planId, setPlanId] = useState<string | null>(null);
+  useEffect(() => {
+    fetch('/api/paypal/config')
+      .then((r) => r.json())
+      .then((j) => setPlanId(j.planId || null))
+      .catch(() => setPlanId(null));
+  }, []);
 
   return (
     <div className="grid gap-4 sm:grid-cols-2">
@@ -81,14 +90,14 @@ export function ProPayments() {
           {m.pricing.monthlyDesc}
         </p>
         <div className="mt-4 flex-1">
-          {PAYPAL_ON && PLAN_ID ? (
+          {PAYPAL_ON && planId ? (
             <PayPalScriptProvider
               options={{ clientId: CLIENT_ID!, currency: 'USD', intent: 'subscription' }}
             >
               <PayPalButtons
                 style={{ layout: 'vertical', label: 'subscribe', height: 44 }}
                 createSubscription={(_data, actions) =>
-                  actions.subscription.create({ plan_id: PLAN_ID! })
+                  actions.subscription.create({ plan_id: planId })
                 }
                 onApprove={async (data) => {
                   const subId = (data as { subscriptionID?: string }).subscriptionID;
