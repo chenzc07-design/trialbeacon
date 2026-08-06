@@ -51,7 +51,7 @@ export default async function CancerDetailPage({
         intro={`${m.cancers[slug].descriptor}. ${t(m, 'cancerDetail.indexed', { n: feed.items.length })}`}
         freshness
         meta={
-          <div className="hidden sm:flex">
+          <div className="flex">
             <Link
               href={`/after-care?cancer=${slug}`}
               className="btn-secondary text-[13px]"
@@ -70,15 +70,6 @@ export default async function CancerDetailPage({
         <span className="mx-1.5" aria-hidden="true">/</span>
         <span className="text-ink-800">{m.cancers[slug].label}</span>
       </nav>
-
-      <div className="mt-4 flex sm:hidden">
-        <Link
-          href={`/after-care?cancer=${slug}`}
-          className="btn-secondary text-[13px]"
-        >
-          {m.cancerDetail.advancedViewCta}
-        </Link>
-      </div>
 
       <div className="mt-5 flex flex-wrap items-center gap-3">
         <DataStatus live={feed.live} />

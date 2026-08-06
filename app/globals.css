@@ -63,7 +63,7 @@
   }
 
   .pill-solid {
-    @apply border-navy-700 bg-navy-800 text-white hover:bg-navy-900;
+    @apply border-navy-700 bg-navy-700 text-white hover:bg-navy-800;
   }
 
   .pill-outline {

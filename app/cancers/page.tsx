@@ -32,19 +32,19 @@ export default async function CancersPage() {
       />
 
       <div className="container-page py-10 sm:py-12">
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {stats.map((c) => (
             <Link
               key={c.slug}
               href={`/cancers/${c.slug}`}
-              className="card-interactive group flex flex-col p-5"
+              className="card-interactive group flex h-full flex-col p-5 sm:p-6"
             >
               <div className="flex items-start justify-between gap-3">
-                <h2 className="text-base font-semibold text-ink-950">
+                <h2 className="text-lg font-bold tracking-tight text-ink-950 sm:text-xl">
                   {m.cancers[c.slug].label}
                 </h2>
                 <svg
-                  className="mt-0.5 h-4 w-4 shrink-0 text-slateish-300 transition-all group-hover:translate-x-0.5 group-hover:text-navy-500"
+                  className="mt-1 h-4 w-4 shrink-0 text-slateish-300 transition-all group-hover:translate-x-0.5 group-hover:text-navy-500"
                   viewBox="0 0 14 14"
                   fill="none"
                   aria-hidden="true"
@@ -58,21 +58,29 @@ export default async function CancersPage() {
                   />
                 </svg>
               </div>
-              <p className="mt-1.5 text-sm leading-relaxed text-slateish-500">
+              <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-slateish-500">
                 {m.cancers[c.slug].descriptor}
               </p>
-              <div className="mt-auto flex flex-wrap items-center gap-1.5 pt-4">
-                <span className="chip border-slateish-200 bg-slateish-100 text-slateish-600">
-                  {t(m, 'common.recordsIndexed', { n: c.total })}
-                </span>
-                <span className="chip border-navy-100 bg-navy-50 text-navy-700">
-                  {t(m, 'common.advancedLaterLine', { n: c.afterCare })}
-                </span>
-              </div>
-              <div className="mt-3 flex items-center gap-3 text-[11px] tabular-nums text-slateish-400">
-                <span>{m.region.US} {c.regions.US}</span>
-                <span>{m.region.EU} {c.regions.EU}</span>
-                <span>{m.region.CN} {c.regions.CN}</span>
+              <div className="mt-auto flex flex-col gap-3 pt-5">
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="chip border-navy-100 bg-navy-50 font-medium text-navy-800">
+                    {t(m, 'common.recordsIndexed', { n: c.total })}
+                  </span>
+                  <span className="chip border-slateish-200 bg-slateish-100 text-slateish-600">
+                    {t(m, 'common.advancedLaterLine', { n: c.afterCare })}
+                  </span>
+                </div>
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="chip border-slateish-200 bg-white text-slateish-600">
+                    {m.region.US} {c.regions.US}
+                  </span>
+                  <span className="chip border-slateish-200 bg-white text-slateish-600">
+                    {m.region.EU} {c.regions.EU}
+                  </span>
+                  <span className="chip border-slateish-200 bg-white text-slateish-600">
+                    {m.region.CN} {c.regions.CN}
+                  </span>
+                </div>
               </div>
             </Link>
           ))}

@@ -96,7 +96,7 @@ export function UpdateCard({
   );
 
   return (
-    <article className="card-interactive flex flex-col gap-3 p-4 sm:p-5">
+    <article className="card-interactive flex flex-col gap-3 p-5 sm:p-6">
       {/* Top row — region · source · public category (two types only). */}
       <div className="flex flex-wrap items-center gap-1.5">
         {regions.map((r) => (
@@ -108,7 +108,7 @@ export function UpdateCard({
       </div>
 
       {/* Title — kept to a readable 2–3 lines. */}
-      <h3 className="clamp-3 text-[15px] font-medium leading-snug text-ink-900">
+      <h3 className="clamp-3 text-base font-semibold leading-snug text-ink-900">
         <Link
           href={`/trials/${item.id}${
             item.cancers[0] && item.cancers[0] !== 'all'
@@ -217,7 +217,7 @@ export function UpdateList({
     );
   }
   return (
-    <div className="grid gap-3">
+    <div className="grid gap-4">
       {items.map((item) => (
         <UpdateCard
           key={item.id}
