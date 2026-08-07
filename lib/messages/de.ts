@@ -13,6 +13,7 @@ export const de: Messages = {
     safety: 'Vor Kontaktaufnahme mit einer Studie',
     signIn: 'Anmelden',
     signOut: 'Abmelden',
+    following: 'Folgen',
     account: 'Konto',
   },
   common: {
@@ -197,6 +198,53 @@ export const de: Messages = {
     remove: 'Von der Merkliste entfernen',
     saved: 'In der Merkliste',
     signInToSave: 'Anmelden, um geräteübergreifend zu speichern',
+    // ----- cancer-type following -----
+    cancerAdd: 'Follow updates for this cancer type',
+    cancerSaved: 'Following this cancer type',
+    cancerRemove: 'Stop following this cancer type',
+    cancerSignIn: 'Sign in to follow',
+  },
+  following: {
+    title: 'Following',
+    intro:
+      'Public official records you follow. Organised here for your next appointment — never recommended or interpreted.',
+    recordsTitle: 'Followed records',
+    recordsEmpty: 'You have not saved any records yet.',
+    recordsEmptyCta: 'Browse cancer types',
+    cancersTitle: 'Followed cancer types',
+    cancersEmpty: 'You are not following any cancer type yet.',
+    unfollow: 'Stop following',
+    generatePdf: 'Generate discussion list PDF',
+    generating: 'Generating…',
+    digestTitle: 'Weekly digest email',
+    digestBody:
+      'A short email summarising public-record changes for the cancer types you follow. Optional, and only included with Pro.',
+    digestOn: 'Weekly digest on',
+    digestOff: 'Weekly digest off',
+    digestToggle: 'Receive a weekly digest of changes',
+    digestProOnly: 'The weekly digest is a Pro feature. Upgrade to receive it.',
+    digestSaved: 'Digest preference saved.',
+    openFollowing: 'Open your follow list',
+    openAfterCare: 'Go to After Care',
+    disclaimer:
+      'This only organises public official records. It is not medical advice, a recommendation, or a match for your situation.',
+  },
+  digest: {
+    subjectPrefix: 'Your TrialBeacon weekly update',
+    topics: 'Topics you follow: {topics}',
+    intro:
+      'Summary of public official records you follow. No recommendations, no interpretation.',
+    recordUpdates: 'Record updates',
+    recordUpdatesHint: 'Changes to records you saved:',
+    cancerActivity: 'Cancer type activity',
+    cancerActivityHint: 'New or updated public records this week:',
+    openFollow: 'Open your follow list',
+    generateList: 'Generate discussion list',
+    footerNote:
+      'This email only organises public official records. It is not medical advice, a recommendation, or a match for your situation. Always rely on the original official page and your doctor.',
+    unsubscribe: 'Unsubscribe',
+    noChanges: 'No new public-record changes in your follows this week.',
+    viewedOn: 'Viewed on',
   },
   changes: {
     eyebrow: 'Was hat sich geändert',
@@ -669,6 +717,13 @@ export const de: Messages = {
     successBodySingle:
       'Ihr einmaliges Freischalten wurde hinzugefügt — Sie können jetzt eine vollständige Liste (bis zu 10 Einträge) generieren.',
     successCta: 'Liste generieren',
+    successHint:
+      "Need another list before a future appointment? Single export remains available — you can generate one any time from After Care.",
+    successDownload: 'Download PDF',
+    successNext:
+      'Bring this list to your next appointment with your care team — it is only a summary of official records, not medical advice.',
+    successEmpty:
+      'No records selected yet. Go to After Care to choose records, then come back to download your list.',
     cancelTitle: 'Zahlung nicht abgeschlossen',
     cancelBody: 'Es wurde keine Zahlung vorgenommen. Sie können es jederzeit erneut versuchen.',
     errorTitle: 'Etwas ist schiefgelaufen',

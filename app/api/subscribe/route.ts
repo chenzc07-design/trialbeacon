@@ -43,7 +43,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         error: `You can follow up to ${MAX_CANCERS} cancer ${
-          MAX_CANCERS === 1 ? 'type' : 'types'
+          Number(MAX_CANCERS) === 1 ? 'type' : 'types'
         }.`,
       },
       { status: 400 }
@@ -60,6 +60,10 @@ export async function POST(request: Request) {
     email,
     cancers: cancerList,
     regions: regionList.length ? regionList : ['US', 'EU', 'CN'],
+    // Anonymous subscribers are not Pro, so the weekly digest job skips them
+    // (the digest is a Pro feature). They can still confirm interest; only an
+    // active Pro entitlement ever produces an email.
+    proUntil: 0,
   });
 
   // Double opt-in: send a confirmation email only when a provider is set.

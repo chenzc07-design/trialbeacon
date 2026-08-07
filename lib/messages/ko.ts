@@ -13,6 +13,7 @@ export const ko: Messages = {
     safety: '연구에 연락하기 전에',
     signIn: '로그인',
     signOut: '로그아웃',
+    following: '팔로우',
     account: '계정',
   },
   common: {
@@ -197,6 +198,53 @@ export const ko: Messages = {
     remove: '팔로우 목록에서 제거',
     saved: '팔로우 목록에 있음',
     signInToSave: '로그인하면 여러 기기에 저장됩니다',
+    // ----- cancer-type following -----
+    cancerAdd: 'Follow updates for this cancer type',
+    cancerSaved: 'Following this cancer type',
+    cancerRemove: 'Stop following this cancer type',
+    cancerSignIn: 'Sign in to follow',
+  },
+  following: {
+    title: 'Following',
+    intro:
+      'Public official records you follow. Organised here for your next appointment — never recommended or interpreted.',
+    recordsTitle: 'Followed records',
+    recordsEmpty: 'You have not saved any records yet.',
+    recordsEmptyCta: 'Browse cancer types',
+    cancersTitle: 'Followed cancer types',
+    cancersEmpty: 'You are not following any cancer type yet.',
+    unfollow: 'Stop following',
+    generatePdf: 'Generate discussion list PDF',
+    generating: 'Generating…',
+    digestTitle: 'Weekly digest email',
+    digestBody:
+      'A short email summarising public-record changes for the cancer types you follow. Optional, and only included with Pro.',
+    digestOn: 'Weekly digest on',
+    digestOff: 'Weekly digest off',
+    digestToggle: 'Receive a weekly digest of changes',
+    digestProOnly: 'The weekly digest is a Pro feature. Upgrade to receive it.',
+    digestSaved: 'Digest preference saved.',
+    openFollowing: 'Open your follow list',
+    openAfterCare: 'Go to After Care',
+    disclaimer:
+      'This only organises public official records. It is not medical advice, a recommendation, or a match for your situation.',
+  },
+  digest: {
+    subjectPrefix: 'Your TrialBeacon weekly update',
+    topics: 'Topics you follow: {topics}',
+    intro:
+      'Summary of public official records you follow. No recommendations, no interpretation.',
+    recordUpdates: 'Record updates',
+    recordUpdatesHint: 'Changes to records you saved:',
+    cancerActivity: 'Cancer type activity',
+    cancerActivityHint: 'New or updated public records this week:',
+    openFollow: 'Open your follow list',
+    generateList: 'Generate discussion list',
+    footerNote:
+      'This email only organises public official records. It is not medical advice, a recommendation, or a match for your situation. Always rely on the original official page and your doctor.',
+    unsubscribe: 'Unsubscribe',
+    noChanges: 'No new public-record changes in your follows this week.',
+    viewedOn: 'Viewed on',
   },
   changes: {
     eyebrow: '변경 내용',
@@ -663,6 +711,13 @@ export const ko: Messages = {
     successBodyPro: 'Discussion List Pro가 활성화되었습니다. 이번 달에는 필요한 만큼 목록을 생성하세요.',
     successBodySingle: '단회 잠금 해제가 추가되었습니다——이제 전체 목록(기록 최대 10개) 1개를 생성할 수 있습니다.',
     successCta: '목록 생성',
+    successHint:
+      "Need another list before a future appointment? Single export remains available — you can generate one any time from After Care.",
+    successDownload: 'Download PDF',
+    successNext:
+      'Bring this list to your next appointment with your care team — it is only a summary of official records, not medical advice.',
+    successEmpty:
+      'No records selected yet. Go to After Care to choose records, then come back to download your list.',
     cancelTitle: '결제가 완료되지 않음',
     cancelBody: '요금이 청구되지 않았습니다. 준비되면 언제든 다시 시도할 수 있습니다.',
     errorTitle: '문제가 발생했습니다',

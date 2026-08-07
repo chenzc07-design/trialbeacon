@@ -24,6 +24,13 @@ export interface Subscription {
    * future user system can be layered on without a data migration.
    */
   token: string;
+  /**
+   * Epoch ms when the subscriber's Pro entitlement lapses (0 = none / not
+   * tracked). The weekly digest job only emails subscribers whose Pro is
+   * still active, so an expired plan stops receiving mail without a manual
+   * unsubscribe.
+   */
+  proUntil: number;
 }
 
 export interface SubscriptionStore {
@@ -75,6 +82,7 @@ class MemorySubscriptionStore implements SubscriptionStore {
     if (existing) {
       existing.cancers = sub.cancers;
       existing.regions = sub.regions;
+      existing.proUntil = sub.proUntil ?? 0;
       existing.token ||= token();
       return existing;
     }
@@ -86,6 +94,7 @@ class MemorySubscriptionStore implements SubscriptionStore {
       createdAt: new Date().toISOString(),
       confirmed: false,
       token: token(),
+      proUntil: sub.proUntil ?? 0,
     };
     memory.set(email, created);
     return created;
@@ -181,7 +190,7 @@ class KvSubscriptionStore implements SubscriptionStore {
     const email = sub.email.toLowerCase();
     const existing = await this.find(email);
     const created: Subscription = existing
-      ? { ...existing, cancers: sub.cancers, regions: sub.regions }
+      ? { ...existing, cancers: sub.cancers, regions: sub.regions, proUntil: sub.proUntil ?? 0 }
       : {
           id: token(),
           email,
@@ -190,6 +199,7 @@ class KvSubscriptionStore implements SubscriptionStore {
           createdAt: new Date().toISOString(),
           confirmed: false,
           token: token(),
+          proUntil: sub.proUntil ?? 0,
         };
     const cmds: [string, ...string[]][] = [
       ['SET', subKey(email), JSON.stringify(created)],

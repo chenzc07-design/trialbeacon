@@ -4,7 +4,13 @@
  * from either side without dragging in `node:crypto` or `next/headers`.
  */
 export const FREE_FOLLOW_LIMIT = 1;
-export const ALERT_FREE_LIMIT = 1;
+/**
+ * Free accounts may follow up to 5 cancer types (raised from 1 so the
+ * "follow one or more cancer types" spec is satisfiable on the free tier).
+ * A paid tier would raise this further; the single source of truth lives
+ * here so the form, the API, and the subscription cap never disagree.
+ */
+export const ALERT_FREE_LIMIT = 5;
 export const SESSION_TTL_DAYS = 60;
 export const CODE_TTL_MIN = 10;
 export const SESSION_COOKIE = 'tb_session';

@@ -8,6 +8,7 @@ import { PageHero } from '@/components/PageHero';
 import { StatsPing } from '@/components/StatsPing';
 import { FilterMotif } from '@/components/Motifs';
 import { DiscussionPrompt } from '@/components/DiscussionPrompt';
+import { FollowCancerButton } from '@/components/FollowCancerButton';
 import { getServerMessages } from '@/lib/i18n-server';
 
 export const revalidate = 3600;
@@ -88,6 +89,9 @@ export default async function AfterCarePage({
 
         <div className="mt-5 flex flex-wrap items-center gap-3">
           <DataStatus live={feed.live} />
+          {cancer ? (
+            <FollowCancerButton slug={cancer.slug} />
+          ) : null}
         </div>
 
         <div className="mt-5">

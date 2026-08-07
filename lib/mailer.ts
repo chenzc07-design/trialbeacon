@@ -15,6 +15,9 @@ export interface OutgoingEmail {
   to: string;
   subject: string;
   text: string;
+  /** Optional HTML body. When present, providers send a multipart message;
+   * when absent, the digest falls back to plain text only. */
+  html?: string;
 }
 
 export function isEmailConfigured(): boolean {
@@ -33,6 +36,7 @@ async function sendViaResend(email: OutgoingEmail): Promise<boolean> {
       to: [email.to],
       subject: email.subject,
       text: email.text,
+      ...(email.html ? { html: email.html } : {}),
       // Plain text only: no tracking pixels, no open/click tracking.
     }),
   });
@@ -52,6 +56,7 @@ async function sendViaPostmark(email: OutgoingEmail): Promise<boolean> {
       To: email.to,
       Subject: email.subject,
       TextBody: email.text,
+      ...(email.html ? { HtmlBody: email.html } : {}),
       TrackOpens: false,
       TrackLinks: 'None',
     }),

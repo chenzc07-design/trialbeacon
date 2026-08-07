@@ -80,6 +80,9 @@ export interface Prefs {
    * next purchase.
    */
   lastOrder?: OrderRecord;
+  /** Preferred UI locale (e.g. 'en' | 'zh'). Persisted so the weekly digest
+   * can be rendered in the recipient's language. Optional, never clinical. */
+  locale?: string;
 }
 
 /**
@@ -115,6 +118,7 @@ export function defaultPrefs(): Prefs {
     genCount: 0,
     paypalSubscriptionId: undefined,
     lastOrder: undefined,
+    locale: undefined,
   };
 }
 
@@ -412,6 +416,10 @@ function sanitizePrefs(p: Partial<Prefs> | null | undefined): Prefs {
         ? p.paypalSubscriptionId
         : undefined,
     lastOrder: sanitizeOrder(p?.lastOrder),
+    locale:
+      typeof p?.locale === 'string' && p.locale.length > 0 && p.locale.length <= 8
+        ? p.locale
+        : undefined,
   };
 }
 
@@ -476,6 +484,19 @@ export async function resolvePrefsOnSignIn(uid: string): Promise<Prefs> {
   const remote = await readRemotePrefs(uid);
   if (remote) return sanitizePrefs(remote);
   return (await readPrefsForUid(uid)) ?? defaultPrefs();
+}
+
+/**
+ * Looks up a person's stored preferences by email (used by the weekly digest
+ * job to find the saved-record list + locale for a confirmed subscriber).
+ * Derives the uid from the address and reads the sync store when configured;
+ * returns null when nothing durable is stored (e.g. local-only cookie).
+ */
+export async function readUserPrefsByEmail(email: string): Promise<Prefs | null> {
+  const uid = uidForEmail(email);
+  const remote = await readRemotePrefs(uid);
+  if (remote) return sanitizePrefs(remote);
+  return null;
 }
 
 /* ------------------------------------------------------------ current user */

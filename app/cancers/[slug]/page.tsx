@@ -7,6 +7,7 @@ import { RegionTabs } from '@/components/RegionTabs';
 import { DataStatus } from '@/components/DataStatus';
 import { PageHero } from '@/components/PageHero';
 import { StatsPing } from '@/components/StatsPing';
+import { FollowCancerButton } from '@/components/FollowCancerButton';
 import { t, getServerMessages } from '@/lib/i18n-server';
 
 export const revalidate = 3600;
@@ -51,7 +52,8 @@ export default async function CancerDetailPage({
         intro={`${m.cancers[slug].descriptor}. ${t(m, 'cancerDetail.indexed', { n: feed.items.length })}`}
         freshness
         meta={
-          <div className="flex">
+          <div className="flex flex-wrap items-center gap-2">
+            <FollowCancerButton slug={slug} />
             <Link
               href={`/after-care?cancer=${slug}`}
               className="btn-secondary text-[13px]"

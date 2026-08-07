@@ -192,6 +192,13 @@ export function SiteHeader() {
                     {m.nav.myList}
                   </Link>
                   <Link
+                    href="/following"
+                    className="block rounded-lg px-3 py-2 text-sm text-ink-900 hover:bg-slateish-50"
+                    role="menuitem"
+                  >
+                    {m.nav.following}
+                  </Link>
+                  <Link
                     href="/alerts"
                     className="block rounded-lg px-3 py-2 text-sm text-ink-900 hover:bg-slateish-50"
                     role="menuitem"
@@ -294,6 +301,13 @@ export function SiteHeader() {
                   className="rounded-lg px-3 py-2.5 text-sm font-medium text-slateish-600 hover:bg-slateish-100"
                 >
                   {m.nav.myList}
+                </Link>
+                <Link
+                  href="/following"
+                  onClick={() => setOpen(false)}
+                  className="rounded-lg px-3 py-2.5 text-sm font-medium text-slateish-600 hover:bg-slateish-100"
+                >
+                  {m.nav.following}
                 </Link>
                 <Link
                   href="/account"
