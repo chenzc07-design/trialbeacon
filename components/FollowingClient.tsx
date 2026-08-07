@@ -28,6 +28,10 @@ export function FollowingClient() {
   const [upgradeMsg, setUpgradeMsg] = useState<string | null>(null);
   const [digestBusy, setDigestBusy] = useState(false);
   const [digestSaved, setDigestSaved] = useState(false);
+  const [testBusy, setTestBusy] = useState(false);
+  const [testResult, setTestResult] = useState<
+    'idle' | 'sent' | 'error' | 'no_follows' | 'not_configured'
+  >('idle');
 
   const recordItems = useMemo(
     () =>
@@ -144,6 +148,32 @@ export function FollowingClient() {
       /* ignore */
     } finally {
       setDigestBusy(false);
+    }
+  }
+
+  async function sendTestEmail() {
+    setTestBusy(true);
+    setTestResult('idle');
+    try {
+      const res = await fetch('/api/digest/test', { method: 'POST' });
+      if (res.status === 503) {
+        setTestResult('not_configured');
+        return;
+      }
+      if (res.status === 400) {
+        setTestResult('no_follows');
+        return;
+      }
+      if (res.ok) {
+        const j = (await res.json().catch(() => ({}))) as { delivered?: boolean };
+        setTestResult(j.delivered ? 'sent' : 'error');
+      } else {
+        setTestResult('error');
+      }
+    } catch {
+      setTestResult('error');
+    } finally {
+      setTestBusy(false);
     }
   }
 
@@ -285,6 +315,35 @@ export function FollowingClient() {
                 {m.following.digestSaved}
               </p>
             ) : null}
+            {recordItems.length === 0 && cancerItems.length === 0 ? (
+              <p className="mt-3 border-t border-slateish-200 pt-3 text-[12px] text-slateish-500">
+                {m.following.testNoFollows}
+              </p>
+            ) : (
+              <div className="mt-3 border-t border-slateish-200 pt-3">
+                <button
+                  type="button"
+                  onClick={sendTestEmail}
+                  disabled={testBusy}
+                  className="btn-secondary text-[13px] disabled:opacity-60"
+                >
+                  {testBusy ? m.following.sendingTest : m.following.sendTest}
+                </button>
+                {testResult === 'sent' ? (
+                  <p className="mt-2 text-[12px] font-medium text-[#3f8f6b]">
+                    {m.following.testSent}
+                  </p>
+                ) : testResult === 'error' ? (
+                  <p className="mt-2 text-[12px] font-medium text-[#7a3030]">
+                    {m.following.testError}
+                  </p>
+                ) : testResult === 'not_configured' ? (
+                  <p className="mt-2 text-[12px] text-slateish-500">
+                    {m.following.testNotConfigured}
+                  </p>
+                ) : null}
+              </div>
+            )}
           </div>
         ) : (
           <div className="mt-3 rounded-lg border border-[#cfe3d8] bg-[#eef6f2] px-3 py-2.5 text-[13px] text-[#2e5747]">

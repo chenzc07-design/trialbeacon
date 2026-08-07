@@ -224,6 +224,12 @@ export const ko: Messages = {
     digestToggle: 'Receive a weekly digest of changes',
     digestProOnly: 'The weekly digest is a Pro feature. Upgrade to receive it.',
     digestSaved: 'Digest preference saved.',
+    sendTest: 'Send a test email',
+    sendingTest: 'Sending…',
+    testSent: 'Test email sent — check your inbox (and spam folder).',
+    testError: 'Could not send the test email. Please try again.',
+    testNoFollows: 'Follow at least one record or cancer type to receive the digest.',
+    testNotConfigured: 'Email sending is not configured on this site yet.',
     openFollowing: 'Open your follow list',
     openAfterCare: 'Go to After Care',
     disclaimer:
@@ -677,7 +683,7 @@ export const ko: Messages = {
     whatYouGet: [
       '플랜이 활성화된 동안 횟수 제한 없이 목록 생성',
       '팔로우 목록 내보내기——저장한 기록을 하나의 목록으로',
-      '정리한 목록의 주 1회 선택적 다이제스트 이메일',
+      '주 1회 다이제스트 이메일——기록이나 암 종류를 팔로우하면, 변경 사항이 있을 때만 Pro가 공개 변경 사항을 이메일로 보냅니다',
     ],
     whatYouDontTitle: '제공되지 않는 항목',
     whatYouDont: [

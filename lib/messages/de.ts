@@ -224,6 +224,12 @@ export const de: Messages = {
     digestToggle: 'Receive a weekly digest of changes',
     digestProOnly: 'The weekly digest is a Pro feature. Upgrade to receive it.',
     digestSaved: 'Digest preference saved.',
+    sendTest: 'Send a test email',
+    sendingTest: 'Sending…',
+    testSent: 'Test email sent — check your inbox (and spam folder).',
+    testError: 'Could not send the test email. Please try again.',
+    testNoFollows: 'Follow at least one record or cancer type to receive the digest.',
+    testNotConfigured: 'Email sending is not configured on this site yet.',
     openFollowing: 'Open your follow list',
     openAfterCare: 'Go to After Care',
     disclaimer:
@@ -678,7 +684,7 @@ export const de: Messages = {
     whatYouGet: [
       'Unbegrenzte Listengenerierungen, solange Ihr Tarif aktiv ist',
       'Export der Merkliste — verwandeln Sie gespeicherte Einträge in eine Liste',
-      'Optionale wöchentliche Zusammenfassungs-E-Mail Ihrer Listen',
+      'Wöchentliche Zusammenfassungs-E-Mail — wenn Sie Datensätze oder Krebsarten folgen, sendet Pro Ihnen deren öffentliche Änderungen (nur bei Änderungen)',
     ],
     whatYouDontTitle: 'Was Sie nicht erhalten',
     whatYouDont: [

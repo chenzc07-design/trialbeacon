@@ -260,6 +260,13 @@ export const en = {
     digestToggle: 'Receive a weekly digest of changes',
     digestProOnly: 'The weekly digest is a Pro feature. Upgrade to receive it.',
     digestSaved: 'Digest preference saved.',
+    sendTest: 'Send a test email',
+    sendingTest: 'Sending…',
+    testSent: 'Test email sent — check your inbox (and spam folder).',
+    testError: 'Could not send the test email. Please try again.',
+    testNoFollows:
+      'Follow at least one record or cancer type to receive the digest.',
+    testNotConfigured: 'Email sending is not configured on this site yet.',
     openFollowing: 'Open your follow list',
     openAfterCare: 'Go to After Care',
     disclaimer:
@@ -724,7 +731,7 @@ export const en = {
     whatYouGet: [
       'Unlimited discussion-list generations while your plan is active',
       'Follow-list export — turn your saved records into one list',
-      'Optional weekly digest email of your organised lists',
+      'Weekly digest email — when you follow records or cancer types, Pro emails you their public changes (only when there are changes)',
     ],
     whatYouDontTitle: 'What you do NOT get',
     whatYouDont: [

@@ -224,6 +224,12 @@ export const ja: Messages = {
     digestToggle: 'Receive a weekly digest of changes',
     digestProOnly: 'The weekly digest is a Pro feature. Upgrade to receive it.',
     digestSaved: 'Digest preference saved.',
+    sendTest: 'Send a test email',
+    sendingTest: 'Sending…',
+    testSent: 'Test email sent — check your inbox (and spam folder).',
+    testError: 'Could not send the test email. Please try again.',
+    testNoFollows: 'Follow at least one record or cancer type to receive the digest.',
+    testNotConfigured: 'Email sending is not configured on this site yet.',
     openFollowing: 'Open your follow list',
     openAfterCare: 'Go to After Care',
     disclaimer:
@@ -677,7 +683,7 @@ export const ja: Messages = {
     whatYouGet: [
       'プラン有効期間中は回数無制限でリストを生成',
       'フォローリストの書き出し——保存した記録を1つのリストに',
-      '整理したリストの週1回の省略可能なダイジェストメール',
+      '週1回のダイジェストメール——記録やがん種をフォローすると、公開された変更をProがメールで届けます（変更がある場合のみ）',
     ],
     whatYouDontTitle: 'ご利用いただけないもの',
     whatYouDont: [
