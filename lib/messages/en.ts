@@ -241,10 +241,18 @@ export const en = {
     saved: 'In my follow list',
     signInToSave: 'Sign in to save across devices',
     // ----- cancer-type following (1.1 B) -----
-    cancerAdd: 'Follow updates for this cancer type',
-    cancerSaved: 'Following this cancer type',
+    cancerAdd: 'Follow updates',
+    cancerSaved: 'Following',
     cancerRemove: 'Stop following this cancer type',
     cancerSignIn: 'Sign in to follow',
+    hint: 'When public records change, this is included in your weekly summary email. Not medical advice.',
+    limitTitle: 'The free plan follows up to {max} cancer types',
+    limitBody: 'Upgrade to Pro to follow more, or replace a current follow with this one.',
+    limitReplace: 'Replace a follow & follow this',
+    limitViewPro: 'View Pro',
+    toastOn: 'Following {name}',
+    toastOff: 'Unfollowed {name}',
+    toastError: 'Could not update. Please try again.',
   },
   // ---------------------------------------------------------------------------
   // Follow centre (/following): records + cancer types a person follows, and

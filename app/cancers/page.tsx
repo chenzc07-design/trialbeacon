@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { baselineCancerStats } from '@/lib/data';
 import { PageHero } from '@/components/PageHero';
 import { BeaconMotif } from '@/components/Motifs';
+import { FollowCancerButton } from '@/components/FollowCancerButton';
 import { t, getServerMessages } from '@/lib/i18n-server';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -34,11 +35,11 @@ export default async function CancersPage() {
       <div className="container-page py-10 sm:py-12">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {stats.map((c) => (
-            <Link
+            <div
               key={c.slug}
-              href={`/cancers/${c.slug}`}
               className="card-interactive group flex h-full flex-col p-5 sm:p-6"
             >
+              <Link href={`/cancers/${c.slug}`} className="flex h-full flex-col">
               <div className="flex items-start justify-between gap-3">
                 <h2 className="text-lg font-bold tracking-tight text-ink-950 sm:text-xl">
                   {m.cancers[c.slug].label}
@@ -82,7 +83,11 @@ export default async function CancersPage() {
                   </span>
                 </div>
               </div>
-            </Link>
+              </Link>
+              <div className="mt-3 flex items-center justify-end border-t border-slateish-100 pt-3">
+                <FollowCancerButton slug={c.slug} hint />
+              </div>
+            </div>
           ))}
         </div>
       </div>

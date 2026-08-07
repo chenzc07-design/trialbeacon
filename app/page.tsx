@@ -5,6 +5,7 @@ import { baselineCancerStats, SNAPSHOT_DATE } from '@/lib/data';
 import { SOURCES } from '@/lib/sources';
 import { SearchBox } from '@/components/SearchBox';
 import { FreshnessBadge } from '@/components/FreshnessBadge';
+import { FollowCancerButton } from '@/components/FollowCancerButton';
 import { t, getServerMessages } from '@/lib/i18n-server';
 
 const PRINCIPLE_ICONS = [
@@ -343,48 +344,52 @@ export default async function HomePage() {
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {stats.map((c) => (
-            <Link
+            <div
               key={c.slug}
-              href={`/cancers/${c.slug}`}
-              className="card-interactive group flex items-center gap-4 p-4"
+              className="card-interactive group relative flex items-center gap-4 p-4"
             >
-              <div className="relative h-14 w-20 shrink-0 overflow-hidden rounded-lg bg-slateish-100 ring-1 ring-slateish-200/60">
-                <Image
-                  src={c.image}
-                  alt=""
-                  fill
-                  sizes="80px"
-                  className="object-cover"
-                />
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center justify-between gap-2">
-                  <h3 className="truncate text-[14px] font-semibold text-ink-950">
-                    {m.cancers[c.slug].label}
-                  </h3>
-                  <svg
-                    className="h-3 w-3 shrink-0 text-slateish-300 transition-all group-hover:translate-x-0.5 group-hover:text-navy-500"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M3 7h8M7.5 3.5L11 7l-3.5 3.5"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+              <Link href={`/cancers/${c.slug}`} className="flex min-w-0 flex-1 items-center gap-4">
+                <div className="relative h-14 w-20 shrink-0 overflow-hidden rounded-lg bg-slateish-100 ring-1 ring-slateish-200/60">
+                  <Image
+                    src={c.image}
+                    alt=""
+                    fill
+                    sizes="80px"
+                    className="object-cover"
+                  />
                 </div>
-                <p className="mt-0.5 truncate text-[11px] text-slateish-500">
-                  {m.cancers[c.slug].descriptor}
-                </p>
-                <p className="mt-1 text-[11px] tabular-nums text-slateish-500">
-                  {t(m, 'common.recordsIndexed', { n: c.total })}
-                </p>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="truncate text-[14px] font-semibold text-ink-950">
+                      {m.cancers[c.slug].label}
+                    </h3>
+                    <svg
+                      className="h-3 w-3 shrink-0 text-slateish-300 transition-all group-hover:translate-x-0.5 group-hover:text-navy-500"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M3 7h8M7.5 3.5L11 7l-3.5 3.5"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <p className="mt-0.5 truncate text-[11px] text-slateish-500">
+                    {m.cancers[c.slug].descriptor}
+                  </p>
+                  <p className="mt-1 text-[11px] tabular-nums text-slateish-500">
+                    {t(m, 'common.recordsIndexed', { n: c.total })}
+                  </p>
+                </div>
+              </Link>
+              <div className="shrink-0">
+                <FollowCancerButton slug={c.slug} />
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </section>
