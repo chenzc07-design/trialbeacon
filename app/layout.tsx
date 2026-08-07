@@ -4,6 +4,7 @@ import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { I18nProvider } from '@/components/I18nProvider';
 import { AuthProvider } from '@/components/AuthProvider';
+import { LimitModalProvider } from '@/components/LimitModal';
 import { getServerMessages } from '@/lib/i18n-server';
 import { siteJsonLd, hreflangAll } from '@/lib/seo';
 
@@ -75,9 +76,11 @@ export default async function RootLayout({
         />
         <I18nProvider locale={locale} messages={messages}>
           <AuthProvider>
-            <SiteHeader />
-            <main className="flex-1">{children}</main>
-            <SiteFooter />
+            <LimitModalProvider>
+              <SiteHeader />
+              <main className="flex-1">{children}</main>
+              <SiteFooter />
+            </LimitModalProvider>
           </AuthProvider>
         </I18nProvider>
       </body>

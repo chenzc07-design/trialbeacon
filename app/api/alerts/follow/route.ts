@@ -45,6 +45,8 @@ export async function POST(req: NextRequest) {
 
   const follow = body?.follow !== false;
   const replace = body?.replace === true;
+  const replaceSlug =
+    typeof body?.replaceSlug === 'string' ? body.replaceSlug : '';
   const current = Array.isArray(u.alertCancers) ? u.alertCancers : [];
 
   let next: string[];
@@ -57,8 +59,14 @@ export async function POST(req: NextRequest) {
       { error: 'limit', max: ALERT_FREE_LIMIT, alertCancers: current },
       { status: 409 }
     );
+  } else if (replace && replaceSlug && current.includes(replaceSlug)) {
+    // Swap exactly one: drop the chosen follow, add the new one.
+    next = current.filter((s) => s !== replaceSlug);
+    if (!next.includes(slug)) next.push(slug);
+  } else if (replace) {
+    next = [slug];
   } else {
-    next = replace ? [slug] : [...current, slug];
+    next = [...current, slug];
   }
 
   // Following implies the person wants updates; keep the flag on. Unfollowing

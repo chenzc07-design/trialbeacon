@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { useI18n } from './I18nProvider';
 import { useAuth } from './AuthProvider';
+import { useLimitModal } from './LimitModal';
 import { t } from '@/lib/i18n-runtime';
 import { showToast } from '@/lib/toast';
 import { ALERT_FREE_LIMIT } from '@/lib/auth-shared';
@@ -15,8 +15,10 @@ import { ALERT_FREE_LIMIT } from '@/lib/auth-shared';
  *
  * - Anonymous visitors are routed to sign-in (returns to the current page).
  * - A signed-in visitor's click writes the follow immediately and toasts.
- * - Hitting the free limit returns a clear prompt offering "replace a follow"
- *   or "view Pro" instead of silently dropping the request.
+ * - At the free limit, clicking an un-followed cancer opens the app-wide
+ *   limit modal directly (local pre-check — no network write, no rollback,
+ *   no flicker). The modal itself lives in LimitModalProvider, so it is a
+ *   single, stable instance unrelated to any card's lifecycle.
  */
 export function FollowCancerButton({
   slug,
@@ -33,14 +35,14 @@ export function FollowCancerButton({
 }) {
   const { messages: m } = useI18n();
   const { user, status, ready, openSignIn, refresh } = useAuth();
-  const router = useRouter();
-  const [busy, setBusy] = useState(false);
-  const [showLimit, setShowLimit] = useState(false);
-
+  const { openLimit, limitSlug } = useLimitModal();
   const label = m.cancers[slug]?.label ?? slug;
+  const [busy, setBusy] = useState(false);
   const [following, setFollowing] = useState<boolean>(initialFollowing ?? false);
 
   // Keep the local toggle in step with the authoritative list from context.
+  // Runs only when `user` actually changes; sets the same boolean when the
+  // data is unchanged, so React bails out (no render loop).
   useEffect(() => {
     if (user) setFollowing(user.alertCancers?.includes(slug) ?? false);
   }, [user, slug]);
@@ -49,7 +51,7 @@ export function FollowCancerButton({
     return typeof window !== 'undefined' ? window.location.pathname : '/';
   }
 
-  async function doFollow(follow: boolean, replace = false) {
+  async function doFollow(follow: boolean) {
     if (!user) {
       openSignIn(currentPath());
       return;
@@ -59,10 +61,12 @@ export function FollowCancerButton({
       const res = await fetch('/api/alerts/follow', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ slug, follow, replace }),
+        body: JSON.stringify({ slug, follow }),
       });
+      // Fallback: if the local count was stale and the server still rejects,
+      // open the modal instead of erroring — never write-and-roll-back.
       if (res.status === 409) {
-        setShowLimit(true);
+        openLimit(slug);
         return;
       }
       if (!res.ok) {
@@ -83,10 +87,19 @@ export function FollowCancerButton({
     }
   }
 
-  function handleClick() {
-    if (!ready) return;
+  function handleClick(e: React.MouseEvent) {
+    // Never let a follow click bubble up to the card's navigation link.
+    e.stopPropagation();
+    if (!ready || limitSlug) return;
     if (status !== 'signed-in' || !user) {
       openSignIn(currentPath());
+      return;
+    }
+    const follows = user.alertCancers ?? [];
+    // Local pre-check first: at the free limit and this one not yet followed
+    // → open the limit modal directly, with no network write.
+    if (!following && follows.length >= ALERT_FREE_LIMIT) {
+      openLimit(slug);
       return;
     }
     void doFollow(!following);
@@ -109,7 +122,10 @@ export function FollowCancerButton({
     return (
       <button
         type="button"
-        onClick={() => openSignIn(currentPath())}
+        onClick={(e) => {
+          e.stopPropagation();
+          openSignIn(currentPath());
+        }}
         title={m.follow.cancerSignIn}
         className={`btn-secondary ${base}`}
       >
@@ -169,50 +185,6 @@ export function FollowCancerButton({
         <p className="mt-2 max-w-[22rem] text-[11px] leading-snug text-slateish-500">
           {m.follow.hint}
         </p>
-      ) : null}
-
-      {showLimit ? (
-        <div
-          className="fixed inset-0 z-[90] flex items-end justify-center bg-ink-950/50 px-4 py-6 sm:items-center"
-          onClick={() => setShowLimit(false)}
-        >
-          <div
-            className="w-full max-w-sm rounded-2xl bg-white p-5 shadow-card-hover"
-            onClick={(e) => e.stopPropagation()}
-            role="dialog"
-            aria-modal="true"
-          >
-            <h3 className="text-base font-semibold text-ink-950">
-              {t(m, 'follow.limitTitle', { max: ALERT_FREE_LIMIT })}
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-slateish-600">
-              {m.follow.limitBody}
-            </p>
-            <div className="mt-4 flex flex-col gap-2">
-              <button
-                type="button"
-                disabled={busy}
-                onClick={() => {
-                  setShowLimit(false);
-                  void doFollow(true, true);
-                }}
-                className="btn-primary w-full"
-              >
-                {m.follow.limitReplace}
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setShowLimit(false);
-                  router.push('/pro');
-                }}
-                className="btn-secondary w-full"
-              >
-                {m.follow.limitViewPro}
-              </button>
-            </div>
-          </div>
-        </div>
       ) : null}
     </>
   );
