@@ -67,8 +67,8 @@ const STEPS = [
   {
     n: 3,
     img: '/tb-community.png',
-    title: 'Find what fits you',
-    body: 'Share the official records with your care team. Every entry links straight to its source so you and your doctor can verify it together.',
+    title: 'Share with your care team',
+    body: 'Take the official titles and links to your appointment. Every entry points to the original source so you and your clinician can verify together.',
   },
 ];
 
@@ -85,8 +85,8 @@ const TRUST = [
   },
   {
     img: '/tb-free-use.png',
-    title: 'Free for every patient & caregiver',
-    body: '100% free, forever. Sponsors never influence what we list. Your health is personal — and your search history should be too.',
+    title: 'Free to browse',
+    body: 'Free to browse and build a short list. Optional paid export when you need a full print-ready list. Your health is personal — and your search history should be too.',
   },
 ];
 

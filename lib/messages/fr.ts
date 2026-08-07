@@ -280,7 +280,7 @@ export const fr: Messages = {
     traceabilityLabel: 'Traçabilité.',
     traceabilityBody: 'Chaque entrée comporte un lien en un clic vers sa page officielle d’origine. Si un enregistrement ne peut être tracé, il n’est pas listé.',
     restraintLabel: 'Retenue.',
-    restraintBody: 'L’index central est gratuit et le restera. Si des fonctionnalités payantes optionnelles sont ajoutées plus tard, elles n’incluront jamais de publicité, de recommandations ou de contenu jouant sur l’émotion. La confiance est le seul bien de ce projet.',
+    restraintBody: 'You can browse and search the public index for free. Payment is only for the optional full-list export — never for advertising, recommendations, or content that plays on emotion. Trust is the only asset this project has.',
     sourcesCta: 'Sources et méthodologie',
     disclaimerCta: 'Avertissement complet',
   },

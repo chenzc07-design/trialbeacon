@@ -20,7 +20,7 @@ export const en = {
   common: {
     noMedicalAdvice: 'No medical advice',
     noRecommendations: 'No treatment recommendations',
-    freeToUse: 'Free to use',
+    freeToUse: 'Free to browse',
     viewAllTypes: 'View all types',
     openView: 'Open this view',
     allTypes: 'All types',
@@ -68,7 +68,7 @@ export const en = {
     afterCareTitle: 'After Conservative / Palliative Care',
     afterCareKicker: 'Dedicated view',
     afterCareBody:
-      'This view only includes public records whose official title or scope explicitly mention advanced, metastatic, recurrent, refractory, later-line treatment, or supportive / palliative care. It is not advice, and it does not filter for "what fits you" — it simply gathers the literally relevant official entries in one place so you can check the originals yourself.',
+      'This view only includes public records whose official title or scope explicitly mention advanced, metastatic, recurrent, refractory, later-line treatment, or supportive / palliative care. It is not advice, and it does not filter by personal suitability — it simply gathers the literally relevant official entries in one place so you can check the originals yourself.',
     afterCareNotRec: '',
     afterCareCta: 'Open this view',
     afterCareFoot:
@@ -331,7 +331,7 @@ export const en = {
       'Every entry carries a one-click link to its original official page. If a record cannot be traced, it is not listed.',
     restraintLabel: 'Restraint.',
     restraintBody:
-      'The core index is free and will remain free. If optional paid features are added later, they will never include advertising, recommendations or content that plays on emotion. Trust is the only asset this project has.',
+      'You can browse and search the public index for free. Payment is only for the optional full-list export — never for advertising, recommendations, or content that plays on emotion. Trust is the only asset this project has.',
     sourcesCta: 'Sources & methodology',
     disclaimerCta: 'Full disclaimer',
   },

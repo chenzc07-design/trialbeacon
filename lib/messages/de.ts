@@ -280,7 +280,7 @@ export const de: Messages = {
     traceabilityLabel: 'Nachvollziehbarkeit.',
     traceabilityBody: 'Jeder Eintrag enthält einen Ein-Klick-Link zu seiner ursprünglichen offiziellen Seite. Lässt sich ein Datensatz nicht zurückverfolgen, wird er nicht gelistet.',
     restraintLabel: 'Zurückhaltung.',
-    restraintBody: 'Der Kernindex ist kostenlos und bleibt kostenlos. Werden später optionale kostenpflichtige Funktionen hinzugefügt, werden diese niemals Werbung, Empfehlungen oder emotionalisierende Inhalte enthalten. Vertrauen ist das einzige Gut, das dieses Projekt besitzt.',
+    restraintBody: 'You can browse and search the public index for free. Payment is only for the optional full-list export — never for advertising, recommendations, or content that plays on emotion. Trust is the only asset this project has.',
     sourcesCta: 'Quellen & Methodik',
     disclaimerCta: 'Vollständiger Haftungsausschluss',
   },

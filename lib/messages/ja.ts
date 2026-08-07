@@ -280,7 +280,7 @@ export const ja: Messages = {
     traceabilityLabel: '追跡可能性。',
     traceabilityBody: 'すべての項目に、原典の公式ページへワンクリックで移動できるリンクが付いています。たどることができない記録は掲載しません。',
     restraintLabel: '抑制。',
-    restraintBody: '中核となる索引は無料であり、今後も無料のままです。将来的に任意の有料機能を追加する場合でも、広告、推奨、感情に訴える内容を含めることはありません。信頼はこのプロジェクトが持つ唯一の資産です。',
+    restraintBody: 'You can browse and search the public index for free. Payment is only for the optional full-list export — never for advertising, recommendations, or content that plays on emotion. Trust is the only asset this project has.',
     sourcesCta: '情報源と収集方法',
     disclaimerCta: '免責事項の全文',
   },

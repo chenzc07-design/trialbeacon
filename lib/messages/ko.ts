@@ -280,7 +280,7 @@ export const ko: Messages = {
     traceabilityLabel: '추적 가능성.',
     traceabilityBody: '모든 항목에는 원본 공식 페이지로 가는 한 번의 클릭 링크가 있습니다. 추적할 수 없는 기록은 게시되지 않습니다.',
     restraintLabel: '절제.',
-    restraintBody: '핵심 색인은 무료이며 앞으로도 무료입니다. 이후 선택적 유료 기능이 추가되더라도 광고, 권고, 감정에 호소하는 콘텐츠는 절대 포함되지 않습니다. 신뢰만이 이 프로젝트가 가진 유일한 자산입니다.',
+    restraintBody: 'You can browse and search the public index for free. Payment is only for the optional full-list export — never for advertising, recommendations, or content that plays on emotion. Trust is the only asset this project has.',
     sourcesCta: '출처 및 방법론',
     disclaimerCta: '전체 면책 사항',
   },

@@ -18,7 +18,7 @@ export const zh: Messages = {
   common: {
     noMedicalAdvice: '不含医疗建议',
     noRecommendations: '不推荐任何治疗',
-    freeToUse: '免费使用',
+    freeToUse: '可免费浏览',
     viewAllTypes: '查看全部类型',
     openView: '打开此视图',
     allTypes: '全部类型',
@@ -59,7 +59,7 @@ export const zh: Messages = {
     badgeRegions: '美国 · 欧洲 · 中国 官方记录',
     afterCareTitle: 'After Conservative / Palliative Care',
     afterCareKicker: '保守／姑息治疗之后的公开记录',
-    afterCareBody: '这个视图只收录官方标题或范围中明确提到晚期、转移、复发、难治、后线治疗或支持/姑息相关的公开记录。它不是建议，也不是筛选「适合你」的试验，只是把那些字面上相关的官方条目集中展示，方便你自己核对原文。',
+    afterCareBody: '这个视图只收录官方标题或范围中明确提到晚期、转移、复发、难治、后线治疗或支持/姑息相关的公开记录。它不是建议，也不会按个人情况筛选试验，只是把那些字面上相关的官方条目集中展示，方便你自己核对原文。',
     afterCareNotRec: '',
     afterCareCta: '打开这个视图',
     afterCareFoot: '记录是否仍然开放、是否符合任何个人情况，只能以官方原文和您的主治医生判断为准。',
@@ -280,7 +280,7 @@ export const zh: Messages = {
     traceabilityLabel: '可追溯。',
     traceabilityBody: '每条记录都带有一个一键直达原始官方页面的链接。若一条记录无法追溯，就不会被列出。',
     restraintLabel: '克制。',
-    restraintBody: '核心索引免费，并将一直免费。若日后增加可选的付费功能，也绝不会包含广告、推荐或利用情绪的内容。信任是这个项目唯一的资产。',
+    restraintBody: '可免费浏览与检索公开记录。付费仅用于可选的完整清单导出，绝不会包含广告、推荐或利用情绪的内容。信任是这个项目唯一的资产。',
     sourcesCta: '数据来源与方法',
     disclaimerCta: '完整免责声明',
   },
@@ -551,7 +551,7 @@ export const zh: Messages = {
   // ---------------------------------------------------------------------------
   export: {
     limitTitle: '已达免费上限（{n} 条）。',
-    limitBody: '导出一份可打印的沟通清单，便于就诊时与医生讨论——仅整理公开标题与来源链接。',
+    limitBody: '导出可打印的沟通清单，便于就诊时与医生讨论。',
     buySingle: '导出本次清单 {price}',
     seePro: '查看 Pro {price}/月',
     finePrint: '仅整理公开标题与链接，不构成推荐或医疗建议。',
