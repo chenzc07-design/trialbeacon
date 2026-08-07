@@ -11,6 +11,7 @@ import { t } from '@/lib/i18n-runtime';
 import { downloadDiscussionListPdf } from '@/lib/discussion-pdf';
 import { requestQuota } from '@/lib/quota-client';
 import { ProUpgradePrompt } from '@/components/ProUpgradePrompt';
+import { ExportUpsell } from '@/components/ExportUpsell';
 import { RegionBadge, SourceBadge, TypeBadge, StatusBadge } from '@/components/badges';
 
 const NOTES_KEY = 'tb_mylist_notes';
@@ -155,6 +156,7 @@ export function MyListClient() {
             {m.myList.clearAll}
           </button>
         </div>
+        <ExportUpsell selectedItems={items} freeLimit={5} />
         {upgradeMsg ? (
           <ProUpgradePrompt message={upgradeMsg} />
         ) : null}

@@ -4,7 +4,7 @@
 // must attach to the response. No new storage; state lives in the tb_prefs
 // cookie (and the optional Upstash sync).
 
-import { getRequestPrefs, savePrefs, isProActive, type CookieSpec } from './auth';
+import { getRequestPrefs, savePrefs, isProActive, ANON_UID, type CookieSpec, type OrderRecord } from './auth';
 import { PRO_MONTH_MS } from './auth-shared';
 
 /** Add `count` single-unlock credits (each unlocks one full list ≤10 records). */
@@ -57,4 +57,27 @@ export async function cancelPro(): Promise<CookieSpec> {
   const next = { ...prefs, paypalSubscriptionId: undefined };
   const { cookie } = await savePrefs(uid, next);
   return cookie;
+}
+
+/**
+ * Persist a minimal, privacy-first record of the most recent paid export
+ * entitlement. Stores only payment metadata (no health information) and
+ * supersedes any previous order. Returns the cookie the caller must attach.
+ */
+export async function recordOrder(order: OrderRecord): Promise<CookieSpec> {
+  const { uid, prefs } = await getRequestPrefs();
+  const next = { ...prefs, lastOrder: order };
+  const { cookie } = await savePrefs(uid, next);
+  return cookie;
+}
+
+/** Build an OrderRecord flagged guest/signed-in from the current request. */
+export async function buildOrder(
+  type: 'single' | 'subscription',
+  amount: string,
+  currency: string,
+  paypalId: string
+): Promise<OrderRecord> {
+  const { uid } = await getRequestPrefs();
+  return { type, amount, currency, paypalId, at: Date.now(), guest: uid === ANON_UID };
 }

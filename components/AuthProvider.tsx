@@ -23,6 +23,14 @@ export interface AuthUser {
   plan: 'free' | 'pro';
   proUntil: number;
   paypalSubscriptionId?: string;
+  lastOrder?: {
+    type: 'single' | 'subscription';
+    amount: string;
+    currency: string;
+    paypalId: string;
+    at: number;
+    guest: boolean;
+  } | null;
 }
 
 interface AuthState {

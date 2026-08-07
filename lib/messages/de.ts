@@ -162,6 +162,14 @@ export const de: Messages = {
     eraseConfirmCta: 'Bestätigen — jetzt löschen',
     eraseCancel: 'Abbrechen',
     erasing: 'Wird gelöscht…',
+    orderTitle: 'Your last export',
+    orderNone: 'No exports yet.',
+    orderSingle: 'Single export',
+    orderSubscription: 'Pro subscription',
+    orderAmount: 'Amount',
+    orderDate: 'Date',
+    orderTxn: 'PayPal transaction',
+    orderGuest: 'Guest checkout',
   },
   alerts: {
     eyebrow: 'Kostenlos',
@@ -541,6 +549,29 @@ export const de: Messages = {
     proBadge: 'Pro-Bericht',
     proCta: 'Upgrade für detaillierten Besuchsvorbereitungsbericht',
   },
+  export: {
+    limitTitle: 'Free limit reached ({n} records).',
+    limitBody:
+      'Export a print-ready discussion list for your appointment — official titles and source links only.',
+    buySingle: 'Export this list — {price}',
+    seePro: 'See Pro — {price}/mo',
+    finePrint: 'Official titles and links only. No recommendations, no medical advice.',
+    billedViaPaypal: 'Billed via PayPal.',
+    payTitle: 'Complete payment with PayPal',
+    back: 'Back',
+    ready: 'Your export is ready',
+    readyNote:
+      'A print-ready PDF of the records you selected has been downloaded. Re-download any time below.',
+    regenerate: 'Regenerate download',
+    guestSave: 'Sign in to save your records',
+    collapsedHint: 'Free limit reached ({n} records).',
+    seeProShort: 'See Pro',
+    expand: 'Export options',
+    dismiss: 'Dismiss',
+    downloadFailed: 'We could not generate the PDF. Please try again or contact',
+    payFailed: 'Payment could not be completed. No charge was made — you can try again.',
+  },
+
   cancers: {
     lung: {
       label: 'Lungenkrebs',
@@ -608,10 +639,10 @@ export const de: Messages = {
       'Keine Änderung der angezeigten öffentlichen Einträge',
     ],
     singleTitle: 'Einmaliges Freischalten',
-    singlePrice: '$4.9',
+    singlePrice: '$4.90',
     singleDesc: 'Eine vollständige Liste (bis zu 10 Einträge). Keine Kontoänderung nötig.',
     monthlyTitle: 'Pro monatlich',
-    monthlyPrice: '$6.9',
+    monthlyPrice: '$6.90',
     monthlyPer: ' / Monat',
     monthlyDesc:
       'Unbegrenzte Generierungen für einen Monat, Merklisten-Export und optionale wöchentliche Zusammenfassungs-E-Mail.',
@@ -645,5 +676,17 @@ export const de: Messages = {
     retry: 'Erneut versuchen',
     backHome: 'Zurück zur Startseite',
     statNote: 'Nur anonyme Nutzung — es werden keine persönlichen Gesundheitsdaten erhoben oder gespeichert.',
+    faqTitle: 'Questions',
+    faqRefundQ: 'Can I get a refund?',
+    faqRefundA:
+      'Single exports are delivered immediately as a download, so they are non-refundable. For the monthly plan you can cancel anytime; you keep Pro until the current period ends and are not billed again.',
+    faqMedicalQ: 'Is this medical advice?',
+    faqMedicalA:
+      'No. TrialBeacon only organises public official records into a list. It never recommends, ranks, or interprets anything.',
+    faqCancelQ: 'How do I cancel the subscription?',
+    faqCancelA:
+      'Cancel from your account page or directly in PayPal. Cancellation stops future renewals; Pro access continues until the period ends.',
+    chinaNote:
+      'China payments (WeChat Pay / Alipay) — coming soon. PayPal is available worldwide.',
   },
 };

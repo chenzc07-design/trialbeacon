@@ -162,6 +162,14 @@ export const zh: Messages = {
     eraseConfirmCta: '确认删除',
     eraseCancel: '取消',
     erasing: '删除中…',
+    orderTitle: '你的上次导出',
+    orderNone: '还没有导出记录。',
+    orderSingle: '单次导出',
+    orderSubscription: 'Pro 订阅',
+    orderAmount: '金额',
+    orderDate: '日期',
+    orderTxn: 'PayPal 交易号',
+    orderGuest: '游客结账',
   },
   alerts: {
     eyebrow: '免费',
@@ -537,6 +545,31 @@ export const zh: Messages = {
     proBadge: '专业版报告',
     proCta: '升级到详细就诊准备报告',
   },
+  // ---------------------------------------------------------------------------
+  // 导出引导（克制、以转化为目标）。只售卖公开官方记录的整理与导出，
+  // 绝不涉及建议、匹配或疗效承诺。
+  // ---------------------------------------------------------------------------
+  export: {
+    limitTitle: '已达免费上限（{n} 条）。',
+    limitBody: '导出一份可打印的沟通清单，便于就诊时与医生讨论——仅整理公开标题与来源链接。',
+    buySingle: '导出本次清单 {price}',
+    seePro: '查看 Pro {price}/月',
+    finePrint: '仅整理公开标题与链接，不构成推荐或医疗建议。',
+    billedViaPaypal: '通过 PayPal 扣款。',
+    payTitle: '使用 PayPal 完成支付',
+    back: '返回',
+    ready: '导出已就绪',
+    readyNote: '你所选记录的打印版 PDF 已下载，可随时在下方重新生成。',
+    regenerate: '重新生成下载',
+    guestSave: '登录以保存你的记录',
+    collapsedHint: '已达免费上限（{n} 条）。',
+    seeProShort: '查看 Pro',
+    expand: '展开导出选项',
+    dismiss: '关闭',
+    downloadFailed: '无法生成 PDF，请重试或联系',
+    payFailed: '支付未完成，未产生扣款，你可以重试。',
+  },
+
   cancers: {
     lung: {
       label: '肺癌',
@@ -586,9 +619,8 @@ export const zh: Messages = {
   pricing: {
     nav: '沟通清单 Pro',
     eyebrow: '可选的付费功能',
-    title: '沟通清单 Pro',
-    subtitle:
-      '用于节省整理公开官方记录时间的可选工具。它们不做排名、推荐或任何改动——只是让清单整理更快。',
+    title: 'Pro — 可打印的沟通清单',
+    subtitle: '导出你选定的公开官方记录。不推荐、不匹配、不提供医疗建议。',
     disclaimer:
       '这是一项付费的便利功能。TrialBeacon 仍不提供医疗建议、推荐或匹配。免费方案仍然可用。',
     whatYouGetTitle: '您将获得',
@@ -604,12 +636,12 @@ export const zh: Messages = {
       '不改变所展示的公开记录',
     ],
     singleTitle: '单次解锁',
-    singlePrice: '$4.9',
-    singleDesc: '一份完整清单（最多 10 条记录）。无需更改账户。',
+    singlePrice: '$4.90',
+    singleDesc: '一份可打印的沟通清单 PDF——本次所选的全部记录（最多 10 条）。',
     monthlyTitle: '月度 Pro',
-    monthlyPrice: '$6.9',
+    monthlyPrice: '$6.90',
     monthlyPer: ' / 月',
-    monthlyDesc: '一个月内不限次生成、关注列表导出，以及可选的一周一次整理邮件。',
+    monthlyDesc: '更高的导出次数、你保存的关注列表，以及可打印的 PDF——在方案有效期内。',
     payWithPaypal: '使用 PayPal 支付',
     paypalUnavailable: 'PayPal 尚未配置，敬请期待。',
     comingSoon: '即将支持',
@@ -635,5 +667,14 @@ export const zh: Messages = {
     retry: '重试',
     backHome: '返回首页',
     statNote: '仅匿名使用统计——不收集或存储任何个人健康信息。',
+    faqTitle: '常见问题',
+    faqRefundQ: '可以退款吗？',
+    faqRefundA:
+      '单次导出在支付后立即以下载形式交付，因此不支持退款。月度方案可随时取消；取消后你仍可使用 Pro 至当前周期结束，之后不再扣费。',
+    faqMedicalQ: '这是医疗建议吗？',
+    faqMedicalA: '不是。TrialBeacon 仅把公开官方记录整理成清单，绝不做推荐、排名或解读。',
+    faqCancelQ: '如何取消订阅？',
+    faqCancelA: '可在账户页或直接在 PayPal 中取消。取消会停止后续续费；Pro 访问权限持续至当前周期结束。',
+    chinaNote: '国内支付（微信支付 / 支付宝）——即将支持。PayPal 全球可用。',
   },
 };

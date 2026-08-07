@@ -299,6 +299,44 @@ export function AccountClient() {
           )}
         </div>
 
+        {/* Last export entitlement (A4) — shows the most recent paid order. No PHI. */}
+        <div className="mt-6 card p-6">
+          <h2 className="text-base font-semibold text-ink-950">
+            {m.account.orderTitle}
+          </h2>
+          {user.lastOrder ? (
+            <dl className="mt-3 space-y-2 text-sm">
+              <div className="flex items-center justify-between gap-4">
+                <dt className="text-slateish-500">
+                  {user.lastOrder.type === 'subscription'
+                    ? m.account.orderSubscription
+                    : m.account.orderSingle}
+                </dt>
+                <dd className="font-medium text-ink-950">
+                  {user.lastOrder.amount} {user.lastOrder.currency}
+                  {user.lastOrder.guest ? (
+                    <span className="ml-2 inline-flex items-center rounded-full border border-slateish-200 bg-slateish-50 px-2 py-0.5 text-[11px] font-normal text-slateish-500">
+                      {m.account.orderGuest}
+                    </span>
+                  ) : null}
+                </dd>
+              </div>
+              <div className="flex items-center justify-between gap-4">
+                <dt className="text-slateish-500">{m.account.orderDate}</dt>
+                <dd className="text-ink-950">{fmtDate(user.lastOrder.at, locale)}</dd>
+              </div>
+              <div className="flex items-center justify-between gap-4">
+                <dt className="text-slateish-500">{m.account.orderTxn}</dt>
+                <dd className="truncate font-mono text-[12px] text-slateish-600">
+                  {user.lastOrder.paypalId}
+                </dd>
+              </div>
+            </dl>
+          ) : (
+            <p className="mt-2 text-sm text-slateish-500">{m.account.orderNone}</p>
+          )}
+        </div>
+
         <div className="mt-8 rounded-2xl border border-[#e8c9c9] bg-[#faf7f6] p-5">
           <h2 className="text-sm font-semibold text-ink-950">
             {m.account.eraseTitle}

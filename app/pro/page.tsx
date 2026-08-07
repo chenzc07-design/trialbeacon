@@ -100,6 +100,30 @@ export default function ProPage() {
           {m.pricing.statNote}
         </p>
       </div>
+
+      {/* FAQ (≤3) */}
+      <section className="mt-10">
+        <h2 className="text-base font-semibold text-ink-950">{m.pricing.faqTitle}</h2>
+        <div className="mt-4 space-y-3">
+          {[
+            ['faqRefundQ', 'faqRefundA'],
+            ['faqMedicalQ', 'faqMedicalA'],
+            ['faqCancelQ', 'faqCancelA'],
+          ].map(([q, a]) => (
+            <div key={q} className="card p-5">
+              <h3 className="text-sm font-semibold text-ink-900">{m.pricing[q as 'faqRefundQ']}</h3>
+              <p className="mt-1.5 text-[13px] leading-relaxed text-slateish-600">
+                {m.pricing[a as 'faqRefundA']}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* China payments — reserved, not yet live */}
+      <p className="mt-8 text-center text-[12px] leading-relaxed text-slateish-400">
+        {m.pricing.chinaNote}
+      </p>
     </main>
   );
 }

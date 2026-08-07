@@ -21,10 +21,13 @@ export const SIGNED_DAILY_GENS = 3;
 
 /**
  * Records-per-list caps (one generation can only include so many records).
- * Anonymous free lists hold up to 5 records; signed-in free lists up to 10.
+ * Free plans (anonymous OR signed-in) hold up to 5 records; a single-unlock
+ * credit or an active Pro subscription raises that to 10. The free cap is
+ * deliberately uniform so the "Free limit reached (5 records)" copy is always
+ * accurate and the upsell triggers at the same point for every free visitor.
  */
 export const FREE_GEN_LIMIT = 5;
-export const SIGNED_GEN_LIMIT = 10;
+export const SIGNED_GEN_LIMIT = 5;
 
 /**
  * Pro (Discussion List Pro) and single-unlock caps. Both unlock a full list

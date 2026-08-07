@@ -34,6 +34,13 @@ export interface DiscussionPdfInput {
   messages: Messages;
   /** Reserved for a future paid tier. The neutral list never shows upsell. */
   variant?: 'free' | 'pro';
+  /**
+   * Optional explicit per-list record cap. When omitted, falls back to the
+   * auth-based cap (5 for free, 10 for signed-in). A single-unlock credit or
+   * Pro plan passes its actual allowance (10) here so a guest who just paid
+   * can export a full list without being re-capped at the free ceiling.
+   */
+  recordLimit?: number;
 }
 
 export interface DiscussionPdfResult {
@@ -204,7 +211,8 @@ function renderListHtml(data: DiscussionItem[], locale: Locale, m: Messages): st
 export async function downloadDiscussionListPdf(
   input: DiscussionPdfInput
 ): Promise<DiscussionPdfResult> {
-  const limit = input.signedIn ? SIGNED_IN_EXPORT_LIMIT : FREE_EXPORT_LIMIT;
+  const limit =
+    input.recordLimit ?? (input.signedIn ? SIGNED_IN_EXPORT_LIMIT : FREE_EXPORT_LIMIT);
   const truncated = input.items.length > limit;
   const capped = truncated ? input.items.slice(0, limit) : input.items;
   const data = capped.map(buildDiscussionItem);

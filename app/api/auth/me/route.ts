@@ -18,6 +18,7 @@ export async function GET() {
       plan: u.plan,
       proUntil: u.proUntil,
       paypalSubscriptionId: u.paypalSubscriptionId,
+      lastOrder: u.lastOrder ?? null,
     },
   });
 }

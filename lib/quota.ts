@@ -55,11 +55,14 @@ function evaluate(uid: string, prefs: Prefs, items: number): QuotaResult {
   const signedIn = uid !== ANON_UID;
   const pro = isProActive(prefs);
   const dailyLimit = signedIn ? SIGNED_DAILY_GENS : FREE_DAILY_GENS;
-  const genLimit = signedIn ? SIGNED_GEN_LIMIT : FREE_GEN_LIMIT;
+  const freeCap = signedIn ? SIGNED_GEN_LIMIT : FREE_GEN_LIMIT;
   const today = todayStr();
   const countToday = prefs.genDate === today ? prefs.genCount || 0 : 0;
   const dailyRemaining = dailyLimit - countToday;
   const credits = prefs.unlockCredits || 0;
+  // When a credit is available the per-list cap lifts to SINGLE_UNLOCK_RECORDS;
+  // the reported genLimit reflects that so the UI never shows a wrong ceiling.
+  const genLimit = credits > 0 ? SINGLE_UNLOCK_RECORDS : freeCap;
 
   const base: QuotaResult = {
     allowed: false,
@@ -85,6 +88,12 @@ function evaluate(uid: string, prefs: Prefs, items: number): QuotaResult {
   }
 
   // Free plan.
+  //
+  // A single-unlock credit lifts the per-list record cap to
+  // SINGLE_UNLOCK_RECORDS (10) — that is the whole point of buying one: a
+  // paid export is NOT subject to the free 5-record ceiling. The reported
+  // `genLimit` already reflects that lift, so the check below is correct for
+  // both free-only and credit-bearing visitors.
   if (items > genLimit) {
     return { ...base, allowed: false, reason: 'genLimit' };
   }

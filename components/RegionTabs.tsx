@@ -14,6 +14,7 @@ import {
 import { downloadDiscussionListPdf } from '@/lib/discussion-pdf';
 import { requestQuota } from '@/lib/quota-client';
 import { ProUpgradePrompt } from './ProUpgradePrompt';
+import { ExportUpsell } from './ExportUpsell';
 import { KEYWORDS, KEYWORD_LABELS, KEYWORD_HEADING } from '@/lib/keywords';
 
 const REGION_ORDER: Region[] = ['US', 'EU', 'CN', 'OTHER'];
@@ -471,6 +472,10 @@ export function RegionTabs({
               ) : null}
             </div>
           </div>
+
+          {/* Proactive, neutral upsell when a free visitor hits the record
+              ceiling — offers a one-off paid export (fulfilled inline) or Pro. */}
+          <ExportUpsell selectedItems={selectedVisible} freeLimit={FREE_EXPORT_LIMIT} />
 
           <p className="mt-2 text-[11px] leading-relaxed text-slateish-400">
             {t(m, 'discussionList.limitNotePre', {

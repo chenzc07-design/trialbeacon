@@ -16,6 +16,10 @@ export type StatEvent =
   | 'upgrade_click'
   | 'pro_visit'
   | 'payment_success'
+  | 'payment_failure'
+  | 'limit_reached'
+  | 'buy_single_click'
+  | 'pro_click'
   | 'alerts_subscribe';
 
 export const STAT_EVENTS: StatEvent[] = [
@@ -26,6 +30,10 @@ export const STAT_EVENTS: StatEvent[] = [
   'upgrade_click',
   'pro_visit',
   'payment_success',
+  'payment_failure',
+  'limit_reached',
+  'buy_single_click',
+  'pro_click',
   'alerts_subscribe',
 ];
 

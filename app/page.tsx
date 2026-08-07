@@ -99,44 +99,6 @@ const GALLERY = [
   { img: '/tb-hospital.png', cap: 'Trials, run at trusted centers' },
 ];
 
-const TOOLS = [
-  {
-    img: '/tb-drug-decoder.png',
-    title: 'Drug Decoder',
-    body: 'Plain-English profiles for cancer drugs — what each one does, key trial results and approval history, sourced from official labels.',
-  },
-  {
-    img: '/tb-treatment-arcs.png',
-    title: 'Treatment Arcs',
-    body: 'See a month-by-month timeline of what to expect on a therapy, which labs to ask about, and when to talk to your specialist.',
-  },
-  {
-    img: '/tb-match-me.png',
-    title: 'Match Me',
-    body: 'Enter your age, location and treatment history. We surface the publicly listed trials that fit your profile first.',
-  },
-  {
-    img: '/tb-med-check.png',
-    title: 'Medication conflict checker',
-    body: 'Check which of your current medications might conflict with a trial’s listed eligibility criteria — before you ask your team.',
-  },
-  {
-    img: '/tb-drug-compare.png',
-    title: 'Drug comparison charts',
-    body: 'Compare approved drugs for the same cancer side by side — mechanism, dosing, side effects and trial data in one view.',
-  },
-  {
-    img: '/tb-genetics.png',
-    title: 'Genetics & testing',
-    body: 'Understand how your mutation type affects eligibility, and find CLIA-certified testing labs from the official registry.',
-  },
-  {
-    img: '/tb-ai-tech.png',
-    title: 'AI that speaks your language',
-    body: 'Eligibility criteria are written for review boards. Our AI rewrites them so you can tell in seconds whether a record might apply to you.',
-  },
-];
-
 const SOURCES_PILLS = Object.values(SOURCES).map((s) => ({
   id: s.id,
   label: s.label,
@@ -423,37 +385,6 @@ export default async function HomePage() {
                 </p>
               </div>
             </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* ============== Tools / feature modules ============== */}
-      <section className="container-page mt-16">
-        <div className="text-center">
-          <p className="label-eyebrow mx-auto">More than a search box</p>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight">
-            Tools built around the official record
-          </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-sm text-slateish-500">
-            TrialBeacon brings scattered government and regulatory data together in one quiet,
-            plain-language place — for the people who actually need it.
-          </p>
-        </div>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {TOOLS.map((tool) => (
-            <div key={tool.title} className="card flex flex-col p-5">
-              <div className="relative mb-4 aspect-[16/10] w-full overflow-hidden rounded-xl bg-slateish-100">
-                <Image
-                  src={tool.img}
-                  alt=""
-                  fill
-                  sizes="(max-width: 640px) 100vw, 33vw"
-                  className="object-cover"
-                />
-              </div>
-              <h3 className="text-base font-semibold text-ink-950">{tool.title}</h3>
-              <p className="mt-1.5 text-[13px] leading-relaxed text-slateish-600">{tool.body}</p>
-            </div>
           ))}
         </div>
       </section>

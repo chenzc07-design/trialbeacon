@@ -184,6 +184,15 @@ export const en = {
     eraseConfirmCta: 'Confirm — erase now',
     eraseCancel: 'Cancel',
     erasing: 'Erasing…',
+    // ----- last export entitlement (A4) -----
+    orderTitle: 'Your last export',
+    orderNone: 'No exports yet.',
+    orderSingle: 'Single export',
+    orderSubscription: 'Pro subscription',
+    orderAmount: 'Amount',
+    orderDate: 'Date',
+    orderTxn: 'PayPal transaction',
+    orderGuest: 'Guest checkout',
   },
   alerts: {
     eyebrow: 'Free',
@@ -651,9 +660,9 @@ export const en = {
     nav: 'Pro',
     // ----- /pro page -----
     eyebrow: 'Optional paid feature',
-    title: 'Discussion List Pro',
+    title: 'Pro — print-ready discussion lists',
     subtitle:
-      'Optional tools that save time organising public official records. They do not rank, recommend, or change anything — they only make the list faster to prepare.',
+      'Export the official public records you select. No recommendations, no matching, no medical advice.',
     disclaimer:
       'This is a paid convenience feature. TrialBeacon still provides no medical advice, recommendations, or matching. The free plan stays available.',
     whatYouGetTitle: 'What you get',
@@ -669,13 +678,14 @@ export const en = {
       'No change to which public records are shown',
     ],
     singleTitle: 'Single unlock',
-    singlePrice: '$4.9',
-    singleDesc: 'One full discussion list (up to 10 records). No account change needed.',
+    singlePrice: '$4.90',
+    singleDesc:
+      'One print-ready discussion list PDF — all the records you selected this time (up to 10).',
     monthlyTitle: 'Monthly Pro',
-    monthlyPrice: '$6.9',
+    monthlyPrice: '$6.90',
     monthlyPer: ' / month',
     monthlyDesc:
-      'Unlimited generations for one month, follow-list export, and an optional weekly digest email.',
+      'Higher export limits, your saved follow list, and print-ready PDFs — while your plan is active.',
     payWithPaypal: 'Pay with PayPal',
     paypalUnavailable: 'PayPal is not configured yet. Please check back soon.',
     comingSoon: 'Coming soon',
@@ -710,7 +720,48 @@ export const en = {
     // ----- privacy -----
     statNote:
       'Anonymous usage only — no personal health information is collected or stored.',
+    // ----- FAQ (≤3) -----
+    faqTitle: 'Questions',
+    faqRefundQ: 'Can I get a refund?',
+    faqRefundA:
+      'Single exports are delivered immediately as a download, so they are non-refundable. For the monthly plan you can cancel anytime; you keep Pro until the current period ends and are not billed again.',
+    faqMedicalQ: 'Is this medical advice?',
+    faqMedicalA:
+      'No. TrialBeacon only organises public official records into a list. It never recommends, ranks, or interprets anything.',
+    faqCancelQ: 'How do I cancel the subscription?',
+    faqCancelA:
+      'Cancel from your account page or directly in PayPal. Cancellation stops future renewals; Pro access continues until the period ends.',
+    // ----- China payments (reserved) -----
+    chinaNote:
+      'China payments (WeChat Pay / Alipay) — coming soon. PayPal is available worldwide.',
   },
+  // ---------------------------------------------------------------------------
+  // Export upsell (neutral, conversion-focused). Sells only organisation +
+  // export of public official records — never advice, matching, or outcomes.
+  // ---------------------------------------------------------------------------
+  export: {
+    limitTitle: 'Free limit reached ({n} records).',
+    limitBody:
+      'Export a print-ready discussion list for your appointment — official titles and source links only.',
+    buySingle: 'Export this list — {price}',
+    seePro: 'See Pro — {price}/mo',
+    finePrint: 'Official titles and links only. No recommendations, no medical advice.',
+    billedViaPaypal: 'Billed via PayPal.',
+    payTitle: 'Complete payment with PayPal',
+    back: 'Back',
+    ready: 'Your export is ready',
+    readyNote:
+      'A print-ready PDF of the records you selected has been downloaded. Re-download any time below.',
+    regenerate: 'Regenerate download',
+    guestSave: 'Sign in to save your records',
+    collapsedHint: 'Free limit reached ({n} records).',
+    seeProShort: 'See Pro',
+    expand: 'Export options',
+    dismiss: 'Dismiss',
+    downloadFailed: 'We could not generate the PDF. Please try again or contact',
+    payFailed: 'Payment could not be completed. No charge was made — you can try again.',
+  },
+
   // Localised cancer type names + descriptors (slug-keyed).
   cancers: {
     lung: { label: 'Lung Cancer', descriptor: 'Including NSCLC and SCLC' },

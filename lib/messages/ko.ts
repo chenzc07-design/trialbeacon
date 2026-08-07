@@ -162,6 +162,14 @@ export const ko: Messages = {
     eraseConfirmCta: '확인 — 지금 삭제',
     eraseCancel: '취소',
     erasing: '삭제 중…',
+    orderTitle: 'Your last export',
+    orderNone: 'No exports yet.',
+    orderSingle: 'Single export',
+    orderSubscription: 'Pro subscription',
+    orderAmount: 'Amount',
+    orderDate: 'Date',
+    orderTxn: 'PayPal transaction',
+    orderGuest: 'Guest checkout',
   },
   alerts: {
     eyebrow: '무료',
@@ -540,6 +548,29 @@ export const ko: Messages = {
     proBadge: 'Pro 보고서',
     proCta: '자세한 진료 준비 보고서로 업그레이드',
   },
+  export: {
+    limitTitle: 'Free limit reached ({n} records).',
+    limitBody:
+      'Export a print-ready discussion list for your appointment — official titles and source links only.',
+    buySingle: 'Export this list — {price}',
+    seePro: 'See Pro — {price}/mo',
+    finePrint: 'Official titles and links only. No recommendations, no medical advice.',
+    billedViaPaypal: 'Billed via PayPal.',
+    payTitle: 'Complete payment with PayPal',
+    back: 'Back',
+    ready: 'Your export is ready',
+    readyNote:
+      'A print-ready PDF of the records you selected has been downloaded. Re-download any time below.',
+    regenerate: 'Regenerate download',
+    guestSave: 'Sign in to save your records',
+    collapsedHint: 'Free limit reached ({n} records).',
+    seeProShort: 'See Pro',
+    expand: 'Export options',
+    dismiss: 'Dismiss',
+    downloadFailed: 'We could not generate the PDF. Please try again or contact',
+    payFailed: 'Payment could not be completed. No charge was made — you can try again.',
+  },
+
   cancers: {
     lung: {
       label: '폐암',
@@ -607,10 +638,10 @@ export const ko: Messages = {
       '표시되는 공개 기록의 변경 없음',
     ],
     singleTitle: '단회 잠금 해제',
-    singlePrice: '$4.9',
+    singlePrice: '$4.90',
     singleDesc: '전체 목록 1개(기록 최대 10개). 계정 변경 불필요.',
     monthlyTitle: '월간 Pro',
-    monthlyPrice: '$6.9',
+    monthlyPrice: '$6.90',
     monthlyPer: ' / 월',
     monthlyDesc:
       '한 달간 횟수 제한 없이 생성, 팔로우 목록 내보내기, 선택적 주 1회 다이제스트 이메일.',
@@ -639,5 +670,17 @@ export const ko: Messages = {
     retry: '다시 시도',
     backHome: '홈으로 돌아가기',
     statNote: '익명 이용만 해당——개인 건강 정보는 수집하거나 저장하지 않습니다.',
+    faqTitle: 'Questions',
+    faqRefundQ: 'Can I get a refund?',
+    faqRefundA:
+      'Single exports are delivered immediately as a download, so they are non-refundable. For the monthly plan you can cancel anytime; you keep Pro until the current period ends and are not billed again.',
+    faqMedicalQ: 'Is this medical advice?',
+    faqMedicalA:
+      'No. TrialBeacon only organises public official records into a list. It never recommends, ranks, or interprets anything.',
+    faqCancelQ: 'How do I cancel the subscription?',
+    faqCancelA:
+      'Cancel from your account page or directly in PayPal. Cancellation stops future renewals; Pro access continues until the period ends.',
+    chinaNote:
+      'China payments (WeChat Pay / Alipay) — coming soon. PayPal is available worldwide.',
   },
 };

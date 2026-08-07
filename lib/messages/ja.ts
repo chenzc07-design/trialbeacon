@@ -162,6 +162,14 @@ export const ja: Messages = {
     eraseConfirmCta: '確認して削除',
     eraseCancel: 'キャンセル',
     erasing: '削除しています…',
+    orderTitle: 'Your last export',
+    orderNone: 'No exports yet.',
+    orderSingle: 'Single export',
+    orderSubscription: 'Pro subscription',
+    orderAmount: 'Amount',
+    orderDate: 'Date',
+    orderTxn: 'PayPal transaction',
+    orderGuest: 'Guest checkout',
   },
   alerts: {
     eyebrow: '無料',
@@ -540,6 +548,29 @@ export const ja: Messages = {
     proBadge: 'Pro レポート',
     proCta: '詳細な受診準備レポートにアップグレード',
   },
+  export: {
+    limitTitle: 'Free limit reached ({n} records).',
+    limitBody:
+      'Export a print-ready discussion list for your appointment — official titles and source links only.',
+    buySingle: 'Export this list — {price}',
+    seePro: 'See Pro — {price}/mo',
+    finePrint: 'Official titles and links only. No recommendations, no medical advice.',
+    billedViaPaypal: 'Billed via PayPal.',
+    payTitle: 'Complete payment with PayPal',
+    back: 'Back',
+    ready: 'Your export is ready',
+    readyNote:
+      'A print-ready PDF of the records you selected has been downloaded. Re-download any time below.',
+    regenerate: 'Regenerate download',
+    guestSave: 'Sign in to save your records',
+    collapsedHint: 'Free limit reached ({n} records).',
+    seeProShort: 'See Pro',
+    expand: 'Export options',
+    dismiss: 'Dismiss',
+    downloadFailed: 'We could not generate the PDF. Please try again or contact',
+    payFailed: 'Payment could not be completed. No charge was made — you can try again.',
+  },
+
   cancers: {
     lung: {
       label: '肺がん',
@@ -607,10 +638,10 @@ export const ja: Messages = {
       '表示される公開記録の変更はなし',
     ],
     singleTitle: '単回アンロック',
-    singlePrice: '$4.9',
+    singlePrice: '$4.90',
     singleDesc: '完全なリスト1件（最大10件の記録）。アカウントの変更は不要です。',
     monthlyTitle: '月額 Pro',
-    monthlyPrice: '$6.9',
+    monthlyPrice: '$6.90',
     monthlyPer: ' / 月',
     monthlyDesc:
       '1か月間回数無制限の生成、フォローリスト書き出し、省略可能な週1回のダイジェストメール。',
@@ -642,5 +673,17 @@ export const ja: Messages = {
     retry: '再試行',
     backHome: 'ホームに戻る',
     statNote: '匿名の利用のみ——個人の健康情報は収集・保存されません。',
+    faqTitle: 'Questions',
+    faqRefundQ: 'Can I get a refund?',
+    faqRefundA:
+      'Single exports are delivered immediately as a download, so they are non-refundable. For the monthly plan you can cancel anytime; you keep Pro until the current period ends and are not billed again.',
+    faqMedicalQ: 'Is this medical advice?',
+    faqMedicalA:
+      'No. TrialBeacon only organises public official records into a list. It never recommends, ranks, or interprets anything.',
+    faqCancelQ: 'How do I cancel the subscription?',
+    faqCancelA:
+      'Cancel from your account page or directly in PayPal. Cancellation stops future renewals; Pro access continues until the period ends.',
+    chinaNote:
+      'China payments (WeChat Pay / Alipay) — coming soon. PayPal is available worldwide.',
   },
 };

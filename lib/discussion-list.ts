@@ -65,10 +65,11 @@ export interface DiscussionItem {
 
 export const DISCUSSION_STORAGE_KEY = 'tb_discussion_list';
 
-/** Cap for visitors who are not signed in (free tier: up to 5 records/list). */
+/** Cap for free visitors (anonymous OR signed-in): up to 5 records/list. */
 export const FREE_EXPORT_LIMIT = 5;
-/** Cap for signed-in free users (free tier: up to 10 records/list). */
-export const SIGNED_IN_EXPORT_LIMIT = 10;
+/** Cap for signed-in free users — unified with the anonymous cap (5) so the
+ *  free-limit copy is consistent; a single-unlock credit / Pro raises it. */
+export const SIGNED_IN_EXPORT_LIMIT = 5;
 
 /** Map an official record into the export shape. No transformation of meaning. */
 export function buildDiscussionItem(item: UpdateItem): DiscussionItem {

@@ -73,6 +73,26 @@ export interface Prefs {
   genCount: number;
   /** PayPal subscription id, when a recurring plan is active. */
   paypalSubscriptionId?: string;
+  /**
+   * Minimal, privacy-first record of the most recent paid export entitlement.
+   * Holds only payment metadata — never any health information. Shown on the
+   * account page so a person can see their last purchase; superseded on the
+   * next purchase.
+   */
+  lastOrder?: OrderRecord;
+}
+
+/**
+ * The single piece of payment metadata we persist. Nothing clinical — just
+ * enough to show "your last export entitlement" and reconcile against PayPal.
+ */
+export interface OrderRecord {
+  type: 'single' | 'subscription';
+  amount: string; // e.g. "4.90"
+  currency: string; // e.g. "USD"
+  paypalId: string; // capture id (single) or subscription id (monthly)
+  at: number; // epoch ms
+  guest: boolean; // true when no session existed at purchase time
 }
 
 export interface User extends Prefs {
@@ -94,6 +114,7 @@ export function defaultPrefs(): Prefs {
     genDate: '',
     genCount: 0,
     paypalSubscriptionId: undefined,
+    lastOrder: undefined,
   };
 }
 
@@ -390,6 +411,24 @@ function sanitizePrefs(p: Partial<Prefs> | null | undefined): Prefs {
       typeof p.paypalSubscriptionId === 'string' && p.paypalSubscriptionId.length > 0
         ? p.paypalSubscriptionId
         : undefined,
+    lastOrder: sanitizeOrder(p?.lastOrder),
+  };
+}
+
+/** Keep only well-formed order records; drop anything malformed. */
+function sanitizeOrder(o: unknown): OrderRecord | undefined {
+  if (!o || typeof o !== 'object') return undefined;
+  const r = o as Record<string, unknown>;
+  if (r.type !== 'single' && r.type !== 'subscription') return undefined;
+  if (typeof r.paypalId !== 'string' || r.paypalId.length === 0) return undefined;
+  if (typeof r.at !== 'number' || !Number.isFinite(r.at)) return undefined;
+  return {
+    type: r.type,
+    amount: typeof r.amount === 'string' ? r.amount : '',
+    currency: typeof r.currency === 'string' ? r.currency : 'USD',
+    paypalId: r.paypalId,
+    at: r.at,
+    guest: r.guest === true,
   };
 }
 
