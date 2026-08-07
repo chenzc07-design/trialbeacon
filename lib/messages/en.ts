@@ -222,6 +222,16 @@ export const en = {
       finePrint:
         'One email per week, links only, no tracking pixels, unsubscribe anytime. Your address is used solely for this alert and is never shared.',
       signInPrompt: 'Sign in to manage alert preferences across devices.',
+      sendTest: 'Send a test email',
+      sendingTest: 'Sending…',
+      testSent:
+        'Test email sent to {email}. Please check your inbox (and spam folder).',
+      testErrorNet: 'Network error. Please try again.',
+      testNotConfigured:
+        'Email service is not configured; sending is unavailable right now.',
+      testSendFailed:
+        'The email provider rejected the send. Please try again later.',
+      testUnauthorized: 'Please sign in before sending a test email.',
     },
     freeLimitNote: 'Without an account you can follow up to {max} cancer type. Sign in for the same free limit, sync across devices, and receive future paid-tier extensions.',
   },

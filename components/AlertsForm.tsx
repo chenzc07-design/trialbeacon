@@ -22,6 +22,10 @@ export function AlertsForm() {
   const [state, setState] = useState<'idle' | 'submitting' | 'done' | 'error'>('idle');
   const [message, setMessage] = useState('');
 
+  const [testState, setTestState] = useState<'idle' | 'busy' | 'sent' | 'error'>('idle');
+  const [testMessage, setTestMessage] = useState('');
+  const [testRecipient, setTestRecipient] = useState('');
+
   /*
    * The session arrives after the first paint, so the stored values are
    * copied in once it does. Without this the email field of a signed-in
@@ -90,6 +94,34 @@ export function AlertsForm() {
     } catch {
       setState('error');
       setMessage(m.alerts.form.errorNetwork);
+    }
+  };
+
+  const testErrorLabel = (error: string | undefined, status: number): string => {
+    if (error === 'email_not_configured') return m.alerts.form.testNotConfigured;
+    if (error === 'send_failed') return m.alerts.form.testSendFailed;
+    if (error === 'unauthorized') return m.alerts.form.testUnauthorized;
+    if (status >= 500) return m.alerts.form.testSendFailed;
+    return m.alerts.form.testErrorNet;
+  };
+
+  const sendTestEmail = async () => {
+    setTestState('busy');
+    setTestMessage('');
+    setTestRecipient('');
+    try {
+      const res = await fetch('/api/email/test', { method: 'POST' });
+      const json = await res.json().catch(() => ({}) as Record<string, unknown>);
+      if (res.ok && (json as { ok?: boolean }).ok) {
+        setTestState('sent');
+        setTestRecipient(String((json as { to?: string }).to ?? ''));
+        return;
+      }
+      setTestState('error');
+      setTestMessage(testErrorLabel((json as { error?: string }).error, res.status));
+    } catch {
+      setTestState('error');
+      setTestMessage(m.alerts.form.testErrorNet);
     }
   };
 
@@ -222,6 +254,28 @@ export function AlertsForm() {
       >
         {state === 'submitting' ? m.alerts.form.submitting : m.alerts.form.subscribe}
       </button>
+
+      {user ? (
+        <div className="mt-6 border-t border-slateish-200 pt-5">
+          <button
+            type="button"
+            onClick={sendTestEmail}
+            disabled={testState === 'busy'}
+            className="btn-secondary w-full sm:w-auto"
+          >
+            {testState === 'busy' ? m.alerts.form.sendingTest : m.alerts.form.sendTest}
+          </button>
+          {testState === 'sent' ? (
+            <p className="mt-3 rounded-lg border border-[#cfe3d8] bg-[#eef6f2] px-3.5 py-2.5 text-sm text-[#2e5747]">
+              {t(m, 'alerts.form.testSent', { email: testRecipient })}
+            </p>
+          ) : testState === 'error' ? (
+            <p className="mt-3 rounded-lg border border-[#e8c9c9] bg-[#faf0f0] px-3.5 py-2.5 text-sm text-[#7a3030]">
+              {testMessage}
+            </p>
+          ) : null}
+        </div>
+      ) : null}
 
       <p className="mt-4 text-xs leading-relaxed text-slateish-500">
         {m.alerts.form.finePrint}
