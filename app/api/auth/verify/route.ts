@@ -9,9 +9,9 @@ import {
   CHALLENGE_MAX_ATTEMPTS,
   checkIpRate,
   clientIp,
-  prefsCookie,
   uidForEmail,
   resolvePrefsOnSignIn,
+  providerPrefsCookie,
 } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
@@ -65,15 +65,19 @@ export async function POST(req: Request) {
   const uid = uidForEmail(email);
 
   // Anything already saved for this account — in the sync store, or left on
-  // this device by an earlier session — comes back.
+  // this device by an earlier session — comes back. Record the login method.
   const prefs = await resolvePrefsOnSignIn(uid);
+  const pc = await providerPrefsCookie(uid, 'email');
+  const userPrefs: typeof prefs = {
+    ...prefs,
+    providers: Array.from(new Set([...(prefs.providers ?? []), 'email'])),
+  };
 
   const res = NextResponse.json({
     ok: true,
-    user: { id: uid, email, provider: 'email', ...prefs },
+    user: { id: uid, email, provider: 'email', ...userPrefs },
   });
   res.cookies.set(session.name, session.value, session.options);
-  const pc = prefsCookie(uid, prefs);
   res.cookies.set(pc.name, pc.value, pc.options);
   const cleared = clearChallengeCookie();
   res.cookies.set(cleared.name, cleared.value, cleared.options);

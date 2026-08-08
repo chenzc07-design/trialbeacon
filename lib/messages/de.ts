@@ -130,6 +130,8 @@ export const de: Messages = {
     codeHint: 'Wir haben soeben einen 6-stelligen Code an Ihre E-Mail-Adresse gesendet. Er läuft in 10 Minuten ab.',
     codeSent: 'Code gesendet. Prüfen Sie Ihren Posteingang (und den Spam-Ordner).',
     googleBtn: 'Mit Google fortfahren',
+    microsoftBtn: 'Mit Microsoft fortfahren',
+    appleBtn: 'Mit Apple fortfahren',
     signedInAs: 'Angemeldet als {email}',
     signOutCta: 'Abmelden',
     signedInTitle: 'Sie sind angemeldet',
@@ -141,12 +143,17 @@ export const de: Messages = {
     errorEmailUnavailable: 'E-Mail-Codes können derzeit nicht versendet werden. Nutzen Sie „Mit Google fortfahren“ oder versuchen Sie es später erneut.',
     errorRateLimited: 'Zu viele Versuche. Bitte warten Sie einige Minuten und versuchen Sie es erneut.',
     privacyTitle: 'Was gespeichert wird',
+    privacyLogin:
+      'Sie können sich mit einem einmaligen E-Mail-Code oder mit Google, Microsoft oder Apple anmelden. Wir erhalten Ihr Passwort von diesen Diensten nie.',
     privacyBody: 'Ihre E-Mail-Adresse und deren Einweg-Hash. Die von Ihnen für Benachrichtigungen gewählten Krebsarten. Ihre gespeicherten Einträge. Sonst nichts. Sie können sich jederzeit abmelden und auf der Kontoseite alles löschen.',
     dismiss: 'Jetzt nicht',
   },
   account: {
     title: 'Konto',
     emailLabel: 'E-Mail',
+    providers: 'Anmelde­methoden',
+    providersHint:
+      'Jede dieser Methoden kann genutzt werden, um sich bei diesem Konto anzumelden. Sie teilen sich dieselbe E-Mail-Adresse, daher bleiben Merkliste und Benachrichtigungen an einem Ort.',
     listTitle: 'Meine Merkliste',
     listHint: 'Die von Ihnen gespeicherten Einträge stehen hier und werden geräteübergreifend synchronisiert. Nichts davon ist eine Empfehlung.',
     alertsTitle: 'Einstellungen für wöchentliche Benachrichtigungen',

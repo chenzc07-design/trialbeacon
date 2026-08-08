@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server';
 import crypto from 'node:crypto';
 import {
   issueSessionCookie,
-  prefsCookie,
   uidForEmail,
   resolvePrefsOnSignIn,
+  providerPrefsCookie,
 } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
@@ -136,13 +136,13 @@ export async function GET(req: Request) {
   // Identity is derived from the address, so signing in with Google lands on
   // the same account as an email code for the same address — no linking step.
   const uid = uidForEmail(profile.email);
-  const prefs = await resolvePrefsOnSignIn(uid);
+  await resolvePrefsOnSignIn(uid);
 
   const session = issueSessionCookie(profile.email, 'google');
   const dest = s.next.startsWith('/') ? s.next : '/';
   const res = NextResponse.redirect(new URL(dest, url.origin));
   res.cookies.set(session.name, session.value, session.options);
-  const pc = prefsCookie(uid, prefs);
+  const pc = await providerPrefsCookie(uid, 'google');
   res.cookies.set(pc.name, pc.value, pc.options);
   return res;
 }

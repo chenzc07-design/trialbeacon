@@ -23,6 +23,16 @@ function fmtDate(ms: number, locale: string): string {
 
 const DEFAULT_REGIONS = ['US', 'EU', 'CN'];
 
+/** Brand labels + dot colour for each login method. Brand names stay in
+ *  English across locales (standard practice); only the surrounding copy is
+ *  translated. */
+const PROVIDER_META: Record<string, { label: string; dot: string }> = {
+  email: { label: 'Email', dot: 'bg-[#3f8f6b]' },
+  google: { label: 'Google', dot: 'bg-[#4285F4]' },
+  microsoft: { label: 'Microsoft', dot: 'bg-[#00A4EF]' },
+  apple: { label: 'Apple', dot: 'bg-[#111827]' },
+};
+
 export function AccountClient() {
   const { messages: m, locale } = useI18n();
   const { user, signOut, eraseAll, openSignIn, refresh, status } = useAuth();
@@ -146,6 +156,35 @@ export function AccountClient() {
               {m.account.emailLabel}
             </h2>
             <p className="mt-2 text-sm text-slateish-600">{user.email}</p>
+            <div className="mt-4">
+              <h2 className="text-base font-semibold text-ink-950">
+                {m.account.providers}
+              </h2>
+              <p className="mt-1 text-sm text-slateish-500">
+                {m.account.providersHint}
+              </p>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {(['email', 'google', 'microsoft', 'apple'] as const).map((p) => {
+                  const bound = p === 'email' || (user.providers ?? []).includes(p);
+                  const meta = PROVIDER_META[p];
+                  return (
+                    <li
+                      key={p}
+                      className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs ${
+                        bound
+                          ? 'border-slateish-200 bg-slateish-50 text-slateish-700'
+                          : 'border-slateish-200 bg-white text-slateish-400'
+                      }`}
+                    >
+                      <span
+                        className={`h-1.5 w-1.5 rounded-full ${bound ? meta.dot : 'bg-slateish-300'}`}
+                      />
+                      {meta.label}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
             <hr className="my-5 border-slateish-200" />
             <h2 className="text-base font-semibold text-ink-950">
               {m.account.listTitle}

@@ -83,6 +83,13 @@ export interface Prefs {
   /** Preferred UI locale (e.g. 'en' | 'zh'). Persisted so the weekly digest
    * can be rendered in the recipient's language. Optional, never clinical. */
   locale?: string;
+  /**
+   * Login methods that have been used with this account. An account is keyed
+   * by email, so the same address signing in via Email, Google, Microsoft or
+   * Apple lands on the same profile; this list records which were used so the
+   * account page can show them. Never clinical.
+   */
+  providers?: string[];
 }
 
 /**
@@ -102,7 +109,7 @@ export interface User extends Prefs {
   id: string;
   email: string;
   emailLower: string;
-  provider: 'email' | 'google';
+  provider: Provider;
 }
 
 export function defaultPrefs(): Prefs {
@@ -119,6 +126,7 @@ export function defaultPrefs(): Prefs {
     paypalSubscriptionId: undefined,
     lastOrder: undefined,
     locale: undefined,
+    providers: [],
   };
 }
 
@@ -151,6 +159,55 @@ function unsign<T>(token: string | undefined): T | null {
   } catch {
     return null;
   }
+}
+
+/* --------------------------------------------------------- oauth helpers */
+
+export interface OAuthState {
+  next: string;
+  n: string;
+  t: number;
+}
+export function signState(state: OAuthState): string {
+  return sign(state);
+}
+export function verifyState(token: string): OAuthState | null {
+  const s = unsign<OAuthState>(token);
+  if (!s) return null;
+  // 10-minute replay window, matching the Google flow.
+  if (Date.now() - s.t > 10 * 60 * 1000) return null;
+  return s;
+}
+
+/**
+ * Decode a JWT's payload without verifying its signature. The issuer is
+ * reached over a TLS channel and the OAuth `state` is independently verified,
+ * so signature checking is intentionally out of scope here — the same posture
+ * the Google flow takes (it trusts the access token, not the id_token sig).
+ */
+export function decodeJwt(token: string): Record<string, unknown> | null {
+  const parts = token.split('.');
+  if (parts.length < 2) return null;
+  try {
+    return JSON.parse(b64urlDecode(parts[1]).toString('utf8'));
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Merge a login provider into the account's bound-providers list, persist it
+ * to the sync store, and return the prefs cookie to attach to the sign-in
+ * response. Used by every OAuth callback so the account page can show which
+ * methods have been linked.
+ */
+export async function providerPrefsCookie(uid: string, provider: Provider): Promise<CookieSpec> {
+  const prefs = await resolvePrefsOnSignIn(uid);
+  const seen = new Set(prefs.providers ?? []);
+  seen.add(provider);
+  const next: Prefs = { ...prefs, providers: Array.from(seen) };
+  const saved = await savePrefs(uid, next);
+  return saved.cookie;
 }
 
 /* -------------------------------------------------------------- identity */
@@ -271,17 +328,21 @@ function cookieSpec(name: string, value: string, maxAgeSeconds: number): CookieS
   };
 }
 
+/** Login methods supported. An account is keyed by email, so every method
+ *  for the same address resolves to the same profile. */
+export type Provider = 'email' | 'google' | 'microsoft' | 'apple';
+
 interface SessionPayload {
   uid: string;
   email: string;
-  provider: 'email' | 'google';
+  provider: Provider;
   iat: number;
   exp: number;
 }
 
 export function issueSessionCookie(
   email: string,
-  provider: 'email' | 'google'
+  provider: Provider
 ): CookieSpec {
   const iat = Date.now();
   const exp = iat + SESSION_TTL_DAYS * 24 * 60 * 60 * 1000;
@@ -420,6 +481,12 @@ function sanitizePrefs(p: Partial<Prefs> | null | undefined): Prefs {
       typeof p?.locale === 'string' && p.locale.length > 0 && p.locale.length <= 8
         ? p.locale
         : undefined,
+    providers: Array.isArray(p?.providers)
+      ? (p!.providers as unknown[]).filter(
+          (x): x is string =>
+            typeof x === 'string' && ['email', 'google', 'microsoft', 'apple'].includes(x)
+        )
+      : [],
   };
 }
 

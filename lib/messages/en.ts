@@ -147,6 +147,8 @@ export const en = {
     codeHint: 'We just sent a 6-digit code to your email. It expires in 10 minutes.',
     codeSent: 'Code sent. Check your inbox (and spam folder).',
     googleBtn: 'Continue with Google',
+    microsoftBtn: 'Continue with Microsoft',
+    appleBtn: 'Continue with Apple',
     signedInAs: 'Signed in as {email}',
     signOutCta: 'Sign out',
     signedInTitle: 'You are signed in',
@@ -160,6 +162,8 @@ export const en = {
       'Email codes cannot be sent right now. Use Continue with Google, or try again later.',
     errorRateLimited: 'Too many attempts. Please wait a few minutes and try again.',
     privacyTitle: 'What is stored',
+    privacyLogin:
+      'You can sign in with a one-time email code, or with Google, Microsoft or Apple. We never receive your password from those services.',
     privacyBody:
       'Your email address and a one-way hash of it. Your selected cancer types for alerts. Your saved records. Nothing else. You can sign out and erase everything at any time from the account page.',
     dismiss: 'Not now',
@@ -167,6 +171,9 @@ export const en = {
   account: {
     title: 'Account',
     emailLabel: 'Email',
+    providers: 'Sign-in methods',
+    providersHint:
+      'Any of these can be used to sign in to this account. They share the same email, so your follow list and alerts stay in one place.',
     listTitle: 'My follow list',
     listHint:
       'Records you have saved are listed here, synced across devices. Nothing here is a recommendation.',

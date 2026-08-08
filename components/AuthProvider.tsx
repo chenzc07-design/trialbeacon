@@ -15,7 +15,9 @@ import { clearMyListStorage } from '@/lib/mylist-storage';
 export interface AuthUser {
   id: string;
   email: string;
-  provider: 'email' | 'google';
+  provider: 'email' | 'google' | 'microsoft' | 'apple';
+  /** Login methods used with this account (Email/Google/Microsoft/Apple). */
+  providers: string[];
   myList: string[];
   alertCancers: string[];
   alertRegions: ('US' | 'EU' | 'CN')[];
@@ -158,12 +160,18 @@ function SignInModal() {
   const [devCode, setDevCode] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [googleError, setGoogleError] = useState<string | null>(null);
+  const [microsoftError, setMicrosoftError] = useState<string | null>(null);
+  const [appleError, setAppleError] = useState<string | null>(null);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const p = new URLSearchParams(window.location.search);
     const ge = p.get('google_error');
     if (ge) setGoogleError(ge);
+    const me = p.get('microsoft_error');
+    if (me) setMicrosoftError(me);
+    const ae = p.get('apple_error');
+    if (ae) setAppleError(ae);
   }, []);
 
   const send = async () => {
@@ -250,6 +258,22 @@ function SignInModal() {
     window.location.href = `/api/auth/google${next}`;
   };
 
+  const startMicrosoft = () => {
+    const next =
+      signInNext && signInNext !== '/'
+        ? `?next=${encodeURIComponent(signInNext)}`
+        : '';
+    window.location.href = `/api/auth/microsoft${next}`;
+  };
+
+  const startApple = () => {
+    const next =
+      signInNext && signInNext !== '/'
+        ? `?next=${encodeURIComponent(signInNext)}`
+        : '';
+    window.location.href = `/api/auth/apple${next}`;
+  };
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-end justify-center bg-ink-950/50 px-4 py-6 sm:items-center"
@@ -286,6 +310,16 @@ function SignInModal() {
           {googleError ? (
             <p className="mt-3 rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-xs text-amber-800">
               Google sign-in returned: {googleError}. Use the email code below instead.
+            </p>
+          ) : null}
+          {microsoftError ? (
+            <p className="mt-3 rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+              Microsoft sign-in returned: {microsoftError}. Use the email code below instead.
+            </p>
+          ) : null}
+          {appleError ? (
+            <p className="mt-3 rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+              Apple sign-in returned: {appleError}. Use the email code below instead.
             </p>
           ) : null}
 
@@ -349,6 +383,32 @@ function SignInModal() {
                 </svg>
                 {m.auth.googleBtn}
               </button>
+              <button
+                type="button"
+                onClick={startMicrosoft}
+                className="flex w-full items-center justify-center gap-2 rounded-xl border border-slateish-300 bg-white px-4 py-2.5 text-sm font-medium text-ink-900 hover:bg-slateish-50"
+              >
+                <svg className="h-4 w-4" viewBox="0 0 21 21" aria-hidden="true">
+                  <rect x="1" y="1" width="9" height="9" fill="#F25022" />
+                  <rect x="11" y="1" width="9" height="9" fill="#7FBA00" />
+                  <rect x="1" y="11" width="9" height="9" fill="#00A4EF" />
+                  <rect x="11" y="11" width="9" height="9" fill="#FFB900" />
+                </svg>
+                {m.auth.microsoftBtn}
+              </button>
+              <button
+                type="button"
+                onClick={startApple}
+                className="flex w-full items-center justify-center gap-2 rounded-xl border border-slateish-300 bg-white px-4 py-2.5 text-sm font-medium text-ink-900 hover:bg-slateish-50"
+              >
+                <svg className="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M16.365 1.43c0 1.14-.46 2.22-1.2 3.02-.83.9-2.2 1.6-3.34 1.51-.13-1.1.43-2.27 1.13-3.02.8-.85 2.2-1.5 3.34-1.51.06 0 .07 0 .07 0zM20.5 17.2c-.55 1.27-.82 1.84-1.53 2.96-1.03 1.62-2.48 3.64-4.27 3.65-1.55.01-1.95-1.01-4.05-1-2.1.01-2.54 1.01-4.09 1.01-1.79 0-3.16-1.81-4.19-3.43C-.06 16.94-.36 11.9 1.39 9.06c1.02-1.66 2.64-2.7 4.25-2.7 1.58 0 2.57 1.01 3.88 1.01 1.29 0 2.08-1.01 3.93-1.01 1.41 0 2.9.77 3.96 2.1-3.48 1.9-2.92 6.86.09 8.74z"
+                    fill="#000"
+                  />
+                </svg>
+                {m.auth.appleBtn}
+              </button>
             </>
           ) : (
             <>
@@ -406,6 +466,7 @@ function SignInModal() {
           <div className="mt-5 rounded-xl border border-slateish-200 bg-slateish-50 p-3 text-xs leading-relaxed text-slateish-600">
             <p className="font-semibold text-ink-800">{m.auth.privacyTitle}</p>
             <p className="mt-1">{m.auth.privacyBody}</p>
+            <p className="mt-1">{m.auth.privacyLogin}</p>
           </div>
           <button
             type="button"

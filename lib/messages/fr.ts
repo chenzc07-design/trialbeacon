@@ -130,6 +130,8 @@ export const fr: Messages = {
     codeHint: 'Nous venons d\'envoyer un code à 6 chiffres à votre adresse e-mail. Il expire dans 10 minutes.',
     codeSent: 'Code envoyé. Vérifiez votre boîte de réception (et les spams).',
     googleBtn: 'Continuer avec Google',
+    microsoftBtn: 'Continuer avec Microsoft',
+    appleBtn: 'Continuer avec Apple',
     signedInAs: 'Connecté en tant que {email}',
     signOutCta: 'Se déconnecter',
     signedInTitle: 'Vous êtes connecté',
@@ -141,12 +143,17 @@ export const fr: Messages = {
     errorEmailUnavailable: 'Impossible d\'envoyer un code par e-mail pour le moment. Utilisez « Continuer avec Google » ou réessayez plus tard.',
     errorRateLimited: 'Trop de tentatives. Veuillez patienter quelques minutes avant de réessayer.',
     privacyTitle: 'Ce qui est conservé',
+    privacyLogin:
+      'Vous pouvez vous connecter avec un code e-mail à usage unique, ou avec Google, Microsoft ou Apple. Nous ne recevons jamais votre mot de passe de ces services.',
     privacyBody: 'Votre adresse e-mail et son empreinte à sens unique. Les types de cancer que vous avez sélectionnés pour les alertes. Les entrées que vous avez enregistrées. Rien d\'autre. Vous pouvez vous déconnecter et tout effacer à tout moment depuis la page du compte.',
     dismiss: 'Pas maintenant',
   },
   account: {
     title: 'Compte',
     emailLabel: 'E-mail',
+    providers: 'Méthodes de connexion',
+    providersHint:
+      'Toutes ces méthodes permettent de se connecter à ce compte. Elles partagent la même adresse e-mail, donc votre liste de suivi et vos alertes restent au même endroit.',
     listTitle: 'Ma liste de suivi',
     listHint: 'Les entrées que vous avez enregistrées apparaissent ici et sont synchronisées entre vos appareils. Rien ici n\'est une recommandation.',
     alertsTitle: 'Préférences d\'alerte hebdomadaire',
