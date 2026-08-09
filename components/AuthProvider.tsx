@@ -12,6 +12,28 @@ import {
 import { useI18n } from './I18nProvider';
 import { clearMyListStorage } from '@/lib/mylist-storage';
 
+// Google Identity Services (GIS) — loads the credential directly in the
+// browser (no token endpoint / client_secret / PKCE), which is the only
+// browser-driven Google sign-in that works without the server reaching Google.
+const GOOGLE_GIS_SRC = 'https://accounts.google.com/gsi/client';
+let gisLoadPromise: Promise<void> | null = null;
+function loadGoogleGIS(): Promise<void> {
+  if (typeof window === 'undefined') return Promise.resolve();
+  const w = window as unknown as { google?: { accounts?: { id?: unknown } } };
+  if (w.google?.accounts?.id) return Promise.resolve();
+  if (gisLoadPromise) return gisLoadPromise;
+  gisLoadPromise = new Promise<void>((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = GOOGLE_GIS_SRC;
+    s.async = true;
+    s.defer = true;
+    s.onload = () => resolve();
+    s.onerror = () => reject(new Error('google_script_failed'));
+    document.head.appendChild(s);
+  });
+  return gisLoadPromise;
+}
+
 export interface AuthUser {
   id: string;
   email: string;
@@ -250,12 +272,61 @@ function SignInModal() {
     }
   };
 
-  const startGoogle = () => {
+  const startGoogle = async () => {
     const next =
       signInNext && signInNext !== '/'
         ? `?next=${encodeURIComponent(signInNext)}`
         : '';
-    window.location.href = `/api/auth/google${next}`;
+    setBusy(true);
+    try {
+      const r = await fetch('/api/auth/google' + next);
+      if (!r.ok) {
+        window.location.href = '/account?google_error=not_configured';
+        return;
+      }
+      const { state, nonce, clientId } = await r.json();
+      await loadGoogleGIS();
+      const w = window as unknown as {
+        google?: { accounts?: { id?: {
+          initialize: (cfg: Record<string, unknown>) => void;
+          prompt: (momentListener?: (m: unknown) => void) => void;
+        } } };
+      };
+      if (!w.google?.accounts?.id) {
+        window.location.href = '/account?google_error=google_script_failed';
+        return;
+      }
+      w.google.accounts.id.initialize({
+        client_id: clientId,
+        nonce,
+        use_fedcm_for_prompt: true,
+        callback: async (resp: { credential?: string }) => {
+          try {
+            const v = await fetch('/api/auth/google/verify', {
+              method: 'POST',
+              headers: { 'content-type': 'application/json' },
+              credentials: 'same-origin',
+              body: JSON.stringify({ id_token: resp.credential, state }),
+            });
+            const j = await v.json().catch(() => ({ ok: false }));
+            if (j.ok) {
+              window.location.href =
+                j.next && j.next.indexOf('/') === 0 ? j.next : '/account';
+            } else {
+              window.location.href =
+                '/account?google_error=' + encodeURIComponent(j.error || 'verify_failed');
+            }
+          } catch {
+            window.location.href = '/account?google_error=oauth_failed';
+          }
+        },
+      });
+      w.google.accounts.id.prompt();
+    } catch {
+      window.location.href = '/account?google_error=oauth_failed';
+    } finally {
+      setBusy(false);
+    }
   };
 
   const startMicrosoft = () => {

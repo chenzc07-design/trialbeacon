@@ -1,18 +1,20 @@
 import { NextResponse } from 'next/server';
 import crypto from 'node:crypto';
-import { publicOrigin, signState, generatePkce } from '@/lib/auth';
+import { signState } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
 /**
  * GET /api/auth/google?next=/some/path
  *
- * Starts a PKCE authorization-code flow. Crucially we do NOT send a
- * client_secret — the code→token exchange is performed in the user's BROWSER
- * (see /api/auth/google/callback), because this sandbox cannot reach Google's
- * network. The PKCE `code_verifier` is carried inside the signed `state` so the
- * browser can complete the exchange; Google's id_token is later verified
- * server-side against Google's public JWKS (lib/google-jwks.json).
+ * Issues a server-signed `state` (carrying a one-time `nonce` + the post-login
+ * destination) and returns it together with the Google `clientId`. The browser
+ * hands these to Google Identity Services (GIS), which returns an `id_token`
+ * directly — no token endpoint, no client_secret, no PKCE. Google's "Web
+ * application" clients REQUIRE a client_secret for the code-exchange flow, so
+ * GIS (credential model) is the only browser-driven path that works without
+ * the server ever calling Google. The `id_token` is later verified server-side
+ * against Google's public JWKS (see /api/auth/google/verify).
  */
 export async function GET(req: Request) {
   const cid = process.env.GOOGLE_CLIENT_ID;
@@ -27,24 +29,8 @@ export async function GET(req: Request) {
     );
   }
   const url = new URL(req.url);
-  const next = url.searchParams.get('next') || '/';
-  const nonce = crypto.randomBytes(8).toString('hex');
-  const { verifier, challenge } = generatePkce();
-  const state = signState({ next, n: nonce, t: Date.now(), v: verifier });
-  const origin = publicOrigin(req);
-  const redirectUri = `${origin}/api/auth/google/callback`;
-  const params = new URLSearchParams({
-    client_id: cid,
-    redirect_uri: redirectUri,
-    response_type: 'code',
-    scope: 'openid email profile',
-    state,
-    nonce,
-    code_challenge: challenge,
-    code_challenge_method: 'S256',
-    prompt: 'select_account',
-  });
-  return NextResponse.redirect(
-    `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`
-  );
+  const next = url.searchParams.get('next') || '/account';
+  const nonce = crypto.randomBytes(12).toString('hex');
+  const state = signState({ next, n: nonce, t: Date.now() });
+  return NextResponse.json({ state, nonce, clientId: cid });
 }

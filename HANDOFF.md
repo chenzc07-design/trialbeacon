@@ -152,10 +152,10 @@ The site owner wanted a dead-simple way to see **visits / registrations / paid-u
 
 **The Google network problem — solved without the server ever reaching Google.** The sandbox server cannot reach Google at all (DNS sinkhole `198.18.0.56`, no working egress proxy, direct IPs firewalled). So the server can never exchange the OAuth code or fetch Google's JWKS. The fix: **the visitor's browser performs the code→token exchange** (the browser *can* reach Google), and the server only **verifies the returned `id_token`** — zero server→Google calls.
 
-Flow (`lib/auth.ts` + `app/api/auth/google/*`):
-1. `/api/auth/google` redirects to Google with **PKCE** (`code_challenge`, `code_challenge_method=S256`, `nonce`, **no `client_secret`**). The PKCE `code_verifier` rides inside the signed `state`.
-2. Google redirects back to `/api/auth/google/callback`, which returns a tiny HTML page that, **in the browser**, exchanges `code` → `id_token` at `https://oauth2.googleapis.com/token` (CORS-enabled), then POSTs the `id_token` to `/api/auth/google/verify`.
-3. `/api/auth/google/verify` verifies (a) the HMAC-signed `state` and (b) the `id_token`'s **RS256 signature against Google's public JWKS** (`lib/google-jwks.json`), plus `iss` / `aud` / `exp` / `nonce`. On success it issues the session + provider cookies.
+Flow (`lib/auth.ts` + `components/AuthProvider.tsx` + `app/api/auth/google/*`):
+1. `/api/auth/google` returns a server-signed `state` (carrying a one-time `nonce` + post-login destination) and the Google `clientId`. *(Google's "Web application" clients REQUIRE `client_secret` for the code-exchange flow — verified 2026-08-09 — so that flow is unusable here; we use GIS instead.)*
+2. The browser loads **Google Identity Services (GIS)** and calls `google.accounts.id.initialize({ client_id, nonce })` + `prompt()`. Google returns the `id_token` **directly to the browser** (postMessage) — no token endpoint, no `client_secret`, no PKCE. This is the only browser-driven Google sign-in that works without the server ever calling Google.
+3. The browser POSTs `{ id_token, state }` to `/api/auth/google/verify`, which verifies (a) the HMAC-signed `state` and (b) the `id_token`'s **RS256 signature against Google's public JWKS** (`lib/google-jwks.json`), plus `iss` / `aud` / `exp` / `nonce`. On success it issues the session + provider cookies.
 
 The JWKS is committed *public* data; refresh it from `https://www.googleapis.com/oauth2/v3/certs` when Google rotates keys (~weekly). The RS256-JWK verification is unit-tested and proven in this Node.
 
@@ -173,11 +173,11 @@ So **all three can be proven to work in this sandbox.** Microsoft/Apple still ne
 
 | Provider | Authorized redirect URI | Authorized JavaScript origin |
 | --- | --- | --- |
-| Google | `https://af73f65d0b7b099a8.gz1.agentos-app.net/api/auth/google/callback` | *not required* (authorization-code + PKCE flow) |
+| Google | `https://af73f65d0b7b099a8.gz1.agentos-app.net/api/auth/google/callback` | **Required** — GIS needs "Authorized JavaScript origins" |
 | Microsoft | `https://af73f65d0b7b099a8.gz1.agentos-app.net/api/auth/microsoft/callback` | `https://af73f65d0b7b099a8.gz1.agentos-app.net` |
 | Apple | `https://af73f65d0b7b099a8.gz1.agentos-app.net/api/auth/apple/callback` | `https://af73f65d0b7b099a8.gz1.agentos-app.net` |
 
-For Google, **only the redirect URI** needs registering (auth-code + PKCE; no JS origin). For production also register the same three paths under your real domain(s), e.g. `https://trialbeacon.cn/api/auth/<provider>/callback` and `https://trialbeacon.vercel.app/api/auth/<provider>/callback`.
+For Google, the **Authorized JavaScript origin** is what actually matters. Google sign-in now uses Google Identity Services (GIS, "credential" model): the browser gets the `id_token` directly via `google.accounts.id` and posts it to `/api/auth/google/verify` — there is **no** redirect-based code exchange, so Google's "Authorized redirect URIs" list is effectively unused (the `/api/auth/google/callback` route still exists only to forward `?error=` back to `/account`). Register `https://af73f65d0b7b099a8.gz1.agentos-app.net` as a JavaScript origin. For production also add `https://trialbeacon.cn` (and `https://trialbeacon.vercel.app`) as JavaScript origins. Microsoft/Apple keep using their respective redirect URIs + the origin.
 
 The `redirect_uri` is derived at request time from the public host (`publicOrigin(req)` in `lib/auth.ts`), so it always matches the domain the visitor typed — no hardcoded URLs to keep in sync.
 
