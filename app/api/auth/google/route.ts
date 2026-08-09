@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import crypto from 'node:crypto';
+import { publicOrigin } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -49,7 +50,7 @@ export async function GET(req: Request) {
   // Bounded state: encode the destination + nonce + HMAC.
   const nonce = crypto.randomBytes(8).toString('hex');
   const state = sign({ next, n: nonce, t: Date.now() });
-  const origin = url.origin;
+  const origin = publicOrigin(req);
   const redirectUri = `${origin}/api/auth/google/callback`;
   const params = new URLSearchParams({
     client_id: cid,

@@ -5,6 +5,7 @@ import {
   providerPrefsCookie,
   uidForEmail,
   verifyState,
+  publicOrigin,
 } from '@/lib/auth';
 import { markAccountSeen } from '@/lib/metrics';
 
@@ -26,8 +27,7 @@ function errRedirect(origin: string, code: string) {
  * independently verified, so id_token signature checking is out of scope here.
  */
 export async function POST(req: Request) {
-  const url = new URL(req.url);
-  const origin = url.origin;
+  const origin = publicOrigin(req);
 
   let body: URLSearchParams;
   try {
@@ -60,7 +60,7 @@ export async function POST(req: Request) {
   }
   const session = issueSessionCookie(email, 'apple');
   const dest = s.next.startsWith('/') ? s.next : '/';
-  const res = NextResponse.redirect(new URL(dest, url.origin));
+  const res = NextResponse.redirect(new URL(dest, origin));
   res.cookies.set(session.name, session.value, session.options);
   const pc = await providerPrefsCookie(uid, 'apple');
   res.cookies.set(pc.name, pc.value, pc.options);

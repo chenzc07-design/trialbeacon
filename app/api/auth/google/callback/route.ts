@@ -5,6 +5,7 @@ import {
   uidForEmail,
   resolvePrefsOnSignIn,
   providerPrefsCookie,
+  publicOrigin,
 } from '@/lib/auth';
 import { markAccountSeen } from '@/lib/metrics';
 
@@ -102,21 +103,21 @@ export async function GET(req: Request) {
   const err = url.searchParams.get('error');
   if (err) {
     return NextResponse.redirect(
-      new URL(`/account?google_error=${encodeURIComponent(err)}`, url.origin)
+      new URL(`/account?google_error=${encodeURIComponent(err)}`, publicOrigin(req))
     );
   }
   if (!code || !state) {
     return NextResponse.redirect(
-      new URL('/account?google_error=missing_code', url.origin)
+      new URL('/account?google_error=missing_code', publicOrigin(req))
     );
   }
   const s = verifyState(state);
   if (!s) {
     return NextResponse.redirect(
-      new URL('/account?google_error=bad_state', url.origin)
+      new URL('/account?google_error=bad_state', publicOrigin(req))
     );
   }
-  const redirectUri = `${url.origin}/api/auth/google/callback`;
+  const redirectUri = `${publicOrigin(req)}/api/auth/google/callback`;
   let tokens, profile;
   try {
     tokens = await exchangeCode(code, redirectUri);
@@ -125,13 +126,13 @@ export async function GET(req: Request) {
     return NextResponse.redirect(
       new URL(
         `/account?google_error=${encodeURIComponent(String(e?.message ?? 'oauth_failed'))}`,
-        url.origin
+        publicOrigin(req)
       )
     );
   }
   if (!profile.email || profile.email_verified === false) {
     return NextResponse.redirect(
-      new URL('/account?google_error=email_unverified', url.origin)
+      new URL('/account?google_error=email_unverified', publicOrigin(req))
     );
   }
   // Identity is derived from the address, so signing in with Google lands on
@@ -147,7 +148,7 @@ export async function GET(req: Request) {
 
   const session = issueSessionCookie(profile.email, 'google');
   const dest = s.next.startsWith('/') ? s.next : '/';
-  const res = NextResponse.redirect(new URL(dest, url.origin));
+  const res = NextResponse.redirect(new URL(dest, publicOrigin(req)));
   res.cookies.set(session.name, session.value, session.options);
   const pc = await providerPrefsCookie(uid, 'google');
   res.cookies.set(pc.name, pc.value, pc.options);

@@ -54,6 +54,26 @@ export function isAuthSecretConfigured(): boolean {
   return Boolean(process.env.AUTH_SECRET);
 }
 
+/**
+ * Resolve the PUBLIC origin (scheme + host) of an incoming request.
+ *
+ * OAuth redirect_uri MUST match the domain the user actually typed, not the
+ * internal address the server binds to (e.g. 0.0.0.0:3000 behind a proxy).
+ * So we trust the proxy-provided `x-forwarded-host` / `host` headers, and
+ * default to https for any non-local host (the public link is always https).
+ */
+export function publicOrigin(req: Request): string {
+  const host =
+    req.headers.get('x-forwarded-host') ||
+    req.headers.get('host') ||
+    new URL(req.url).host;
+  const isLocal = /^(localhost|127\.|0\.0\.0\.0|::1|\[::1\])/.test(host);
+  const proto =
+    req.headers.get('x-forwarded-proto') ||
+    (isLocal ? 'http' : 'https');
+  return `${proto}://${host}`;
+}
+
 /* ------------------------------------------------------------------ types */
 
 export interface Prefs {

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import crypto from 'node:crypto';
-import { signState } from '@/lib/auth';
+import { signState, publicOrigin } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -12,7 +12,7 @@ export const dynamic = 'force-dynamic';
  * The same email always maps to the same account via email-derived uid.
  */
 export async function GET(req: Request) {
-  const origin = new URL(req.url).origin;
+  const origin = publicOrigin(req);
   const cid = process.env.APPLE_CLIENT_ID;
   const keyId = process.env.APPLE_KEY_ID;
   const teamId = process.env.APPLE_TEAM_ID;

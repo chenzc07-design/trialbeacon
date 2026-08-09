@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import crypto from 'node:crypto';
-import { signState } from '@/lib/auth';
+import { signState, publicOrigin } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,7 +14,7 @@ export const dynamic = 'force-dynamic';
 export async function GET(req: Request) {
   const cid = process.env.MICROSOFT_CLIENT_ID;
   const csec = process.env.MICROSOFT_CLIENT_SECRET;
-  const origin = new URL(req.url).origin;
+  const origin = publicOrigin(req);
   if (!cid || !csec) {
     return NextResponse.redirect(
       new URL('/account?microsoft_error=not_configured', origin)

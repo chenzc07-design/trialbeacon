@@ -5,6 +5,7 @@ import {
   providerPrefsCookie,
   uidForEmail,
   verifyState,
+  publicOrigin,
 } from '@/lib/auth';
 import { markAccountSeen } from '@/lib/metrics';
 
@@ -57,23 +58,23 @@ export async function GET(req: Request) {
   const cid = process.env.MICROSOFT_CLIENT_ID;
   const csec = process.env.MICROSOFT_CLIENT_SECRET;
   const url = new URL(req.url);
-  if (!cid || !csec) return errRedirect(url.origin, 'not_configured');
+  if (!cid || !csec) return errRedirect(publicOrigin(req), 'not_configured');
 
   const code = url.searchParams.get('code');
   const state = url.searchParams.get('state');
   const err = url.searchParams.get('error');
-  if (err) return errRedirect(url.origin, err);
-  if (!code || !state) return errRedirect(url.origin, 'missing_code');
+  if (err) return errRedirect(publicOrigin(req), err);
+  if (!code || !state) return errRedirect(publicOrigin(req), 'missing_code');
 
   const s = verifyState(state);
-  if (!s) return errRedirect(url.origin, 'bad_state');
+  if (!s) return errRedirect(publicOrigin(req), 'bad_state');
 
-  const redirectUri = `${url.origin}/api/auth/microsoft/callback`;
+  const redirectUri = `${publicOrigin(req)}/api/auth/microsoft/callback`;
   let tokens: TokenResp;
   try {
     tokens = await exchangeCode(code, redirectUri);
   } catch (e: any) {
-    return errRedirect(url.origin, String(e?.message ?? 'oauth_failed'));
+    return errRedirect(publicOrigin(req), String(e?.message ?? 'oauth_failed'));
   }
 
   // Prefer the verified email claim from the id_token; fall back to Graph /me.
@@ -89,7 +90,7 @@ export async function GET(req: Request) {
     }
   }
   if (!email && tokens.access_token) email = await graphEmail(tokens.access_token);
-  if (!email) return errRedirect(url.origin, 'no_email');
+  if (!email) return errRedirect(publicOrigin(req), 'no_email');
 
   // Identity is derived from the address, so any provider for the same email
   // lands on the same account — no explicit linking step is needed.
@@ -102,7 +103,7 @@ export async function GET(req: Request) {
   }
   const session = issueSessionCookie(email, 'microsoft');
   const dest = s.next.startsWith('/') ? s.next : '/';
-  const res = NextResponse.redirect(new URL(dest, url.origin));
+  const res = NextResponse.redirect(new URL(dest, publicOrigin(req)));
   res.cookies.set(session.name, session.value, session.options);
   const pc = await providerPrefsCookie(uid, 'microsoft');
   res.cookies.set(pc.name, pc.value, pc.options);
