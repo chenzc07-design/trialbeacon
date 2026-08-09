@@ -2,6 +2,8 @@ node_modules/
 .next/
 .vercel/
 .data/
+# Local JSON persistence fallback (writable envs only; replaced by Upstash in prod)
+.tb_state/
 # Ignore real env files but keep the documented example
 .env
 .env.*

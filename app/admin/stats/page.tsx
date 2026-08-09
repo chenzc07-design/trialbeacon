@@ -1,14 +1,14 @@
 import {
   readStats,
   STAT_EVENTS,
-  STAT_PERSISTENT,
+  STAT_STORE,
   type StatEvent,
 } from '@/lib/stats';
 import {
   readPayments,
   summarizePayments,
   readAccountCount,
-  metricsPersistent,
+  METRICS_STORE,
 } from '@/lib/metrics';
 
 export const dynamic = 'force-dynamic';
@@ -61,7 +61,7 @@ export default async function AdminStatsPage({
     readAccountCount(),
   ]);
   const pay = summarizePayments(payments);
-  const persistent = STAT_PERSISTENT && metricsPersistent();
+  const store = STAT_STORE === 'upstash' && METRICS_STORE === 'upstash' ? 'upstash' : 'file';
 
   return (
     <main className="container-page max-w-3xl py-12">
@@ -69,12 +69,12 @@ export default async function AdminStatsPage({
         <h1 className="text-xl font-semibold text-ink-950">TrialBeacon 经营数据</h1>
         <span
           className={`rounded-full px-2.5 py-1 text-[11px] font-medium ${
-            persistent
+            store === 'upstash'
               ? 'bg-[#eef6f2] text-[#2e5747]'
-              : 'bg-amber-50 text-amber-800'
+              : 'bg-[#eef2fb] text-[#2e4a7a]'
           }`}
         >
-          {persistent ? '持久化 (Upstash)' : '内存 (重启即清零)'}
+          {store === 'upstash' ? '持久化 (Upstash)' : '持久化 (本地文件)'}
         </span>
       </div>
       <p className="mt-2 text-sm text-slateish-600">
@@ -110,11 +110,11 @@ export default async function AdminStatsPage({
         />
       </section>
 
-      {!persistent ? (
-        <p className="mt-4 rounded-lg bg-amber-50 px-3 py-2 text-[12px] text-amber-800">
-          当前未配置 Upstash Redis，以上数字存于服务实例内存，<b>冷启动会清零</b>。
-          在 Vercel 环境变量加上 <code>UPSTASH_REDIS_REST_URL</code> 与{' '}
-          <code>UPSTASH_REDIS_REST_TOKEN</code> 后，数据即持久可信。
+      {store === 'file' ? (
+        <p className="mt-4 rounded-lg bg-[#eef2fb] px-3 py-2 text-[12px] text-[#2e4a7a]">
+          数据存于本机磁盘（<code>.tb_state/</code>），<b>重启不会清零</b>；
+          但仅限当前实例，不跨 Serverless 多实例共享。正式上线建议在 Vercel 配置{' '}
+          <code>UPSTASH_REDIS_REST_URL</code> 与 <code>UPSTASH_REDIS_REST_TOKEN</code>。
         </p>
       ) : null}
 

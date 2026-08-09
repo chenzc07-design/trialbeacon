@@ -11,6 +11,7 @@
 // Server-only.
 
 import { isSyncConfigured } from './auth';
+import { loadJson, saveJson } from './persist';
 
 const KV_URL = process.env.UPSTASH_REDIS_REST_URL;
 const KV_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
@@ -47,13 +48,53 @@ export interface PaymentRecord {
   at: number; // epoch ms
 }
 
-// In-memory fallbacks (only used when Upstash is not configured).
+// In-memory caches, hydrated from / written back to a local JSON file
+// (`.tb_state/*.json`) when Upstash is not configured. This keeps payment
+// records and the registration count alive across server restarts in writable
+// environments (local dev, sandbox preview). Per-instance only — configure
+// Upstash for production-grade multi-instance durability.
 const memPayments: PaymentRecord[] = [];
 const memAccounts = new Set<string>();
+let payLoaded = false;
+let acctLoaded = false;
+
+async function hydratePayments(): Promise<void> {
+  if (payLoaded) return;
+  const arr = await loadJson<PaymentRecord[]>('payments.json', []);
+  if (Array.isArray(arr)) memPayments.push(...arr);
+  payLoaded = true;
+}
+
+async function persistPayments(): Promise<void> {
+  await saveJson('payments.json', memPayments);
+}
+
+async function hydrateAccounts(): Promise<void> {
+  if (acctLoaded) return;
+  const arr = await loadJson<string[]>('accounts.json', []);
+  if (Array.isArray(arr)) for (const e of arr) memAccounts.add(e.toLowerCase());
+  acctLoaded = true;
+}
+
+async function persistAccounts(): Promise<void> {
+  await saveJson('accounts.json', [...memAccounts]);
+}
+
+/** Wipe payment + account state (used by the dev seed route for idempotent seeding). */
+export async function resetMetrics(): Promise<void> {
+  memPayments.length = 0;
+  memAccounts.clear();
+  payLoaded = false;
+  acctLoaded = false;
+  await saveJson('payments.json', []);
+  await saveJson('accounts.json', []);
+}
 
 export function metricsPersistent(): boolean {
   return isSyncConfigured();
 }
+
+export const METRICS_STORE: 'upstash' | 'file' = isSyncConfigured() ? 'upstash' : 'file';
 
 /** Persist one payment. Safe to call from any payment-confirmation path. */
 export async function recordPayment(
@@ -69,7 +110,9 @@ export async function recordPayment(
     at: p.at ?? Date.now(),
   };
   if (!isSyncConfigured()) {
+    await hydratePayments();
     memPayments.push(rec);
+    await persistPayments();
     return;
   }
   await upstash([
@@ -80,7 +123,10 @@ export async function recordPayment(
 
 /** All payment records, oldest first. */
 export async function readPayments(): Promise<PaymentRecord[]> {
-  if (!isSyncConfigured()) return memPayments.slice();
+  if (!isSyncConfigured()) {
+    await hydratePayments();
+    return memPayments.slice();
+  }
   const res = await upstash([['SMEMBERS', 'tb:pays']]);
   const ids = (res[0] as string[]) ?? [];
   const out: PaymentRecord[] = [];
@@ -124,8 +170,10 @@ export function summarizePayments(payments: PaymentRecord[]): PaymentSummary {
 export async function markAccountSeen(email: string): Promise<boolean> {
   const e = email.toLowerCase();
   if (!isSyncConfigured()) {
+    await hydrateAccounts();
     if (memAccounts.has(e)) return false;
     memAccounts.add(e);
+    await persistAccounts();
     return true;
   }
   const res = await upstash([['SADD', 'tb:accts', e]]);
@@ -135,7 +183,10 @@ export async function markAccountSeen(email: string): Promise<boolean> {
 
 /** Total distinct registered accounts. */
 export async function readAccountCount(): Promise<number> {
-  if (!isSyncConfigured()) return memAccounts.size;
+  if (!isSyncConfigured()) {
+    await hydrateAccounts();
+    return memAccounts.size;
+  }
   const res = await upstash([['SCARD', 'tb:accts']]);
   return Number(res[0] ?? 0);
 }
