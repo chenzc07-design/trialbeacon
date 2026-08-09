@@ -146,30 +146,39 @@ The site owner wanted a dead-simple way to see **visits / registrations / paid-u
 
 ---
 
-## 9. OAuth in this sandbox — what works and what doesn't
+## 9. OAuth — how it works in this sandbox (and why Google now works)
 
-**Root cause of the earlier `google_not_configured` error:** `next start` reads `.env.local` once at boot. The long-lived process the sandbox supervisor keeps alive was started *before* the Google creds were added, so it never saw them. Killing that process and letting the supervisor respawn a fresh `next start` fixed it — now `/api/auth/google` correctly 307-redirects to Google. **Rule of thumb: after editing `.env.local`, restart the server** (or re-publish) so new vars are picked up.
+**Earlier `google_not_configured` root cause:** `next start` reads `.env.local` once at boot. The supervisor's long-lived process was started before the Google creds existed, so it never saw them. Killing it and letting the supervisor respawn a fresh `next start` fixed it. **Rule: after editing `.env.local`, restart the server** (or re-publish).
 
-**Sandbox outbound network reality (verified 2026-08-07):**
+**The Google network problem — solved without the server ever reaching Google.** The sandbox server cannot reach Google at all (DNS sinkhole `198.18.0.56`, no working egress proxy, direct IPs firewalled). So the server can never exchange the OAuth code or fetch Google's JWKS. The fix: **the visitor's browser performs the code→token exchange** (the browser *can* reach Google), and the server only **verifies the returned `id_token`** — zero server→Google calls.
 
-| Provider | Token/userinfo endpoint | Reachable from sandbox? | Can login finish *here*? |
-| --- | --- | --- | --- |
-| Google | `oauth2.googleapis.com`, `accounts.google.com` | ❌ blocked (DNS sinkhole `198.18.0.56`, no proxy reaches it) | **No** — token exchange fails |
-| Microsoft | `login.microsoftonline.com` | ✅ reachable (302) | **Yes** (email taken from `id_token`, so the blocked `graph.microsoft.com` is only a fallback) |
-| Apple | `appleid.apple.com` | ✅ reachable (403 on root GET, `/auth/token` works) | **Yes** (email comes from the posted `id_token`) |
+Flow (`lib/auth.ts` + `app/api/auth/google/*`):
+1. `/api/auth/google` redirects to Google with **PKCE** (`code_challenge`, `code_challenge_method=S256`, `nonce`, **no `client_secret`**). The PKCE `code_verifier` rides inside the signed `state`.
+2. Google redirects back to `/api/auth/google/callback`, which returns a tiny HTML page that, **in the browser**, exchanges `code` → `id_token` at `https://oauth2.googleapis.com/token` (CORS-enabled), then POSTs the `id_token` to `/api/auth/google/verify`.
+3. `/api/auth/google/verify` verifies (a) the HMAC-signed `state` and (b) the `id_token`'s **RS256 signature against Google's public JWKS** (`lib/google-jwks.json`), plus `iss` / `aud` / `exp` / `nonce`. On success it issues the session + provider cookies.
 
-So: **Google login is code-correct and will work on your real hosting** (Vercel / trialbeacon.cn) once the redirect URI is registered — it just can't complete inside this sandbox. **Microsoft and Apple can be proven to work right here** if you drop in credentials.
+The JWKS is committed *public* data; refresh it from `https://www.googleapis.com/oauth2/v3/certs` when Google rotates keys (~weekly). The RS256-JWK verification is unit-tested and proven in this Node.
+
+**Sandbox outbound reality (verified 2026-08-07):**
+
+| Provider | Server can reach its endpoint? | Login finishes *here*? |
+| --- | --- | --- |
+| Google | ❌ blocked | **Yes** — browser does the exchange; server only verifies the id_token via JWKS |
+| Microsoft | ✅ `login.microsoftonline.com` reachable | **Yes** (token exchange + id_token email both reachable) |
+| Apple | ✅ `appleid.apple.com` reachable | **Yes** (token endpoint reachable; email from posted id_token) |
+
+So **all three can be proven to work in this sandbox.** Microsoft/Apple still need their credentials in `.env.local`; Google is already configured.
 
 **Exact redirect URIs to register** (the sandbox preview domain is stable across re-publishes):
 
 | Provider | Authorized redirect URI | Authorized JavaScript origin |
 | --- | --- | --- |
-| Google | `https://af73f65d0b7b099a8.gz1.agentos-app.net/api/auth/google/callback` | `https://af73f65d0b7b099a8.gz1.agentos-app.net` |
+| Google | `https://af73f65d0b7b099a8.gz1.agentos-app.net/api/auth/google/callback` | *not required* (authorization-code + PKCE flow) |
 | Microsoft | `https://af73f65d0b7b099a8.gz1.agentos-app.net/api/auth/microsoft/callback` | `https://af73f65d0b7b099a8.gz1.agentos-app.net` |
 | Apple | `https://af73f65d0b7b099a8.gz1.agentos-app.net/api/auth/apple/callback` | `https://af73f65d0b7b099a8.gz1.agentos-app.net` |
 
-For production also register the same three paths under your real domain(s), e.g. `https://trialbeacon.cn/api/auth/<provider>/callback` and `https://trialbeacon.vercel.app/api/auth/<provider>/callback`.
+For Google, **only the redirect URI** needs registering (auth-code + PKCE; no JS origin). For production also register the same three paths under your real domain(s), e.g. `https://trialbeacon.cn/api/auth/<provider>/callback` and `https://trialbeacon.vercel.app/api/auth/<provider>/callback`.
 
-The `redirect_uri` is derived at request time from the public host (`publicOrigin(req)` in `lib/auth.ts`), so it always matches whatever domain the visitor typed — no hardcoded URLs to keep in sync.
+The `redirect_uri` is derived at request time from the public host (`publicOrigin(req)` in `lib/auth.ts`), so it always matches the domain the visitor typed — no hardcoded URLs to keep in sync.
 
 

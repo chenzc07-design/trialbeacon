@@ -29,6 +29,12 @@ import {
   ANON_UID,
 } from './auth-shared';
 
+// Google's public signing keys (JWKS). Used to verify the id_token returned by
+// the browser-side PKCE exchange WITHOUT the server ever calling Google — the
+// sandbox cannot reach Google's network. Refresh from
+// https://www.googleapis.com/oauth2/v3/certs when these rotate (~weekly).
+import googleJwks from './google-jwks.json';
+
 export {
   SESSION_COOKIE,
   SESSION_TTL_DAYS,
@@ -187,6 +193,9 @@ export interface OAuthState {
   next: string;
   n: string;
   t: number;
+  /** PKCE code_verifier — embedded in the (signed) state, surfaced to the
+   *  browser so it can perform the code→token exchange client-side. */
+  v?: string;
 }
 export function signState(state: OAuthState): string {
   return sign(state);
@@ -197,6 +206,68 @@ export function verifyState(token: string): OAuthState | null {
   // 10-minute replay window, matching the Google flow.
   if (Date.now() - s.t > 10 * 60 * 1000) return null;
   return s;
+}
+
+/** PKCE code_verifier + S256 challenge for the browser-side token exchange. */
+export function generatePkce(): { verifier: string; challenge: string } {
+  const verifier = b64url(crypto.randomBytes(64));
+  const challenge = b64url(crypto.createHash('sha256').update(verifier).digest());
+  return { verifier, challenge };
+}
+
+/**
+ * Verify a Google-issued OpenID id_token WITHOUT calling Google's network.
+ *
+ * The sandbox cannot reach Google, so the OAuth code→token exchange happens in
+ * the user's browser (PKCE). The browser hands us the id_token; we verify its
+ * RS256 signature against Google's public JWKS (committed to
+ * lib/google-jwks.json, refreshed from https://www.googleapis.com/oauth2/v3/certs
+ * when keys rotate). This closes the loop: the server never talks to Google,
+ * yet the token is cryptographically proven to be Google's.
+ */
+export function verifyGoogleIdToken(
+  idToken: string,
+  expectedNonce: string
+): { email: string; email_verified?: boolean } {
+  const parts = idToken.split('.');
+  if (parts.length !== 3) throw new Error('bad_id_token');
+  const [h, p, s] = parts;
+  let header: { kid?: string; alg?: string };
+  let payload: Record<string, unknown>;
+  try {
+    header = JSON.parse(b64urlDecode(h).toString('utf8'));
+    payload = JSON.parse(b64urlDecode(p).toString('utf8'));
+  } catch {
+    throw new Error('bad_id_token');
+  }
+  if (header.alg && header.alg !== 'RS256') throw new Error('bad_alg');
+  const keys = (
+    googleJwks as { keys: Array<{ kid: string; kty: string; n: string; e: string }> }
+  ).keys;
+  const jwk = keys.find((k) => k.kid === header.kid);
+  if (!jwk) throw new Error('unknown_kid');
+  const pub = crypto.createPublicKey({
+    key: { kty: 'RSA', n: jwk.n, e: jwk.e },
+    format: 'jwk',
+  });
+  const valid = crypto.verify(
+    'sha256',
+    Buffer.from(`${h}.${p}`),
+    pub,
+    b64urlDecode(s)
+  );
+  if (!valid) throw new Error('bad_signature');
+  const now = Math.floor(Date.now() / 1000);
+  if (typeof payload.exp === 'number' && payload.exp < now)
+    throw new Error('token_expired');
+  const iss = payload.iss as string;
+  if (iss !== 'accounts.google.com' && iss !== 'https://accounts.google.com')
+    throw new Error('bad_iss');
+  if (payload.aud !== process.env.GOOGLE_CLIENT_ID) throw new Error('bad_aud');
+  if (expectedNonce && payload.nonce !== expectedNonce) throw new Error('bad_nonce');
+  const email = payload.email as string;
+  if (!email) throw new Error('no_email');
+  return { email, email_verified: Boolean(payload.email_verified) };
 }
 
 /**

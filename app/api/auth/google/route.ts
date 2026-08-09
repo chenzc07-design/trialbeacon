@@ -1,37 +1,18 @@
 import { NextResponse } from 'next/server';
 import crypto from 'node:crypto';
-import { publicOrigin } from '@/lib/auth';
+import { publicOrigin, signState, generatePkce } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
-const SECRET =
-  process.env.AUTH_SECRET ||
-  'tb-dev-secret-do-not-use-in-prod-0000000000000000';
-
-function b64url(buf: Buffer): string {
-  return buf
-    .toString('base64')
-    .replace(/=+$/, '')
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_');
-}
-function b64urlDecode(s: string): Buffer {
-  s = s.replace(/-/g, '+').replace(/_/g, '/');
-  while (s.length % 4) s += '=';
-  return Buffer.from(s, 'base64');
-}
-function sign(payload: object): string {
-  const body = b64url(Buffer.from(JSON.stringify(payload)));
-  const mac = b64url(
-    crypto.createHmac('sha256', SECRET).update(body).digest()
-  );
-  return `${body}.${mac}`;
-}
-
 /**
  * GET /api/auth/google?next=/some/path
- * Redirects to Google's OAuth consent screen. Requires GOOGLE_CLIENT_ID to
- * be set; otherwise returns a 503.
+ *
+ * Starts a PKCE authorization-code flow. Crucially we do NOT send a
+ * client_secret — the code→token exchange is performed in the user's BROWSER
+ * (see /api/auth/google/callback), because this sandbox cannot reach Google's
+ * network. The PKCE `code_verifier` is carried inside the signed `state` so the
+ * browser can complete the exchange; Google's id_token is later verified
+ * server-side against Google's public JWKS (lib/google-jwks.json).
  */
 export async function GET(req: Request) {
   const cid = process.env.GOOGLE_CLIENT_ID;
@@ -47,9 +28,9 @@ export async function GET(req: Request) {
   }
   const url = new URL(req.url);
   const next = url.searchParams.get('next') || '/';
-  // Bounded state: encode the destination + nonce + HMAC.
   const nonce = crypto.randomBytes(8).toString('hex');
-  const state = sign({ next, n: nonce, t: Date.now() });
+  const { verifier, challenge } = generatePkce();
+  const state = signState({ next, n: nonce, t: Date.now(), v: verifier });
   const origin = publicOrigin(req);
   const redirectUri = `${origin}/api/auth/google/callback`;
   const params = new URLSearchParams({
@@ -58,6 +39,9 @@ export async function GET(req: Request) {
     response_type: 'code',
     scope: 'openid email profile',
     state,
+    nonce,
+    code_challenge: challenge,
+    code_challenge_method: 'S256',
     prompt: 'select_account',
   });
   return NextResponse.redirect(
