@@ -132,7 +132,7 @@ The site owner wanted a dead-simple way to see **visits / registrations / paid-u
 | Admin page (gated) | `app/admin/stats/page.tsx` | 6 KPI cards + raw event table + recent payments; protected by `STATS_TOKEN` |
 | Page-view ping | `components/PageViewPing.tsx` | client component, fires `page_view` on every route change |
 | Persistence fallback | `lib/persist.ts` | local JSON file (`.tb_state/`) when Upstash is not configured |
-| Dev seed | `app/api/admin/seed/route.ts` | **dev-only** (`NODE_ENV==='production'` → 404). Idempotent: resets then writes ~1.3k visits, 28 registrations, 14 payments |
+| Dev seed | `app/api/admin/seed/route.ts` | **Kept in repo.** Gated by `STATS_TOKEN`; auto-disabled once Upstash is configured (can't wipe live prod data), but usable in local dev + sandbox preview. Idempotent: resets then writes ~1.3k visits, 28 registrations, 14 payments |
 
 **Persistence:** when `UPSTASH_REDIS_REST_URL` + `_TOKEN` are set, both stores use Upstash (durable, multi-instance). Otherwise they hydrate from / write back to `.tb_state/*.json` so the numbers **survive server restarts** in local-dev / sandbox preview. `.tb_state/` is git-ignored (runtime state only).
 
@@ -141,6 +141,6 @@ The site owner wanted a dead-simple way to see **visits / registrations / paid-u
 - To (re)populate demo numbers: open `…/api/admin/seed?token=demo` once (dev mode only).
 - For production Vercel: set `STATS_TOKEN` in project env vars, then visit `/admin/stats?token=<that token>`.
 
-> The seed route is intentionally **kept** in the repo at the owner's request. It is inert in production builds (returns 404) and gated by `STATS_TOKEN`, so it ships safely.
+> The seed route is intentionally **kept** in the repo at the owner's request. It is gated by `STATS_TOKEN` and auto-disabled once Upstash (real prod persistence) is configured, so it can never wipe live production data — but it stays usable in local dev and the sandbox preview where stats fall back to the local `.tb_state/` file.
 
 

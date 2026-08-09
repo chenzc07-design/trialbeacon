@@ -1,18 +1,20 @@
 import { NextResponse } from 'next/server';
 import { recordEvent, resetStats } from '@/lib/stats';
 import { recordPayment, markAccountSeen, resetMetrics } from '@/lib/metrics';
+import { isSyncConfigured } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
 /**
- * DEV-ONLY demo seed. Gated by NODE_ENV !== 'production' AND a matching
- * STATS_TOKEN, so it is completely inert once the app is built for production
- * (Vercel). Used only to populate the local preview with sample data so the
- * owner dashboard can be reviewed before real traffic arrives.
+ * Demo seed, gated by a matching STATS_TOKEN. It is disabled once real
+ * production persistence (Upstash) is configured, so it can never wipe live
+ * data on Vercel; but it stays usable in local dev and the sandbox preview
+ * (where stats/metrics fall back to the local `.tb_state/` file). Idempotent:
+ * it resets then writes a fixed sample dataset, so repeated hits are stable.
  */
 export async function GET(req: Request) {
-  if (process.env.NODE_ENV === 'production') {
-    return NextResponse.json({ error: 'dev_only' }, { status: 404 });
+  if (isSyncConfigured()) {
+    return NextResponse.json({ error: 'disabled_in_production' }, { status: 404 });
   }
   const token = new URL(req.url).searchParams.get('token');
   if (!process.env.STATS_TOKEN || token !== process.env.STATS_TOKEN) {
