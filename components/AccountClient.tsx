@@ -30,7 +30,6 @@ const PROVIDER_META: Record<string, { label: string; dot: string }> = {
   email: { label: 'Email', dot: 'bg-[#3f8f6b]' },
   google: { label: 'Google', dot: 'bg-[#4285F4]' },
   microsoft: { label: 'Microsoft', dot: 'bg-[#00A4EF]' },
-  apple: { label: 'Apple', dot: 'bg-[#111827]' },
 };
 
 export function AccountClient() {
@@ -164,7 +163,7 @@ export function AccountClient() {
                 {m.account.providersHint}
               </p>
               <ul className="mt-3 flex flex-wrap gap-2">
-                {(['email', 'google', 'microsoft', 'apple'] as const).map((p) => {
+                {(['email', 'google', 'microsoft'] as const).map((p) => {
                   const bound = p === 'email' || (user.providers ?? []).includes(p);
                   const meta = PROVIDER_META[p];
                   return (

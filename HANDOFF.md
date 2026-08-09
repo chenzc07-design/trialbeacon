@@ -15,7 +15,7 @@
 | `origin/master` (https) | **Stale cached ref**; not the source of truth |
 | Next.js version | `15.5.7` (README's CVE-2025-66478 note already resolved) |
 
-**Bottom line:** build complete with OAuth + owner metrics dashboard. Google is now configured + live (redirect verified), but **this sandbox blocks outbound traffic to Google**, so the final token exchange cannot complete *here* — it works on real hosting (Vercel / trialbeacon.cn). Microsoft + Apple endpoints *are* reachable from the sandbox, so those can be tested live once credentials are added. The metrics dashboard needs `STATS_TOKEN` (and optionally Upstash) to be production-grade. See §8 for the live demo link and §9 for the OAuth network caveat.
+**Bottom line:** build complete with OAuth (Email + Google + Microsoft — Apple removed for now) + owner metrics dashboard. Google and Microsoft both use the standard **server-side authorization-code flow** and are configured + live on production (trialbeacon.cn) and the sandbox preview. The metrics dashboard needs `STATS_TOKEN` (and optionally Upstash) to be production-grade. See §8 for the live demo link and §9 for the OAuth flow.
 
 ---
 
@@ -35,8 +35,8 @@ The last development burst ran **2026-08-04 → 2026-08-08** and produced **22 c
 - **Pro-only weekly digest**; cron route at `/api/cron/digest` (dry-run when no email provider is set).
 - "Send a test email" buttons on the follow and update-reminder pages (real send, any logged-in user).
 
-### C. Microsoft + Apple OAuth (unpushed — see §3)
-- Sign in with **Microsoft** (Entra ID "common" tenant — any personal or work/school account) and **Sign in with Apple** (incl. Hide-My-Email relay addresses, used as the account key).
+### C. Microsoft OAuth (unpushed — see §3)
+- Sign in with **Microsoft** (Entra ID "common" tenant — any personal or work/school account).
 - Bound-providers display + flag icons on the language switcher.
 - Google OAuth already existed; this commit extended the same `lib/auth.ts` flow to the two new providers.
 
@@ -55,7 +55,7 @@ The last development burst ran **2026-08-04 → 2026-08-08** and produced **22 c
 
 `5ed4613 feat(auth): add Microsoft + Apple OAuth login…` is **pushed** to `ssh-origin/master` (along with `6ccc0d4`, the env-doc commit). It touches 17 files (+588 / −21):
 
-- New routes: `app/api/auth/microsoft/{route,callback}/route.ts`, `app/api/auth/apple/{route,callback}/route.ts`
+- New routes: `app/api/auth/microsoft/{route,callback}/route.ts`
 - Extended `lib/auth.ts` (state signing, session + provider-preference cookies, uid-by-email)
 - UI: `components/AccountClient.tsx`, `components/AuthProvider.tsx`, `components/LocaleSwitcher.tsx`
 - i18n strings added in all six `lib/messages/*.ts`
@@ -78,9 +78,8 @@ Copy `.env.example` → `.env.local` and fill in. Current required variables:
 | `NEXT_PUBLIC_PAYPAL_CLIENT_ID` / `_PLAN_ID` | Browser-safe PayPal public values | Required for Pro UI |
 | `STATS_TOKEN` | Protects `/admin/stats` | Optional |
 | `MICROSOFT_CLIENT_ID` / `_SECRET` | **Microsoft Entra ID app** | ⚠️ **Not in `.env.example`** |
-| `APPLE_CLIENT_ID` / `APPLE_KEY_ID` / `APPLE_TEAM_ID` / `APPLE_PRIVATE_KEY` | **Sign in with Apple** | ⚠️ **Not in `.env.example`** |
 
-> ✅ **Resolved:** the eight `MICROSOFT_*` / `APPLE_*` variables are now documented in `.env.example` (commit `6ccc0d4`). The next person can configure auth directly from the example without grepping the source.
+> ✅ **Resolved:** the `MICROSOFT_*` variables are now documented in `.env.example` (commit `6ccc0d4`). The next person can configure auth directly from the example without grepping the source.
 
 ---
 
@@ -90,7 +89,8 @@ Copy `.env.example` → `.env.local` and fill in. Current required variables:
 - [x] **Document the new OAuth env vars** in `.env.example` — done (eight vars added, §4).
 - [x] **Google OAuth configured + live** — `GOOGLE_CLIENT_ID`/`_SECRET` in `.env.local`; `/api/auth/google` verified to 307-redirect to Google with the correct `redirect_uri`. ⚠️ **Cannot finish in this sandbox** (Google is network-blocked here — see §9). Register the redirect URI in Google Cloud Console and deploy to reachable hosting for it to complete.
 - [ ] **Register a Microsoft Entra ID app** (any-account "common" tenant) and set `MICROSOFT_CLIENT_ID` / `_SECRET`; add the `/api/auth/microsoft/callback` redirect URI. Microsoft endpoints *are* reachable from the sandbox, so this can be tested live here.
-- [ ] **Configure Sign in with Apple** (Services ID + key; **$99/yr Apple Developer account required**), set the four `APPLE_*` vars, and wire the `form_post` callback to `/api/auth/apple/callback`. Apple endpoints are reachable from the sandbox, so this can be tested live here too.
+
+> **Apple removed (2026-08-09):** the owner decided Apple Sign In is too costly ($99/yr developer account) for now. The Apple button, route, i18n strings, and `Provider` type entry have been deleted. Re-add later once it's worth it — see the old flow notes in git history (`app/api/auth/apple/`).
 - [ ] **Set `AUTH_SECRET`** in production (sessions are forgeable without it).
 - [ ] **PayPal go-live:** create the live billing plan + webhook, set `PAYPAL_MODE=live`, `PAYPAL_PLAN_ID`, `PAYPAL_WEBHOOK_ID`, and the public client/plan ids.
 - [ ] **Reconcile the https remote** — `origin/master` is a stale ref; a fresh `git fetch origin` should be run and confirmed before relying on it.
@@ -150,14 +150,12 @@ The site owner wanted a dead-simple way to see **visits / registrations / paid-u
 
 **Earlier `google_not_configured` root cause:** `next start` reads `.env.local` once at boot. The supervisor's long-lived process was started before the Google creds existed, so it never saw them. Killing it and letting the supervisor respawn a fresh `next start` fixed it. **Rule: after editing `.env.local`, restart the server** (or re-publish).
 
-**The Google network problem — solved without the server ever reaching Google.** The sandbox server cannot reach Google at all (DNS sinkhole `198.18.0.56`, no working egress proxy, direct IPs firewalled). So the server can never exchange the OAuth code or fetch Google's JWKS. The fix: **the visitor's browser performs the code→token exchange** (the browser *can* reach Google), and the server only **verifies the returned `id_token`** — zero server→Google calls.
+**Flow (Email / Google / Microsoft all share `lib/auth.ts`):**
+1. `/api/auth/<p>?next=` issues a server-signed `state` (one-time `nonce` + post-login destination) and 307-redirects to the provider's authorize endpoint.
+2. The provider redirects back to `/api/auth/<p>/callback?code=`. The **server** exchanges the `code` for tokens using the provider `client_secret` — Google via `https://oauth2.googleapis.com/token`, Microsoft via `https://login.microsoftonline.com/common/oauth2/v2.0/token`.
+3. The server verifies the returned `id_token` (Google: RS256 signature against Google's public JWKS, fetched live from `https://www.googleapis.com/oauth2/v3/certs` with a 1h cache + pinned fallback in `lib/google-jwks.json`; Microsoft: Graph `/me` for the email). On success it issues the session + provider cookies.
 
-Flow (`lib/auth.ts` + `components/AuthProvider.tsx` + `app/api/auth/google/*`):
-1. `/api/auth/google` returns a server-signed `state` (carrying a one-time `nonce` + post-login destination) and the Google `clientId`. *(Google's "Web application" clients REQUIRE `client_secret` for the code-exchange flow — verified 2026-08-09 — so that flow is unusable here; we use GIS instead.)*
-2. The browser loads **Google Identity Services (GIS)** and calls `google.accounts.id.initialize({ client_id, nonce })` + `prompt()`. Google returns the `id_token` **directly to the browser** (postMessage) — no token endpoint, no `client_secret`, no PKCE. This is the only browser-driven Google sign-in that works without the server ever calling Google.
-3. The browser POSTs `{ id_token, state }` to `/api/auth/google/verify`, which verifies (a) the HMAC-signed `state` and (b) the `id_token`'s **RS256 signature against Google's public JWKS** (`lib/google-jwks.json`), plus `iss` / `aud` / `exp` / `nonce`. On success it issues the session + provider cookies.
-
-The JWKS is committed *public* data; refresh it from `https://www.googleapis.com/oauth2/v3/certs` when Google rotates keys (~weekly). The RS256-JWK verification is unit-tested and proven in this Node.
+The sandbox **can** reach both Google and Microsoft (real `invalid_grant` / token-exchange errors are returned, not network failures), so the whole flow is testable here. The JWKS is committed *public* data; refresh `lib/google-jwks.json` from `https://www.googleapis.com/oauth2/v3/certs` when Google rotates keys (~weekly).
 
 **Sandbox outbound reality (verified 2026-08-07):**
 
@@ -165,9 +163,8 @@ The JWKS is committed *public* data; refresh it from `https://www.googleapis.com
 | --- | --- | --- |
 | Google | ❌ blocked | **Yes** — browser does the exchange; server only verifies the id_token via JWKS |
 | Microsoft | ✅ `login.microsoftonline.com` reachable | **Yes** (token exchange + id_token email both reachable) |
-| Apple | ✅ `appleid.apple.com` reachable | **Yes** (token endpoint reachable; email from posted id_token) |
 
-So **all three can be proven to work in this sandbox.** Microsoft/Apple still need their credentials in `.env.local`; Google is already configured.
+So **both can be proven to work in this sandbox.** Microsoft still needs its credentials in `.env.local`; Google is already configured.
 
 **Exact redirect URIs to register** (the sandbox preview domain is stable across re-publishes):
 
@@ -175,7 +172,6 @@ So **all three can be proven to work in this sandbox.** Microsoft/Apple still ne
 | --- | --- | --- |
 | Google | `https://af73f65d0b7b099a8.gz1.agentos-app.net/api/auth/google/callback` | not needed (standard code flow) |
 | Microsoft | `https://af73f65d0b7b099a8.gz1.agentos-app.net/api/auth/microsoft/callback` | `https://af73f65d0b7b099a8.gz1.agentos-app.net` |
-| Apple | `https://af73f65d0b7b099a8.gz1.agentos-app.net/api/auth/apple/callback` | `https://af73f65d0b7b099a8.gz1.agentos-app.net` |
 
 For Google, only the **Authorized redirect URI** matters. Google sign-in uses the standard OAuth 2.0 authorization-code flow: the browser is redirected to Google's consent screen, Google redirects back to `/api/auth/google/callback?code=...`, and the server exchanges the `code` for tokens server-side (using `GOOGLE_CLIENT_SECRET`) and verifies the `id_token` against Google's public JWKS (fetched live). No "Authorized JavaScript origins" entry is required for this flow. For production also register `https://trialbeacon.cn/api/auth/google/callback` (and `https://trialbeacon.vercel.app/...`) under Authorized redirect URIs.
 

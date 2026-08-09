@@ -131,7 +131,6 @@ export const fr: Messages = {
     codeSent: 'Code envoyé. Vérifiez votre boîte de réception (et les spams).',
     googleBtn: 'Continuer avec Google',
     microsoftBtn: 'Continuer avec Microsoft',
-    appleBtn: 'Continuer avec Apple',
     signedInAs: 'Connecté en tant que {email}',
     signOutCta: 'Se déconnecter',
     signedInTitle: 'Vous êtes connecté',
@@ -144,7 +143,7 @@ export const fr: Messages = {
     errorRateLimited: 'Trop de tentatives. Veuillez patienter quelques minutes avant de réessayer.',
     privacyTitle: 'Ce qui est conservé',
     privacyLogin:
-      'Vous pouvez vous connecter avec un code e-mail à usage unique, ou avec Google, Microsoft ou Apple. Nous ne recevons jamais votre mot de passe de ces services.',
+      'Vous pouvez vous connecter avec un code e-mail à usage unique, ou avec Google ou Microsoft. Nous ne recevons jamais votre mot de passe de ces services.',
     privacyBody: 'Votre adresse e-mail et son empreinte à sens unique. Les types de cancer que vous avez sélectionnés pour les alertes. Les entrées que vous avez enregistrées. Rien d\'autre. Vous pouvez vous déconnecter et tout effacer à tout moment depuis la page du compte.',
     dismiss: 'Pas maintenant',
   },

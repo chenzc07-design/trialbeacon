@@ -131,7 +131,6 @@ export const de: Messages = {
     codeSent: 'Code gesendet. Prüfen Sie Ihren Posteingang (und den Spam-Ordner).',
     googleBtn: 'Mit Google fortfahren',
     microsoftBtn: 'Mit Microsoft fortfahren',
-    appleBtn: 'Mit Apple fortfahren',
     signedInAs: 'Angemeldet als {email}',
     signOutCta: 'Abmelden',
     signedInTitle: 'Sie sind angemeldet',
@@ -144,7 +143,7 @@ export const de: Messages = {
     errorRateLimited: 'Zu viele Versuche. Bitte warten Sie einige Minuten und versuchen Sie es erneut.',
     privacyTitle: 'Was gespeichert wird',
     privacyLogin:
-      'Sie können sich mit einem einmaligen E-Mail-Code oder mit Google, Microsoft oder Apple anmelden. Wir erhalten Ihr Passwort von diesen Diensten nie.',
+      'Sie können sich mit einem einmaligen E-Mail-Code oder mit Google oder Microsoft anmelden. Wir erhalten Ihr Passwort von diesen Diensten nie.',
     privacyBody: 'Ihre E-Mail-Adresse und deren Einweg-Hash. Die von Ihnen für Benachrichtigungen gewählten Krebsarten. Ihre gespeicherten Einträge. Sonst nichts. Sie können sich jederzeit abmelden und auf der Kontoseite alles löschen.',
     dismiss: 'Jetzt nicht',
   },

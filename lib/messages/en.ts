@@ -148,7 +148,6 @@ export const en = {
     codeSent: 'Code sent. Check your inbox (and spam folder).',
     googleBtn: 'Continue with Google',
     microsoftBtn: 'Continue with Microsoft',
-    appleBtn: 'Continue with Apple',
     signedInAs: 'Signed in as {email}',
     signOutCta: 'Sign out',
     signedInTitle: 'You are signed in',
@@ -163,7 +162,7 @@ export const en = {
     errorRateLimited: 'Too many attempts. Please wait a few minutes and try again.',
     privacyTitle: 'What is stored',
     privacyLogin:
-      'You can sign in with a one-time email code, or with Google, Microsoft or Apple. We never receive your password from those services.',
+      'You can sign in with a one-time email code, or with Google or Microsoft. We never receive your password from those services.',
     privacyBody:
       'Your email address and a one-way hash of it. Your selected cancer types for alerts. Your saved records. Nothing else. You can sign out and erase everything at any time from the account page.',
     dismiss: 'Not now',

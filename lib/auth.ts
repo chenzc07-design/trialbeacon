@@ -136,8 +136,8 @@ export interface Prefs {
   locale?: string;
   /**
    * Login methods that have been used with this account. An account is keyed
-   * by email, so the same address signing in via Email, Google, Microsoft or
-   * Apple lands on the same profile; this list records which were used so the
+   * by email, so the same address signing in via Email, Google or
+   * Microsoft lands on the same profile; this list records which were used so the
    * account page can show them. Never clinical.
    */
   providers?: string[];
@@ -443,7 +443,7 @@ function cookieSpec(name: string, value: string, maxAgeSeconds: number): CookieS
 
 /** Login methods supported. An account is keyed by email, so every method
  *  for the same address resolves to the same profile. */
-export type Provider = 'email' | 'google' | 'microsoft' | 'apple';
+export type Provider = 'email' | 'google' | 'microsoft';
 
 interface SessionPayload {
   uid: string;
@@ -597,7 +597,7 @@ function sanitizePrefs(p: Partial<Prefs> | null | undefined): Prefs {
     providers: Array.isArray(p?.providers)
       ? (p!.providers as unknown[]).filter(
           (x): x is string =>
-            typeof x === 'string' && ['email', 'google', 'microsoft', 'apple'].includes(x)
+            typeof x === 'string' && ['email', 'google', 'microsoft'].includes(x)
         )
       : [],
   };
