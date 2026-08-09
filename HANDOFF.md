@@ -173,11 +173,11 @@ So **all three can be proven to work in this sandbox.** Microsoft/Apple still ne
 
 | Provider | Authorized redirect URI | Authorized JavaScript origin |
 | --- | --- | --- |
-| Google | `https://af73f65d0b7b099a8.gz1.agentos-app.net/api/auth/google/callback` | **Required** — GIS needs "Authorized JavaScript origins" |
+| Google | `https://af73f65d0b7b099a8.gz1.agentos-app.net/api/auth/google/callback` | not needed (standard code flow) |
 | Microsoft | `https://af73f65d0b7b099a8.gz1.agentos-app.net/api/auth/microsoft/callback` | `https://af73f65d0b7b099a8.gz1.agentos-app.net` |
 | Apple | `https://af73f65d0b7b099a8.gz1.agentos-app.net/api/auth/apple/callback` | `https://af73f65d0b7b099a8.gz1.agentos-app.net` |
 
-For Google, the **Authorized JavaScript origin** is what actually matters. Google sign-in now uses Google Identity Services (GIS, "credential" model): the browser gets the `id_token` directly via `google.accounts.id` and posts it to `/api/auth/google/verify` — there is **no** redirect-based code exchange, so Google's "Authorized redirect URIs" list is effectively unused (the `/api/auth/google/callback` route still exists only to forward `?error=` back to `/account`). Register `https://af73f65d0b7b099a8.gz1.agentos-app.net` as a JavaScript origin. For production also add `https://trialbeacon.cn` (and `https://trialbeacon.vercel.app`) as JavaScript origins. Microsoft/Apple keep using their respective redirect URIs + the origin.
+For Google, only the **Authorized redirect URI** matters. Google sign-in uses the standard OAuth 2.0 authorization-code flow: the browser is redirected to Google's consent screen, Google redirects back to `/api/auth/google/callback?code=...`, and the server exchanges the `code` for tokens server-side (using `GOOGLE_CLIENT_SECRET`) and verifies the `id_token` against Google's public JWKS (fetched live). No "Authorized JavaScript origins" entry is required for this flow. For production also register `https://trialbeacon.cn/api/auth/google/callback` (and `https://trialbeacon.vercel.app/...`) under Authorized redirect URIs.
 
 The `redirect_uri` is derived at request time from the public host (`publicOrigin(req)` in `lib/auth.ts`), so it always matches the domain the visitor typed — no hardcoded URLs to keep in sync.
 

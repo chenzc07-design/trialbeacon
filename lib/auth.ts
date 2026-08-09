@@ -29,11 +29,36 @@ import {
   ANON_UID,
 } from './auth-shared';
 
-// Google's public signing keys (JWKS). Used to verify the id_token returned by
-// the browser-side PKCE exchange WITHOUT the server ever calling Google — the
-// sandbox cannot reach Google's network. Refresh from
-// https://www.googleapis.com/oauth2/v3/certs when these rotate (~weekly).
+// Google's public signing keys (JWKS), pinned as a fallback. At runtime we
+// prefer the live set fetched from https://www.googleapis.com/oauth2/v3/certs
+// (the sandbox can reach Google), merging it with this pinned copy so a stale
+// cache never breaks verification when Google rotates its signing keys.
 import googleJwks from './google-jwks.json';
+
+// Live Google signing keys, cached in-process for 1h. Falls back to the pinned
+// set above if the fetch fails.
+let _googleJwksCache: { keys: Array<{ kid: string; kty: string; n: string; e: string }>; at: number } | null = null;
+async function getGoogleJwks(): Promise<Array<{ kid: string; kty: string; n: string; e: string }>> {
+  const TTL = 60 * 60 * 1000;
+  if (_googleJwksCache && Date.now() - _googleJwksCache.at < TTL) return _googleJwksCache.keys;
+  try {
+    const r = await fetch('https://www.googleapis.com/oauth2/v3/certs', { cache: 'no-store' });
+    if (r.ok) {
+      const j = (await r.json()) as { keys?: Array<{ kid: string; kty: string; n: string; e: string }> };
+      if (j.keys?.length) {
+        const merged = [...j.keys];
+        for (const k of googleJwks.keys) {
+          if (!merged.find((m) => m.kid === k.kid)) merged.push(k);
+        }
+        _googleJwksCache = { keys: merged, at: Date.now() };
+        return merged;
+      }
+    }
+  } catch {
+    /* fall through to pinned set */
+  }
+  return googleJwks.keys;
+}
 
 export {
   SESSION_COOKIE,
@@ -216,19 +241,18 @@ export function generatePkce(): { verifier: string; challenge: string } {
 }
 
 /**
- * Verify a Google-issued OpenID id_token WITHOUT calling Google's network.
+ * Verify a Google-issued OpenID id_token.
  *
- * The sandbox cannot reach Google, so the OAuth code→token exchange happens in
- * the user's browser (PKCE). The browser hands us the id_token; we verify its
- * RS256 signature against Google's public JWKS (committed to
- * lib/google-jwks.json, refreshed from https://www.googleapis.com/oauth2/v3/certs
- * when keys rotate). This closes the loop: the server never talks to Google,
- * yet the token is cryptographically proven to be Google's.
+ * The signature is checked against Google's public JWKS, which we fetch live
+ * from https://www.googleapis.com/oauth2/v3/certs (the sandbox can reach
+ * Google) and merge with the pinned copy in lib/google-jwks.json so key
+ * rotation never breaks sign-in. We additionally enforce exp, iss, aud and the
+ * replay-protected nonce.
  */
-export function verifyGoogleIdToken(
+export async function verifyGoogleIdToken(
   idToken: string,
   expectedNonce: string
-): { email: string; email_verified?: boolean } {
+): Promise<{ email: string; email_verified?: boolean }> {
   const parts = idToken.split('.');
   if (parts.length !== 3) throw new Error('bad_id_token');
   const [h, p, s] = parts;
@@ -241,9 +265,7 @@ export function verifyGoogleIdToken(
     throw new Error('bad_id_token');
   }
   if (header.alg && header.alg !== 'RS256') throw new Error('bad_alg');
-  const keys = (
-    googleJwks as { keys: Array<{ kid: string; kty: string; n: string; e: string }> }
-  ).keys;
+  const keys = await getGoogleJwks();
   const jwk = keys.find((k) => k.kid === header.kid);
   if (!jwk) throw new Error('unknown_kid');
   const pub = crypto.createPublicKey({
