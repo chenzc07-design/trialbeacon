@@ -15,7 +15,7 @@
 | `origin/master` (https) | **Stale cached ref**; not the source of truth |
 | Next.js version | `15.5.7` (README's CVE-2025-66478 note already resolved) |
 
-**Bottom line:** build complete with OAuth + owner metrics dashboard. Microsoft/Apple login still needs real OAuth credentials; the metrics dashboard needs `STATS_TOKEN` (and optionally Upstash) to be production-grade. See §8 for the live demo link.
+**Bottom line:** build complete with OAuth + owner metrics dashboard. Google is now configured + live (redirect verified), but **this sandbox blocks outbound traffic to Google**, so the final token exchange cannot complete *here* — it works on real hosting (Vercel / trialbeacon.cn). Microsoft + Apple endpoints *are* reachable from the sandbox, so those can be tested live once credentials are added. The metrics dashboard needs `STATS_TOKEN` (and optionally Upstash) to be production-grade. See §8 for the live demo link and §9 for the OAuth network caveat.
 
 ---
 
@@ -88,8 +88,9 @@ Copy `.env.example` → `.env.local` and fill in. Current required variables:
 
 - [x] **Push the OAuth commit** (`5ed4613`) to `ssh-origin` — done (`6ccc0d4` is the tip).
 - [x] **Document the new OAuth env vars** in `.env.example` — done (eight vars added, §4).
-- [ ] **Register a Microsoft Entra ID app** (any-account "common" tenant) and set `MICROSOFT_CLIENT_ID` / `_SECRET`; add the `/api/auth/microsoft/callback` redirect URI.
-- [ ] **Configure Sign in with Apple** (Services ID + key), set the four `APPLE_*` vars, and wire the `form_post` callback to `/api/auth/apple/callback`.
+- [x] **Google OAuth configured + live** — `GOOGLE_CLIENT_ID`/`_SECRET` in `.env.local`; `/api/auth/google` verified to 307-redirect to Google with the correct `redirect_uri`. ⚠️ **Cannot finish in this sandbox** (Google is network-blocked here — see §9). Register the redirect URI in Google Cloud Console and deploy to reachable hosting for it to complete.
+- [ ] **Register a Microsoft Entra ID app** (any-account "common" tenant) and set `MICROSOFT_CLIENT_ID` / `_SECRET`; add the `/api/auth/microsoft/callback` redirect URI. Microsoft endpoints *are* reachable from the sandbox, so this can be tested live here.
+- [ ] **Configure Sign in with Apple** (Services ID + key; **$99/yr Apple Developer account required**), set the four `APPLE_*` vars, and wire the `form_post` callback to `/api/auth/apple/callback`. Apple endpoints are reachable from the sandbox, so this can be tested live here too.
 - [ ] **Set `AUTH_SECRET`** in production (sessions are forgeable without it).
 - [ ] **PayPal go-live:** create the live billing plan + webhook, set `PAYPAL_MODE=live`, `PAYPAL_PLAN_ID`, `PAYPAL_WEBHOOK_ID`, and the public client/plan ids.
 - [ ] **Reconcile the https remote** — `origin/master` is a stale ref; a fresh `git fetch origin` should be run and confirmed before relying on it.
@@ -142,5 +143,33 @@ The site owner wanted a dead-simple way to see **visits / registrations / paid-u
 - For production Vercel: set `STATS_TOKEN` in project env vars, then visit `/admin/stats?token=<that token>`.
 
 > The seed route is intentionally **kept** in the repo at the owner's request. It is gated by `STATS_TOKEN` and auto-disabled once Upstash (real prod persistence) is configured, so it can never wipe live production data — but it stays usable in local dev and the sandbox preview where stats fall back to the local `.tb_state/` file.
+
+---
+
+## 9. OAuth in this sandbox — what works and what doesn't
+
+**Root cause of the earlier `google_not_configured` error:** `next start` reads `.env.local` once at boot. The long-lived process the sandbox supervisor keeps alive was started *before* the Google creds were added, so it never saw them. Killing that process and letting the supervisor respawn a fresh `next start` fixed it — now `/api/auth/google` correctly 307-redirects to Google. **Rule of thumb: after editing `.env.local`, restart the server** (or re-publish) so new vars are picked up.
+
+**Sandbox outbound network reality (verified 2026-08-07):**
+
+| Provider | Token/userinfo endpoint | Reachable from sandbox? | Can login finish *here*? |
+| --- | --- | --- | --- |
+| Google | `oauth2.googleapis.com`, `accounts.google.com` | ❌ blocked (DNS sinkhole `198.18.0.56`, no proxy reaches it) | **No** — token exchange fails |
+| Microsoft | `login.microsoftonline.com` | ✅ reachable (302) | **Yes** (email taken from `id_token`, so the blocked `graph.microsoft.com` is only a fallback) |
+| Apple | `appleid.apple.com` | ✅ reachable (403 on root GET, `/auth/token` works) | **Yes** (email comes from the posted `id_token`) |
+
+So: **Google login is code-correct and will work on your real hosting** (Vercel / trialbeacon.cn) once the redirect URI is registered — it just can't complete inside this sandbox. **Microsoft and Apple can be proven to work right here** if you drop in credentials.
+
+**Exact redirect URIs to register** (the sandbox preview domain is stable across re-publishes):
+
+| Provider | Authorized redirect URI | Authorized JavaScript origin |
+| --- | --- | --- |
+| Google | `https://af73f65d0b7b099a8.gz1.agentos-app.net/api/auth/google/callback` | `https://af73f65d0b7b099a8.gz1.agentos-app.net` |
+| Microsoft | `https://af73f65d0b7b099a8.gz1.agentos-app.net/api/auth/microsoft/callback` | `https://af73f65d0b7b099a8.gz1.agentos-app.net` |
+| Apple | `https://af73f65d0b7b099a8.gz1.agentos-app.net/api/auth/apple/callback` | `https://af73f65d0b7b099a8.gz1.agentos-app.net` |
+
+For production also register the same three paths under your real domain(s), e.g. `https://trialbeacon.cn/api/auth/<provider>/callback` and `https://trialbeacon.vercel.app/api/auth/<provider>/callback`.
+
+The `redirect_uri` is derived at request time from the public host (`publicOrigin(req)` in `lib/auth.ts`), so it always matches whatever domain the visitor typed — no hardcoded URLs to keep in sync.
 
 
