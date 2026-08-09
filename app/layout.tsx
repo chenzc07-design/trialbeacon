@@ -5,6 +5,7 @@ import { SiteFooter } from '@/components/SiteFooter';
 import { I18nProvider } from '@/components/I18nProvider';
 import { AuthProvider } from '@/components/AuthProvider';
 import { LimitModalProvider } from '@/components/LimitModal';
+import { PageViewPing } from '@/components/PageViewPing';
 import { getServerMessages } from '@/lib/i18n-server';
 import { siteJsonLd, hreflangAll } from '@/lib/seo';
 
@@ -82,6 +83,7 @@ export default async function RootLayout({
               <SiteFooter />
             </LimitModalProvider>
           </AuthProvider>
+          <PageViewPing />
         </I18nProvider>
       </body>
     </html>

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { verifyWebhookSignature } from '@/lib/paypal';
 import { recordEvent } from '@/lib/stats';
+import { recordPayment } from '@/lib/metrics';
 
 export const dynamic = 'force-dynamic';
 
@@ -47,6 +48,13 @@ export async function POST(req: Request) {
       type === 'PAYMENT.SALE.COMPLETED'
     ) {
       // Production: map event.resource.id -> user, update their Pro window.
+      const rid = (event?.resource?.id as string) || '';
+      await recordPayment({
+        type: 'subscription',
+        amount: 6.9,
+        currency: 'USD',
+        paypalId: rid,
+      }).catch(() => undefined);
       await recordEvent('payment_success');
     } else if (
       type === 'BILLING.SUBSCRIPTION.CANCELLED' ||

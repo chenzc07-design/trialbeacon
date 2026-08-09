@@ -20,11 +20,13 @@ export type StatEvent =
   | 'limit_reached'
   | 'buy_single_click'
   | 'pro_click'
-  | 'alerts_subscribe';
+  | 'alerts_subscribe'
+  | 'page_view';
 
 export const STAT_EVENTS: StatEvent[] = [
-  'view_aftercare',
+  'page_view',
   'view_cancer',
+  'view_aftercare',
   'view_original',
   'select_generate',
   'upgrade_click',

@@ -6,6 +6,7 @@ import {
   resolvePrefsOnSignIn,
   providerPrefsCookie,
 } from '@/lib/auth';
+import { markAccountSeen } from '@/lib/metrics';
 
 export const dynamic = 'force-dynamic';
 
@@ -137,6 +138,12 @@ export async function GET(req: Request) {
   // the same account as an email code for the same address — no linking step.
   const uid = uidForEmail(profile.email);
   await resolvePrefsOnSignIn(uid);
+  // Best-effort registration tracking (first sign-in only).
+  try {
+    await markAccountSeen(profile.email);
+  } catch {
+    /* metrics are non-critical */
+  }
 
   const session = issueSessionCookie(profile.email, 'google');
   const dest = s.next.startsWith('/') ? s.next : '/';

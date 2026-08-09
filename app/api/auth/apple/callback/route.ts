@@ -6,6 +6,7 @@ import {
   uidForEmail,
   verifyState,
 } from '@/lib/auth';
+import { markAccountSeen } from '@/lib/metrics';
 
 export const dynamic = 'force-dynamic';
 
@@ -51,6 +52,12 @@ export async function POST(req: Request) {
 
   // Same email ⇒ same account, regardless of which provider was used.
   const uid = uidForEmail(email);
+  // Best-effort registration tracking (first sign-in only).
+  try {
+    await markAccountSeen(email);
+  } catch {
+    /* metrics are non-critical */
+  }
   const session = issueSessionCookie(email, 'apple');
   const dest = s.next.startsWith('/') ? s.next : '/';
   const res = NextResponse.redirect(new URL(dest, url.origin));

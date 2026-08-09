@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { setSubscriptionId, grantPro, recordOrder, buildOrder } from '@/lib/entitlement';
 import { recordEvent } from '@/lib/stats';
+import { recordPayment } from '@/lib/metrics';
+import { getCurrentUser } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -25,6 +27,15 @@ export async function POST(req: Request) {
     // Minimal order record (payment metadata only — no PHI).
     const order = await buildOrder('subscription', '6.90', 'USD', subscriptionId ?? '');
     const orderCookie = await recordOrder(order);
+    // Central payment record for owner revenue / paid-user metrics.
+    const user = await getCurrentUser().catch(() => null);
+    await recordPayment({
+      type: 'subscription',
+      amount: 6.9,
+      currency: 'USD',
+      paypalId: subscriptionId ?? '',
+      email: user?.email,
+    }).catch(() => undefined);
     await recordEvent('payment_success');
     const res = NextResponse.json({ ok: true, proUntil });
     if (c1) res.cookies.set(c1.name, c1.value, c1.options);
