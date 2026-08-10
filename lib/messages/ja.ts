@@ -114,6 +114,7 @@ export const ja: Messages = {
     betaBody: 'まだストアにない場合は、内部テスト版をお試しください：',
     testflight: 'TestFlight（iOS）',
     apk: 'Android APK',
+    autoUpdate: '一度インストールすれば、起動時に自動で更新され、再ダウンロードは不要です。',
     inAppBrowserTitle: 'スマホのブラウザで開く',
     inAppBrowserBody:
       'WeChat/QQ の内蔵ブラウザでは APK のダウンロードがブロックされることがあります。右上のメニュー（⋮）から「ブラウザで開く」を選んでからダウンロードしてください。',

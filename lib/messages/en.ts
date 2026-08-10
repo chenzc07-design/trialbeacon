@@ -125,6 +125,7 @@ export const en = {
     androidButton: 'Get it on Google Play',
     betaTitle: 'Internal test build',
     betaBody: 'Not on the stores yet? Try the internal test build:',
+    autoUpdate: 'Install once — the app updates itself on launch, no re-download needed.',
     testflight: 'TestFlight (iOS)',
     apk: 'Android APK',
     inAppBrowserTitle: 'Open in your phone browser',

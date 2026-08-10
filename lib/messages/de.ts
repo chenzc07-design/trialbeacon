@@ -114,6 +114,7 @@ export const de: Messages = {
     betaBody: 'Noch nicht im Store? Teste den internen Build:',
     testflight: 'TestFlight (iOS)',
     apk: 'Android-APK',
+    autoUpdate: 'Einmal installieren — die App aktualisiert sich beim Start selbst, kein erneuter Download.',
     inAppBrowserTitle: 'Im Telefon-Browser öffnen',
     inAppBrowserBody:
       'Du verwendest den eingebauten Browser von WeChat/QQ, der APK-Downloads blockieren kann. Tippe oben rechts auf das Menü (⋮), wähle „Im Browser öffnen“ und lade dann herunter.',

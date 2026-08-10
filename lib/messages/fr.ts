@@ -114,6 +114,7 @@ export const fr: Messages = {
     betaBody: 'Pas encore sur les stores ? Essayez le build de test :',
     testflight: 'TestFlight (iOS)',
     apk: 'APK Android',
+    autoUpdate: "Installez une fois — l'app se met à jour au lancement, sans re-téléchargement.",
     inAppBrowserTitle: 'Ouvrir dans le navigateur du téléphone',
     inAppBrowserBody:
       "Vous êtes dans le navigateur intégré de WeChat/QQ, qui peut bloquer les téléchargements d'APK. Tapez le menu (⋮) en haut à droite, choisissez « Ouvrir dans le navigateur », puis téléchargez.",

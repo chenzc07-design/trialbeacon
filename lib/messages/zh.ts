@@ -112,6 +112,7 @@ export const zh: Messages = {
     androidButton: '在 Google Play 获取',
     betaTitle: '内测版',
     betaBody: '尚未上架商店？可先试用内测版本：',
+    autoUpdate: '安装一次即可：以后打开 App 会自动更新，无需重新下载。',
     testflight: 'TestFlight（iOS）',
     apk: 'Android 安装包',
     inAppBrowserTitle: '请用手机浏览器打开',

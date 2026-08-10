@@ -114,6 +114,7 @@ export const ko: Messages = {
     betaBody: '아직 스토어에 없나요? 내부 테스트 빌드를 사용해 보세요:',
     testflight: 'TestFlight (iOS)',
     apk: 'Android APK',
+    autoUpdate: '한 번만 설치하면 앱이 실행 시 자동으로 업데이트되어 다시 내려받을 필요가 없습니다.',
     inAppBrowserTitle: '휴대폰 브라우저에서 열기',
     inAppBrowserBody:
       'WeChat/QQ 내장 브라우저에서는 APK 다운로드가 차단될 수 있습니다. 오른쪽 상단 메뉴(⋮)를 눌러 "브라우저에서 열기"를 선택한 후 다운로드하세요.',

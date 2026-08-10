@@ -22,7 +22,7 @@ const TESTFLIGHT = process.env.NEXT_PUBLIC_APP_TESTFLIGHT_URL ?? '';
 // NEXT_PUBLIC_APP_APK_URL when a new build is published.
 const APK =
   process.env.NEXT_PUBLIC_APP_APK_URL ??
-  'https://expo.dev/artifacts/eas/6w4kfkR5gboHkRCTqVtLOpK8h89kObOS0DKQOqSU8ak.apk';
+  'https://expo.dev/artifacts/eas/WZPVt8ST1umEEUROJ2uywamBhOFq8WYpPMgI-n3qzDI.apk';
 
 function isInAppBrowser(ua: string) {
   return /MicroMessenger|MQQBrowser|QQ\//i.test(ua);
@@ -133,6 +133,9 @@ export default async function GetAppPage() {
                     {g.apk}
                   </a>
                 )
+              ) : null}
+              {APK && showAndroid && !inApp && g.autoUpdate ? (
+                <p className="text-xs text-slateish-500">{g.autoUpdate}</p>
               ) : null}
             </div>
           </div>
