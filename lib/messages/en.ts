@@ -103,6 +103,18 @@ export const en = {
     sourcesCta: 'Sources & methodology',
     freshnessTitle: 'Data freshness',
     freshnessBody: 'Records are retrieved live from the public APIs where possible, or from the last verified snapshot.',
+    // Prominent QR / "open on phone" promo (placed just below the hero).
+    // Desktop shows a scannable QR; mobile hides the QR and shows a short
+    // "you're already on your phone" line instead (no awkward self-scan).
+    appPromo: {
+      kicker: 'Take it with you',
+      title: 'Open on your phone — same features as the website',
+      body: 'Scan with your phone camera to use TrialBeacon on mobile: browse official records, follow cancer types and build your discussion list — identical to this site.',
+      urlLabel: 'trialbeacon.cn',
+      note: 'The app and this website share one account. Sign in once, everywhere.',
+      mobileTitle: 'Already on your phone?',
+      mobileBody: 'Just open your browser and go to trialbeacon.cn — same features, no install needed.',
+    },
   },
   cancersIndex: {
     eyebrow: 'Browse',

@@ -92,6 +92,17 @@ export const zh: Messages = {
     sourcesCta: '数据来源与方法',
     freshnessTitle: '数据时效',
     freshnessBody: '记录尽可能通过公开 API 实时获取；无法实时获取时，使用最后一次核对的快照。',
+    // 首页主视觉下方醒目的二维码 / 「在手机打开」引导。
+    // 桌面端显示可扫描二维码；手机端隐藏二维码，改为简短提示（避免自扫的尴尬）。
+    appPromo: {
+      kicker: '随身使用',
+      title: '手机打开 TrialBeacon（与网页功能一致）',
+      body: '用手机相机扫码，即可在移动端使用 TrialBeacon：浏览官方记录、关注癌种、生成讨论清单——与网页完全相同。',
+      urlLabel: 'trialbeacon.cn',
+      note: 'App 与网站共用同一账号，一次登录，处处同步。',
+      mobileTitle: '你已经在手机上了？',
+      mobileBody: '直接打开浏览器访问 trialbeacon.cn 即可，功能一致，无需安装。',
+    },
   },
   cancersIndex: {
     eyebrow: '浏览',

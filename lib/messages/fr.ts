@@ -92,6 +92,17 @@ export const fr: Messages = {
     sourcesCta: 'Sources et méthodologie',
     freshnessTitle: 'Fraîcheur des données',
     freshnessBody: 'Les entrées sont récupérées en direct via les API publiques lorsque c\'est possible, sinon depuis le dernier instantané vérifié.',
+    // Encart QR visible / « Ouvrir sur mobile » juste sous le hero.
+    // Le bureau affiche un QR scannable ; le mobile masque le QR et montre un court message.
+    appPromo: {
+      kicker: 'Emportez-le avec vous',
+      title: 'Ouvrir sur votre mobile — mêmes fonctions que le site',
+      body: 'Scannez avec l\'appareil photo de votre téléphone pour utiliser TrialBeacon sur mobile : parcourir les registres officiels, suivre des types de cancer et créer votre liste de discussion — identique au site.',
+      urlLabel: 'trialbeacon.cn',
+      note: 'L\'appli et le site partagent un même compte. Une seule connexion, partout.',
+      mobileTitle: 'Déjà sur votre mobile ?',
+      mobileBody: 'Ouvrez simplement votre navigateur et allez sur trialbeacon.cn — mêmes fonctions, aucune installation requise.',
+    },
   },
   cancersIndex: {
     eyebrow: 'Parcourir',

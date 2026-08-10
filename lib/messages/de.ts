@@ -92,6 +92,17 @@ export const de: Messages = {
     sourcesCta: 'Quellen & Methodik',
     freshnessTitle: 'Aktualität der Daten',
     freshnessBody: 'Einträge werden nach Möglichkeit live über die öffentlichen APIs abgerufen, andernfalls aus dem zuletzt geprüften Snapshot.',
+    // Auffälliges QR- / „Auf dem Handy öffnen"-Modul direkt unter dem Hero.
+    // Desktop zeigt einen scannbaren QR-Code; mobil wird der QR ausgeblendet und ein kurzer Hinweis gezeigt.
+    appPromo: {
+      kicker: 'Immer dabei',
+      title: 'Auf dem Handy öffnen — gleiche Funktionen wie die Website',
+      body: 'Scannen Sie mit der Handykamera, um TrialBeacon mobil zu nutzen: offizielle Einträge durchsuchen, Krebsarten folgen und Diskussionslisten erstellen — identisch zur Website.',
+      urlLabel: 'trialbeacon.cn',
+      note: 'App und Website teilen sich ein Konto. Einmal anmelden, überall synchron.',
+      mobileTitle: 'Schon auf dem Handy?',
+      mobileBody: 'Öffnen Sie einfach den Browser und rufen Sie trialbeacon.cn auf — gleiche Funktionen, keine Installation nötig.',
+    },
   },
   cancersIndex: {
     eyebrow: 'Durchsuchen',

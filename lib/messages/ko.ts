@@ -92,6 +92,17 @@ export const ko: Messages = {
     sourcesCta: '출처 및 방법론',
     freshnessTitle: '데이터 최신성',
     freshnessBody: '기록은 가능한 경우 공개 API에서 실시간으로 가져오며, 그렇지 않으면 마지막으로 확인한 스냅샷을 사용합니다.',
+    // 히어로 바로 아래에 표시되는 눈에 띄는 QR / "폰에서 열기" 안내.
+    // 데스크톱에서는 스캔 가능한 QR을, 모바일에서는 QR을 숨기고 짧은 안내를 표시합니다.
+    appPromo: {
+      kicker: '언제 어디서나',
+      title: '폰에서 열기 — 웹사이트와 동일한 기능',
+      body: '폰 카메라로 스캔하면 모바일 TrialBeacon을 사용할 수 있습니다. 공식 기록 보기, 암 종류 팔로우, 토론 목록 만들기 — 웹사이트와 똑같이.',
+      urlLabel: 'trialbeacon.cn',
+      note: '앱과 웹사이트는 하나의 계정을 공유합니다. 한 번 로그인하면 어디서나 동기화됩니다.',
+      mobileTitle: '이미 폰에서 보시나요?',
+      mobileBody: '그냥 브라우저에서 trialbeacon.cn으로 이동하세요. 기능은 동일하고 설치도 필요 없습니다.',
+    },
   },
   cancersIndex: {
     eyebrow: '둘러보기',

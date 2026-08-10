@@ -92,6 +92,17 @@ export const ja: Messages = {
     sourcesCta: '情報源と収集方法',
     freshnessTitle: 'データの鮮度',
     freshnessBody: '記録は可能な限り公開 API からリアルタイムで取得し、取得できない場合は最後に確認したスナップショットを使用します。',
+    // ヒーローの直下に表示する目立つ QR / 「スマホで開く」案内。
+    // デスクトップではスキャン可能な QR を、モバイルでは QR を非表示にして短い案内を表示します。
+    appPromo: {
+      kicker: 'いつでもどこでも',
+      title: 'スマホで開く — ウェブサイトと同じ機能',
+      body: 'スマホのカメラでスキャンすると、モバイル版 TrialBeacon を使えます。公式記録の閲覧、がん種のフォロー、ディスカッションリストの作成 — ウェブサイトと同じです。',
+      urlLabel: 'trialbeacon.cn',
+      note: 'アプリとウェブサイトは同じアカウントを共有します。一度サインインすればどこでも同期します。',
+      mobileTitle: 'もうスマホで見ていますか？',
+      mobileBody: 'ブラウザで trialbeacon.cn を開くだけです。機能は同じで、インストールも不要です。',
+    },
   },
   cancersIndex: {
     eyebrow: '一覧',

@@ -6,6 +6,7 @@ import { SOURCES } from '@/lib/sources';
 import { SearchBox } from '@/components/SearchBox';
 import { FreshnessBadge } from '@/components/FreshnessBadge';
 import { FollowCancerButton } from '@/components/FollowCancerButton';
+import { AppQrSection } from '@/components/AppQrSection';
 import { t, getServerMessages } from '@/lib/i18n-server';
 
 const PRINCIPLE_ICONS = [
@@ -236,6 +237,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ============== Open on your phone (QR / mobile prompt) ============== */}
+      <AppQrSection />
 
       {/* ============== After Care — dedicated view ============== */}
       <section className="container-page mt-10 sm:mt-14">
@@ -525,25 +529,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ============== Get the app ============== */}
-      <section className="container-page mt-16 mb-10">
-        <div className="card flex flex-col items-center gap-4 p-8 text-center">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-navy-50 text-2xl">📱</span>
-          <h2 className="text-xl font-semibold tracking-tight text-ink-950">Take TrialBeacon with you</h2>
-          <p className="max-w-md text-sm text-slateish-500">
-            Scan to open TrialBeacon on your phone — your official clinical-trial record, wherever you are.
-          </p>
-          <div className="rounded-2xl bg-white p-3 shadow-card-hover ring-1 ring-slateish-200">
-            <Image
-              src="/tb-app-qr.png"
-              alt="QR code — scan to open TrialBeacon at trialbeacon.cn"
-              width={180}
-              height={180}
-            />
-          </div>
-          <p className="text-xs text-slateish-400">trialbeacon.cn</p>
-        </div>
-      </section>
     </>
   );
 }
