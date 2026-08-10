@@ -3,12 +3,14 @@ import { getServerMessages } from '@/lib/i18n-server';
 
 /**
  * Where the homepage QR points. Phased by design:
- *  - App not yet listed  → the official mobile site (https://trialbeacon.cn/).
- *  - App listed          → swap to an intermediate page that detects iOS/Android
- *                           and deep-links to the App Store / Play Store, falling
- *                           back to the official site. One-line change + redeploy.
+ *  - App not yet listed  → the /get-app landing page, which detects the device
+ *                           and offers the mobile site / internal test / store.
+ *  - App listed          → the same /get-app page shows App Store / Play Store
+ *                           buttons once NEXT_PUBLIC_APP_STORE_URL / _PLAY_URL
+ *                           are set. One-line change + redeploy (or just set the
+ *                           env vars and redeploy).
  */
-const APP_QR_TARGET = process.env.NEXT_PUBLIC_APP_QR_URL ?? 'https://trialbeacon.cn/';
+const APP_QR_TARGET = process.env.NEXT_PUBLIC_APP_QR_URL ?? 'https://trialbeacon.cn/get-app';
 
 /**
  * Prominent "open on your phone" promo placed directly below the hero.

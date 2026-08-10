@@ -116,6 +116,24 @@ export const en = {
       mobileBody: 'Just open your browser and go to trialbeacon.cn — same features, no install needed.',
     },
   },
+  getApp: {
+    kicker: 'Get the app',
+    title: 'Take TrialBeacon with you',
+    subtitle:
+      'The same official public records, on your phone. Sign in once — your account, follows and Pro plan sync with the website.',
+    storeSoon: 'Coming soon to the App Store and Google Play.',
+    iosButton: 'Download on the App Store',
+    androidButton: 'Get it on Google Play',
+    betaTitle: 'Internal test build',
+    betaBody: 'Not on the stores yet? Try the internal test build:',
+    testflight: 'TestFlight (iOS)',
+    apk: 'Android APK',
+    webTitle: 'Use the mobile site now',
+    webBody:
+      'No download needed — open TrialBeacon in your phone browser and add it to your home screen for an app-like experience.',
+    openSite: 'Open mobile site',
+    addHint: 'Tip: in your browser menu, choose “Add to Home Screen”.',
+  },
   cancersIndex: {
     eyebrow: 'Browse',
     title: 'Cancer types',
