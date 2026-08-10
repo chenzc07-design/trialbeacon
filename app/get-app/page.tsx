@@ -17,7 +17,11 @@ const SITE_URL = 'https://trialbeacon.cn';
 const STORE_IOS = process.env.NEXT_PUBLIC_APP_STORE_URL ?? '';
 const STORE_ANDROID = process.env.NEXT_PUBLIC_APP_PLAY_URL ?? '';
 const TESTFLIGHT = process.env.NEXT_PUBLIC_APP_TESTFLIGHT_URL ?? '';
-const APK = process.env.NEXT_PUBLIC_APP_APK_URL ?? '';
+// Default points at the current EAS internal preview build (Android APK).
+// Override via NEXT_PUBLIC_APP_APK_URL when a new build is published.
+const APK =
+  process.env.NEXT_PUBLIC_APP_APK_URL ??
+  'https://expo.dev/accounts/chouchou2008s-team/projects/trialbeacon/builds/eb04cc07-e3d8-4268-825c-fecf9add898f';
 
 export async function generateMetadata(): Promise<Metadata> {
   const { messages: m } = await getServerMessages();
