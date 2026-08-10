@@ -114,6 +114,10 @@ export const zh: Messages = {
     betaBody: '尚未上架商店？可先试用内测版本：',
     testflight: 'TestFlight（iOS）',
     apk: 'Android 安装包',
+    inAppBrowserTitle: '请用手机浏览器打开',
+    inAppBrowserBody:
+      '当前是微信/QQ 内置浏览器，无法直接下载安装包。请点击右上角 ⋮，选择「在浏览器打开」后再点击下载安装。',
+    inAppBrowserHint: '右上角 ⋮ → 在浏览器打开',
     webTitle: '现在就用移动网页',
     webBody: '无需下载——用手机浏览器打开 TrialBeacon，添加到主屏幕即得类 App 体验。',
     openSite: '打开移动站',

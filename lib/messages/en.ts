@@ -127,6 +127,10 @@ export const en = {
     betaBody: 'Not on the stores yet? Try the internal test build:',
     testflight: 'TestFlight (iOS)',
     apk: 'Android APK',
+    inAppBrowserTitle: 'Open in your phone browser',
+    inAppBrowserBody:
+      "You're inside WeChat/QQ's built-in browser, which blocks APK downloads. Tap the menu (⋮) in the top-right, choose 'Open in browser', then tap the download button.",
+    inAppBrowserHint: 'Menu ⋮ → Open in browser',
     webTitle: 'Use the mobile site now',
     webBody:
       'No download needed — open TrialBeacon in your phone browser and add it to your home screen for an app-like experience.',

@@ -114,6 +114,10 @@ export const ja: Messages = {
     betaBody: 'まだストアにない場合は、内部テスト版をお試しください：',
     testflight: 'TestFlight（iOS）',
     apk: 'Android APK',
+    inAppBrowserTitle: 'スマホのブラウザで開く',
+    inAppBrowserBody:
+      'WeChat/QQ の内蔵ブラウザでは APK のダウンロードがブロックされることがあります。右上のメニュー（⋮）から「ブラウザで開く」を選んでからダウンロードしてください。',
+    inAppBrowserHint: 'メニュー ⋮ → ブラウザで開く',
     webTitle: '今すぐモバイルサイトを使う',
     webBody: 'ダウンロード不要 — スマホのブラウザで TrialBeacon を開き、ホーム画面に追加すればアプリのような体験に。',
     openSite: 'モバイルサイトを開く',

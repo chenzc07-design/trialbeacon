@@ -17,11 +17,16 @@ const SITE_URL = 'https://trialbeacon.cn';
 const STORE_IOS = process.env.NEXT_PUBLIC_APP_STORE_URL ?? '';
 const STORE_ANDROID = process.env.NEXT_PUBLIC_APP_PLAY_URL ?? '';
 const TESTFLIGHT = process.env.NEXT_PUBLIC_APP_TESTFLIGHT_URL ?? '';
-// Default points at the current EAS internal preview build (Android APK).
-// Override via NEXT_PUBLIC_APP_APK_URL when a new build is published.
+// Default points straight at the built .apk file (not the EAS build page), so
+// tapping the button downloads the APK directly. Override via
+// NEXT_PUBLIC_APP_APK_URL when a new build is published.
 const APK =
   process.env.NEXT_PUBLIC_APP_APK_URL ??
-  'https://expo.dev/accounts/chouchou2008s-team/projects/trialbeacon/builds/eb04cc07-e3d8-4268-825c-fecf9add898f';
+  'https://expo.dev/artifacts/eas/p9KgiBD85t7EoL4Zt1ohGz1QmYo3LCflfCZx_GkG8p4.apk';
+
+function isInAppBrowser(ua: string) {
+  return /MicroMessenger|MQQBrowser|QQ\//i.test(ua);
+}
 
 export async function generateMetadata(): Promise<Metadata> {
   const { messages: m } = await getServerMessages();
@@ -38,6 +43,7 @@ export default async function GetAppPage() {
   const ua = (await headers()).get('user-agent') ?? '';
   const isIOS = /iPhone|iPad|iPod|Macintosh/i.test(ua);
   const isAndroid = /Android/i.test(ua);
+  const inApp = isInAppBrowser(ua);
 
   const listed = Boolean(STORE_IOS && STORE_ANDROID);
   const beta = Boolean(TESTFLIGHT || APK);
@@ -104,14 +110,29 @@ export default async function GetAppPage() {
                 </a>
               ) : null}
               {APK && showAndroid ? (
-                <a
-                  href={APK}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-secondary justify-center"
-                >
-                  {g.apk}
-                </a>
+                inApp ? (
+                  <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-left">
+                    <p className="text-sm font-semibold text-amber-900">
+                      {g.inAppBrowserTitle}
+                    </p>
+                    <p className="mt-1 text-sm leading-relaxed text-amber-800">
+                      {g.inAppBrowserBody}
+                    </p>
+                    <p className="mt-2 text-sm font-medium text-amber-900">
+                      {g.inAppBrowserHint}
+                    </p>
+                  </div>
+                ) : (
+                  <a
+                    href={APK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download
+                    className="btn-secondary justify-center"
+                  >
+                    {g.apk}
+                  </a>
+                )
               ) : null}
             </div>
           </div>

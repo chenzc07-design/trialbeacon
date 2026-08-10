@@ -114,6 +114,10 @@ export const de: Messages = {
     betaBody: 'Noch nicht im Store? Teste den internen Build:',
     testflight: 'TestFlight (iOS)',
     apk: 'Android-APK',
+    inAppBrowserTitle: 'Im Telefon-Browser öffnen',
+    inAppBrowserBody:
+      'Du verwendest den eingebauten Browser von WeChat/QQ, der APK-Downloads blockieren kann. Tippe oben rechts auf das Menü (⋮), wähle „Im Browser öffnen“ und lade dann herunter.',
+    inAppBrowserHint: 'Menü ⋮ → Im Browser öffnen',
     webTitle: 'Jetzt die mobile Site nutzen',
     webBody: 'Kein Download nötig — TrialBeacon im Handy-Browser öffnen und zum Home-Bildschirm hinzufügen für ein app-artiges Erlebnis.',
     openSite: 'Mobile Site öffnen',

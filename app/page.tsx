@@ -350,25 +350,25 @@ export default async function HomePage() {
           {stats.map((c) => (
             <div
               key={c.slug}
-              className="card-interactive group relative flex items-center gap-4 p-4"
+              className="card-interactive group relative flex flex-col overflow-hidden"
             >
-              <Link href={`/cancers/${c.slug}`} className="flex min-w-0 flex-1 items-center gap-4">
-                <div className="relative h-14 w-20 shrink-0 overflow-hidden rounded-lg bg-slateish-100 ring-1 ring-slateish-200/60">
+              <Link href={`/cancers/${c.slug}`} className="flex flex-1 flex-col">
+                <div className="relative h-28 w-full shrink-0 overflow-hidden bg-slateish-100">
                   <Image
                     src={c.image}
-                    alt=""
+                    alt={m.cancers[c.slug].label}
                     fill
-                    sizes="80px"
-                    className="object-cover"
+                    sizes="(max-width:640px) 50vw, 25vw"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
-                <div className="min-w-0 flex-1">
+                <div className="flex flex-1 flex-col gap-1 p-4">
                   <div className="flex items-center justify-between gap-2">
-                    <h3 className="truncate text-[14px] font-semibold text-ink-950">
+                    <h3 className="text-[15px] font-semibold leading-tight text-ink-950">
                       {m.cancers[c.slug].label}
                     </h3>
                     <svg
-                      className="h-3 w-3 shrink-0 text-slateish-300 transition-all group-hover:translate-x-0.5 group-hover:text-navy-500"
+                      className="h-3.5 w-3.5 shrink-0 text-slateish-300 transition-all group-hover:translate-x-0.5 group-hover:text-navy-500"
                       viewBox="0 0 14 14"
                       fill="none"
                       aria-hidden="true"
@@ -382,15 +382,15 @@ export default async function HomePage() {
                       />
                     </svg>
                   </div>
-                  <p className="mt-0.5 truncate text-[11px] text-slateish-500">
+                  <p className="line-clamp-2 text-[12px] leading-snug text-slateish-500">
                     {m.cancers[c.slug].descriptor}
                   </p>
-                  <p className="mt-1 text-[11px] tabular-nums text-slateish-500">
+                  <p className="mt-auto pt-1 text-[11px] tabular-nums text-slateish-500">
                     {t(m, 'common.recordsIndexed', { n: c.total })}
                   </p>
                 </div>
               </Link>
-              <div className="shrink-0">
+              <div className="flex items-center justify-end border-t border-slateish-100 px-4 py-3">
                 <FollowCancerButton slug={c.slug} />
               </div>
             </div>

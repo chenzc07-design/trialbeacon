@@ -114,6 +114,10 @@ export const ko: Messages = {
     betaBody: '아직 스토어에 없나요? 내부 테스트 빌드를 사용해 보세요:',
     testflight: 'TestFlight (iOS)',
     apk: 'Android APK',
+    inAppBrowserTitle: '휴대폰 브라우저에서 열기',
+    inAppBrowserBody:
+      'WeChat/QQ 내장 브라우저에서는 APK 다운로드가 차단될 수 있습니다. 오른쪽 상단 메뉴(⋮)를 눌러 "브라우저에서 열기"를 선택한 후 다운로드하세요.',
+    inAppBrowserHint: '메뉴 ⋮ → 브라우저에서 열기',
     webTitle: '지금 모바일 사이트 사용',
     webBody: '다운로드 불필요 — 휴대폰 브라우저에서 TrialBeacon을 열고 홈 화면에 추가하면 앱 같은 경험을 할 수 있습니다.',
     openSite: '모바일 사이트 열기',

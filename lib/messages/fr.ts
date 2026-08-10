@@ -114,6 +114,10 @@ export const fr: Messages = {
     betaBody: 'Pas encore sur les stores ? Essayez le build de test :',
     testflight: 'TestFlight (iOS)',
     apk: 'APK Android',
+    inAppBrowserTitle: 'Ouvrir dans le navigateur du téléphone',
+    inAppBrowserBody:
+      "Vous êtes dans le navigateur intégré de WeChat/QQ, qui peut bloquer les téléchargements d'APK. Tapez le menu (⋮) en haut à droite, choisissez « Ouvrir dans le navigateur », puis téléchargez.",
+    inAppBrowserHint: 'Menu ⋮ → Ouvrir dans le navigateur',
     webTitle: 'Utiliser le site mobile maintenant',
     webBody: 'Aucun téléchargement requis — ouvrez TrialBeacon dans le navigateur de votre mobile et ajoutez-le à l’écran d’accueil pour une expérience proche de l’appli.',
     openSite: 'Ouvrir le site mobile',
