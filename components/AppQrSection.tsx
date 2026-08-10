@@ -32,7 +32,7 @@ export async function AppQrSection() {
   });
 
   return (
-    <section className="container-page mt-10 sm:mt-14" aria-label={p.title}>
+    <section id="app-promo" className="container-page mt-10 sm:mt-14" aria-label={p.title}>
       <div className="card flex flex-col items-center gap-6 p-6 sm:flex-row sm:items-center sm:gap-8 sm:p-7">
         {/* Desktop: scannable QR. Hidden on mobile to avoid self-scan. */}
         <div className="hidden shrink-0 rounded-2xl bg-white p-3 shadow-card-hover ring-1 ring-slateish-200 md:block">
