@@ -108,7 +108,6 @@ export const zh: Messages = {
     kicker: '下载 App',
     title: '手机随身使用 TrialBeacon',
     subtitle: '同样的官方公开记录，装在手机上。一次登录，账号、关注与 Pro 套餐与网站同步。',
-    storeSoon: '即将登陆 App Store 与 Google Play。',
     iosButton: '在 App Store 下载',
     androidButton: '在 Google Play 获取',
     betaTitle: '内测版',

@@ -108,7 +108,6 @@ export const ko: Messages = {
     kicker: '앱 받기',
     title: 'TrialBeacon을 휴대폰에',
     subtitle: '동일한 공식 공개 기록을 휴대폰에서. 한 번 로그인하면 계정, 팔로우, Pro 플랜이 웹사이트와 동기화됩니다.',
-    storeSoon: '곧 App Store 및 Google Play에 출시됩니다.',
     iosButton: 'App Store에서 다운로드',
     androidButton: 'Google Play에서 받기',
     betaTitle: '내부 테스트 빌드',

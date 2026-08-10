@@ -108,7 +108,6 @@ export const ja: Messages = {
     kicker: 'アプリを入手',
     title: 'TrialBeacon をスマホで',
     subtitle: '同じ公式公開記録をスマホで。一度サインインすれば、アカウント・フォロー・Pro プランがウェブサイトと同期します。',
-    storeSoon: '近日 App Store と Google Play に登場します。',
     iosButton: 'App Store でダウンロード',
     androidButton: 'Google Play で入手',
     betaTitle: '内部テスト版',

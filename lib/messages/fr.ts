@@ -108,7 +108,6 @@ export const fr: Messages = {
     kicker: 'Obtenir l’appli',
     title: 'TrialBeacon dans votre poche',
     subtitle: 'Les mêmes registres publics officiels, sur votre mobile. Une seule connexion — votre compte, vos suivis et l’offre Pro se synchronisent avec le site.',
-    storeSoon: 'Bientôt sur l’App Store et Google Play.',
     iosButton: 'Télécharger sur l’App Store',
     androidButton: 'Obtenir sur Google Play',
     betaTitle: 'Build de test interne',

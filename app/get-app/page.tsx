@@ -55,7 +55,7 @@ export default async function GetAppPage() {
       </div>
 
       <div className="mx-auto mt-8 max-w-xl space-y-4">
-        {/* Store badges — shown once the app is listed. */}
+        {/* Store badges — shown once the app is listed (set via NEXT_PUBLIC_*_URL). */}
         {listed ? (
           <div className="card flex flex-col gap-3 p-6">
             {STORE_IOS && showIos ? (
@@ -79,41 +79,39 @@ export default async function GetAppPage() {
               </a>
             ) : null}
           </div>
-        ) : (
+        ) : null}
+
+        {/* Internal beta — shown when TestFlight / APK links are configured. */}
+        {beta ? (
           <div className="card p-6 text-center">
-            <p className="text-sm text-slateish-600">{g.storeSoon}</p>
-            {beta ? (
-              <div className="mt-4 border-t border-slateish-200 pt-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-slateish-500">
-                  {g.betaTitle}
-                </p>
-                <p className="mt-1 text-sm text-slateish-600">{g.betaBody}</p>
-                <div className="mt-3 flex flex-col gap-2">
-                  {TESTFLIGHT && showIos ? (
-                    <a
-                      href={TESTFLIGHT}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-primary justify-center"
-                    >
-                      {g.testflight}
-                    </a>
-                  ) : null}
-                  {APK && showAndroid ? (
-                    <a
-                      href={APK}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-secondary justify-center"
-                    >
-                      {g.apk}
-                    </a>
-                  ) : null}
-                </div>
-              </div>
-            ) : null}
+            <p className="text-xs font-semibold uppercase tracking-wide text-slateish-500">
+              {g.betaTitle}
+            </p>
+            <p className="mt-1 text-sm text-slateish-600">{g.betaBody}</p>
+            <div className="mt-3 flex flex-col gap-2">
+              {TESTFLIGHT && showIos ? (
+                <a
+                  href={TESTFLIGHT}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary justify-center"
+                >
+                  {g.testflight}
+                </a>
+              ) : null}
+              {APK && showAndroid ? (
+                <a
+                  href={APK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-secondary justify-center"
+                >
+                  {g.apk}
+                </a>
+              ) : null}
+            </div>
           </div>
-        )}
+        ) : null}
 
         {/* Mobile site — always available, no download required. */}
         <div className="card p-6">

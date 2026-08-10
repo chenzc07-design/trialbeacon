@@ -108,7 +108,6 @@ export const de: Messages = {
     kicker: 'App holen',
     title: 'TrialBeacon mitnehmen',
     subtitle: 'Die gleichen offiziellen öffentlichen Registrierungen auf dem Handy. Einmal anmelden — Konto, Folge-Liste und Pro-Tarif synchronisieren mit der Website.',
-    storeSoon: 'Bald im App Store und bei Google Play.',
     iosButton: 'Im App Store laden',
     androidButton: 'Bei Google Play holen',
     betaTitle: 'Interner Test-Build',

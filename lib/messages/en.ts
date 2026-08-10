@@ -121,7 +121,6 @@ export const en = {
     title: 'Take TrialBeacon with you',
     subtitle:
       'The same official public records, on your phone. Sign in once — your account, follows and Pro plan sync with the website.',
-    storeSoon: 'Coming soon to the App Store and Google Play.',
     iosButton: 'Download on the App Store',
     androidButton: 'Get it on Google Play',
     betaTitle: 'Internal test build',
