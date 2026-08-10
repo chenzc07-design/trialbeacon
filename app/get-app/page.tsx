@@ -22,7 +22,7 @@ const TESTFLIGHT = process.env.NEXT_PUBLIC_APP_TESTFLIGHT_URL ?? '';
 // NEXT_PUBLIC_APP_APK_URL when a new build is published.
 const APK =
   process.env.NEXT_PUBLIC_APP_APK_URL ??
-  'https://expo.dev/artifacts/eas/p9KgiBD85t7EoL4Zt1ohGz1QmYo3LCflfCZx_GkG8p4.apk';
+  'https://expo.dev/artifacts/eas/6w4kfkR5gboHkRCTqVtLOpK8h89kObOS0DKQOqSU8ak.apk';
 
 function isInAppBrowser(ua: string) {
   return /MicroMessenger|MQQBrowser|QQ\//i.test(ua);
