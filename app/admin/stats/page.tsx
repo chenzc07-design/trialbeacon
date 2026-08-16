@@ -41,14 +41,49 @@ export default async function AdminStatsPage({
   searchParams: Promise<{ token?: string }>;
 }) {
   const sp = await searchParams;
-  const expected = process.env.STATS_TOKEN;
-  if (!expected || sp.token !== expected) {
+  // Keep the stats page compatible with the existing deployment configuration.
+  // STATS_TOKEN is preferred; OWNER_TOKEN is accepted as a deliberate legacy
+  // fallback because older Vercel projects used that name for admin access.
+  const expectedTokens = [process.env.STATS_TOKEN, process.env.OWNER_TOKEN].filter(
+    (value): value is string => Boolean(value),
+  );
+  const suppliedToken = sp.token?.trim();
+  const authorized = Boolean(suppliedToken && expectedTokens.includes(suppliedToken));
+
+  if (!authorized) {
     return (
       <main className="container-page max-w-2xl py-16">
-        <div className="card p-8 text-center">
-          <p className="text-lg font-semibold text-ink-900">Unauthorized</p>
-          <p className="mt-2 text-sm text-slateish-600">
-            A valid <code>?token=</code> is required to view usage statistics.
+        <div className="card p-8">
+          <p className="text-lg font-semibold text-ink-900">
+            {suppliedToken ? '令牌无效' : '后台统计登录'}
+          </p>
+          <p className="mt-2 text-sm leading-6 text-slateish-600">
+            请输入 Vercel Production 环境中配置的后台访问令牌。令牌只会通过 HTTPS
+            作为当前页面的查询参数提交，不会显示在页面内容中。
+          </p>
+          <form method="get" className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <label htmlFor="stats-token" className="sr-only">
+              后台访问令牌
+            </label>
+            <input
+              id="stats-token"
+              name="token"
+              type="password"
+              autoComplete="current-password"
+              placeholder="输入后台访问令牌"
+              className="min-h-11 flex-1 rounded-lg border border-slateish-300 bg-white px-3 text-sm text-ink-900 outline-none transition focus:border-[#2e5747] focus:ring-2 focus:ring-[#2e5747]/15"
+              required
+            />
+            <button
+              type="submit"
+              className="min-h-11 rounded-lg bg-[#244c3d] px-5 text-sm font-medium text-white transition hover:bg-[#1d3f32]"
+            >
+              进入统计后台
+            </button>
+          </form>
+          <p className="mt-4 text-xs text-slateish-500">
+            如果你没有令牌，请在 Vercel 项目的 Production Environment Variables
+            中查看或轮换 <code>STATS_TOKEN</code>。
           </p>
         </div>
       </main>
