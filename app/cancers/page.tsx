@@ -26,7 +26,6 @@ export default async function CancersPage() {
         eyebrow={m.cancersIndex.eyebrow}
         title={m.cancersIndex.title}
         intro={m.cancersIndex.subtitle}
-        freshness
         meta={
           <div className="hidden text-slateish-400 sm:block">
             <BeaconMotif className="h-20 w-20 text-navy-200" />
