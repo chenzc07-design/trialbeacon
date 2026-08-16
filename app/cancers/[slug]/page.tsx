@@ -15,10 +15,6 @@ import { t, getServerMessages } from '@/lib/i18n-server';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export function generateStaticParams() {
-  return CANCERS.map((c) => ({ slug: c.slug }));
-}
-
 export async function generateMetadata({
   params,
 }: {
