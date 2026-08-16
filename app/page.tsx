@@ -196,6 +196,22 @@ export default async function HomePage() {
         </div>
       </section>
 
+      <section className="container-page py-10 sm:py-12">
+        <div className="rounded-[24px] border border-[#d7e4e0] bg-[#f3f7f5] p-6 sm:p-8">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div className="max-w-2xl">
+              <p className="label-eyebrow text-[#527080]">A useful next step</p>
+              <h2 className="mt-2 text-xl font-semibold tracking-tight text-[#173044] sm:text-2xl">Find once, then let the source trail come back to you.</h2>
+              <p className="mt-3 text-sm leading-6 text-[#527080]">Browse freely, follow a cancer type for weekly public updates, or unlock a print-ready discussion list when you need to bring several records into a care conversation.</p>
+            </div>
+            <div className="flex shrink-0 flex-wrap gap-3">
+              <Link href="/alerts" className="btn-secondary border-[#b8cbc7] bg-white text-[13px]">Set a weekly alert <span>→</span></Link>
+              <Link href="/pro" className="btn-primary bg-[#2e5747] text-[13px] hover:bg-[#254a3b]">Explore Pro <span>→</span></Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="container-page py-12 sm:py-16">
         <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
           <div><p className="label-eyebrow">How to use it</p><h2 className="mt-2 text-2xl font-semibold tracking-tight text-ink-950 sm:text-3xl">Designed for verification, not persuasion.</h2><p className="mt-4 text-sm leading-6 text-slateish-600">The product stays deliberately narrow: help you find public records, understand where they came from and take the source to a conversation with your care team.</p></div>
