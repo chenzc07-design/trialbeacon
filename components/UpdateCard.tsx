@@ -4,7 +4,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import type { UpdateItem, Region, UpdateType } from '@/lib/types';
 import { SOURCES } from '@/lib/sources';
-import { SNAPSHOT_DATE } from '@/lib/data/trials';
+import { SNAPSHOT_DATE } from '@/lib/data';
 import { useI18n } from './I18nProvider';
 import {
   RegionBadge,
@@ -127,7 +127,7 @@ export function UpdateCard({
         <PhaseBadge phase={item.phase} />
         <StatusBadge status={item.status} />
         <span className="text-xs tabular-nums text-slateish-500">
-          {formatDate(SNAPSHOT_DATE, locale)}
+          {formatDate(item.date || SNAPSHOT_DATE, locale)}
         </span>
       </div>
 
