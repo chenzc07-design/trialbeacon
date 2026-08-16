@@ -1,7 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { SNAPSHOT_DATE } from './data/trials';
+import { FRESH_SNAPSHOT_DATE } from './data/fresh-trials';
+
+const SNAPSHOT_DATE = FRESH_SNAPSHOT_DATE;
 
 /**
  * Computes the freshness of the bundled snapshot relative to the visitor's
