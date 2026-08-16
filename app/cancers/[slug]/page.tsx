@@ -10,7 +10,10 @@ import { StatsPing } from '@/components/StatsPing';
 import { FollowCancerButton } from '@/components/FollowCancerButton';
 import { t, getServerMessages } from '@/lib/i18n-server';
 
-export const revalidate = 3600;
+// Detail pages must show the latest public registry response rather than a
+// build-time/ISR snapshot. The API request still falls back safely in lib/data.
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export function generateStaticParams() {
   return CANCERS.map((c) => ({ slug: c.slug }));
@@ -41,7 +44,7 @@ export default async function CancerDetailPage({
   const cancer = getCancer(slug);
   if (!cancer) notFound();
 
-  const feed = await getCancerFeed(slug);
+  const feed = await getCancerFeed(slug, { limit: 40 });
 
   return (
     <>

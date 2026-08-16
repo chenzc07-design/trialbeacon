@@ -238,11 +238,16 @@ export async function fetchCtgov(
   cancers: string[],
   revalidate = 3600
 ): Promise<UpdateItem[]> {
-  const res = await fetch(buildCtgovUrl(q), {
+  const requestInit: RequestInit & { next?: { revalidate: number } } = {
     headers: { accept: 'application/json' },
-    next: { revalidate },
     signal: AbortSignal.timeout(8000),
-  });
+  };
+  if (revalidate === 0) {
+    requestInit.cache = 'no-store';
+  } else {
+    requestInit.next = { revalidate };
+  }
+  const res = await fetch(buildCtgovUrl(q), requestInit);
   if (!res.ok) throw new Error(`ClinicalTrials.gov responded ${res.status}`);
   const json = (await res.json()) as { studies?: CtgovStudy[] };
   return (json.studies ?? [])
@@ -262,11 +267,16 @@ export async function fetchCtgovStudy(
   const url = `${API_BASE}/${encodeURIComponent(nctId)}?fields=${encodeURIComponent(
     DETAIL_FIELDS
   )}`;
-  const res = await fetch(url, {
+  const requestInit: RequestInit & { next?: { revalidate: number } } = {
     headers: { accept: 'application/json' },
-    next: { revalidate },
     signal: AbortSignal.timeout(8000),
-  });
+  };
+  if (revalidate === 0) {
+    requestInit.cache = 'no-store';
+  } else {
+    requestInit.next = { revalidate };
+  }
+  const res = await fetch(url, requestInit);
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`ClinicalTrials.gov responded ${res.status}`);
   const study = (await res.json()) as CtgovStudy;
