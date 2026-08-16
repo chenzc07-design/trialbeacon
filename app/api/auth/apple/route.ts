@@ -21,11 +21,7 @@ function b64url(buf: Buffer): string {
     .replace(/\+/g, '-')
     .replace(/\//g, '_');
 }
-function b64urlDecode(s: string): Buffer {
-  s = s.replace(/-/g, '+').replace(/_/g, '/');
-  while (s.length % 4) s += '=';
-  return Buffer.from(s, 'base64');
-}
+
 function sign(payload: object): string {
   const body = b64url(Buffer.from(JSON.stringify(payload)));
   const mac = b64url(
@@ -35,18 +31,22 @@ function sign(payload: object): string {
 }
 
 /**
- * GET /api/auth/microsoft?next=/some/path
- * Redirects to Microsoft (Entra ID) OAuth consent screen.
- * Requires MICROSOFT_CLIENT_ID; otherwise returns 503 microsoft_not_configured.
+ * GET /api/auth/apple?next=/some/path
+ * Redirects to Apple "Sign in with Apple" consent screen.
+ * Requires APPLE_CLIENT_ID + APPLE_TEAM_ID + APPLE_KEY_ID + APPLE_PRIVATE_KEY;
+ * otherwise returns 503 apple_not_configured.
+ *
+ * Note: Apple has no static client_secret. We mint a short-lived JWT from the
+ * .p8 key in the callback. The start route only needs the client id.
  */
 export async function GET(req: Request) {
-  const cid = process.env.MICROSOFT_CLIENT_ID;
+  const cid = process.env.APPLE_CLIENT_ID;
   if (!cid) {
     return NextResponse.json(
       {
-        error: 'microsoft_not_configured',
+        error: 'apple_not_configured',
         message:
-          'Microsoft sign-in is not configured on this deployment. Use the email-code method.',
+          'Apple sign-in is not configured on this deployment. Use the email-code method.',
       },
       { status: 503 }
     );
@@ -56,17 +56,17 @@ export async function GET(req: Request) {
   const nonce = crypto.randomBytes(8).toString('hex');
   const state = sign({ next, n: nonce, t: Date.now() });
   const origin = url.origin;
-  const redirectUri = `${origin}/api/auth/microsoft/callback`;
-  const tenant = process.env.MICROSOFT_TENANT || 'common';
+  const redirectUri = `${origin}/api/auth/apple/callback`;
   const params = new URLSearchParams({
     client_id: cid,
     redirect_uri: redirectUri,
     response_type: 'code',
-    scope: 'openid email profile User.Read',
+    scope: 'name email',
     state,
-    prompt: 'select_account',
+    // Keep the callback a plain GET redirect so it mirrors the Google flow.
+    response_mode: 'query',
   });
   return NextResponse.redirect(
-    `https://login.microsoftonline.com/${tenant}/oauth2/v2.0/authorize?${params.toString()}`
+    `https://appleid.apple.com/auth/authorize?${params.toString()}`
   );
 }

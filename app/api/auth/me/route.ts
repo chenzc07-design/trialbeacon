@@ -19,6 +19,7 @@ export async function GET() {
       proUntil: u.proUntil,
       paypalSubscriptionId: u.paypalSubscriptionId,
       lastOrder: u.lastOrder ?? null,
+      name: u.name ?? null,
       providers: u.providers ?? [],
     },
   });

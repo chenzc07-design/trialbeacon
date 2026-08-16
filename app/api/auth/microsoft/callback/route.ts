@@ -1,111 +1,160 @@
 import { NextResponse } from 'next/server';
+import crypto from 'node:crypto';
 import {
-  decodeJwt,
   issueSessionCookie,
-  providerPrefsCookie,
+  prefsCookie,
   uidForEmail,
-  verifyState,
-  publicOrigin,
+  resolvePrefsOnSignIn,
 } from '@/lib/auth';
-import { markAccountSeen } from '@/lib/metrics';
 
 export const dynamic = 'force-dynamic';
 
-interface TokenResp {
-  access_token: string;
-  id_token?: string;
+// In production AUTH_SECRET MUST be set; a missing secret makes the OAuth
+// state token forgeable, so we refuse to boot. Local dev gets a stable
+// (clearly-labelled) dev secret instead — never used in production.
+let SECRET: string = process.env.AUTH_SECRET || '';
+if (!SECRET) {
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('AUTH_SECRET is not configured. Refusing to start in production.');
+  }
+  SECRET = 'tb-dev-secret-do-not-use-in-prod-0000000000000000';
 }
 
-function errRedirect(origin: string, code: string) {
-  return NextResponse.redirect(
-    new URL(`/account?microsoft_error=${encodeURIComponent(code)}`, origin)
+function b64url(buf: Buffer): string {
+  return buf
+    .toString('base64')
+    .replace(/=+$/, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
+}
+function b64urlDecode(s: string): Buffer {
+  s = s.replace(/-/g, '+').replace(/_/g, '/');
+  while (s.length % 4) s += '=';
+  return Buffer.from(s, 'base64');
+}
+
+interface OAuthState {
+  next: string;
+  n: string;
+  t: number;
+}
+
+function verifyState(token: string): OAuthState | null {
+  const [body, mac] = token.split('.');
+  if (!body || !mac) return null;
+  const expected = b64url(
+    crypto.createHmac('sha256', SECRET).update(body).digest()
   );
-}
-
-async function exchangeCode(code: string, redirectUri: string): Promise<TokenResp> {
-  const cid = process.env.MICROSOFT_CLIENT_ID!;
-  const csec = process.env.MICROSOFT_CLIENT_SECRET!;
-  const res = await fetch('https://login.microsoftonline.com/common/oauth2/v2.0/token', {
-    method: 'POST',
-    headers: { 'content-type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({
-      code,
-      client_id: cid,
-      client_secret: csec,
-      redirect_uri: redirectUri,
-      grant_type: 'authorization_code',
-    }),
-  });
-  if (!res.ok) throw new Error(`token_exchange_failed:${res.status}`);
-  return res.json();
-}
-
-/** Microsoft Graph /me returns mail or userPrincipalName for the address. */
-async function graphEmail(accessToken: string): Promise<string | null> {
+  if (
+    expected.length !== mac.length ||
+    !crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(mac))
+  )
+    return null;
   try {
-    const res = await fetch('https://graph.microsoft.com/v1.0/me', {
-      headers: { authorization: `Bearer ${accessToken}` },
-    });
-    if (!res.ok) return null;
-    const j = await res.json();
-    return j.mail || j.userPrincipalName || null;
+    const s = JSON.parse(b64urlDecode(body).toString('utf8')) as OAuthState;
+    if (Date.now() - s.t > 10 * 60 * 1000) return null; // 10-min replay window
+    return s;
   } catch {
     return null;
   }
 }
 
+async function exchangeCode(
+  code: string,
+  redirectUri: string
+): Promise<{ access_token: string; id_token?: string }> {
+  const cid = process.env.MICROSOFT_CLIENT_ID!;
+  const csec = process.env.MICROSOFT_CLIENT_SECRET!;
+  const tenant = process.env.MICROSOFT_TENANT || 'common';
+  const res = await fetch(
+    `https://login.microsoftonline.com/${tenant}/oauth2/v2.0/token`,
+    {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        code,
+        client_id: cid,
+        client_secret: csec,
+        redirect_uri: redirectUri,
+        grant_type: 'authorization_code',
+      }),
+    }
+  );
+  if (!res.ok) throw new Error(`token_exchange_failed: ${res.status}`);
+  return res.json();
+}
+
+async function fetchMicrosoftProfile(
+  accessToken: string
+): Promise<{ email?: string; userPrincipalName?: string }> {
+  const res = await fetch('https://graph.microsoft.com/v1.0/me', {
+    headers: { authorization: `Bearer ${accessToken}` },
+  });
+  if (!res.ok) throw new Error('profile_fetch_failed');
+  return res.json();
+}
+
 export async function GET(req: Request) {
   const cid = process.env.MICROSOFT_CLIENT_ID;
   const csec = process.env.MICROSOFT_CLIENT_SECRET;
+  if (!cid || !csec) {
+    return NextResponse.json(
+      { error: 'microsoft_not_configured' },
+      { status: 503 }
+    );
+  }
   const url = new URL(req.url);
-  if (!cid || !csec) return errRedirect(publicOrigin(req), 'not_configured');
-
   const code = url.searchParams.get('code');
   const state = url.searchParams.get('state');
   const err = url.searchParams.get('error');
-  if (err) return errRedirect(publicOrigin(req), err);
-  if (!code || !state) return errRedirect(publicOrigin(req), 'missing_code');
-
+  if (err) {
+    return NextResponse.redirect(
+      new URL(`/account?microsoft_error=${encodeURIComponent(err)}`, url.origin)
+    );
+  }
+  if (!code || !state) {
+    return NextResponse.redirect(
+      new URL('/account?microsoft_error=missing_code', url.origin)
+    );
+  }
   const s = verifyState(state);
-  if (!s) return errRedirect(publicOrigin(req), 'bad_state');
-
-  const redirectUri = `${publicOrigin(req)}/api/auth/microsoft/callback`;
-  let tokens: TokenResp;
+  if (!s) {
+    return NextResponse.redirect(
+      new URL('/account?microsoft_error=bad_state', url.origin)
+    );
+  }
+  const redirectUri = `${url.origin}/api/auth/microsoft/callback`;
+  let profile;
   try {
-    tokens = await exchangeCode(code, redirectUri);
+    const tokens = await exchangeCode(code, redirectUri);
+    profile = await fetchMicrosoftProfile(tokens.access_token);
   } catch (e: any) {
-    return errRedirect(publicOrigin(req), String(e?.message ?? 'oauth_failed'));
+    return NextResponse.redirect(
+      new URL(
+        `/account?microsoft_error=${encodeURIComponent(String(e?.message ?? 'oauth_failed'))}`,
+        url.origin
+      )
+    );
   }
-
-  // Prefer the verified email claim from the id_token; fall back to Graph /me.
-  let email: string | null = null;
-  if (tokens.id_token) {
-    const payload = decodeJwt(tokens.id_token);
-    if (payload) {
-      email =
-        (typeof payload.email === 'string' && payload.email) ||
-        (typeof payload.unique_name === 'string' && payload.unique_name) ||
-        (typeof payload.upn === 'string' && payload.upn) ||
-        null;
-    }
+  const email =
+    profile.email && profile.email.length > 0
+      ? profile.email
+      : profile.userPrincipalName;
+  if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+    return NextResponse.redirect(
+      new URL('/account?microsoft_error=email_unavailable', url.origin)
+    );
   }
-  if (!email && tokens.access_token) email = await graphEmail(tokens.access_token);
-  if (!email) return errRedirect(publicOrigin(req), 'no_email');
-
-  // Identity is derived from the address, so any provider for the same email
-  // lands on the same account — no explicit linking step is needed.
+  // Identity is derived from the address — same account as email/Google for
+  // the same address. No separate linking step.
   const uid = uidForEmail(email);
-  // Best-effort registration tracking (first sign-in only).
-  try {
-    await markAccountSeen(email);
-  } catch {
-    /* metrics are non-critical */
-  }
+  const prefs = await resolvePrefsOnSignIn(uid);
+
   const session = issueSessionCookie(email, 'microsoft');
   const dest = s.next.startsWith('/') ? s.next : '/';
-  const res = NextResponse.redirect(new URL(dest, publicOrigin(req)));
+  const res = NextResponse.redirect(new URL(dest, url.origin));
   res.cookies.set(session.name, session.value, session.options);
-  const pc = await providerPrefsCookie(uid, 'microsoft');
+  const pc = prefsCookie(uid, prefs);
   res.cookies.set(pc.name, pc.value, pc.options);
   return res;
 }

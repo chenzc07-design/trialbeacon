@@ -29,37 +29,6 @@ import {
   ANON_UID,
 } from './auth-shared';
 
-// Google's public signing keys (JWKS), pinned as a fallback. At runtime we
-// prefer the live set fetched from https://www.googleapis.com/oauth2/v3/certs
-// (the sandbox can reach Google), merging it with this pinned copy so a stale
-// cache never breaks verification when Google rotates its signing keys.
-import googleJwks from './google-jwks.json';
-
-// Live Google signing keys, cached in-process for 1h. Falls back to the pinned
-// set above if the fetch fails.
-let _googleJwksCache: { keys: Array<{ kid: string; kty: string; n: string; e: string }>; at: number } | null = null;
-async function getGoogleJwks(): Promise<Array<{ kid: string; kty: string; n: string; e: string }>> {
-  const TTL = 60 * 60 * 1000;
-  if (_googleJwksCache && Date.now() - _googleJwksCache.at < TTL) return _googleJwksCache.keys;
-  try {
-    const r = await fetch('https://www.googleapis.com/oauth2/v3/certs', { cache: 'no-store' });
-    if (r.ok) {
-      const j = (await r.json()) as { keys?: Array<{ kid: string; kty: string; n: string; e: string }> };
-      if (j.keys?.length) {
-        const merged = [...j.keys];
-        for (const k of googleJwks.keys) {
-          if (!merged.find((m) => m.kid === k.kid)) merged.push(k);
-        }
-        _googleJwksCache = { keys: merged, at: Date.now() };
-        return merged;
-      }
-    }
-  } catch {
-    /* fall through to pinned set */
-  }
-  return googleJwks.keys;
-}
-
 export {
   SESSION_COOKIE,
   SESSION_TTL_DAYS,
@@ -75,34 +44,22 @@ export const CHALLENGE_COOKIE = 'tb_chal';
 /** Hard cap so the prefs cookie can never approach the 4 KB browser limit. */
 export const MY_LIST_MAX = 200;
 
-const SECRET =
-  process.env.AUTH_SECRET ||
-  // Stable dev fallback so signing works without env. In production
-  // AUTH_SECRET MUST be set, otherwise sessions are forgeable.
-  'tb-dev-secret-do-not-use-in-prod-0000000000000000';
+// In production AUTH_SECRET MUST be set. A missing secret makes the session
+// and preference cookies forgeable, so we refuse to boot rather than silently
+// fall back to a public string. Local dev runs may omit it and get a stable
+// (clearly-labelled) dev secret instead — that path is never taken in prod.
+let SECRET: string = process.env.AUTH_SECRET || '';
+if (!SECRET) {
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error(
+      'AUTH_SECRET is not configured. Refusing to start in production — set AUTH_SECRET before deploying.'
+    );
+  }
+  SECRET = 'tb-dev-secret-do-not-use-in-prod-0000000000000000';
+}
 
 export function isAuthSecretConfigured(): boolean {
   return Boolean(process.env.AUTH_SECRET);
-}
-
-/**
- * Resolve the PUBLIC origin (scheme + host) of an incoming request.
- *
- * OAuth redirect_uri MUST match the domain the user actually typed, not the
- * internal address the server binds to (e.g. 0.0.0.0:3000 behind a proxy).
- * So we trust the proxy-provided `x-forwarded-host` / `host` headers, and
- * default to https for any non-local host (the public link is always https).
- */
-export function publicOrigin(req: Request): string {
-  const host =
-    req.headers.get('x-forwarded-host') ||
-    req.headers.get('host') ||
-    new URL(req.url).host;
-  const isLocal = /^(localhost|127\.|0\.0\.0\.0|::1|\[::1\])/.test(host);
-  const proto =
-    req.headers.get('x-forwarded-proto') ||
-    (isLocal ? 'http' : 'https');
-  return `${proto}://${host}`;
 }
 
 /* ------------------------------------------------------------------ types */
@@ -134,12 +91,9 @@ export interface Prefs {
   /** Preferred UI locale (e.g. 'en' | 'zh'). Persisted so the weekly digest
    * can be rendered in the recipient's language. Optional, never clinical. */
   locale?: string;
-  /**
-   * Login methods that have been used with this account. An account is keyed
-   * by email, so the same address signing in via Email, Google or
-   * Microsoft lands on the same profile; this list records which were used so the
-   * account page can show them. Never clinical.
-   */
+  /** Display name chosen by the person. Never clinical. Free-text, length-capped. */
+  name?: string;
+  /** Sign-in providers previously used for this account. */
   providers?: string[];
 }
 
@@ -160,7 +114,7 @@ export interface User extends Prefs {
   id: string;
   email: string;
   emailLower: string;
-  provider: Provider;
+  provider: 'email' | 'google' | 'microsoft' | 'apple';
 }
 
 export function defaultPrefs(): Prefs {
@@ -177,6 +131,7 @@ export function defaultPrefs(): Prefs {
     paypalSubscriptionId: undefined,
     lastOrder: undefined,
     locale: undefined,
+    name: undefined,
     providers: [],
   };
 }
@@ -210,117 +165,6 @@ function unsign<T>(token: string | undefined): T | null {
   } catch {
     return null;
   }
-}
-
-/* --------------------------------------------------------- oauth helpers */
-
-export interface OAuthState {
-  next: string;
-  n: string;
-  t: number;
-  /** PKCE code_verifier — embedded in the (signed) state, surfaced to the
-   *  browser so it can perform the code→token exchange client-side. */
-  v?: string;
-}
-export function signState(state: OAuthState): string {
-  return sign(state);
-}
-export function verifyState(token: string): OAuthState | null {
-  const s = unsign<OAuthState>(token);
-  if (!s) return null;
-  // 10-minute replay window, matching the Google flow.
-  if (Date.now() - s.t > 10 * 60 * 1000) return null;
-  return s;
-}
-
-/** PKCE code_verifier + S256 challenge for the browser-side token exchange. */
-export function generatePkce(): { verifier: string; challenge: string } {
-  const verifier = b64url(crypto.randomBytes(64));
-  const challenge = b64url(crypto.createHash('sha256').update(verifier).digest());
-  return { verifier, challenge };
-}
-
-/**
- * Verify a Google-issued OpenID id_token.
- *
- * The signature is checked against Google's public JWKS, which we fetch live
- * from https://www.googleapis.com/oauth2/v3/certs (the sandbox can reach
- * Google) and merge with the pinned copy in lib/google-jwks.json so key
- * rotation never breaks sign-in. We additionally enforce exp, iss, aud and the
- * replay-protected nonce.
- */
-export async function verifyGoogleIdToken(
-  idToken: string,
-  expectedNonce: string
-): Promise<{ email: string; email_verified?: boolean }> {
-  const parts = idToken.split('.');
-  if (parts.length !== 3) throw new Error('bad_id_token');
-  const [h, p, s] = parts;
-  let header: { kid?: string; alg?: string };
-  let payload: Record<string, unknown>;
-  try {
-    header = JSON.parse(b64urlDecode(h).toString('utf8'));
-    payload = JSON.parse(b64urlDecode(p).toString('utf8'));
-  } catch {
-    throw new Error('bad_id_token');
-  }
-  if (header.alg && header.alg !== 'RS256') throw new Error('bad_alg');
-  const keys = await getGoogleJwks();
-  const jwk = keys.find((k) => k.kid === header.kid);
-  if (!jwk) throw new Error('unknown_kid');
-  const pub = crypto.createPublicKey({
-    key: { kty: 'RSA', n: jwk.n, e: jwk.e },
-    format: 'jwk',
-  });
-  const valid = crypto.verify(
-    'sha256',
-    Buffer.from(`${h}.${p}`),
-    pub,
-    b64urlDecode(s)
-  );
-  if (!valid) throw new Error('bad_signature');
-  const now = Math.floor(Date.now() / 1000);
-  if (typeof payload.exp === 'number' && payload.exp < now)
-    throw new Error('token_expired');
-  const iss = payload.iss as string;
-  if (iss !== 'accounts.google.com' && iss !== 'https://accounts.google.com')
-    throw new Error('bad_iss');
-  if (payload.aud !== process.env.GOOGLE_CLIENT_ID) throw new Error('bad_aud');
-  if (expectedNonce && payload.nonce !== expectedNonce) throw new Error('bad_nonce');
-  const email = payload.email as string;
-  if (!email) throw new Error('no_email');
-  return { email, email_verified: Boolean(payload.email_verified) };
-}
-
-/**
- * Decode a JWT's payload without verifying its signature. The issuer is
- * reached over a TLS channel and the OAuth `state` is independently verified,
- * so signature checking is intentionally out of scope here — the same posture
- * the Google flow takes (it trusts the access token, not the id_token sig).
- */
-export function decodeJwt(token: string): Record<string, unknown> | null {
-  const parts = token.split('.');
-  if (parts.length < 2) return null;
-  try {
-    return JSON.parse(b64urlDecode(parts[1]).toString('utf8'));
-  } catch {
-    return null;
-  }
-}
-
-/**
- * Merge a login provider into the account's bound-providers list, persist it
- * to the sync store, and return the prefs cookie to attach to the sign-in
- * response. Used by every OAuth callback so the account page can show which
- * methods have been linked.
- */
-export async function providerPrefsCookie(uid: string, provider: Provider): Promise<CookieSpec> {
-  const prefs = await resolvePrefsOnSignIn(uid);
-  const seen = new Set(prefs.providers ?? []);
-  seen.add(provider);
-  const next: Prefs = { ...prefs, providers: Array.from(seen) };
-  const saved = await savePrefs(uid, next);
-  return saved.cookie;
 }
 
 /* -------------------------------------------------------------- identity */
@@ -441,21 +285,17 @@ function cookieSpec(name: string, value: string, maxAgeSeconds: number): CookieS
   };
 }
 
-/** Login methods supported. An account is keyed by email, so every method
- *  for the same address resolves to the same profile. */
-export type Provider = 'email' | 'google' | 'microsoft';
-
 interface SessionPayload {
   uid: string;
   email: string;
-  provider: Provider;
+  provider: 'email' | 'google' | 'microsoft' | 'apple';
   iat: number;
   exp: number;
 }
 
 export function issueSessionCookie(
   email: string,
-  provider: Provider
+  provider: 'email' | 'google' | 'microsoft' | 'apple'
 ): CookieSpec {
   const iat = Date.now();
   const exp = iat + SESSION_TTL_DAYS * 24 * 60 * 60 * 1000;
@@ -564,6 +404,13 @@ function sanitizePrefs(p: Partial<Prefs> | null | undefined): Prefs {
   const proUntil = typeof p.proUntil === 'number' && p.proUntil > 0 ? p.proUntil : 0;
   const plan =
     p.plan === 'pro' && proUntil > Date.now() ? 'pro' : 'free';
+  const name =
+    typeof p.name === 'string' && p.name.trim().length > 0 && p.name.length <= 80
+      ? p.name.trim().slice(0, 80)
+      : undefined;
+  const providers = Array.isArray(p.providers)
+    ? Array.from(new Set(p.providers.filter((x) => typeof x === 'string' && x.length <= 32))).slice(0, 8)
+    : d.providers;
   return {
     myList: Array.isArray(p.myList)
       ? Array.from(new Set(p.myList.filter((x) => typeof x === 'string'))).slice(
@@ -594,12 +441,8 @@ function sanitizePrefs(p: Partial<Prefs> | null | undefined): Prefs {
       typeof p?.locale === 'string' && p.locale.length > 0 && p.locale.length <= 8
         ? p.locale
         : undefined,
-    providers: Array.isArray(p?.providers)
-      ? (p!.providers as unknown[]).filter(
-          (x): x is string =>
-            typeof x === 'string' && ['email', 'google', 'microsoft'].includes(x)
-        )
-      : [],
+    name,
+    providers,
   };
 }
 
@@ -641,6 +484,16 @@ export async function getRequestPrefs(): Promise<{ uid: string; prefs: Prefs }> 
 export function prefsCookie(uid: string, p: Prefs): CookieSpec {
   const payload: PrefsCookiePayload = { uid, ...sanitizePrefs(p) };
   return cookieSpec(PREFS_COOKIE, sign(payload), SESSION_TTL_DAYS * 24 * 60 * 60);
+}
+
+/** Backward-compatible helper used by the email verifier to record a provider. */
+export async function providerPrefsCookie(
+  uid: string,
+  provider: 'email' | 'google' | 'microsoft' | 'apple'
+): Promise<CookieSpec> {
+  const current = (await resolvePrefsOnSignIn(uid)) ?? defaultPrefs();
+  const providers = Array.from(new Set([...(current.providers ?? []), provider]));
+  return prefsCookie(uid, { ...current, providers });
 }
 
 /**

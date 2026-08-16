@@ -1,100 +1,155 @@
 import { NextResponse } from 'next/server';
+import crypto from 'node:crypto';
 import {
-  verifyState,
-  verifyGoogleIdToken,
   issueSessionCookie,
+  prefsCookie,
   uidForEmail,
   resolvePrefsOnSignIn,
-  providerPrefsCookie,
-  publicOrigin,
 } from '@/lib/auth';
-import { markAccountSeen } from '@/lib/metrics';
 
 export const dynamic = 'force-dynamic';
 
-/**
- * GET /api/auth/google/callback?code=...&state=...&error=...
- *
- * Google's authorization-code redirect lands here. We:
- *   1. verify the HMAC-signed `state` (CSRF + nonce binding),
- *   2. exchange the `code` for tokens at oauth2.googleapis.com/token
- *      (server-side, using the client_secret),
- *   3. verify the id_token's RS256 signature against Google's public JWKS,
- *   4. issue the session + provider-preference cookies.
- * Any failure redirects back to /account?google_error=<reason>.
- */
+// In production AUTH_SECRET MUST be set; a missing secret makes the OAuth
+// state token forgeable, so we refuse to boot. Local dev gets a stable
+// (clearly-labelled) dev secret instead — never used in production.
+let SECRET: string = process.env.AUTH_SECRET || '';
+if (!SECRET) {
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('AUTH_SECRET is not configured. Refusing to start in production.');
+  }
+  SECRET = 'tb-dev-secret-do-not-use-in-prod-0000000000000000';
+}
+
+function b64url(buf: Buffer): string {
+  return buf
+    .toString('base64')
+    .replace(/=+$/, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
+}
+function b64urlDecode(s: string): Buffer {
+  s = s.replace(/-/g, '+').replace(/_/g, '/');
+  while (s.length % 4) s += '=';
+  return Buffer.from(s, 'base64');
+}
+
+interface OAuthState {
+  next: string;
+  n: string;
+  t: number;
+}
+
+function verifyState(token: string): OAuthState | null {
+  const [body, mac] = token.split('.');
+  if (!body || !mac) return null;
+  const expected = b64url(
+    crypto.createHmac('sha256', SECRET).update(body).digest()
+  );
+  if (
+    expected.length !== mac.length ||
+    !crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(mac))
+  )
+    return null;
+  try {
+    const s = JSON.parse(b64urlDecode(body).toString('utf8')) as OAuthState;
+    // 10-minute replay window
+    if (Date.now() - s.t > 10 * 60 * 1000) return null;
+    return s;
+  } catch {
+    return null;
+  }
+}
+
+async function exchangeCode(
+  code: string,
+  redirectUri: string
+): Promise<{ access_token: string; id_token?: string }> {
+  const cid = process.env.GOOGLE_CLIENT_ID!;
+  const csec = process.env.GOOGLE_CLIENT_SECRET!;
+  const res = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      code,
+      client_id: cid,
+      client_secret: csec,
+      redirect_uri: redirectUri,
+      grant_type: 'authorization_code',
+    }),
+  });
+  if (!res.ok) {
+    throw new Error(`token_exchange_failed: ${res.status}`);
+  }
+  return res.json();
+}
+
+async function fetchGoogleProfile(
+  accessToken: string
+): Promise<{ email: string; email_verified?: boolean }> {
+  const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+    headers: { authorization: `Bearer ${accessToken}` },
+  });
+  if (!res.ok) throw new Error('profile_fetch_failed');
+  return res.json();
+}
+
 export async function GET(req: Request) {
-  const origin = publicOrigin(req);
-  const url = new URL(req.url);
-
-  const fail = (err: string) => {
-    const dest = new URL('/account', origin);
-    dest.searchParams.set('google_error', err);
-    return NextResponse.redirect(dest);
-  };
-
-  const error = url.searchParams.get('error');
-  if (error) return fail(error);
-
-  const code = url.searchParams.get('code');
-  const state = url.searchParams.get('state');
-  if (!code || !state) return fail('missing_params');
-
-  const s = verifyState(state);
-  if (!s) return fail('bad_state');
-
   const cid = process.env.GOOGLE_CLIENT_ID;
   const csec = process.env.GOOGLE_CLIENT_SECRET;
-  if (!cid || !csec) return fail('not_configured');
-
-  const redirectUri = new URL('/api/auth/google/callback', origin).toString();
-
-  let idToken: string;
-  try {
-    const r = await fetch('https://oauth2.googleapis.com/token', {
-      method: 'POST',
-      headers: { 'content-type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({
-        client_id: cid,
-        client_secret: csec,
-        code,
-        redirect_uri: redirectUri,
-        grant_type: 'authorization_code',
-      }).toString(),
-    });
-    const tokens = (await r.json()) as { id_token?: string; error?: string };
-    if (!r.ok || !tokens.id_token) {
-      return fail(tokens.error || 'token_exchange_failed');
-    }
-    idToken = tokens.id_token;
-  } catch {
-    return fail('token_exchange_failed');
+  if (!cid || !csec) {
+    return NextResponse.json(
+      { error: 'google_not_configured' },
+      { status: 503 }
+    );
   }
-
-  let profile: { email: string; email_verified?: boolean };
+  const url = new URL(req.url);
+  const code = url.searchParams.get('code');
+  const state = url.searchParams.get('state');
+  const err = url.searchParams.get('error');
+  if (err) {
+    return NextResponse.redirect(
+      new URL(`/account?google_error=${encodeURIComponent(err)}`, url.origin)
+    );
+  }
+  if (!code || !state) {
+    return NextResponse.redirect(
+      new URL('/account?google_error=missing_code', url.origin)
+    );
+  }
+  const s = verifyState(state);
+  if (!s) {
+    return NextResponse.redirect(
+      new URL('/account?google_error=bad_state', url.origin)
+    );
+  }
+  const redirectUri = `${url.origin}/api/auth/google/callback`;
+  let tokens, profile;
   try {
-    profile = await verifyGoogleIdToken(idToken, s.n);
+    tokens = await exchangeCode(code, redirectUri);
+    profile = await fetchGoogleProfile(tokens.access_token);
   } catch (e: any) {
-    return fail(String(e?.message ?? 'verify_failed'));
+    return NextResponse.redirect(
+      new URL(
+        `/account?google_error=${encodeURIComponent(String(e?.message ?? 'oauth_failed'))}`,
+        url.origin
+      )
+    );
   }
   if (!profile.email || profile.email_verified === false) {
-    return fail('email_unverified');
+    return NextResponse.redirect(
+      new URL('/account?google_error=email_unverified', url.origin)
+    );
   }
-
-  // Same address ⇒ same account across every provider (no linking step).
+  // Identity is derived from the address, so signing in with Google lands on
+  // the same account as an email code for the same address — no linking step.
   const uid = uidForEmail(profile.email);
-  await resolvePrefsOnSignIn(uid);
-  try {
-    await markAccountSeen(profile.email);
-  } catch {
-    /* metrics are non-critical */
-  }
+  const prefs = await resolvePrefsOnSignIn(uid);
 
-  const dest = new URL(s.next.startsWith('/') ? s.next : '/account', origin);
-  const res = NextResponse.redirect(dest);
   const session = issueSessionCookie(profile.email, 'google');
+  const dest = s.next.startsWith('/') ? s.next : '/';
+  const res = NextResponse.redirect(new URL(dest, url.origin));
   res.cookies.set(session.name, session.value, session.options);
-  const pc = await providerPrefsCookie(uid, 'google');
+  const pc = prefsCookie(uid, prefs);
   res.cookies.set(pc.name, pc.value, pc.options);
   return res;
 }
