@@ -88,9 +88,11 @@ export async function getCancerFeed(
     }
   }
 
-  if (!live) {
-    trials = FRESH_TRIAL_SNAPSHOT.filter((i) => matchesCancer(i, slug));
-  }
+  // The generated official snapshot is refreshed during deployment and is
+  // newer than any stale edge response. Keep it first so duplicate NCT IDs
+  // retain the freshest official update date, then add any live-only records.
+  const fresh = FRESH_TRIAL_SNAPSHOT.filter((i) => matchesCancer(i, slug));
+  trials = dedupe([...fresh, ...trials]);
 
   const regional = REGIONAL_SOURCES.filter((i) => matchesCancer(i, slug));
   let items = dedupe([...trials, ...regional]);
