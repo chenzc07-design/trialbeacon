@@ -1,534 +1,181 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
 import { baselineCancerStats, SNAPSHOT_DATE } from '@/lib/data';
 import { SOURCES } from '@/lib/sources';
 import { SearchBox } from '@/components/SearchBox';
 import { FreshnessBadge } from '@/components/FreshnessBadge';
 import { FollowCancerButton } from '@/components/FollowCancerButton';
-import { AppQrSection } from '@/components/AppQrSection';
+import { CancerIcon } from '@/components/CancerIcon';
 import { t, getServerMessages } from '@/lib/i18n-server';
 
-const PRINCIPLE_ICONS = [
-  (
-    <path
-      d="M12 3l7 3v5c0 4.4-3 8.4-7 9.5C8 19.4 5 15.4 5 11V6l7-3z"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinejoin="round"
-      fill="none"
-    />
-  ),
-  (
-    <>
-      <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="1.5" fill="none" />
-      <path d="M8.5 12h7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </>
-  ),
-  (
-    <>
-      <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="1.5" fill="none" />
-      <path
-        d="M3.5 12h17M12 3.5c2.5 2.3 3.8 5.2 3.8 8.5s-1.3 6.2-3.8 8.5c-2.5-2.3-3.8-5.2-3.8-8.5s1.3-6.2 3.8-8.5z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        fill="none"
-      />
-    </>
-  ),
-  (
-    <>
-      <path
-        d="M10 14l4-4M9 7l1-1a4 4 0 015.7 5.7l-1 1M15 17l-1 1A4 4 0 018.3 12.3l1-1"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        fill="none"
-      />
-    </>
-  ),
-];
-
-const PRINCIPLE_KEYS = ['official', 'noRec', 'threeRegions', 'traceable'] as const;
-
-// Image-led sections restored from the pre-optimization design, using the
-// full provided image set (hero photo + steps + tools + trust + gallery + QR).
-const STEPS = [
+const PRINCIPLES = [
   {
-    n: 1,
-    img: '/tb-search.png',
-    title: 'Search your condition',
-    body: 'Type your diagnosis or browse 10+ cancer types. Each page pulls in clinical trial registrations, guideline indexes and regulatory notices from official sources.',
+    number: '01',
+    title: 'Official wording',
+    body: 'Titles and links are reproduced from public registries and source pages.',
   },
   {
-    n: 2,
-    img: '/tb-consult.png',
-    title: 'Understand the landscape',
-    body: 'See what is publicly listed for your cancer type — including advanced, recurrent or later-line options — with a direct link to the original page for every entry.',
+    number: '02',
+    title: 'No treatment ranking',
+    body: 'The index does not score, recommend or predict what may be suitable for anyone.',
   },
   {
-    n: 3,
-    img: '/tb-community.png',
-    title: 'Share with your care team',
-    body: 'Take the official titles and links to your appointment. Every entry points to the original source so you and your clinician can verify together.',
+    number: '03',
+    title: 'Traceable by design',
+    body: 'Every entry leads back to the original source so you can verify it with your care team.',
   },
 ];
 
-const TRUST = [
-  {
-    img: '/tb-data-source.png',
-    title: 'Real-time official data',
-    body: 'Every trial comes directly from ClinicalTrials.gov, the EU register and Chinese regulatory sources. No third-party data brokers, no reselling.',
-  },
-  {
-    img: '/tb-privacy.png',
-    title: 'Your data stays yours',
-    body: 'We do not track you across the web, build advertising profiles from your health searches, or sell your data. No login required.',
-  },
-  {
-    img: '/tb-free-use.png',
-    title: 'Free to browse',
-    body: 'Free to browse and build a short list. Optional paid export when you need a full print-ready list. Your health is personal — and your search history should be too.',
-  },
+const SOURCE_GROUPS = [
+  { label: 'United States', items: ['ClinicalTrials.gov', 'FDA', 'NCCN'] },
+  { label: 'Europe', items: ['EMA', 'CTIS', 'ESMO'] },
+  { label: 'China', items: ['CDE', 'NMPA', 'ChiCTR'] },
 ];
 
-const GALLERY = [
-  { img: '/tb-research.png', cap: 'Breakthroughs, studied in the lab' },
-  { img: '/tb-medical-team.png', cap: 'Care teams, coordinating together' },
-  { img: '/tb-innovation.png', cap: 'Precision medicine, moving forward' },
-  { img: '/tb-patient-story.png', cap: 'Patients, supported at home' },
-  { img: '/tb-empowerment.png', cap: 'You, in control of the search' },
-  { img: '/tb-hospital.png', cap: 'Trials, run at trusted centers' },
-];
-
-const SOURCES_PILLS = Object.values(SOURCES).map((s) => ({
-  id: s.id,
-  label: s.label,
-  region: s.region,
-  url: s.url,
-  fullName: s.fullName,
-}));
-
-/**
- * Per-locale title and description. Without this the homepage inherits the
- * root layout's single English pair, so all six languages get indexed under
- * the same English snippet.
- */
 export async function generateMetadata(): Promise<Metadata> {
   const { messages: m } = await getServerMessages();
   return {
-    // `absolute` keeps the "· TrialBeacon" template off the homepage title,
-    // which already names the site.
     title: { absolute: m.home.metaTitle },
     description: m.home.metaDescription,
-    openGraph: {
-      title: m.home.metaTitle,
-      description: m.home.metaDescription,
-    },
-    twitter: {
-      title: m.home.metaTitle,
-      description: m.home.metaDescription,
-    },
+    openGraph: { title: m.home.metaTitle, description: m.home.metaDescription },
+    twitter: { title: m.home.metaTitle, description: m.home.metaDescription },
   };
 }
 
 export default async function HomePage() {
   const { messages: m } = await getServerMessages();
   const stats = baselineCancerStats();
+  const totalRecords = stats.reduce((sum, item) => sum + item.total, 0);
 
   return (
     <>
-      {/* ============== Hero (desktop + mobile) ============== */}
-      <section className="relative overflow-hidden border-b border-slateish-200 bg-gradient-to-b from-slateish-50 via-white to-white">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[url('/hero-bg.svg')] bg-cover bg-center opacity-60"
-        />
-        <div className="container-page relative py-14 sm:py-24">
-          <div className="grid items-start gap-10 lg:grid-cols-2">
-            <div>
-              <p className="label-eyebrow">{m.home.eyebrow}</p>
+      <section className="relative overflow-hidden bg-[#0d1d32] text-white">
+        <div className="pointer-events-none absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:56px_56px]" />
+        <div className="pointer-events-none absolute -right-36 -top-44 h-[520px] w-[520px] rounded-full border border-white/10 sm:h-[720px] sm:w-[720px]" />
+        <div className="pointer-events-none absolute -right-16 -top-24 h-[360px] w-[360px] rounded-full border border-white/10 sm:h-[520px] sm:w-[520px]" />
 
-              {/* Title: both strings exist in the DOM but only one is shown via CSS.
-                  Desktop (≥768px) shows the full version; mobile (<768px) the short one. */}
-              <h1 className="mt-4 text-[26px] font-semibold leading-tight tracking-tight text-ink-950 md:text-[40px] md:leading-[1.16]">
-                <span className="hidden md:block">{m.home.title1}</span>
-                <span className="md:hidden">{m.home.title1Short}</span>
+        <div className="container-page relative py-12 sm:py-20 lg:py-24">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,.95fr)] lg:items-center lg:gap-20">
+            <div>
+              <div className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#a9c5d7]">
+                <span className="h-2 w-2 rounded-full bg-[#e5a56b] shadow-[0_0_0_5px_rgba(229,165,107,.14)]" />
+                Independent clinical research index
+              </div>
+              <h1 className="mt-6 max-w-3xl text-[34px] font-semibold leading-[1.08] tracking-[-0.04em] text-white sm:text-[50px] lg:text-[62px]">
+                A clearer way to read the cancer trial landscape.
               </h1>
-
-              {/* Subtitle: same CSS-only show/hide, no concatenation. */}
-              <p className="mt-5 max-w-xl text-[14px] leading-relaxed text-slateish-600 md:text-[15px]">
-                <span className="hidden md:block">{m.home.subtitle}</span>
-                <span className="md:hidden">{m.home.subtitleShort}</span>
+              <p className="mt-6 max-w-2xl text-[15px] leading-7 text-[#c8d5df] sm:text-[17px]">
+                Public clinical-trial registrations, guideline indexes and regulatory notices — gathered from official sources and linked back to the original record.
               </p>
 
-              {m.home.subtitleNo ? (
-                <p className="mt-3 max-w-xl text-[13px] font-medium leading-relaxed text-slateish-500">
-                  {m.home.subtitleNo}
-                </p>
-              ) : null}
-
-              {/* Primary action — the After Care view is the point of the site. */}
-              <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:items-center">
-                <Link href="/after-care" className="btn-primary justify-center">
-                  <span className="hidden sm:inline">{m.home.heroCta}</span>
-                  <span className="sm:hidden">{m.home.heroCtaShort}</span>
-                  <svg className="h-3.5 w-3.5" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                    <path
-                      d="M3 7h8M7.5 3.5L11 7l-3.5 3.5"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </Link>
-                <Link href="/cancers" className="btn-secondary justify-center">
-                  {m.home.heroCtaSecondary}
-                </Link>
-              </div>
-
-              <div className="mt-6 max-w-xl">
-                <SearchBox size="lg" />
-              </div>
-
-              <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slateish-500">
-                <span>{m.common.noMedicalAdvice}</span>
-                <span aria-hidden="true" className="h-1 w-1 rounded-full bg-slateish-300" />
-                <span>{m.common.noRecommendations}</span>
-                <span aria-hidden="true" className="h-1 w-1 rounded-full bg-slateish-300" />
-                <span>{m.common.freeToUse}</span>
-              </div>
-
-              <div className="mt-4">
-                <FreshnessBadge />
-              </div>
-            </div>
-
-            <div className="relative">
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[28px] shadow-card-hover ring-1 ring-ink-950/10">
-                <Image
-                  src="/tb-hero.png"
-                  alt="Hands cupping a source of light — a symbol of care"
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="mt-5 flex items-center gap-3 rounded-2xl bg-white p-4 shadow-card-hover ring-1 ring-slateish-200">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-ink-900 text-white">
-                  <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true" fill="none">
-                    <path
-                      d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
-                      stroke="currentColor"
-                      strokeWidth="1.6"
-                      fill="none"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </span>
-                <div>
-                  <div className="text-sm font-semibold text-ink-950">{m.home.badgeVerbatim}</div>
-                  <div className="text-xs text-slateish-500">{m.home.badgeRegions}</div>
+              <div className="mt-8 max-w-2xl rounded-2xl bg-white p-2 shadow-[0_20px_60px_rgba(0,0,0,.22)] sm:flex sm:items-center">
+                <div className="min-w-0 flex-1 [&_form]:!border-0 [&_form]:!shadow-none [&_input]:!bg-transparent [&_input]:!text-ink-950 [&_input]:!placeholder:text-slateish-400 [&_button]:!bg-[#0d1d32] [&_button]:hover:!bg-[#18324f]">
+                  <SearchBox size="lg" />
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ============== Open on your phone (QR / mobile prompt) ============== */}
-      <AppQrSection />
-
-      {/* ============== After Care — dedicated view ============== */}
-      <section className="container-page mt-10 sm:mt-14">
-        <Link
-          href="/after-care"
-          className="card-interactive group flex flex-col gap-5 overflow-hidden border-l-4 border-l-ink-900 border-navy-100 bg-gradient-to-br from-navy-50/70 via-white to-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8"
-          aria-label={m.home.afterCareTitle}
-        >
-          <div className="flex items-start gap-4">
-            <span className="mt-0.5 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-ink-900 text-white">
-              <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true" fill="none">
-                <path
-                  d="M7 21h10a3 3 0 003-3V6a3 3 0 00-3-3H7a3 3 0 00-3 3v12a3 3 0 003 3z"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M8 7h8M8 11h8M8 15h5"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </span>
-            <div className="min-w-0">
-              <p className="label-eyebrow">{m.home.afterCareKicker}</p>
-              <h2 className="mt-1 text-xl font-semibold text-ink-950 sm:text-2xl">
-                {m.home.afterCareTitle}
-              </h2>
-              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slateish-600">
-                {m.home.afterCareBody}
-              </p>
-              {m.home.afterCareNotRec ? (
-                <p className="mt-1.5 max-w-2xl text-xs leading-relaxed text-slateish-500">
-                  {m.home.afterCareNotRec}
-                </p>
-              ) : null}
-              <p className="mt-3 max-w-2xl text-[11px] leading-relaxed text-slateish-400">
-                {m.home.afterCareFoot}
-              </p>
-            </div>
-          </div>
-          <span className="btn-primary shrink-0 self-start group-hover:brightness-110 sm:self-center">
-            {m.home.afterCareCta}
-            <svg className="h-3.5 w-3.5" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <path
-                d="M3 7h8M7.5 3.5L11 7l-3.5 3.5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
-        </Link>
-      </section>
-
-      {/* ============== How it works ============== */}
-      <section className="container-page mt-16">
-        <div className="text-center">
-          <p className="label-eyebrow mx-auto">How TrialBeacon works</p>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight">Three steps to the official record</h2>
-          <p className="mx-auto mt-3 max-w-2xl text-sm text-slateish-500">
-            We never rank, evaluate or suggest treatments. Titles are reproduced verbatim from the
-            official record — so you always see what is actually listed.
-          </p>
-        </div>
-        <div className="mt-8 grid gap-4 sm:grid-cols-3">
-          {STEPS.map((s) => (
-            <div key={s.n} className="card overflow-hidden">
-              <div className="relative aspect-[3/2] w-full overflow-hidden bg-slateish-100">
-                <Image
-                  src={s.img}
-                  alt=""
-                  fill
-                  sizes="(max-width: 640px) 100vw, 33vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-5">
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-navy-50 text-sm font-semibold text-navy-700">
-                  {s.n}
-                </span>
-                <h3 className="mt-3 text-base font-semibold text-ink-950">{s.title}</h3>
-                <p className="mt-1.5 text-[13px] leading-relaxed text-slateish-600">{s.body}</p>
+              <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-xs text-[#a9bac8]">
+                <span>Search by condition, phase or NCT number</span>
+                <span className="hidden h-1 w-1 self-center rounded-full bg-[#6f8799] sm:block" />
+                <span>No login required to browse</span>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
 
-      {/* ============== Cancer types — clean card index ============== */}
-      <section className="container-page mt-16">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <h2 className="text-base font-semibold tracking-tight text-ink-950">
-              {m.home.cancerListTitle}
-            </h2>
-            <p className="mt-1 text-sm text-slateish-500">{m.home.cancerListSub}</p>
-          </div>
-          <Link href="/cancers" className="btn-ghost text-[13px]">
-            {m.home.cancerListCta} →
-          </Link>
-        </div>
-
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {stats.map((c) => (
-            <div
-              key={c.slug}
-              className="card-interactive group relative flex flex-col overflow-hidden"
-            >
-              <Link href={`/cancers/${c.slug}`} className="flex flex-1 flex-col">
-                <div className="relative h-28 w-full shrink-0 overflow-hidden bg-slateish-100">
-                  <Image
-                    src={c.image}
-                    alt={m.cancers[c.slug].label}
-                    fill
-                    sizes="(max-width:640px) 50vw, 25vw"
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                </div>
-                <div className="flex flex-1 flex-col gap-1 p-4">
-                  <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-[15px] font-semibold leading-tight text-ink-950">
-                      {m.cancers[c.slug].label}
-                    </h3>
-                    <svg
-                      className="h-3.5 w-3.5 shrink-0 text-slateish-300 transition-all group-hover:translate-x-0.5 group-hover:text-navy-500"
-                      viewBox="0 0 14 14"
-                      fill="none"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M3 7h8M7.5 3.5L11 7l-3.5 3.5"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+            <div className="relative lg:pt-4">
+              <div className="rounded-[26px] border border-white/15 bg-white/[0.07] p-5 shadow-[0_24px_70px_rgba(0,0,0,.18)] backdrop-blur-sm sm:p-6">
+                <div className="flex items-start justify-between gap-5 border-b border-white/10 pb-5">
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#a9c5d7]">Registry pulse</p>
+                    <p className="mt-2 text-sm text-[#d8e2e9]">What is currently indexed</p>
                   </div>
-                  <p className="line-clamp-2 text-[12px] leading-snug text-slateish-500">
-                    {m.cancers[c.slug].descriptor}
-                  </p>
-                  <p className="mt-auto pt-1 text-[11px] tabular-nums text-slateish-500">
-                    {t(m, 'common.recordsIndexed', { n: c.total })}
-                  </p>
+                  <span className="rounded-full border border-[#8bc6b3]/30 bg-[#8bc6b3]/10 px-2.5 py-1 text-[11px] font-medium text-[#b8e4d4]">Live + verified</span>
                 </div>
-              </Link>
-              <div className="flex items-center justify-end border-t border-slateish-100 px-4 py-3">
-                <FollowCancerButton slug={c.slug} />
+                <div className="grid grid-cols-2 gap-3 py-5">
+                  <div className="rounded-2xl bg-white/[0.08] p-4">
+                    <div className="text-3xl font-semibold tracking-tight text-white">{totalRecords}+</div>
+                    <div className="mt-1 text-xs text-[#a9bac8]">indexed records</div>
+                  </div>
+                  <div className="rounded-2xl bg-white/[0.08] p-4">
+                    <div className="text-3xl font-semibold tracking-tight text-white">{stats.length}</div>
+                    <div className="mt-1 text-xs text-[#a9bac8]">cancer types</div>
+                  </div>
+                </div>
+                <div className="space-y-3 border-t border-white/10 pt-5 text-sm">
+                  <div className="flex items-center justify-between gap-4"><span className="text-[#a9bac8]">Regions covered</span><span className="font-medium text-white">US · Europe · China</span></div>
+                  <div className="flex items-center justify-between gap-4"><span className="text-[#a9bac8]">Last verified</span><span className="font-medium text-white">{SNAPSHOT_DATE}</span></div>
+                  <div className="flex items-center justify-between gap-4"><span className="text-[#a9bac8]">Record policy</span><span className="font-medium text-[#b8e4d4]">No ranking</span></div>
+                </div>
+              </div>
+              <div className="mt-4 flex items-center gap-3 px-1 text-xs text-[#a9bac8]">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#e5a56b] text-[#0d1d32]">↗</span>
+                <span>Every result keeps a direct link to its official source.</span>
               </div>
             </div>
-          ))}
+          </div>
         </div>
       </section>
 
-      {/* ============== Built for patients / trust ============== */}
-      <section className="mt-16 bg-ink-950">
-        <div className="container-page py-16">
-          <div className="text-center">
-            <p className="label-eyebrow mx-auto !text-navy-300">Built for patients, by design</p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
-              Honest by architecture
-            </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-sm text-slateish-300">
-              Most cancer information is scattered across journals, pharma sites and dense government
-              databases. TrialBeacon brings it together — with guardrails that protect you.
-            </p>
+      <section className="border-b border-slateish-200 bg-white">
+        <div className="container-page grid divide-y divide-slateish-200 py-1 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+          <div className="flex items-center gap-3 py-4 sm:px-6 sm:first:pl-0"><span className="text-lg text-[#d58f5b]">◉</span><div><div className="text-sm font-semibold text-ink-950">Official sources</div><div className="mt-0.5 text-xs text-slateish-500">Registries and regulators</div></div></div>
+          <div className="flex items-center gap-3 py-4 sm:px-6"><span className="text-lg text-[#d58f5b]">⌁</span><div><div className="text-sm font-semibold text-ink-950">Traceable records</div><div className="mt-0.5 text-xs text-slateish-500">Original titles and links</div></div></div>
+          <div className="flex items-center gap-3 py-4 sm:px-6 sm:last:pr-0"><span className="text-lg text-[#d58f5b]">□</span><div><div className="text-sm font-semibold text-ink-950">Free to browse</div><div className="mt-0.5 text-xs text-slateish-500">No account required</div></div></div>
+        </div>
+      </section>
+
+      <section className="container-page py-12 sm:py-16">
+        <div className="grid gap-5 lg:grid-cols-[1.35fr_.65fr]">
+          <Link href="/after-care" className="group relative overflow-hidden rounded-[24px] bg-[#e8f0f3] p-6 transition-transform duration-200 hover:-translate-y-0.5 sm:p-8">
+            <div className="absolute -right-16 -top-20 h-56 w-56 rounded-full border border-[#b8cdd5]" />
+            <div className="relative max-w-2xl">
+              <p className="label-eyebrow text-[#527080]">Focused view</p>
+              <h2 className="mt-3 max-w-xl text-2xl font-semibold tracking-tight text-[#0d1d32] sm:text-3xl">Advanced, recurrent and later-line records in one place.</h2>
+              <p className="mt-3 max-w-xl text-sm leading-6 text-[#527080]">A dedicated view for public records whose official wording explicitly refers to advanced, metastatic, recurrent, refractory, later-line or supportive care.</p>
+              <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#0d1d32]">Open the focused view <span className="transition-transform group-hover:translate-x-1">→</span></span>
+            </div>
+          </Link>
+          <div className="rounded-[24px] border border-slateish-200 bg-white p-6 sm:p-8">
+            <p className="label-eyebrow">Data status</p>
+            <h2 className="mt-3 text-xl font-semibold tracking-tight text-ink-950">A calm starting point for a difficult search.</h2>
+            <p className="mt-3 text-sm leading-6 text-slateish-600">TrialBeacon is an index, not a medical service. Use the original record and your treating team to decide what information matters to you.</p>
+            <div className="mt-5"><FreshnessBadge /></div>
           </div>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {TRUST.map((item) => (
-              <div
-                key={item.title}
-                className="overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10"
-              >
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-white/5">
-                  <Image
-                    src={item.img}
-                    alt=""
-                    fill
-                    sizes="(max-width: 640px) 100vw, 33vw"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-5">
-                  <h3 className="text-base font-semibold text-white">{item.title}</h3>
-                  <p className="mt-1.5 text-[13px] leading-relaxed text-slateish-300">{item.body}</p>
-                </div>
+        </div>
+      </section>
+
+      <section className="border-y border-slateish-200 bg-[#f7f9fa]">
+        <div className="container-page py-12 sm:py-16">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div><p className="label-eyebrow">Browse the index</p><h2 className="mt-2 text-2xl font-semibold tracking-tight text-ink-950">Cancer types</h2><p className="mt-2 text-sm text-slateish-500">Start broad, then open the original record.</p></div>
+            <Link href="/cancers" className="btn-secondary text-[13px]">View all cancer types <span>→</span></Link>
+          </div>
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {stats.map((c) => (
+              <div key={c.slug} className="group flex min-h-[142px] flex-col rounded-2xl border border-slateish-200 bg-white p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#9bb4c0] hover:shadow-card-hover">
+                <Link href={`/cancers/${c.slug}`} className="flex flex-1 items-start gap-3">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#e8f0f3] text-[#31596c]"><CancerIcon slug={c.slug} className="h-6 w-6" /></span>
+                  <span className="min-w-0"><span className="block text-[15px] font-semibold leading-tight text-ink-950">{m.cancers[c.slug].label}</span><span className="mt-1.5 block line-clamp-2 text-xs leading-5 text-slateish-500">{m.cancers[c.slug].descriptor}</span></span>
+                </Link>
+                <div className="mt-4 flex items-center justify-between border-t border-slateish-100 pt-3"><span className="text-[11px] tabular-nums text-slateish-500">{t(m, 'common.recordsIndexed', { n: c.total })}</span><FollowCancerButton slug={c.slug} /></div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ============== Sources strip ============== */}
-      <section className="container-page mt-16">
-        <div className="card p-6 sm:p-7">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <h2 className="text-base font-semibold text-ink-950">
-                {m.home.sourcesTitle}
-              </h2>
-              <p className="mt-1 flex flex-wrap items-center gap-2 text-sm text-slateish-500">
-                <span>
-                  {t(m, 'home.sourcesSub', { date: SNAPSHOT_DATE })}
-                </span>
-                <span aria-hidden="true" className="h-1 w-1 rounded-full bg-slateish-300" />
-                <FreshnessBadge />
-              </p>
-            </div>
-            <Link href="/sources" className="btn-secondary text-[13px]">
-              {m.home.sourcesCta}
-            </Link>
-          </div>
-          <div className="mt-5 flex flex-wrap gap-2">
-            {SOURCES_PILLS.map((s) => (
-              <a
-                key={s.id}
-                href={s.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="chip border-slateish-200 bg-slateish-50 text-slateish-600 transition-colors hover:border-navy-300 hover:text-navy-700"
-                title={s.fullName}
-              >
-                {s.label}
-                <span className="text-slateish-400">· {s.region}</span>
-              </a>
-            ))}
-          </div>
+      <section className="container-page py-12 sm:py-16">
+        <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
+          <div><p className="label-eyebrow">How to use it</p><h2 className="mt-2 text-2xl font-semibold tracking-tight text-ink-950 sm:text-3xl">Designed for verification, not persuasion.</h2><p className="mt-4 text-sm leading-6 text-slateish-600">The product stays deliberately narrow: help you find public records, understand where they came from and take the source to a conversation with your care team.</p></div>
+          <div className="grid gap-3 sm:grid-cols-3">{PRINCIPLES.map((item) => <div key={item.number} className="border-t-2 border-[#d58f5b] pt-4"><div className="text-xs font-semibold tabular-nums text-[#b46f3f]">{item.number}</div><h3 className="mt-3 text-sm font-semibold text-ink-950">{item.title}</h3><p className="mt-2 text-[13px] leading-5 text-slateish-600">{item.body}</p></div>)}</div>
         </div>
       </section>
 
-      {/* ============== Principles ============== */}
-      <section className="container-page mt-16">
-        <h2 className="text-lg font-semibold tracking-tight">{m.home.principlesTitle}</h2>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {PRINCIPLE_KEYS.map((key, i) => (
-            <div key={key} className="card p-6">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-navy-50 text-navy-700">
-                <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
-                  {PRINCIPLE_ICONS[i]}
-                </svg>
-              </span>
-              <h3 className="mt-4 text-sm font-semibold text-ink-950">
-                {m.home.principles[key].title}
-              </h3>
-              <p className="mt-2 text-[13px] leading-relaxed text-slateish-600">
-                {m.home.principles[key].body}
-              </p>
-            </div>
-          ))}
+      <section className="bg-[#0d1d32] text-white">
+        <div className="container-page py-12 sm:py-16">
+          <div className="flex flex-wrap items-end justify-between gap-5"><div><p className="label-eyebrow text-[#a9c5d7]">Source map</p><h2 className="mt-2 text-2xl font-semibold tracking-tight text-white">Where the records come from</h2></div><Link href="/sources" className="btn-secondary border-white/20 bg-transparent text-white hover:border-white/40 hover:bg-white/10">Sources & methodology <span>→</span></Link></div>
+          <div className="mt-8 grid gap-3 sm:grid-cols-3">{SOURCE_GROUPS.map((group) => <div key={group.label} className="rounded-2xl border border-white/10 bg-white/[0.06] p-5"><div className="text-xs font-semibold uppercase tracking-[0.14em] text-[#a9c5d7]">{group.label}</div><div className="mt-4 space-y-2">{group.items.map((item) => <div key={item} className="flex items-center gap-2 text-sm text-white"><span className="h-1.5 w-1.5 rounded-full bg-[#e5a56b]" />{item}</div>)}</div></div>)}</div>
+          <p className="mt-8 text-xs leading-5 text-[#9eb0bf]">The index is informational only. Records can change on the official source, and nothing here implies suitability, efficacy or medical advice.</p>
         </div>
       </section>
-
-      {/* ============== Behind the records — gallery ============== */}
-      <section className="container-page mt-16">
-        <div className="text-center">
-          <p className="label-eyebrow mx-auto">Behind every record</p>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight">
-            The science &amp; people behind the index
-          </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-sm text-slateish-500">
-            Every listing traces back to researchers, clinicians, regulators and the patients
-            themselves. TrialBeacon quietly stitches their public work into one place.
-          </p>
-        </div>
-        <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {GALLERY.map((g) => (
-            <div
-              key={g.img}
-              className="group relative aspect-[4/3] overflow-hidden rounded-2xl shadow-card"
-            >
-              <Image
-                src={g.img}
-                alt=""
-                fill
-                sizes="(max-width: 640px) 100vw, 33vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-[1.05]"
-              />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink-950/70 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <span className="text-sm font-semibold text-white">{g.cap}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
     </>
   );
 }
