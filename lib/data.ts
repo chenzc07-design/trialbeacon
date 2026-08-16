@@ -1,14 +1,15 @@
 import type { UpdateItem, Region, ChangeKind } from './types';
-import { TRIAL_SNAPSHOT, SNAPSHOT_DATE } from './data/trials';
+import { TRIAL_SNAPSHOT, SNAPSHOT_DATE as LEGACY_SNAPSHOT_DATE } from './data/trials';
+import { FRESH_TRIAL_SNAPSHOT, FRESH_SNAPSHOT_DATE } from './data/fresh-trials';
 import { REGIONAL_SOURCES } from './data/regional';
 import { CANCERS, getCancer } from './cancers';
 import { fetchCtgov, isOpenStatus } from './ctgov';
 
-export { SNAPSHOT_DATE };
+export { FRESH_SNAPSHOT_DATE as SNAPSHOT_DATE };
 
 /** Every record known to the offline baseline. */
 export function allBaseline(): UpdateItem[] {
-  return [...TRIAL_SNAPSHOT, ...REGIONAL_SOURCES];
+  return [...FRESH_TRIAL_SNAPSHOT, ...REGIONAL_SOURCES];
 }
 
 export function matchesCancer(item: UpdateItem, slug: string): boolean {
@@ -88,7 +89,7 @@ export async function getCancerFeed(
   }
 
   if (!live) {
-    trials = TRIAL_SNAPSHOT.filter((i) => matchesCancer(i, slug));
+    trials = FRESH_TRIAL_SNAPSHOT.filter((i) => matchesCancer(i, slug));
   }
 
   const regional = REGIONAL_SOURCES.filter((i) => matchesCancer(i, slug));
@@ -125,7 +126,7 @@ export async function getAfterCareFeed(limit = 60): Promise<FeedResult> {
   }
 
   if (!live) {
-    trials = TRIAL_SNAPSHOT.filter((i) => i.afterCare);
+    trials = FRESH_TRIAL_SNAPSHOT.filter((i) => i.afterCare);
   }
 
   const regional = REGIONAL_SOURCES.filter((i) => i.afterCare);
@@ -193,8 +194,8 @@ export async function getChangeTracker(days: number): Promise<{
   }
 
   // Reference point: today for live data, the snapshot date for baseline data.
-  const reference = live ? undefined : SNAPSHOT_DATE;
-  if (!live) pool = TRIAL_SNAPSHOT;
+  const reference = live ? undefined : FRESH_SNAPSHOT_DATE;
+  if (!live) pool = FRESH_TRIAL_SNAPSHOT;
 
   const windowStart = windowStartISO(days, reference);
   const buckets: Record<Exclude<ChangeKind, null>, UpdateItem[]> = {
