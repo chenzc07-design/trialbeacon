@@ -62,13 +62,13 @@ export default async function HomePage() {
             <div>
               <div className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#527080]">
                 <span className="h-2 w-2 rounded-full bg-[#e5a56b] shadow-[0_0_0_5px_rgba(229,165,107,.14)]" />
-                Independent clinical research index
+                {m.home.eyebrow}
               </div>
               <h1 className="mt-6 max-w-3xl text-[34px] font-semibold leading-[1.08] tracking-[-0.04em] text-[#173044] sm:text-[50px] lg:text-[62px]">
-                A clearer way to read the cancer trial landscape.
+                {m.home.title1Short}
               </h1>
               <p className="mt-6 max-w-2xl text-[15px] leading-7 text-[#527080] sm:text-[17px]">
-                Public clinical-trial registrations, guideline indexes and regulatory notices — gathered from official sources and linked back to the original record.
+                {m.home.subtitleShort}
               </p>
 
               <div className="mt-8 max-w-2xl rounded-2xl bg-white/90 p-2 shadow-[0_20px_60px_rgba(53,91,91,.16)] backdrop-blur-sm sm:flex sm:items-center">
@@ -85,37 +85,37 @@ export default async function HomePage() {
 
             <div className="relative lg:pt-4">
               <div className="relative mb-5 h-48 overflow-hidden rounded-[28px] border border-white/70 bg-[#dbe9e5] shadow-[0_20px_55px_rgba(53,91,91,.12)] sm:h-56">
-                <Image src="/home-research-hero.jpg" alt="Researcher working with a microscope in a laboratory" fill sizes="(max-width: 1024px) 100vw, 420px" className="object-cover" />
+                <Image src="/home-research-hero.jpg" alt={m.home.badgeVerbatim} fill sizes="(max-width: 1024px) 100vw, 420px" className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#173044]/55 via-transparent to-transparent" />
-                <p className="absolute inset-x-0 bottom-0 p-5 text-xs font-medium tracking-wide text-white">From research to the official record</p>
+                <p className="absolute inset-x-0 bottom-0 p-5 text-xs font-medium tracking-wide text-white">{m.home.badgeVerbatim}</p>
               </div>
               <div className="rounded-[26px] border border-white/80 bg-white/75 p-5 shadow-[0_24px_70px_rgba(53,91,91,.14)] backdrop-blur-sm sm:p-6">
                 <div className="flex items-start justify-between gap-5 border-b border-[#d7e4e0] pb-5">
                   <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#527080]">Registry pulse</p>
-                    <p className="mt-2 text-sm text-[#527080]">What is currently indexed</p>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#527080]">{m.home.freshnessTitle}</p>
+                    <p className="mt-2 text-sm text-[#527080]">{m.home.freshnessBody}</p>
                   </div>
-                  <span className="rounded-full border border-[#8bc6b3]/30 bg-[#8bc6b3]/10 px-2.5 py-1 text-[11px] font-medium text-[#39806d]">Live + verified</span>
+                  <span className="rounded-full border border-[#8bc6b3]/30 bg-[#8bc6b3]/10 px-2.5 py-1 text-[11px] font-medium text-[#39806d]">{m.common.continuouslyUpdated}</span>
                 </div>
                 <div className="grid grid-cols-2 gap-3 py-5">
                   <div className="rounded-2xl bg-[#edf4f1] p-4">
                     <div className="text-3xl font-semibold tracking-tight text-[#173044]">{totalRecords}+</div>
-                    <div className="mt-1 text-xs text-[#527080]">indexed records</div>
+                    <div className="mt-1 text-xs text-[#527080]">{m.common.recordsIndexed.split('{n} ')[1] ?? m.common.recordsIndexed}</div>
                   </div>
                   <div className="rounded-2xl bg-[#edf4f1] p-4">
                     <div className="text-3xl font-semibold tracking-tight text-[#173044]">{stats.length}</div>
-                    <div className="mt-1 text-xs text-[#527080]">cancer types</div>
+                    <div className="mt-1 text-xs text-[#527080]">{m.cancersIndex.title}</div>
                   </div>
                 </div>
                 <div className="space-y-3 border-t border-[#d7e4e0] pt-5 text-sm">
-                  <div className="flex items-center justify-between gap-4"><span className="text-[#527080]">Regions covered</span><span className="font-medium text-[#173044]">US · Europe · China</span></div>
-                  <div className="flex items-center justify-between gap-4"><span className="text-[#527080]">Last verified</span><span className="font-medium text-[#173044]">{SNAPSHOT_DATE}</span></div>
-                  <div className="flex items-center justify-between gap-4"><span className="text-[#527080]">Record policy</span><span className="font-medium text-[#39806d]">No ranking</span></div>
+                  <div className="flex items-center justify-between gap-4"><span className="text-[#527080]">{m.home.badgeRegions}</span><span className="font-medium text-[#173044]">US · Europe · China</span></div>
+                  <div className="flex items-center justify-between gap-4"><span className="text-[#527080]">{m.common.lastVerified.split('{date}')[0].trim()}</span><span className="font-medium text-[#173044]">{SNAPSHOT_DATE}</span></div>
+                  <div className="flex items-center justify-between gap-4"><span className="text-[#527080]">{m.home.principles.noRec.title}</span><span className="font-medium text-[#39806d]">{m.common.noRecommendations}</span></div>
                 </div>
               </div>
               <div className="mt-4 flex items-center gap-3 px-1 text-xs text-[#527080]">
                 <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#d99b69] text-white">↗</span>
-                <span>Every result keeps a direct link to its official source.</span>
+                <span>{m.home.principles.traceable.body}</span>
               </div>
             </div>
           </div>
@@ -124,9 +124,9 @@ export default async function HomePage() {
 
       <section className="border-b border-slateish-200 bg-white">
         <div className="container-page grid divide-y divide-slateish-200 py-1 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-          <div className="flex items-center gap-3 py-4 sm:px-6 sm:first:pl-0"><span className="text-lg text-[#d58f5b]">◉</span><div><div className="text-sm font-semibold text-ink-950">Official sources</div><div className="mt-0.5 text-xs text-slateish-500">Registries and regulators</div></div></div>
-          <div className="flex items-center gap-3 py-4 sm:px-6"><span className="text-lg text-[#d58f5b]">⌁</span><div><div className="text-sm font-semibold text-ink-950">Traceable records</div><div className="mt-0.5 text-xs text-slateish-500">Original titles and links</div></div></div>
-          <div className="flex items-center gap-3 py-4 sm:px-6 sm:last:pr-0"><span className="text-lg text-[#d58f5b]">□</span><div><div className="text-sm font-semibold text-ink-950">Free to browse</div><div className="mt-0.5 text-xs text-slateish-500">No account required</div></div></div>
+          <div className="flex items-center gap-3 py-4 sm:px-6 sm:first:pl-0"><span className="text-lg text-[#d58f5b]">◉</span><div><div className="text-sm font-semibold text-ink-950">{m.home.principles.official.title}</div><div className="mt-0.5 text-xs text-slateish-500">{m.home.principles.official.body}</div></div></div>
+          <div className="flex items-center gap-3 py-4 sm:px-6"><span className="text-lg text-[#d58f5b]">⌁</span><div><div className="text-sm font-semibold text-ink-950">{m.home.principles.traceable.title}</div><div className="mt-0.5 text-xs text-slateish-500">{m.home.principles.traceable.body}</div></div></div>
+          <div className="flex items-center gap-3 py-4 sm:px-6 sm:last:pr-0"><span className="text-lg text-[#d58f5b]">□</span><div><div className="text-sm font-semibold text-ink-950">{m.home.cancerListTitle}</div><div className="mt-0.5 text-xs text-slateish-500">{m.home.cancerListSub}</div></div></div>
         </div>
       </section>
 
@@ -135,16 +135,16 @@ export default async function HomePage() {
           <Link href="/after-care" className="group relative overflow-hidden rounded-[24px] bg-[#e8f0f3] p-6 transition-transform duration-200 hover:-translate-y-0.5 sm:p-8">
             <div className="absolute -right-16 -top-20 h-56 w-56 rounded-full border border-[#b8cdd5]" />
             <div className="relative max-w-2xl">
-              <p className="label-eyebrow text-[#527080]">Focused view</p>
-              <h2 className="mt-3 max-w-xl text-2xl font-semibold tracking-tight text-[#0d1d32] sm:text-3xl">Advanced, recurrent and later-line records in one place.</h2>
-              <p className="mt-3 max-w-xl text-sm leading-6 text-[#527080]">A dedicated view for public records whose official wording explicitly refers to advanced, metastatic, recurrent, refractory, later-line or supportive care.</p>
-              <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#0d1d32]">Open the focused view <span className="transition-transform group-hover:translate-x-1">→</span></span>
+              <p className="label-eyebrow text-[#527080]">{m.home.afterCareKicker}</p>
+              <h2 className="mt-3 max-w-xl text-2xl font-semibold tracking-tight text-[#0d1d32] sm:text-3xl">{m.home.afterCareTitle}</h2>
+              <p className="mt-3 max-w-xl text-sm leading-6 text-[#527080]">{m.home.afterCareBody}</p>
+              <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#0d1d32]">{m.home.afterCareCta} <span className="transition-transform group-hover:translate-x-1">→</span></span>
             </div>
           </Link>
           <div className="rounded-[24px] border border-slateish-200 bg-white p-6 sm:p-8">
-            <p className="label-eyebrow">Data status</p>
-            <h2 className="mt-3 text-xl font-semibold tracking-tight text-ink-950">A calm starting point for a difficult search.</h2>
-            <p className="mt-3 text-sm leading-6 text-slateish-600">TrialBeacon is an index, not a medical service. Use the original record and your treating team to decide what information matters to you.</p>
+            <p className="label-eyebrow">{m.home.freshnessTitle}</p>
+            <h2 className="mt-3 text-xl font-semibold tracking-tight text-ink-950">{m.home.freshnessTitle}</h2>
+            <p className="mt-3 text-sm leading-6 text-slateish-600">{m.home.freshnessBody}</p>
             <div className="mt-5"><FreshnessBadge /></div>
           </div>
         </div>
@@ -153,24 +153,24 @@ export default async function HomePage() {
       <section className="container-page py-12 sm:py-16">
         <div className="grid gap-5 lg:grid-cols-[1.15fr_.85fr] lg:items-stretch">
           <div className="relative min-h-[330px] overflow-hidden rounded-[24px] bg-[#0d1d32]">
-            <Image src="/home-research-hero.jpg" alt="Researcher working with a microscope in a laboratory" fill sizes="(max-width: 1024px) 100vw, 58vw" className="object-cover opacity-80" />
+            <Image src="/home-research-hero.jpg" alt={m.home.badgeVerbatim} fill sizes="(max-width: 1024px) 100vw, 58vw" className="object-cover opacity-80" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0d1d32] via-[#0d1d32]/20 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#e5b182]">From research to record</p>
-              <h2 className="mt-2 max-w-lg text-2xl font-semibold tracking-tight text-white sm:text-3xl">The science is complex. The source trail should not be.</h2>
-              <p className="mt-3 max-w-xl text-sm leading-6 text-[#d0dce4]">Use TrialBeacon to move from a broad question to the public record behind it — without replacing the researchers, clinicians or original registry.</p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#e5b182]">{m.home.badgeVerbatim}</p>
+              <h2 className="mt-2 max-w-lg text-2xl font-semibold tracking-tight text-white sm:text-3xl">{m.home.sourcesTitle}</h2>
+              <p className="mt-3 max-w-xl text-sm leading-6 text-[#d0dce4]">{m.home.sourcesSub}</p>
             </div>
           </div>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
             <div className="relative min-h-[190px] overflow-hidden rounded-[24px] bg-[#e7f0f2]">
-              <Image src="/home-care-team.jpg" alt="A multidisciplinary medical team reviewing information together" fill sizes="(max-width: 1024px) 50vw, 42vw" className="object-cover" />
+              <Image src="/home-care-team.jpg" alt={m.home.afterCareTitle} fill sizes="(max-width: 1024px) 50vw, 42vw" className="object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0d1d32]/80 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-5"><p className="text-sm font-semibold text-white">Bring the original source to the care conversation.</p></div>
+              <div className="absolute inset-x-0 bottom-0 p-5"><p className="text-sm font-semibold text-white">{m.home.afterCareFoot}</p></div>
             </div>
             <div className="relative min-h-[190px] overflow-hidden rounded-[24px] bg-[#ede9e3]">
-              <Image src="/home-patient-conversation.jpg" alt="A person and their companion sitting together at home" fill sizes="(max-width: 1024px) 50vw, 42vw" className="object-cover" />
+              <Image src="/home-patient-conversation.jpg" alt={m.home.principles.traceable.title} fill sizes="(max-width: 1024px) 50vw, 42vw" className="object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0d1d32]/80 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-5"><p className="text-sm font-semibold text-white">Keep the search human, calm and verifiable.</p></div>
+              <div className="absolute inset-x-0 bottom-0 p-5"><p className="text-sm font-semibold text-white">{m.home.principles.traceable.body}</p></div>
             </div>
           </div>
         </div>
@@ -179,8 +179,8 @@ export default async function HomePage() {
       <section className="border-y border-slateish-200 bg-[#f7f9fa]">
         <div className="container-page py-12 sm:py-16">
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <div><p className="label-eyebrow">Browse the index</p><h2 className="mt-2 text-2xl font-semibold tracking-tight text-ink-950">Cancer types</h2><p className="mt-2 text-sm text-slateish-500">Start broad, then open the original record.</p></div>
-            <Link href="/cancers" className="btn-secondary text-[13px]">View all cancer types <span>→</span></Link>
+            <div><p className="label-eyebrow">{m.cancersIndex.eyebrow}</p><h2 className="mt-2 text-2xl font-semibold tracking-tight text-ink-950">{m.cancersIndex.title}</h2><p className="mt-2 text-sm text-slateish-500">{m.cancersIndex.subtitle}</p></div>
+            <Link href="/cancers" className="btn-secondary text-[13px]">{m.home.browseAllTypes} <span>→</span></Link>
           </div>
           <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {stats.map((c) => (
@@ -200,13 +200,13 @@ export default async function HomePage() {
         <div className="rounded-[24px] border border-[#d7e4e0] bg-[#f3f7f5] p-6 sm:p-8">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-2xl">
-              <p className="label-eyebrow text-[#527080]">A useful next step</p>
-              <h2 className="mt-2 text-xl font-semibold tracking-tight text-[#173044] sm:text-2xl">Find once, then let the source trail come back to you.</h2>
-              <p className="mt-3 text-sm leading-6 text-[#527080]">Browse freely, follow a cancer type for weekly public updates, or unlock a print-ready discussion list when you need to bring several records into a care conversation.</p>
+              <p className="label-eyebrow text-[#527080]">{m.nav.getWeekly}</p>
+              <h2 className="mt-2 text-xl font-semibold tracking-tight text-[#173044] sm:text-2xl">{m.home.sourcesTitle}</h2>
+              <p className="mt-3 text-sm leading-6 text-[#527080]">{m.home.freshnessBody}</p>
             </div>
             <div className="flex shrink-0 flex-wrap gap-3">
-              <Link href="/alerts" className="btn-secondary border-[#b8cbc7] bg-white text-[13px]">Set a weekly alert <span>→</span></Link>
-              <Link href="/pro" className="btn-primary bg-[#2e5747] text-[13px] hover:bg-[#254a3b]">Explore Pro <span>→</span></Link>
+              <Link href="/alerts" className="btn-secondary border-[#b8cbc7] bg-white text-[13px]">{m.nav.getWeekly} <span>→</span></Link>
+              <Link href="/pro" className="btn-primary bg-[#2e5747] text-[13px] hover:bg-[#254a3b]">{m.pricing.nav} <span>→</span></Link>
             </div>
           </div>
         </div>
@@ -214,7 +214,7 @@ export default async function HomePage() {
 
       <section className="container-page py-12 sm:py-16">
         <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
-          <div><p className="label-eyebrow">How to use it</p><h2 className="mt-2 text-2xl font-semibold tracking-tight text-ink-950 sm:text-3xl">Designed for verification, not persuasion.</h2><p className="mt-4 text-sm leading-6 text-slateish-600">The product stays deliberately narrow: help you find public records, understand where they came from and take the source to a conversation with your care team.</p></div>
+          <div><p className="label-eyebrow">{m.home.principlesTitle}</p><h2 className="mt-2 text-2xl font-semibold tracking-tight text-ink-950 sm:text-3xl">{m.home.principles.traceable.title}</h2><p className="mt-4 text-sm leading-6 text-slateish-600">{m.home.principles.traceable.body}</p></div>
           <div className="grid gap-3 sm:grid-cols-3">{PRINCIPLES.map((item) => <div key={item.number} className="border-t-2 border-[#d58f5b] pt-4"><div className="text-xs font-semibold tabular-nums text-[#b46f3f]">{item.number}</div><h3 className="mt-3 text-sm font-semibold text-ink-950">{item.title}</h3><p className="mt-2 text-[13px] leading-5 text-slateish-600">{item.body}</p></div>)}</div>
         </div>
       </section>
@@ -222,7 +222,7 @@ export default async function HomePage() {
       <section className="relative z-10 overflow-hidden border-t border-[#d8e2df] bg-[#e8f0ed] text-[#173044]">
         <div className="absolute inset-0 bg-[url('/home-side-texture.jpg')] bg-cover bg-center opacity-30" aria-hidden="true" />
         <div className="container-page relative py-12 sm:py-16">
-          <div className="flex flex-wrap items-end justify-between gap-5"><div><p className="label-eyebrow text-[#527080]">Source map</p><h2 className="mt-2 text-2xl font-semibold tracking-tight text-[#173044]">Where the records come from</h2></div><Link href="/sources" className="btn-secondary border-[#b8cbc7] bg-white/70 text-[#173044] hover:border-[#7ea39b] hover:bg-white">Sources & methodology <span>→</span></Link></div>
+          <div className="flex flex-wrap items-end justify-between gap-5"><div><p className="label-eyebrow text-[#527080]">{m.home.sourcesTitle}</p><h2 className="mt-2 text-2xl font-semibold tracking-tight text-[#173044]">{m.home.sourcesTitle}</h2></div><Link href="/sources" className="btn-secondary border-[#b8cbc7] bg-white/70 text-[#173044] hover:border-[#7ea39b] hover:bg-white">{m.home.sourcesCta} <span>→</span></Link></div>
           <div className="mt-8 grid gap-3 sm:grid-cols-3">{SOURCE_GROUPS.map((group) => <div key={group.label} className="rounded-2xl border border-white/70 bg-white/60 p-5 backdrop-blur-sm"><div className="text-xs font-semibold uppercase tracking-[0.14em] text-[#527080]">{group.label}</div><div className="mt-4 space-y-2">{group.items.map((item) => <div key={item} className="flex items-center gap-2 text-sm font-medium text-[#173044]"><span className="h-1.5 w-1.5 rounded-full bg-[#c9824f]" />{item}</div>)}</div></div>)}</div>
           <p className="mt-8 text-xs leading-5 text-[#527080]">The index is informational only. Records can change on the official source, and nothing here implies suitability, efficacy or medical advice.</p>
         </div>
