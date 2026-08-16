@@ -3,7 +3,7 @@ import type { Messages } from './en';
 export const ja: Messages = {
   nav: {
     cancerTypes: 'がんの種類',
-    afterCare: 'After Care',
+    afterCare: '治療後ケア',
     changeTracker: '変更トラッカー',
     sources: '情報源',
     alerts: '更新通知',

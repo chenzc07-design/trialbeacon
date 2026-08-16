@@ -77,9 +77,7 @@ export default async function HomePage() {
                 </div>
               </div>
               <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-xs text-[#527080]">
-                <span>Search by condition, phase or NCT number</span>
-                <span className="hidden h-1 w-1 self-center rounded-full bg-[#6f8799] sm:block" />
-                <span>No login required to browse</span>
+                <span>{m.common.searchPlaceholder}</span>
               </div>
             </div>
 
@@ -108,7 +106,7 @@ export default async function HomePage() {
                   </div>
                 </div>
                 <div className="space-y-3 border-t border-[#d7e4e0] pt-5 text-sm">
-                  <div className="flex items-center justify-between gap-4"><span className="text-[#527080]">{m.home.badgeRegions}</span><span className="font-medium text-[#173044]">US · Europe · China</span></div>
+                  <div className="flex items-center justify-between gap-4"><span className="text-[#527080]">{m.home.principles.threeRegions.title}</span><span className="font-medium text-[#173044]">US · Europe · China</span></div>
                   <div className="flex items-center justify-between gap-4"><span className="text-[#527080]">{m.common.lastVerified.split('{date}')[0].trim()}</span><span className="font-medium text-[#173044]">{SNAPSHOT_DATE}</span></div>
                   <div className="flex items-center justify-between gap-4"><span className="text-[#527080]">{m.home.principles.noRec.title}</span><span className="font-medium text-[#39806d]">{m.common.noRecommendations}</span></div>
                 </div>
@@ -214,8 +212,8 @@ export default async function HomePage() {
 
       <section className="container-page py-12 sm:py-16">
         <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
-          <div><p className="label-eyebrow">{m.home.principlesTitle}</p><h2 className="mt-2 text-2xl font-semibold tracking-tight text-ink-950 sm:text-3xl">{m.home.principles.traceable.title}</h2><p className="mt-4 text-sm leading-6 text-slateish-600">{m.home.principles.traceable.body}</p></div>
-          <div className="grid gap-3 sm:grid-cols-3">{PRINCIPLES.map((item) => <div key={item.number} className="border-t-2 border-[#d58f5b] pt-4"><div className="text-xs font-semibold tabular-nums text-[#b46f3f]">{item.number}</div><h3 className="mt-3 text-sm font-semibold text-ink-950">{item.title}</h3><p className="mt-2 text-[13px] leading-5 text-slateish-600">{item.body}</p></div>)}</div>
+          <div><p className="label-eyebrow">{m.home.principlesTitle}</p><h2 className="mt-2 text-2xl font-semibold tracking-tight text-ink-950 sm:text-3xl">{m.home.principlesTitle}</h2><p className="mt-4 text-sm leading-6 text-slateish-600">{m.home.principles.traceable.body}</p></div>
+          <div className="grid gap-3 sm:grid-cols-3">{[m.home.principles.official, m.home.principles.noRec, m.home.principles.traceable].map((item, index) => <div key={index} className="border-t-2 border-[#d58f5b] pt-4"><div className="text-xs font-semibold tabular-nums text-[#b46f3f]">{String(index + 1).padStart(2, '0')}</div><h3 className="mt-3 text-sm font-semibold text-ink-950">{item.title}</h3><p className="mt-2 text-[13px] leading-5 text-slateish-600">{item.body}</p></div>)}</div>
         </div>
       </section>
 

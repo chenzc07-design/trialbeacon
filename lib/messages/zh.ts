@@ -3,7 +3,7 @@ import type { Messages } from './en';
 export const zh: Messages = {
   nav: {
     cancerTypes: '癌症类型',
-    afterCare: 'After Care',
+    afterCare: '后线照护',
     changeTracker: '变更追踪',
     sources: '数据来源',
     alerts: '更新提醒',

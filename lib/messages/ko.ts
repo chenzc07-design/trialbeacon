@@ -3,7 +3,7 @@ import type { Messages } from './en';
 export const ko: Messages = {
   nav: {
     cancerTypes: '암 종류',
-    afterCare: 'After Care',
+    afterCare: '치료 후 관리',
     changeTracker: '변경 추적',
     sources: '출처',
     alerts: '업데이트 알림',

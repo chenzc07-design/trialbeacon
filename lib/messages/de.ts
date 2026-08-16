@@ -3,7 +3,7 @@ import type { Messages } from './en';
 export const de: Messages = {
   nav: {
     cancerTypes: 'Krebserkrankungen',
-    afterCare: 'After Care',
+    afterCare: 'Nachsorge',
     changeTracker: 'Änderungsverlauf',
     sources: 'Quellen',
     alerts: 'Benachrichtigungen',
