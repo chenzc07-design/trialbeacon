@@ -52,31 +52,32 @@ export default async function HomePage() {
     <div className="relative overflow-hidden bg-[#f7f9fa]">
       <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 z-20 hidden w-[max(0px,calc((100vw-1200px)/2))] bg-[url('/home-side-texture.jpg')] bg-cover bg-right opacity-75 blur-[1px] lg:block" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 z-20 hidden w-[max(0px,calc((100vw-1200px)/2))] scale-x-[-1] bg-[url('/home-side-texture.jpg')] bg-cover bg-left opacity-75 blur-[1px] lg:block" />
-      <section className="relative overflow-hidden bg-[#0d1d32] text-white">
-        <div className="pointer-events-none absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:56px_56px]" />
-        <div className="pointer-events-none absolute -right-36 -top-44 h-[520px] w-[520px] rounded-full border border-white/10 sm:h-[720px] sm:w-[720px]" />
-        <div className="pointer-events-none absolute -right-16 -top-24 h-[360px] w-[360px] rounded-full border border-white/10 sm:h-[520px] sm:w-[520px]" />
+      <section className="relative overflow-hidden border-b border-[#d7e4e0] bg-[#eaf2ef] text-[#173044]">
+        <div className="pointer-events-none absolute inset-0 bg-[url('/home-side-texture.jpg')] bg-cover bg-center opacity-35" />
+        <div className="pointer-events-none absolute -right-36 -top-44 h-[520px] w-[520px] rounded-full border border-[#b9d0ca]/70 sm:h-[720px] sm:w-[720px]" />
+        <div className="pointer-events-none absolute -right-16 -top-24 h-[360px] w-[360px] rounded-full border border-[#b9d0ca]/70 sm:h-[520px] sm:w-[520px]" />
 
         <div className="container-page relative py-12 sm:py-20 lg:py-24">
+          <div className="pointer-events-none absolute -right-10 top-10 hidden h-[360px] w-[420px] overflow-hidden rounded-[40px] opacity-55 shadow-[0_30px_80px_rgba(53,91,91,.16)] lg:block"><Image src="/home-research-hero.jpg" alt="" fill sizes="420px" className="object-cover" /></div>
           <div className="grid gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,.95fr)] lg:items-center lg:gap-20">
             <div>
-              <div className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#a9c5d7]">
+              <div className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#527080]">
                 <span className="h-2 w-2 rounded-full bg-[#e5a56b] shadow-[0_0_0_5px_rgba(229,165,107,.14)]" />
                 Independent clinical research index
               </div>
-              <h1 className="mt-6 max-w-3xl text-[34px] font-semibold leading-[1.08] tracking-[-0.04em] text-white sm:text-[50px] lg:text-[62px]">
+              <h1 className="mt-6 max-w-3xl text-[34px] font-semibold leading-[1.08] tracking-[-0.04em] text-[#173044] sm:text-[50px] lg:text-[62px]">
                 A clearer way to read the cancer trial landscape.
               </h1>
-              <p className="mt-6 max-w-2xl text-[15px] leading-7 text-[#c8d5df] sm:text-[17px]">
+              <p className="mt-6 max-w-2xl text-[15px] leading-7 text-[#527080] sm:text-[17px]">
                 Public clinical-trial registrations, guideline indexes and regulatory notices — gathered from official sources and linked back to the original record.
               </p>
 
-              <div className="mt-8 max-w-2xl rounded-2xl bg-white p-2 shadow-[0_20px_60px_rgba(0,0,0,.22)] sm:flex sm:items-center">
+              <div className="mt-8 max-w-2xl rounded-2xl bg-white/90 p-2 shadow-[0_20px_60px_rgba(53,91,91,.16)] backdrop-blur-sm sm:flex sm:items-center">
                 <div className="min-w-0 flex-1 [&_form]:!border-0 [&_form]:!shadow-none [&_input]:!bg-transparent [&_input]:!text-ink-950 [&_input]:!placeholder:text-slateish-400 [&_button]:!bg-[#0d1d32] [&_button]:hover:!bg-[#18324f]">
                   <SearchBox size="lg" />
                 </div>
               </div>
-              <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-xs text-[#a9bac8]">
+              <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-xs text-[#527080]">
                 <span>Search by condition, phase or NCT number</span>
                 <span className="hidden h-1 w-1 self-center rounded-full bg-[#6f8799] sm:block" />
                 <span>No login required to browse</span>
@@ -84,32 +85,32 @@ export default async function HomePage() {
             </div>
 
             <div className="relative lg:pt-4">
-              <div className="rounded-[26px] border border-white/15 bg-white/[0.07] p-5 shadow-[0_24px_70px_rgba(0,0,0,.18)] backdrop-blur-sm sm:p-6">
-                <div className="flex items-start justify-between gap-5 border-b border-white/10 pb-5">
+              <div className="rounded-[26px] border border-white/80 bg-white/75 p-5 shadow-[0_24px_70px_rgba(53,91,91,.14)] backdrop-blur-sm sm:p-6">
+                <div className="flex items-start justify-between gap-5 border-b border-[#d7e4e0] pb-5">
                   <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#a9c5d7]">Registry pulse</p>
-                    <p className="mt-2 text-sm text-[#d8e2e9]">What is currently indexed</p>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#527080]">Registry pulse</p>
+                    <p className="mt-2 text-sm text-[#527080]">What is currently indexed</p>
                   </div>
-                  <span className="rounded-full border border-[#8bc6b3]/30 bg-[#8bc6b3]/10 px-2.5 py-1 text-[11px] font-medium text-[#b8e4d4]">Live + verified</span>
+                  <span className="rounded-full border border-[#8bc6b3]/30 bg-[#8bc6b3]/10 px-2.5 py-1 text-[11px] font-medium text-[#39806d]">Live + verified</span>
                 </div>
                 <div className="grid grid-cols-2 gap-3 py-5">
-                  <div className="rounded-2xl bg-white/[0.08] p-4">
-                    <div className="text-3xl font-semibold tracking-tight text-white">{totalRecords}+</div>
-                    <div className="mt-1 text-xs text-[#a9bac8]">indexed records</div>
+                  <div className="rounded-2xl bg-[#edf4f1] p-4">
+                    <div className="text-3xl font-semibold tracking-tight text-[#173044]">{totalRecords}+</div>
+                    <div className="mt-1 text-xs text-[#527080]">indexed records</div>
                   </div>
-                  <div className="rounded-2xl bg-white/[0.08] p-4">
-                    <div className="text-3xl font-semibold tracking-tight text-white">{stats.length}</div>
-                    <div className="mt-1 text-xs text-[#a9bac8]">cancer types</div>
+                  <div className="rounded-2xl bg-[#edf4f1] p-4">
+                    <div className="text-3xl font-semibold tracking-tight text-[#173044]">{stats.length}</div>
+                    <div className="mt-1 text-xs text-[#527080]">cancer types</div>
                   </div>
                 </div>
-                <div className="space-y-3 border-t border-white/10 pt-5 text-sm">
-                  <div className="flex items-center justify-between gap-4"><span className="text-[#a9bac8]">Regions covered</span><span className="font-medium text-white">US · Europe · China</span></div>
-                  <div className="flex items-center justify-between gap-4"><span className="text-[#a9bac8]">Last verified</span><span className="font-medium text-white">{SNAPSHOT_DATE}</span></div>
-                  <div className="flex items-center justify-between gap-4"><span className="text-[#a9bac8]">Record policy</span><span className="font-medium text-[#b8e4d4]">No ranking</span></div>
+                <div className="space-y-3 border-t border-[#d7e4e0] pt-5 text-sm">
+                  <div className="flex items-center justify-between gap-4"><span className="text-[#527080]">Regions covered</span><span className="font-medium text-[#173044]">US · Europe · China</span></div>
+                  <div className="flex items-center justify-between gap-4"><span className="text-[#527080]">Last verified</span><span className="font-medium text-[#173044]">{SNAPSHOT_DATE}</span></div>
+                  <div className="flex items-center justify-between gap-4"><span className="text-[#527080]">Record policy</span><span className="font-medium text-[#39806d]">No ranking</span></div>
                 </div>
               </div>
-              <div className="mt-4 flex items-center gap-3 px-1 text-xs text-[#a9bac8]">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#e5a56b] text-[#0d1d32]">↗</span>
+              <div className="mt-4 flex items-center gap-3 px-1 text-xs text-[#527080]">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#d99b69] text-white">↗</span>
                 <span>Every result keeps a direct link to its official source.</span>
               </div>
             </div>
@@ -181,7 +182,7 @@ export default async function HomePage() {
             {stats.map((c) => (
               <div key={c.slug} className="group flex min-h-[142px] flex-col rounded-2xl border border-slateish-200 bg-white p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#9bb4c0] hover:shadow-card-hover">
                 <Link href={`/cancers/${c.slug}`} className="flex flex-1 items-start gap-3">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#e8f0f3] text-[#31596c]"><CancerIcon slug={c.slug} className="h-6 w-6" /></span>
+                  <span className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-xl border border-[#d5e3df] bg-[#edf4f1]"><Image src={c.image} alt="" fill sizes="40px" className="object-cover opacity-85" /></span>
                   <span className="min-w-0"><span className="block text-[15px] font-semibold leading-tight text-ink-950">{m.cancers[c.slug].label}</span><span className="mt-1.5 block line-clamp-2 text-xs leading-5 text-slateish-500">{m.cancers[c.slug].descriptor}</span></span>
                 </Link>
                 <div className="mt-4 flex items-center justify-between border-t border-slateish-100 pt-3"><span className="text-[11px] tabular-nums text-slateish-500">{t(m, 'common.recordsIndexed', { n: c.total })}</span><FollowCancerButton slug={c.slug} /></div>
