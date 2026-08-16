@@ -58,7 +58,6 @@ export default async function HomePage() {
         <div className="pointer-events-none absolute -right-16 -top-24 h-[360px] w-[360px] rounded-full border border-[#b9d0ca]/70 sm:h-[520px] sm:w-[520px]" />
 
         <div className="container-page relative py-12 sm:py-20 lg:py-24">
-          <div className="pointer-events-none absolute -right-10 top-10 hidden h-[360px] w-[420px] overflow-hidden rounded-[40px] opacity-55 shadow-[0_30px_80px_rgba(53,91,91,.16)] lg:block"><Image src="/home-research-hero.jpg" alt="" fill sizes="420px" className="object-cover" /></div>
           <div className="grid gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,.95fr)] lg:items-center lg:gap-20">
             <div>
               <div className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#527080]">
@@ -85,6 +84,11 @@ export default async function HomePage() {
             </div>
 
             <div className="relative lg:pt-4">
+              <div className="relative mb-5 h-48 overflow-hidden rounded-[28px] border border-white/70 bg-[#dbe9e5] shadow-[0_20px_55px_rgba(53,91,91,.12)] sm:h-56">
+                <Image src="/home-research-hero.jpg" alt="Researcher working with a microscope in a laboratory" fill sizes="(max-width: 1024px) 100vw, 420px" className="object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#173044]/55 via-transparent to-transparent" />
+                <p className="absolute inset-x-0 bottom-0 p-5 text-xs font-medium tracking-wide text-white">From research to the official record</p>
+              </div>
               <div className="rounded-[26px] border border-white/80 bg-white/75 p-5 shadow-[0_24px_70px_rgba(53,91,91,.14)] backdrop-blur-sm sm:p-6">
                 <div className="flex items-start justify-between gap-5 border-b border-[#d7e4e0] pb-5">
                   <div>
