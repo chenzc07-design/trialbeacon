@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { baselineCancerStats } from '@/lib/data';
+import { liveCancerStats } from '@/lib/data';
 import { PageHero } from '@/components/PageHero';
 import { BeaconMotif } from '@/components/Motifs';
 import { FollowCancerButton } from '@/components/FollowCancerButton';
@@ -14,9 +14,11 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+export const revalidate = 3600;
+
 export default async function CancersPage() {
   const { messages: m } = await getServerMessages();
-  const stats = baselineCancerStats();
+  const stats = await liveCancerStats(80);
 
   return (
     <>
@@ -66,6 +68,9 @@ export default async function CancersPage() {
                 <div className="flex flex-wrap items-center gap-1.5">
                   <span className="chip border-navy-100 bg-navy-50 font-medium text-navy-800">
                     {t(m, 'common.recordsIndexed', { n: c.total })}
+                  </span>
+                  <span className="chip border-emerald-100 bg-emerald-50 text-emerald-700">
+                    {c.live ? '官方数据 · 近 1 小时更新' : '离线快照'}
                   </span>
                   <span className="chip border-slateish-200 bg-slateish-100 text-slateish-600">
                     {t(m, 'common.advancedLaterLine', { n: c.afterCare })}

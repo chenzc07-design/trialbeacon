@@ -328,6 +328,29 @@ export function baselineCancerStats() {
       total: items.length,
       afterCare: items.filter((i) => i.afterCare).length,
       regions: countsByRegion(items),
+      live: false,
     };
   });
+}
+
+/**
+ * Current index cards sourced from the official live registry first.
+ * The result intentionally uses the same bounded page size as the detail
+ * pages, so the index remains fast and never turns a card into a full export.
+ */
+export async function liveCancerStats(limit = 80) {
+  const results = await Promise.all(
+    CANCERS.map(async (c) => {
+      const feed = await getCancerFeed(c.slug, { limit });
+      return {
+        ...c,
+        total: feed.items.length,
+        afterCare: feed.items.filter((i) => i.afterCare).length,
+        regions: countsByRegion(feed.items),
+        live: feed.live,
+        fetchedAt: feed.fetchedAt,
+      };
+    })
+  );
+  return results;
 }
