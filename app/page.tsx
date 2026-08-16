@@ -49,7 +49,9 @@ export default async function HomePage() {
   const totalRecords = stats.reduce((sum, item) => sum + item.total, 0);
 
   return (
-    <>
+    <div className="relative overflow-hidden bg-[#f7f9fa]">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 z-20 hidden w-[max(0px,calc((100vw-1200px)/2))] bg-[url('/home-side-texture.jpg')] bg-cover bg-right opacity-75 blur-[1px] lg:block" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 z-20 hidden w-[max(0px,calc((100vw-1200px)/2))] scale-x-[-1] bg-[url('/home-side-texture.jpg')] bg-cover bg-left opacity-75 blur-[1px] lg:block" />
       <section className="relative overflow-hidden bg-[#0d1d32] text-white">
         <div className="pointer-events-none absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:56px_56px]" />
         <div className="pointer-events-none absolute -right-36 -top-44 h-[520px] w-[520px] rounded-full border border-white/10 sm:h-[720px] sm:w-[720px]" />
@@ -146,7 +148,7 @@ export default async function HomePage() {
       <section className="container-page py-12 sm:py-16">
         <div className="grid gap-5 lg:grid-cols-[1.15fr_.85fr] lg:items-stretch">
           <div className="relative min-h-[330px] overflow-hidden rounded-[24px] bg-[#0d1d32]">
-            <Image src="/tb-research.png" alt="Researcher working with a microscope in a laboratory" fill sizes="(max-width: 1024px) 100vw, 58vw" className="object-cover opacity-80" />
+            <Image src="/home-research-hero.jpg" alt="Researcher working with a microscope in a laboratory" fill sizes="(max-width: 1024px) 100vw, 58vw" className="object-cover opacity-80" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0d1d32] via-[#0d1d32]/20 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#e5b182]">From research to record</p>
@@ -156,12 +158,12 @@ export default async function HomePage() {
           </div>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
             <div className="relative min-h-[190px] overflow-hidden rounded-[24px] bg-[#e7f0f2]">
-              <Image src="/tb-medical-team.png" alt="A multidisciplinary medical team reviewing information together" fill sizes="(max-width: 1024px) 50vw, 42vw" className="object-cover" />
+              <Image src="/home-care-team.jpg" alt="A multidisciplinary medical team reviewing information together" fill sizes="(max-width: 1024px) 50vw, 42vw" className="object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0d1d32]/80 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-5"><p className="text-sm font-semibold text-white">Bring the original source to the care conversation.</p></div>
             </div>
             <div className="relative min-h-[190px] overflow-hidden rounded-[24px] bg-[#ede9e3]">
-              <Image src="/tb-patient-story.png" alt="A person and their companion sitting together at home" fill sizes="(max-width: 1024px) 50vw, 42vw" className="object-cover" />
+              <Image src="/home-patient-conversation.jpg" alt="A person and their companion sitting together at home" fill sizes="(max-width: 1024px) 50vw, 42vw" className="object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0d1d32]/80 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-5"><p className="text-sm font-semibold text-white">Keep the search human, calm and verifiable.</p></div>
             </div>
@@ -196,13 +198,14 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="bg-[#0d1d32] text-white">
-        <div className="container-page py-12 sm:py-16">
-          <div className="flex flex-wrap items-end justify-between gap-5"><div><p className="label-eyebrow text-[#a9c5d7]">Source map</p><h2 className="mt-2 text-2xl font-semibold tracking-tight text-white">Where the records come from</h2></div><Link href="/sources" className="btn-secondary border-white/20 bg-transparent text-white hover:border-white/40 hover:bg-white/10">Sources & methodology <span>→</span></Link></div>
-          <div className="mt-8 grid gap-3 sm:grid-cols-3">{SOURCE_GROUPS.map((group) => <div key={group.label} className="rounded-2xl border border-white/10 bg-white/[0.06] p-5"><div className="text-xs font-semibold uppercase tracking-[0.14em] text-[#a9c5d7]">{group.label}</div><div className="mt-4 space-y-2">{group.items.map((item) => <div key={item} className="flex items-center gap-2 text-sm text-white"><span className="h-1.5 w-1.5 rounded-full bg-[#e5a56b]" />{item}</div>)}</div></div>)}</div>
-          <p className="mt-8 text-xs leading-5 text-[#9eb0bf]">The index is informational only. Records can change on the official source, and nothing here implies suitability, efficacy or medical advice.</p>
+      <section className="relative z-10 overflow-hidden border-t border-[#d8e2df] bg-[#e8f0ed] text-[#173044]">
+        <div className="absolute inset-0 bg-[url('/home-side-texture.jpg')] bg-cover bg-center opacity-30" aria-hidden="true" />
+        <div className="container-page relative py-12 sm:py-16">
+          <div className="flex flex-wrap items-end justify-between gap-5"><div><p className="label-eyebrow text-[#527080]">Source map</p><h2 className="mt-2 text-2xl font-semibold tracking-tight text-[#173044]">Where the records come from</h2></div><Link href="/sources" className="btn-secondary border-[#b8cbc7] bg-white/70 text-[#173044] hover:border-[#7ea39b] hover:bg-white">Sources & methodology <span>→</span></Link></div>
+          <div className="mt-8 grid gap-3 sm:grid-cols-3">{SOURCE_GROUPS.map((group) => <div key={group.label} className="rounded-2xl border border-white/70 bg-white/60 p-5 backdrop-blur-sm"><div className="text-xs font-semibold uppercase tracking-[0.14em] text-[#527080]">{group.label}</div><div className="mt-4 space-y-2">{group.items.map((item) => <div key={item} className="flex items-center gap-2 text-sm font-medium text-[#173044]"><span className="h-1.5 w-1.5 rounded-full bg-[#c9824f]" />{item}</div>)}</div></div>)}</div>
+          <p className="mt-8 text-xs leading-5 text-[#527080]">The index is informational only. Records can change on the official source, and nothing here implies suitability, efficacy or medical advice.</p>
         </div>
       </section>
-    </>
+    </div>
   );
 }
