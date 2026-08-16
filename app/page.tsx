@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { baselineCancerStats, SNAPSHOT_DATE } from '@/lib/data';
 import { SOURCES } from '@/lib/sources';
 import { SearchBox } from '@/components/SearchBox';
@@ -138,6 +139,32 @@ export default async function HomePage() {
             <h2 className="mt-3 text-xl font-semibold tracking-tight text-ink-950">A calm starting point for a difficult search.</h2>
             <p className="mt-3 text-sm leading-6 text-slateish-600">TrialBeacon is an index, not a medical service. Use the original record and your treating team to decide what information matters to you.</p>
             <div className="mt-5"><FreshnessBadge /></div>
+          </div>
+        </div>
+      </section>
+
+      <section className="container-page py-12 sm:py-16">
+        <div className="grid gap-5 lg:grid-cols-[1.15fr_.85fr] lg:items-stretch">
+          <div className="relative min-h-[330px] overflow-hidden rounded-[24px] bg-[#0d1d32]">
+            <Image src="/tb-research.png" alt="Researcher working with a microscope in a laboratory" fill sizes="(max-width: 1024px) 100vw, 58vw" className="object-cover opacity-80" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0d1d32] via-[#0d1d32]/20 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#e5b182]">From research to record</p>
+              <h2 className="mt-2 max-w-lg text-2xl font-semibold tracking-tight text-white sm:text-3xl">The science is complex. The source trail should not be.</h2>
+              <p className="mt-3 max-w-xl text-sm leading-6 text-[#d0dce4]">Use TrialBeacon to move from a broad question to the public record behind it — without replacing the researchers, clinicians or original registry.</p>
+            </div>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
+            <div className="relative min-h-[190px] overflow-hidden rounded-[24px] bg-[#e7f0f2]">
+              <Image src="/tb-medical-team.png" alt="A multidisciplinary medical team reviewing information together" fill sizes="(max-width: 1024px) 50vw, 42vw" className="object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0d1d32]/80 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-5"><p className="text-sm font-semibold text-white">Bring the original source to the care conversation.</p></div>
+            </div>
+            <div className="relative min-h-[190px] overflow-hidden rounded-[24px] bg-[#ede9e3]">
+              <Image src="/tb-patient-story.png" alt="A person and their companion sitting together at home" fill sizes="(max-width: 1024px) 50vw, 42vw" className="object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0d1d32]/80 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-5"><p className="text-sm font-semibold text-white">Keep the search human, calm and verifiable.</p></div>
+            </div>
           </div>
         </div>
       </section>
