@@ -55,7 +55,7 @@ export interface FeedResult {
  */
 export async function getCancerFeed(
   slug: string,
-  opts: { afterCareOnly?: boolean; limit?: number } = {}
+  opts: { afterCareOnly?: boolean; limit?: number; revalidate?: number } = {}
 ): Promise<FeedResult> {
   const cancer = getCancer(slug);
   const fetchedAt = new Date().toISOString();
@@ -78,7 +78,8 @@ export async function getCancerFeed(
             'ACTIVE_NOT_RECRUITING',
           ],
         },
-        [slug]
+        [slug],
+        opts.revalidate ?? 3600
       );
       live = trials.length > 0;
     } catch {

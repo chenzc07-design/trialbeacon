@@ -44,7 +44,7 @@ export default async function CancerDetailPage({
   const cancer = getCancer(slug);
   if (!cancer) notFound();
 
-  const feed = await getCancerFeed(slug, { limit: 40 });
+  const feed = await getCancerFeed(slug, { limit: 40, revalidate: 0 });
 
   return (
     <>
@@ -53,7 +53,6 @@ export default async function CancerDetailPage({
         eyebrow={m.cancersIndex.title}
         title={m.cancers[slug].label}
         intro={`${m.cancers[slug].descriptor}. ${t(m, 'cancerDetail.indexed', { n: feed.items.length })}`}
-        freshness
         meta={
           <div className="flex flex-wrap items-center gap-2">
             <FollowCancerButton slug={slug} />
