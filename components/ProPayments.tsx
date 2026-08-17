@@ -53,7 +53,7 @@ export function ProPayments() {
   );
   const loading = (
     <p className="rounded-lg border border-slateish-200 bg-slateish-50 px-3 py-2 text-[12px] text-slateish-600">
-      Loading PayPal…
+      {m.pricing.paypalLoading}
     </p>
   );
 
@@ -118,7 +118,7 @@ export function ProPayments() {
           onClick={() => setActive(plan)}
           className="w-full rounded-lg bg-[#2e5747] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-[#254a3b]"
         >
-          {plan === 'single' ? m.pricing.payWithPaypal : m.pricing.upgradeCta || 'Subscribe with PayPal'}
+          {plan === 'single' ? m.pricing.payWithPaypal : m.pricing.upgradeCta}
         </button>
       );
     }

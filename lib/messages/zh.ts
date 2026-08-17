@@ -742,6 +742,7 @@ export const zh: Messages = {
     monthlyPer: ' / 月',
     monthlyDesc: '更高的导出次数、你保存的关注列表，以及可打印的 PDF——在方案有效期内。',
     payWithPaypal: '使用 PayPal 支付',
+    paypalLoading: '正在加载 PayPal…',
     paypalUnavailable: 'PayPal 尚未配置，敬请期待。',
     comingSoon: '即将支持',
     otherMethodsTitle: '其他支付方式',

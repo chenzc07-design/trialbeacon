@@ -808,6 +808,7 @@ export const en = {
     monthlyDesc:
       'Higher export limits, your saved follow list, and print-ready PDFs — while your plan is active.',
     payWithPaypal: 'Pay with PayPal',
+    paypalLoading: 'Loading PayPal…',
     paypalUnavailable: 'PayPal is not configured yet. Please check back soon.',
     comingSoon: 'Coming soon',
     otherMethodsTitle: 'Other payment methods',
