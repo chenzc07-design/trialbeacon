@@ -39,6 +39,7 @@ export function SiteHeader() {
 
   const NAV = [
     { href: '/after-care', label: m.nav.afterCare },
+    { href: '/research', label: m.nav.research },
     {
       href: '/cancers',
       label: m.nav.cancerTypes,

@@ -1,0 +1,4878 @@
+[
+  {
+    "id": "NCT07251582",
+    "title": "Effect of Infusion Timing on Pathologic Response to Neoadjuvant Immunotherapy in Resectable Non-Small Cell Lung Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT07251582",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "Hunan Province Tumor Hospital",
+    "interventions": [
+      "Time of Day-based Assignment for Infusion of Immune Checkpoint Inhibitor (e.g., toripalimab, or pembrolizumab) + platinum-based chemotherapy"
+    ],
+    "modality": [
+      "targeted",
+      "immunotherapy"
+    ],
+    "targetedEvidence": [
+      "inhibitor"
+    ],
+    "immuneEvidence": [
+      "checkpoint inhibitor",
+      "immune checkpoint",
+      "immunotherapy",
+      "pembrolizumab",
+      "toripalimab"
+    ],
+    "biomarkerEvidence": [
+      "fusion"
+    ],
+    "frontierEvidence": [],
+    "score": 7
+  },
+  {
+    "id": "NCT07195695",
+    "title": "Beamion LUNG-3: Adjuvant Zongertinib vs Standard Treatment in People With Completely Resected Stage II-IIIB NSCLC Harboring Activating HER2 TKD Mutations",
+    "url": "https://clinicaltrials.gov/study/NCT07195695",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "Boehringer Ingelheim",
+    "interventions": [
+      "Zongertinib",
+      "Pembrolizumab",
+      "Atezolizumab",
+      "Durvalumab",
+      "Nivolumab"
+    ],
+    "modality": [
+      "targeted",
+      "immunotherapy"
+    ],
+    "targetedEvidence": [
+      "her2"
+    ],
+    "immuneEvidence": [
+      "atezolizumab",
+      "durvalumab",
+      "nivolumab",
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [
+      "mutation"
+    ],
+    "frontierEvidence": [],
+    "score": 6
+  },
+  {
+    "id": "NCT06772623",
+    "title": "Study to Evaluate Adverse Events and Efficacy of Intravenous (IV) Telisotuzumab Adizutecan in Combination With a PD-1 Immune Checkpoint Inhibitor in Adult Participants With Advanced or Metastatic Non-Squamous NSCLC With No Prior Treatment for Advanced Disease, and No Actionable Genomic Alterations",
+    "url": "https://clinicaltrials.gov/study/NCT06772623",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "AbbVie",
+    "interventions": [
+      "Telisotuzumab Adizutecan",
+      "Budigalimab",
+      "Pembrolizumab",
+      "Pembrolizumab",
+      "Carboplatin",
+      "Pemetrexed",
+      "Cisplatin"
+    ],
+    "modality": [
+      "targeted",
+      "immunotherapy"
+    ],
+    "targetedEvidence": [
+      "inhibitor"
+    ],
+    "immuneEvidence": [
+      "checkpoint inhibitor",
+      "immune checkpoint",
+      "pd-1",
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [
+      "genomic"
+    ],
+    "frontierEvidence": [],
+    "score": 6
+  },
+  {
+    "id": "NCT07166406",
+    "title": "Testing Immunotherapy With or Without Stereotactic Body Radiation Therapy in Patients With Advanced Liver Cancer, HELIO-RT Trial",
+    "url": "https://clinicaltrials.gov/study/NCT07166406",
+    "cancers": [
+      "liver"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "NRG Oncology",
+    "interventions": [
+      "Atezolizumab",
+      "Bevacizumab",
+      "Biospecimen Collection",
+      "Computed Tomography",
+      "Durvalumab",
+      "Ipilimumab",
+      "Magnetic Resonance Imaging",
+      "Nivolumab",
+      "Positron Emission Tomography",
+      "Questionnaire Administration",
+      "Stereotactic Body Radiation Therapy",
+      "Tremelimumab"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "atezolizumab",
+      "durvalumab",
+      "immunotherapy",
+      "ipilimumab",
+      "nivolumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 5
+  },
+  {
+    "id": "NCT06416410",
+    "title": "JAB-21822 Combined With JAB-3312 Compared SOC in the First Line for Treatment of Advanced Non-small Cell Lung Cancer With KRAS p.G12C Mutation",
+    "url": "https://clinicaltrials.gov/study/NCT06416410",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "Allist Pharmaceuticals, Inc.",
+    "interventions": [
+      "JAB-21822",
+      "Tislelizumab",
+      "JAB-3312",
+      "Pemetrexed",
+      "Carboplatin"
+    ],
+    "modality": [
+      "targeted",
+      "immunotherapy"
+    ],
+    "targetedEvidence": [
+      "g12c",
+      "kras"
+    ],
+    "immuneEvidence": [
+      "tislelizumab"
+    ],
+    "biomarkerEvidence": [
+      "mutation"
+    ],
+    "frontierEvidence": [],
+    "score": 4
+  },
+  {
+    "id": "NCT06875310",
+    "title": "A Study of Adagrasib Plus Pembrolizumab Plus Chemotherapy vs. Placebo Plus Pembrolizumab Plus Chemotherapy in Participants With Previously Untreated Non-squamous Non-small Cell Lung Cancer With KRAS G12C Mutation (KRYSTAL-4)",
+    "url": "https://clinicaltrials.gov/study/NCT06875310",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "Mirati Therapeutics Inc.",
+    "interventions": [
+      "Adagrasib",
+      "Pembrolizumab",
+      "Carboplatin",
+      "Pemetrexed",
+      "Placebo",
+      "Cisplatin"
+    ],
+    "modality": [
+      "targeted",
+      "immunotherapy"
+    ],
+    "targetedEvidence": [
+      "g12c",
+      "kras"
+    ],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [
+      "mutation"
+    ],
+    "frontierEvidence": [],
+    "score": 4
+  },
+  {
+    "id": "NCT06561386",
+    "title": "A Study to Compare the Efficacy of Nivolumab and Relatlimab Plus Chemotherapy vs Pembrolizumab Plus Chemotherapy for Stage IV/Recurrent Non-squamous Non-small Cell Lung Cancer With PD-L1 Expression ≥ 1%",
+    "url": "https://clinicaltrials.gov/study/NCT06561386",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Bristol-Myers Squibb",
+    "interventions": [
+      "Nivolumab",
+      "Relatlimab",
+      "Pembrolizumab",
+      "Carboplatin",
+      "Pemetrexed",
+      "Cisplatin"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "nivolumab",
+      "pd-l1",
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [
+      "expression"
+    ],
+    "frontierEvidence": [],
+    "score": 4
+  },
+  {
+    "id": "NCT07751055",
+    "title": "Neoadjuvant Chemoradiotherapy Combined With CTLA-4 Monoclonal Antibody Plus PD-1 Monoclonal Antibody for Locally Advanced Esophageal Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT07751055",
+    "cancers": [
+      "esophageal"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-07",
+    "sponsor": "Sun Yat-sen University",
+    "interventions": [
+      "Ipilimumab (1mg/kg)",
+      "Sinitilimab",
+      "Nab-paclitaxel + Cisplatin",
+      "IMRT combine with cisplatin concurrent chemotherapy"
+    ],
+    "modality": [
+      "targeted",
+      "immunotherapy"
+    ],
+    "targetedEvidence": [
+      "monoclonal antibody"
+    ],
+    "immuneEvidence": [
+      "ctla-4",
+      "ipilimumab",
+      "pd-1"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 4
+  },
+  {
+    "id": "NCT01174121",
+    "title": "Immunotherapy Using Tumor Infiltrating Lymphocytes for Patients With Metastatic Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT01174121",
+    "cancers": [
+      "breast",
+      "colorectal",
+      "ovarian",
+      "pancreatic"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Pembrolizumab (Keytruda)",
+      "Fludarabine",
+      "Cyclophosphamide",
+      "Aldesleukin",
+      "Young TIL"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "immunotherapy",
+      "pembrolizumab",
+      "tumor infiltrating lymphocyte"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [
+      "tumor infiltrating lymphocyte"
+    ],
+    "score": 4
+  },
+  {
+    "id": "NCT06762431",
+    "title": "Phase I/II Open-label Study Evaluating The Safety And Efficacy of Concomitant Administration of Anti-CD19 CAR T-cell Therapy and Lenalidomide in Refractory/Relapsed Chronic Lymphocytic Leukemia Patients.",
+    "url": "https://clinicaltrials.gov/study/NCT06762431",
+    "cancers": [
+      "leukemia",
+      "lymphoma"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "Vitebsk Regional Clinical Cancer Centre",
+    "interventions": [
+      "Lenalidomide",
+      "Lenalidomide",
+      "Obinutuzumab Injection [Gazyva]"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "car t",
+      "t-cell therapy"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [
+      "car t",
+      "t-cell therapy"
+    ],
+    "score": 4
+  },
+  {
+    "id": "NCT06549855",
+    "title": "PD-1 Inhibitor Combined With Progesterone Treatment in FST for Patients With MMRd Endometrial Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT06549855",
+    "cancers": [
+      "ovarian"
+    ],
+    "phase": "Not applicable",
+    "status": "Recruiting",
+    "date": "2026-08-10",
+    "sponsor": "Peking University People's Hospital",
+    "interventions": [
+      "Sintilimab or Pembrolizumab and medroxyprogesterone acetate (MPA)/ megestrol acetate (MA)"
+    ],
+    "modality": [
+      "targeted",
+      "immunotherapy"
+    ],
+    "targetedEvidence": [
+      "inhibitor"
+    ],
+    "immuneEvidence": [
+      "pd-1",
+      "pembrolizumab",
+      "sintilimab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 4
+  },
+  {
+    "id": "NCT05237986",
+    "title": "Cognitive Aftereffects of Neurotoxicity in Children and Young Adults With Relapsed/Refractory Hematologic Malignancies Who Receive CAR T-cell Therapy",
+    "url": "https://clinicaltrials.gov/study/NCT05237986",
+    "cancers": [
+      "leukemia",
+      "lymphoma"
+    ],
+    "phase": null,
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "car t",
+      "t-cell therapy"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [
+      "car t",
+      "t-cell therapy"
+    ],
+    "score": 4
+  },
+  {
+    "id": "NCT05168163",
+    "title": "Atezolizumab in Combination With a Multi-Kinase Inhibitor for the Treatment of Unresectable, Locally Advanced, or Metastatic Liver Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT05168163",
+    "cancers": [
+      "liver"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-04",
+    "sponsor": "Academic and Community Cancer Research United",
+    "interventions": [
+      "Atezolizumab",
+      "Cabozantinib",
+      "Lenvatinib"
+    ],
+    "modality": [
+      "targeted",
+      "immunotherapy"
+    ],
+    "targetedEvidence": [
+      "inhibitor",
+      "kinase inhibitor"
+    ],
+    "immuneEvidence": [
+      "atezolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 3
+  },
+  {
+    "id": "NCT07381634",
+    "title": "The Safety and Efficacy of Ondansetron in Reducing Immune Checkpoint Inhibitor-Related Toxicities",
+    "url": "https://clinicaltrials.gov/study/NCT07381634",
+    "cancers": [
+      "liver"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-04",
+    "sponsor": "First Affiliated Hospital of Wenzhou Medical University",
+    "interventions": [
+      "ondansetron"
+    ],
+    "modality": [
+      "targeted",
+      "immunotherapy"
+    ],
+    "targetedEvidence": [
+      "inhibitor"
+    ],
+    "immuneEvidence": [
+      "checkpoint inhibitor",
+      "immune checkpoint"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 3
+  },
+  {
+    "id": "NCT03866382",
+    "title": "Testing the Effectiveness of Two Immunotherapy Drugs (Nivolumab and Ipilimumab) With One Anti-cancer Targeted Drug (Cabozantinib) for Rare Genitourinary Tumors",
+    "url": "https://clinicaltrials.gov/study/NCT03866382",
+    "cancers": [
+      "prostate"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-11",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Biospecimen Collection",
+      "Bone Scan",
+      "Cabozantinib S-malate",
+      "Computed Tomography",
+      "Echocardiography Test",
+      "Ipilimumab",
+      "Magnetic Resonance Imaging",
+      "Nivolumab",
+      "Positron Emission Tomography"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "immunotherapy",
+      "ipilimumab",
+      "nivolumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 3
+  },
+  {
+    "id": "NCT03526835",
+    "title": "A Study of Bispecific Antibody MCLA-158 in Patients With Advanced Solid Tumors",
+    "url": "https://clinicaltrials.gov/study/NCT03526835",
+    "cancers": [
+      "esophageal",
+      "gastric"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-07-29",
+    "sponsor": "Merus B.V.",
+    "interventions": [
+      "MCLA-158",
+      "MCLA-158 + Pembrolizumab",
+      "MCLA-158 + FOLFIRI",
+      "MCLA-158 + FOLFOX"
+    ],
+    "modality": [
+      "targeted",
+      "immunotherapy"
+    ],
+    "targetedEvidence": [
+      "bispecific antibody"
+    ],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [
+      "bispecific"
+    ],
+    "score": 3
+  },
+  {
+    "id": "NCT06128551",
+    "title": "Study of Elironrasib and Daraxonrasib as Monotherapies and Combination Therapy in Participants With Advanced KRAS G12C Mutant Solid Tumors",
+    "url": "https://clinicaltrials.gov/study/NCT06128551",
+    "cancers": [
+      "esophageal",
+      "gastric"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-03",
+    "sponsor": "Revolution Medicines, Inc.",
+    "interventions": [
+      "Elironrasib",
+      "Daraxonrasib"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "g12c",
+      "kras"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [
+      "mutant"
+    ],
+    "frontierEvidence": [],
+    "score": 3
+  },
+  {
+    "id": "NCT07629960",
+    "title": "A First-in-Human Trial of BLU-924 (SAR449336) in Advanced Solid Tumors Harboring KRAS Mutations",
+    "url": "https://clinicaltrials.gov/study/NCT07629960",
+    "cancers": [
+      "colorectal",
+      "pancreatic"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-10",
+    "sponsor": "Blueprint Medicines Corporation",
+    "interventions": [
+      "BLU-924"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "kras"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [
+      "mutation"
+    ],
+    "frontierEvidence": [
+      "first-in-human"
+    ],
+    "score": 3
+  },
+  {
+    "id": "NCT06885697",
+    "title": "Anti-Mesothelin TNaive/SCM hYP218 (TNhYP218) CAR T Cells in Participants With Mesothelin-Expressing Solid Tumors Including Mesothelioma",
+    "url": "https://clinicaltrials.gov/study/NCT06885697",
+    "cancers": [
+      "colorectal",
+      "gastric",
+      "ovarian",
+      "pancreatic"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-11",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "mesothelin expression testing",
+      "TNhYP217 CAR T Cells",
+      "fludarabine",
+      "cyclophosphamide"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "car t"
+    ],
+    "biomarkerEvidence": [
+      "expression"
+    ],
+    "frontierEvidence": [
+      "car t"
+    ],
+    "score": 3
+  },
+  {
+    "id": "NCT05288205",
+    "title": "Phase 1/2a Study of JAB-21822 Plus JAB-3312 in Patients With Advanced Solid Tumors Harboring KRAS p.G12C Mutation",
+    "url": "https://clinicaltrials.gov/study/NCT05288205",
+    "cancers": [
+      "colorectal",
+      "lung",
+      "pancreatic"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "Allist Pharmaceuticals, Inc.",
+    "interventions": [
+      "JAB-21822",
+      "JAB-3312"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "g12c",
+      "kras"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [
+      "mutation"
+    ],
+    "frontierEvidence": [],
+    "score": 3
+  },
+  {
+    "id": "NCT05886049",
+    "title": "A Phase 1b Study of Menin Inhibitor SNDX- 5613 in Combination With Daunorubicin and Cytarabine in Newly Diagnosed Patients With Acute Myeloid Leukemia and NPM1 Mutated/FLT3 Wildtype or MLL/KMT2A Rearranged or NUP98 Alterations Disease",
+    "url": "https://clinicaltrials.gov/study/NCT05886049",
+    "cancers": [
+      "leukemia"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Biospecimen Collection",
+      "Bone Marrow Aspiration",
+      "Bone Marrow Biopsy",
+      "Cytarabine",
+      "Daunorubicin",
+      "Multigated Acquisition Scan",
+      "Revumenib",
+      "Transthoracic Echocardiography Test"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "flt3",
+      "inhibitor",
+      "menin"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 3
+  },
+  {
+    "id": "NCT07214532",
+    "title": "Signatera-Guided CDK4/6 Inhibitor Therapy in Breast Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT07214532",
+    "cancers": [
+      "breast"
+    ],
+    "phase": "Not applicable",
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "Natera, Inc.",
+    "interventions": [
+      "ctDNA-Guided Treatment Strategy"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "cdk4",
+      "cdk4/6",
+      "inhibitor"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 3
+  },
+  {
+    "id": "NCT05677490",
+    "title": "mFOLFIRINOX Versus mFOLFOX With or Without Nivolumab for the Treatment of Advanced, Unresectable, or Metastatic HER2 Negative Esophageal, Gastroesophageal Junction, and Gastric Adenocarcinoma",
+    "url": "https://clinicaltrials.gov/study/NCT05677490",
+    "cancers": [
+      "esophageal",
+      "gastric"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-05",
+    "sponsor": "Alliance for Clinical Trials in Oncology",
+    "interventions": [
+      "Fluorouracil",
+      "Leucovorin Calcium",
+      "Oxaliplatin",
+      "Irinotecan",
+      "Nivolumab",
+      "Magnetic Resonance Imaging",
+      "Computed Tomography",
+      "Biospecimen Collection",
+      "Questionnaire Administration"
+    ],
+    "modality": [
+      "targeted",
+      "immunotherapy"
+    ],
+    "targetedEvidence": [
+      "her2"
+    ],
+    "immuneEvidence": [
+      "nivolumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT06731478",
+    "title": "Study of TDXd, Chemotherapy, Pembrolizumab, and Trastuzumab in First-Line Metastatic HER2-Positive Gastric or Gastroesophageal Junction Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT06731478",
+    "cancers": [
+      "gastric"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-10",
+    "sponsor": "Daiichi Sankyo",
+    "interventions": [
+      "Trastuzumab Deruxtecan",
+      "pembrolizumab",
+      "Trastuzumab",
+      "Chemotherapy"
+    ],
+    "modality": [
+      "targeted",
+      "immunotherapy"
+    ],
+    "targetedEvidence": [
+      "her2"
+    ],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT04181060",
+    "title": "Osimertinib With or Without Bevacizumab as Initial Treatment for Patients With EGFR-Mutant Lung Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT04181060",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Bevacizumab",
+      "Biospecimen Collection",
+      "Computed Tomography",
+      "Echocardiography Test",
+      "Magnetic Resonance Imaging",
+      "Multigated Acquisition Scan",
+      "Osimertinib"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "egfr"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [
+      "mutant"
+    ],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT06956001",
+    "title": "Firmonertinib Versus Platinum Based Chemotherapy as First-line Treatment for NSCLC With EGFR PACC or EGFR l861q Mutation",
+    "url": "https://clinicaltrials.gov/study/NCT06956001",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "Allist Pharmaceuticals, Inc.",
+    "interventions": [
+      "Firmonertinib Mesilate Tablets",
+      "Pemetrexed Disodium for Injection",
+      "Cisplatin for injection",
+      "Carboplatin Injection"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "egfr"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [
+      "mutation"
+    ],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT06970639",
+    "title": "A Study Evaluating Furmonertinib Plus Platinum-based Doublet Chemotherapy Versus Osimertinib in Patients With Epidermal Growth Factor Receptor (EGFR) Sensitizing Mutation-Positive Non-squamous Non-Small Cell Lung Cancer (NSCLC) and Brain Metastases",
+    "url": "https://clinicaltrials.gov/study/NCT06970639",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "Allist Pharmaceuticals, Inc.",
+    "interventions": [
+      "Furmonertinib Mesilate Tablets",
+      "Carboplatin Injection",
+      "Cisplatin for injection",
+      "Pemetrexed Disodium for Injection",
+      "Osimertinib Mesylate Tablets"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "egfr"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [
+      "mutation"
+    ],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT04267848",
+    "title": "Testing the Addition of a Type of Drug Called Immunotherapy to the Usual Chemotherapy Treatment for Non-small Cell Lung Cancer, an ALCHEMIST Treatment Trial (Chemo-IO [ACCIO])",
+    "url": "https://clinicaltrials.gov/study/NCT04267848",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Biospecimen Collection",
+      "Carboplatin",
+      "Cisplatin",
+      "Computed Tomography",
+      "Echocardiography Test",
+      "Gemcitabine Hydrochloride",
+      "Magnetic Resonance Imaging",
+      "Observation Activity",
+      "Paclitaxel",
+      "Pembrolizumab",
+      "Pemetrexed Disodium",
+      "Questionnaire Administration"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "immunotherapy",
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT06312176",
+    "title": "A Study of Sacituzumab Tirumotecan (MK-2870) as a Single Agent and in Combination With Pembrolizumab (MK-3475) Versus Treatment of Physician's Choice in Participants With HR+/HER2- Unresectable Locally Advanced or Metastatic Breast Cancer (MK-2870-010)",
+    "url": "https://clinicaltrials.gov/study/NCT06312176",
+    "cancers": [
+      "breast"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "Merck Sharp & Dohme LLC",
+    "interventions": [
+      "Sacituzumab tirumotecan",
+      "Pembrolizumab",
+      "Paclitaxel",
+      "Nab-paclitaxel",
+      "Capecitabine",
+      "Liposomal doxorubicin"
+    ],
+    "modality": [
+      "targeted",
+      "immunotherapy"
+    ],
+    "targetedEvidence": [
+      "her2"
+    ],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT06646276",
+    "title": "A Study to Compare the Efficacy and Safety of BMS-986489 (BMS-986012+ Nivolumab Fixed Dose Combination) in Combination With Carboplatin Plus Etoposide to That of Atezolizumab With Carboplatin Plus Etoposide as First-Line Therapy in Participants With Extensive-Stage Small Cell Lung Cancer (TIGOS).",
+    "url": "https://clinicaltrials.gov/study/NCT06646276",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "Bristol-Myers Squibb",
+    "interventions": [
+      "BMS-986489 (BMS-986012+Nivolumab)",
+      "Atezolizumab",
+      "Carboplatin",
+      "Etoposide"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "atezolizumab",
+      "nivolumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT07262567",
+    "title": "Phase III Study to Compare GFH375 and Chemotherapy in Patients With KRAS G12D-Mutant Metastatic Pancreatic Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT07262567",
+    "cancers": [
+      "pancreatic"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "Genfleet Therapeutics (Shanghai) Inc.",
+    "interventions": [
+      "GFH375",
+      "Chemotherapy"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "kras"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [
+      "mutant"
+    ],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT06498635",
+    "title": "Immunotherapy After Surgery for People Who Have No Remaining Cancer Cells After Standard Treatment for Early-Stage Non-Small Cell Lung Cancer, INSIGHT Trial",
+    "url": "https://clinicaltrials.gov/study/NCT06498635",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Biospecimen Collection",
+      "Computed Tomography",
+      "Durvalumab",
+      "Patient Observation",
+      "Questionnaire Administration"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "durvalumab",
+      "immunotherapy"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT07144280",
+    "title": "A Study to Learn About the Study Medicine Called PF-08046054/SGN-PDL1V Versus Docetaxel in Adult Participants With Previously-Treated Programmed Cell Death Ligand 1 (PD-L1) Positive Non-Small-Cell Lung Cancer (NSCLC)",
+    "url": "https://clinicaltrials.gov/study/NCT07144280",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Pfizer",
+    "interventions": [
+      "PF-08046054",
+      "Docetaxel monotherapy"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pd-l1",
+      "pdl1"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT07223021",
+    "title": "A Study of Fludarabine Dosing in Children and Young Adults With B-cell Acute Lymphoblastic Leukemia",
+    "url": "https://clinicaltrials.gov/study/NCT07223021",
+    "cancers": [
+      "leukemia",
+      "lymphoma"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Memorial Sloan Kettering Cancer Center",
+    "interventions": [
+      "Fludarabine",
+      "Cyclophosphamide",
+      "Fludarabine",
+      "CAR-T"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "car-t"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [
+      "car-t"
+    ],
+    "score": 2
+  },
+  {
+    "id": "NCT07431827",
+    "title": "MK-3475A±Calderasib (MK-1084) in Completely Resected Stage IIA-IIIB (N2) KRAS G12Cm NSCLC (MK-1084-013)",
+    "url": "https://clinicaltrials.gov/study/NCT07431827",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Merck Sharp & Dohme LLC",
+    "interventions": [
+      "Calderasib",
+      "MK-3475A",
+      "Placebo"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "g12c",
+      "kras"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT07472517",
+    "title": "DAREON ® -Lung-1: A Study in People With Advanced Small Cell Lung Cancer to Compare Obrixtamig Plus Atezolizumab, Carboplatin, and Etoposide Treatment With Standard Chemoimmunotherapy",
+    "url": "https://clinicaltrials.gov/study/NCT07472517",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Boehringer Ingelheim",
+    "interventions": [
+      "obrixtamig",
+      "atezolizumab",
+      "carboplatin",
+      "etoposide"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "atezolizumab",
+      "immunotherapy"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT07541079",
+    "title": "A Study Evaluating Adherence, Tolerability, and Patient Reported Outcomes of Giredestrant in Participants With ER+/HER2- Early Breast Cancer Who Are Intolerant to Adjuvant Aromatase Inhibitor Therapy (novERA Breast Cancer)",
+    "url": "https://clinicaltrials.gov/study/NCT07541079",
+    "cancers": [
+      "breast"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Genentech, Inc.",
+    "interventions": [
+      "Giredestrant"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "her2",
+      "inhibitor"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT07127822",
+    "title": "Assessing Iparomlimab and Tuvonralimab in Recurrent or Metastatic MSI-H/dMMR Gastric Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT07127822",
+    "cancers": [
+      "gastric"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-05",
+    "sponsor": "Peking University",
+    "interventions": [
+      "Iparomlimab and Tuvonralimab",
+      "First line chemotherapy plus PD-1/PD-L1 antibody"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pd-1",
+      "pd-l1"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT05564377",
+    "title": "Targeted Therapy Directed by Genetic Testing in Treating Patients With Locally Advanced or Advanced Solid Tumors, The ComboMATCH Screening Trial",
+    "url": "https://clinicaltrials.gov/study/NCT05564377",
+    "cancers": [
+      "ovarian"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-10",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Alpelisib",
+      "Binimetinib",
+      "Biopsy Procedure",
+      "Biospecimen Collection",
+      "Bone Marrow Aspiration",
+      "Bone Marrow Biopsy",
+      "Bone Scan",
+      "Computed Tomography",
+      "Echocardiography Test",
+      "Fluorouracil",
+      "Fulvestrant",
+      "Ipatasertib",
+      "Leucovorin",
+      "Magnetic Resonance Imaging",
+      "Multigated Acquisition Scan",
+      "Mutation Carrier Screening",
+      "Neratinib Maleate",
+      "Nilotinib Hydrochloride Monohydrate",
+      "Olaparib",
+      "Oxaliplatin",
+      "Paclitaxel",
+      "Palbociclib",
+      "Panitumumab",
+      "Positron Emission Tomography",
+      "Selumetinib Sulfate",
+      "Sotorasib"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "targeted therapy"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [
+      "mutation"
+    ],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT04812366",
+    "title": "Genomic Biomarker-Selected Umbrella Neoadjuvant Study for High Risk Localized Prostate Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT04812366",
+    "cancers": [
+      "prostate"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "University of British Columbia",
+    "interventions": [
+      "Apalutamide 60mg Tab",
+      "Abiraterone Acetate 250mg",
+      "Prednisone 5mg Tab",
+      "Docetaxel",
+      "Niraparib 100mg Oral Capsule",
+      "Atezolizumab",
+      "Tazemetostat Pill",
+      "Capivasertib"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "atezolizumab"
+    ],
+    "biomarkerEvidence": [
+      "biomarker",
+      "genomic"
+    ],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT05112601",
+    "title": "Testing Nivolumab With or Without Ipilimumab in Deficient Mismatch Repair System (dMMR) Recurrent Endometrial Carcinoma",
+    "url": "https://clinicaltrials.gov/study/NCT05112601",
+    "cancers": [
+      "ovarian"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Biospecimen Collection",
+      "Computed Tomography",
+      "Ipilimumab",
+      "Magnetic Resonance Imaging",
+      "Nivolumab"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "ipilimumab",
+      "nivolumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT05231122",
+    "title": "Pembrolizumab Combined With Bevacizumab With or Without Agonist Anti-CD40 CDX-1140 for the Treatment of Patients With Recurrent Ovarian Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT05231122",
+    "cancers": [
+      "ovarian"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "Roswell Park Cancer Institute",
+    "interventions": [
+      "Anti-CD40 Agonist Monoclonal Antibody CDX-1140",
+      "Bevacizumab",
+      "Pembrolizumab",
+      "Quality-of-Life Assessment",
+      "Questionnaire Administration"
+    ],
+    "modality": [
+      "targeted",
+      "immunotherapy"
+    ],
+    "targetedEvidence": [
+      "monoclonal antibody"
+    ],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT06914440",
+    "title": "Neoadjuvant SBRT Followed by Nab-Paclitaxel Combined With Toripalimab in HR+/HER2- Breast Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT06914440",
+    "cancers": [
+      "breast"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "Xijing Hospital",
+    "interventions": [
+      "Stereotactic Body Radiation Therapy (SBRT)",
+      "Toripalimab",
+      "Neoadjuvant Chemotherapy",
+      "Surgery",
+      "Adjuvant Chemotherapy",
+      "Adjuvant Radiotherapy",
+      "Endocrine therapy"
+    ],
+    "modality": [
+      "targeted",
+      "immunotherapy"
+    ],
+    "targetedEvidence": [
+      "her2"
+    ],
+    "immuneEvidence": [
+      "toripalimab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT06218602",
+    "title": "Pilot Trial of Fecal Microbiota Transplantation for Lymphoma Patients Receiving Axicabtagene Ciloleucel Therapy.",
+    "url": "https://clinicaltrials.gov/study/NCT06218602",
+    "cancers": [
+      "lymphoma"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "M.D. Anderson Cancer Center",
+    "interventions": [
+      "Fecal Microbiota Transplantation",
+      "Chemotherapy",
+      "CAR-T Therapy"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "car-t"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [
+      "car-t"
+    ],
+    "score": 2
+  },
+  {
+    "id": "NCT06773910",
+    "title": "BMS-986489 (Atigotatug + Nivolumab) vs Durvalumab in Limited-stage Small-cell Lung Cancer (TIGOS-LS)",
+    "url": "https://clinicaltrials.gov/study/NCT06773910",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "SCRI Development Innovations, LLC",
+    "interventions": [
+      "BMS-986489",
+      "Durvalumab"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "durvalumab",
+      "nivolumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT07440290",
+    "title": "DETERMINE Trial Treatment Arm 07: Dabrafenib in Combination With Trametinib in Adult, Paediatric and Teenage/Young Adult Patients With BRAF V600 Mutation-Positive Cancers.",
+    "url": "https://clinicaltrials.gov/study/NCT07440290",
+    "cancers": [
+      "colorectal",
+      "lung",
+      "ovarian",
+      "pancreatic"
+    ],
+    "phase": "Phase 2/3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Cancer Research UK",
+    "interventions": [
+      "Dabrafenib",
+      "Trametinib"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "braf"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [
+      "mutation"
+    ],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT07673367",
+    "title": "Nemtabrutinib With CAR T Therapy in Relapsed/Refractory Mantle Cell Lymphoma",
+    "url": "https://clinicaltrials.gov/study/NCT07673367",
+    "cancers": [
+      "lymphoma"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Vanderbilt-Ingram Cancer Center",
+    "interventions": [
+      "Nemtabrutinib",
+      "Brexucabtagene autoleucel ( other names: brexu-cel , Tecartus)"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "car t"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [
+      "car t"
+    ],
+    "score": 2
+  },
+  {
+    "id": "NCT05208762",
+    "title": "A Study of PF-08046054/SGN-PDL1V in Advanced Solid Tumors",
+    "url": "https://clinicaltrials.gov/study/NCT05208762",
+    "cancers": [
+      "esophageal"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-07-22",
+    "sponsor": "Seagen, a wholly owned subsidiary of Pfizer",
+    "interventions": [
+      "PF-08046054",
+      "pembrolizumab"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pdl1",
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT07192432",
+    "title": "Gene Therapy for HER-Positive Cancer (SENTRY-HER2)",
+    "url": "https://clinicaltrials.gov/study/NCT07192432",
+    "cancers": [
+      "gastric"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-07-28",
+    "sponsor": "Vironexis Biotherapeutics Inc.",
+    "interventions": [
+      "Dose Level 1, VNX-202",
+      "Dose Level 2, VNX-202",
+      "Dose Level 3, VNX-202",
+      "Dose Level 4, VNX-202"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "her2"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [
+      "gene therapy"
+    ],
+    "score": 2
+  },
+  {
+    "id": "NCT05039632",
+    "title": "Phase I/II Randomized Study of NBTXR3 Activated by Abscopal or RadScopal Radiation in Combination With Immunotherapy (Anti-PD-1/L-1) for Patients With Advanced Solid Malignancies",
+    "url": "https://clinicaltrials.gov/study/NCT05039632",
+    "cancers": [
+      "liver"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-07-30",
+    "sponsor": "M.D. Anderson Cancer Center",
+    "interventions": [
+      "Hafnium Oxide-containing Nanoparticles NBTXR3",
+      "Radiation Therapy",
+      "Radiation Therapy"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "immunotherapy",
+      "pd-1"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT05267626",
+    "title": "Study of AU-007, A Monoclonal Antibody That Binds to IL-2 and Inhibits IL-2Rα Binding, in Patients With Unresectable Locally Advanced or Metastatic Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT05267626",
+    "cancers": [
+      "esophageal",
+      "gastric"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-07-30",
+    "sponsor": "Aulos Bioscience, Inc.",
+    "interventions": [
+      "AU-007",
+      "Aldesleukin",
+      "Avelumab",
+      "Nivolumab"
+    ],
+    "modality": [
+      "targeted",
+      "immunotherapy"
+    ],
+    "targetedEvidence": [
+      "monoclonal antibody"
+    ],
+    "immuneEvidence": [
+      "nivolumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT05176483",
+    "title": "Study of Zanzalintinib in Combination With Immuno-Oncology or Other Agents in Participants With Solid Tumors",
+    "url": "https://clinicaltrials.gov/study/NCT05176483",
+    "cancers": [
+      "liver"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-05",
+    "sponsor": "Exelixis",
+    "interventions": [
+      "Zanzalintinib",
+      "Nivolumab",
+      "Ipilimumab",
+      "Nivolumab",
+      "Nivolumab",
+      "Nivolumab + Relatlimab",
+      "Prednisone",
+      "Docetaxel",
+      "DDI Probe Cocktail"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "ipilimumab",
+      "nivolumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT07470853",
+    "title": "A Study of MUC16-Directed Antibody Drug Conjugate HWK-016 in Participants With Advanced Solid Tumors.",
+    "url": "https://clinicaltrials.gov/study/NCT07470853",
+    "cancers": [
+      "ovarian"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-06",
+    "sponsor": "Whitehawk Therapeutics, Inc.",
+    "interventions": [
+      "HWK-016, MUCIN-16-targeted ADC",
+      "Bevacizumab"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "adc",
+      "antibody drug conjugate"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT04585750",
+    "title": "The Evaluation of PC14586 in Patients With Advanced Solid Tumors Harboring a TP53 Y220C Mutation (PYNNACLE)",
+    "url": "https://clinicaltrials.gov/study/NCT04585750",
+    "cancers": [
+      "colorectal",
+      "ovarian"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-10",
+    "sponsor": "PMV Pharmaceuticals, Inc",
+    "interventions": [
+      "rezatapopt",
+      "pembrolizumab"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [
+      "mutation"
+    ],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT07705334",
+    "title": "A Study of SHY-ONC6, a Novel Proteasome Inhibitor, in Adults With Advanced or Metastatic Solid Tumors",
+    "url": "https://clinicaltrials.gov/study/NCT07705334",
+    "cancers": [
+      "colorectal",
+      "gastric",
+      "pancreatic"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-10",
+    "sponsor": "SHY Therapeutics",
+    "interventions": [
+      "SHY-ONC6"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "inhibitor"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [
+      "novel"
+    ],
+    "score": 2
+  },
+  {
+    "id": "NCT06236139",
+    "title": "Cell Therapy (STEAP1 CART) With Enzalutamide for the Treatment of Patients With Metastatic Castration-Resistant Prostate Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT06236139",
+    "cancers": [
+      "prostate"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-11",
+    "sponsor": "Fred Hutchinson Cancer Center",
+    "interventions": [
+      "Anti-STEAP1 CAR T-cells",
+      "Biopsy Procedure",
+      "Biospecimen Collection",
+      "Bone Scan",
+      "Computed Tomography",
+      "Cyclophosphamide",
+      "Echocardiography Test",
+      "Enzalutamide",
+      "Fludarabine",
+      "Leukapheresis",
+      "Magnetic Resonance Imaging",
+      "Multigated Acquisition Scan",
+      "Positron Emission Tomography"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "car t"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [
+      "car t"
+    ],
+    "score": 2
+  },
+  {
+    "id": "NCT05272709",
+    "title": "TT-702 in Patients With Advanced Solid Tumours.",
+    "url": "https://clinicaltrials.gov/study/NCT05272709",
+    "cancers": [
+      "colorectal",
+      "pancreatic",
+      "prostate"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-12",
+    "sponsor": "Cancer Research UK",
+    "interventions": [
+      "TT-702",
+      "Anti-PD-1 and PD-L1 agent"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pd-1",
+      "pd-l1"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT07382817",
+    "title": "Phase 1 Study of JV-394 Autologous Anti-CD94 CAR T for r/r CD94+ T/NK Cell Neoplasms",
+    "url": "https://clinicaltrials.gov/study/NCT07382817",
+    "cancers": [
+      "lymphoma"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-12",
+    "sponsor": "M.D. Anderson Cancer Center",
+    "interventions": [
+      "JV-394"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "car t"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [
+      "car t"
+    ],
+    "score": 2
+  },
+  {
+    "id": "NCT02830724",
+    "title": "Administering Peripheral Blood Lymphocytes Transduced With a CD70-Binding Chimeric Antigen Receptor to People With CD70 Expressing Cancers",
+    "url": "https://clinicaltrials.gov/study/NCT02830724",
+    "cancers": [
+      "breast",
+      "ovarian",
+      "pancreatic"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Cyclophosphamide",
+      "Fludarabine",
+      "Aldesleukin",
+      "Anti-hCD70 CAR transduced PBL"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "car t"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [
+      "car t"
+    ],
+    "score": 2
+  },
+  {
+    "id": "NCT07053072",
+    "title": "PD-1 mRNA LNP Vaccine for Advanced Primary Hepatocellular Carcinoma.",
+    "url": "https://clinicaltrials.gov/study/NCT07053072",
+    "cancers": [
+      "liver"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "West China Hospital",
+    "interventions": [
+      "Low Dose PD-1 mRNA LNP Vaccine",
+      "High dose PD-1 mRNA LNP vaccines"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pd-1"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [
+      "mrna"
+    ],
+    "score": 2
+  },
+  {
+    "id": "NCT04524871",
+    "title": "A Study Evaluating the Efficacy and Safety of Multiple Immunotherapy-Based Treatment Combinations in Patients With Advanced Liver Cancers (Morpheus-Liver)",
+    "url": "https://clinicaltrials.gov/study/NCT04524871",
+    "cancers": [
+      "liver"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "Hoffmann-La Roche",
+    "interventions": [
+      "Atezolizumab",
+      "Bevacizumab 15 mg/kg",
+      "Tiragolumab",
+      "Tocilizumab",
+      "TPST-1120",
+      "Tobemstomig 2100 mg",
+      "Bevacizumab 10 mg/kg",
+      "Tobemstomig 600 mg",
+      "Tobemstomig 1200 mg",
+      "ADG126",
+      "IO-108 1800 mg",
+      "NKT2152",
+      "IO-108 1200 mg"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "atezolizumab",
+      "immunotherapy"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT07222267",
+    "title": "An Investigational Study of BG-75202 Alone and in Combination With Other Therapeutic Agents in Adults With Advanced Solid Tumors",
+    "url": "https://clinicaltrials.gov/study/NCT07222267",
+    "cancers": [
+      "breast"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "BeOne Medicines",
+    "interventions": [
+      "BG-75202",
+      "CDK4 Inhibitor",
+      "Estrogen Receptor Antagonist",
+      "Aromatase Inhibitor"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "cdk4",
+      "inhibitor"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT05225363",
+    "title": "Modified Immune Cells (TAG72-CAR T Cells) for the Treatment of Patients With Platinum Resistant Epithelial Ovarian Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT05225363",
+    "cancers": [
+      "ovarian"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "City of Hope Medical Center",
+    "interventions": [
+      "Chimeric Antigen Receptor T-cells",
+      "Cyclophosphamide",
+      "Fludarabine"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "car t"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [
+      "car t"
+    ],
+    "score": 2
+  },
+  {
+    "id": "NCT06871410",
+    "title": "Genetically Engineered Cells (CD83 CAR T Cells) for the Treatment of Relapsed or Refractory Acute Myeloid Leukemia",
+    "url": "https://clinicaltrials.gov/study/NCT06871410",
+    "cancers": [
+      "leukemia"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Roswell Park Cancer Institute",
+    "interventions": [
+      "Autologous Anti-CD83 CAR T-cells",
+      "Biospecimen Collection",
+      "Chest Radiography",
+      "Computed Tomography",
+      "Cyclophosphamide",
+      "Echocardiography",
+      "Fludarabine Phosphate",
+      "Hydroxyurea",
+      "Leukapheresis",
+      "Lumbar Puncture",
+      "Positron Emission Tomography",
+      "Questionnaire Administration"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "car t"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [
+      "car t"
+    ],
+    "score": 2
+  },
+  {
+    "id": "NCT06417892",
+    "title": "Fruquintinib and Albumin-paclitaxel Combined With or Without PD-1 Antibody in 2nd-line Treatment of G/GEJ Adenocarcinoma",
+    "url": "https://clinicaltrials.gov/study/NCT06417892",
+    "cancers": [
+      "gastric"
+    ],
+    "phase": null,
+    "status": "Recruiting",
+    "date": "2026-07-28",
+    "sponsor": "Cancer Institute and Hospital, Chinese Academy of Medical Sciences",
+    "interventions": [
+      "PD-1inhibitor",
+      "Fruquintinib",
+      "albumin paclitaxel"
+    ],
+    "modality": [
+      "targeted",
+      "immunotherapy"
+    ],
+    "targetedEvidence": [
+      "inhibitor"
+    ],
+    "immuneEvidence": [
+      "pd-1"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 2
+  },
+  {
+    "id": "NCT06901531",
+    "title": "A Study of Zolbetuximab Together With Pembrolizumab and Chemotherapy in Adults With Gastric Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT06901531",
+    "cancers": [
+      "gastric"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-07-31",
+    "sponsor": "Astellas Pharma Global Development, Inc.",
+    "interventions": [
+      "zolbetuximab",
+      "Pembrolizumab",
+      "Capecitabine",
+      "Oxaliplatin",
+      "Folinic acid (leucovorin or local equivalent)",
+      "5-fluorouracil (5-FU)",
+      "Placebo"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07629817",
+    "title": "Surgery vs. Radical Chemoradiotherapy for Esophageal SCC After Neoadjuvant Immunochemotherapy",
+    "url": "https://clinicaltrials.gov/study/NCT07629817",
+    "cancers": [
+      "esophageal"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-07-31",
+    "sponsor": "Henan Cancer Hospital",
+    "interventions": [
+      "Toripalimab + Nab-paclitaxel + Platinum-based Chemotherapy",
+      "Radiation with Concurrent Chemotherapy",
+      "Radical Esophagectomy"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "toripalimab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07475026",
+    "title": "A Study of Neoadjuvant Tislelizumab Plus Lenvatinib in Resectable HCC at High Risk of Recurrence",
+    "url": "https://clinicaltrials.gov/study/NCT07475026",
+    "cancers": [
+      "liver"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-05",
+    "sponsor": "Tianjin Medical University Cancer Institute and Hospital",
+    "interventions": [
+      "Tislelizumab",
+      "Lenvatinib"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "tislelizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07522073",
+    "title": "A Study to Evaluate Chemotherapy With or Without INCB161734 in Previously Untreated, KRAS G12D-Mutated Metastatic Pancreatic Ductal Adenocarcinoma",
+    "url": "https://clinicaltrials.gov/study/NCT07522073",
+    "cancers": [
+      "pancreatic"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-06",
+    "sponsor": "Incyte Corporation",
+    "interventions": [
+      "INCB161734",
+      "Placebo",
+      "Investigator's choice of chemotherapy"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "kras"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06692738",
+    "title": "A Global Phase III Study of Rilvegostomig or Pembrolizumab Plus Chemotherapy for First-Line Treatment of Locally Advanced or Metastatic Squamous Non-small Cell Lung Cancer (NSCLC)",
+    "url": "https://clinicaltrials.gov/study/NCT06692738",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "AstraZeneca",
+    "interventions": [
+      "Rilvegostomig",
+      "Pembrolizumab",
+      "Carboplatin",
+      "Paclitaxel",
+      "Nab-paclitaxel"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07678229",
+    "title": "BRIDGE-NK: Immunotherapy Versus Chemotherapy Induction Followed by Autologous HSCT in Advanced NKTCL",
+    "url": "https://clinicaltrials.gov/study/NCT07678229",
+    "cancers": [
+      "lymphoma"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "Rong Tao",
+    "interventions": [
+      "GELAD regimen",
+      "MEDA regimen",
+      "LEAP regimen",
+      "High-dose methotrexate",
+      "Autologous Hematopoietic Stem Cell Transplantation"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "immunotherapy"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06312137",
+    "title": "A Study to Assess Efficacy and Safety of Pembrolizumab With or Without Sacituzumab Tirumotecan (MK- 2870) in Adult Participants With Resectable Non Small Cell Lung Cancer (NSCLC) Not Achieving Pathological Complete Response (pCR) (MK-2870-019)",
+    "url": "https://clinicaltrials.gov/study/NCT06312137",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "Merck Sharp & Dohme LLC",
+    "interventions": [
+      "Sacituzumab tirumotecan",
+      "Pembrolizumab",
+      "Cisplatin",
+      "Pemetrexed",
+      "Gemcitabine",
+      "Carboplatin",
+      "Paclitaxel",
+      "Rescue medication"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06627647",
+    "title": "A Global Phase III Study of Rilvegostomig or Pembrolizumab Plus Chemotherapy for First-Line Treatment of Locally Advanced or Metastatic Non-Squamous NSCLC",
+    "url": "https://clinicaltrials.gov/study/NCT06627647",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "AstraZeneca",
+    "interventions": [
+      "Rilvegostomig",
+      "Pembrolizumab",
+      "Carboplatin",
+      "Cisplatin",
+      "Pemetrexed"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06717711",
+    "title": "Low-Intensity Extracorporeal Shockwave Therapy on Penile Rehabilitation After Robot-assisted Surgical Treatment of Genitourinary Cancers",
+    "url": "https://clinicaltrials.gov/study/NCT06717711",
+    "cancers": [
+      "prostate"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "Regina Elena Cancer Institute",
+    "interventions": [
+      "Low-intensity Extracorporeal Shock Wave Therapy (LiESWT)",
+      "PDE5 inhibitor (tadalafil)"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "inhibitor"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06841354",
+    "title": "A Study of Sacituzumab Tirumotecan (Sac-TMT, MK-2870) as Monotherapy and in Combination With Pembrolizumab (MK-3475) in Participants With Triple-Negative Breast Cancer (MK-2870-011/TroFuse-011)",
+    "url": "https://clinicaltrials.gov/study/NCT06841354",
+    "cancers": [
+      "breast"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "Merck Sharp & Dohme LLC",
+    "interventions": [
+      "Sacituzumab tirumotecan",
+      "Pembrolizumab",
+      "Rescue Medication",
+      "Paclitaxel",
+      "Nab-paclitaxel",
+      "Gemcitabine",
+      "Carboplatin"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06966700",
+    "title": "A Clinical Study of Sacituzumab Tirumotecan (Sac-TMT, MK-2870) in People With Breast Cancer (MK-2870-032)",
+    "url": "https://clinicaltrials.gov/study/NCT06966700",
+    "cancers": [
+      "breast"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "Merck Sharp & Dohme LLC",
+    "interventions": [
+      "Sacituzumab tirumotecan",
+      "Pembrolizumab",
+      "Rescue Medication",
+      "Carboplatin",
+      "Paclitaxel",
+      "Doxorubicin",
+      "Epirubicin",
+      "Cyclophosphamide",
+      "Capecitabine",
+      "Olaparib"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07388524",
+    "title": "Testing the Impact of an Anti-Cancer Drug, Atezolizumab, After Surgery to Prevent Early Stage Non-small Cell Lung Cancer From Returning, AASI-NSCLC Trial",
+    "url": "https://clinicaltrials.gov/study/NCT07388524",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Atezolizumab",
+      "Atezolizumab and Recombinant Human Hyaluronidase",
+      "Biospecimen Collection",
+      "Computed Tomography",
+      "Patient Observation"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "atezolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07702032",
+    "title": "Study of Petosemtamab Plus Chemotherapy Versus Cetuximab Plus Chemotherapy in RAS and BRAF Wild-type, Unresectable or Metastatic, Left-sided Colorectal Cancer (LiGeR-CRC1)",
+    "url": "https://clinicaltrials.gov/study/NCT07702032",
+    "cancers": [
+      "colorectal"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "Genmab",
+    "interventions": [
+      "Petosemtamab",
+      "Cetuximab",
+      "FOLFIRI",
+      "mFOLFOX6"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "braf"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT05624996",
+    "title": "Testing the Addition of High Dose, Targeted Radiation to the Usual Treatment for Locally-Advanced Inoperable Non-Small Cell Lung Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT05624996",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "NRG Oncology",
+    "interventions": [
+      "Carboplatin",
+      "Cisplatin",
+      "Computed Tomography",
+      "Durvalumab",
+      "Etoposide",
+      "Image Guided Radiation Therapy",
+      "Nab-paclitaxel",
+      "Osimertinib",
+      "Paclitaxel",
+      "Pemetrexed",
+      "Positron Emission Tomography",
+      "Questionnaire Administration",
+      "Stereotactic Body Radiation Therapy"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "durvalumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT05675410",
+    "title": "A Study to Compare Standard Therapy to Treat Hodgkin Lymphoma to the Use of Two Drugs, Brentuximab Vedotin and Nivolumab",
+    "url": "https://clinicaltrials.gov/study/NCT05675410",
+    "cancers": [
+      "lymphoma"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Biospecimen Collection",
+      "Bleomycin Sulfate",
+      "Brentuximab Vedotin",
+      "Computed Tomography",
+      "Cyclophosphamide",
+      "Dacarbazine",
+      "Doxorubicin Hydrochloride",
+      "Etoposide",
+      "Etoposide Phosphate",
+      "Fludeoxyglucose F-18",
+      "Involved-site Radiation Therapy",
+      "Magnetic Resonance Imaging",
+      "Nivolumab",
+      "Positron Emission Tomography",
+      "Prednisolone",
+      "Prednisone",
+      "Procarbazine Hydrochloride",
+      "Questionnaire Administration",
+      "Vinblastine Sulfate",
+      "Vincristine Sulfate"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "nivolumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06077760",
+    "title": "A Study of Intismeran Autogene (V940) Plus Pembrolizumab (MK-3475) Versus Placebo Plus Pembrolizumab in Participants With Non-small Cell Lung Cancer (V940-002)",
+    "url": "https://clinicaltrials.gov/study/NCT06077760",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Merck Sharp & Dohme LLC",
+    "interventions": [
+      "Intismeran autogene",
+      "Pembrolizumab",
+      "Placebo"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06492616",
+    "title": "A Study of Elacestrant Versus Standard Endocrine Therapy in Women and Men With ER+,HER2-, Early Breast Cancer With High Risk of Recurrence",
+    "url": "https://clinicaltrials.gov/study/NCT06492616",
+    "cancers": [
+      "breast"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Stemline Therapeutics, Inc.",
+    "interventions": [
+      "Elacestrant",
+      "Anastrozole",
+      "Letrozole",
+      "Exemestane",
+      "Tamoxifen"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "her2"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06500481",
+    "title": "Testing Proton Craniospinal Radiation Therapy Versus the Usual Radiation Therapy for Leptomeningeal Metastasis, RADIATE-LM Trial",
+    "url": "https://clinicaltrials.gov/study/NCT06500481",
+    "cancers": [
+      "breast",
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "NRG Oncology",
+    "interventions": [
+      "Biospecimen Collection",
+      "Computed Tomography",
+      "Involved-Field Radiation Therapy",
+      "Lumbar Puncture",
+      "Magnetic Resonance Imaging",
+      "Positron Emission Tomography",
+      "Proton Beam Craniospinal Irradiation",
+      "Quality-of-Life Assessment"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "menin"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06997497",
+    "title": "A Clinical Study of Calderasib (MK-1084) With Targeted Therapy and Chemotherapy in People With Colorectal Cancer (MK-1084-012/KANDLELIT-012)",
+    "url": "https://clinicaltrials.gov/study/NCT06997497",
+    "cancers": [
+      "colorectal"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Merck Sharp & Dohme LLC",
+    "interventions": [
+      "Calderasib",
+      "Oxaliplatin",
+      "Leucovorin/levofolinate calcium",
+      "5-Fluorouracil",
+      "Cetuximab",
+      "Bevacizumab",
+      "Bevacizumab biosimilar"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "targeted therapy"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07085767",
+    "title": "Palazestrant in Combination With Ribociclib for the First-line Treatment of ER+/HER2- Advanced Breast Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT07085767",
+    "cancers": [
+      "breast"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Olema Pharmaceuticals, Inc.",
+    "interventions": [
+      "Palazestrant",
+      "Letrozole-matching placebo",
+      "Ribociclib",
+      "Letrozole",
+      "Palazestrant matching-placebo"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "her2"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07190248",
+    "title": "A Clinical Study of Calderasib (MK-1084) and Other Treatments for Participants With Non-Small Cell Lung Cancer (MK-1084-007/KANDLELIT-007)",
+    "url": "https://clinicaltrials.gov/study/NCT07190248",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Merck Sharp & Dohme LLC",
+    "interventions": [
+      "Calderasib",
+      "Pembrolizumab (+) Berahyaluronidase alfa",
+      "Pemetrexed",
+      "Cisplatin",
+      "Carboplatin"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07222566",
+    "title": "Symbiotic-Lung-01 : A Study to Learn About the Study Medicine Called PF-08634404 in Combination With Chemotherapy in Adult Participants With Locally Advanced or Metastatic Non-Small Cell Lung Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT07222566",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Pfizer",
+    "interventions": [
+      "PF-08634404",
+      "Pembrolizumab",
+      "Chemotherapy Regimen 1",
+      "Chemotherapy Regimen 2"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07513376",
+    "title": "A Clinical Trial of Adjuvant Intismeran (V940) With or Without Pembrolizumab Coformulated With Berahyaluronidase Alfa (MK-3475A) in High-Risk Stage I Non-Small Cell Lung Cancer (V940-014)",
+    "url": "https://clinicaltrials.gov/study/NCT07513376",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Merck Sharp & Dohme LLC",
+    "interventions": [
+      "Intismeran",
+      "Pembrolizumab coformulated with berahyaluronidase alfa",
+      "Placebo"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07554339",
+    "title": "A Clinical Trial of Calderasib (MK-1084) and Durvalumab in People With Non-Small Cell Lung Cancer (MK-1084-015/KANDLELIT-015)",
+    "url": "https://clinicaltrials.gov/study/NCT07554339",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Merck Sharp & Dohme LLC",
+    "interventions": [
+      "Calderasib",
+      "Durvalumab",
+      "Placebo to MK-1084"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "durvalumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07554521",
+    "title": "A Study to Evaluate Efficacy and Safety of Tislelizumab Plus Chemotherapy for Locally Advanced Unresectable or Metastatic Gastric or Gastroesophageal Adenocarcinoma and Esophageal Squamous Cell Carcinoma in Racial and Ethnic Minority Patients in the United States",
+    "url": "https://clinicaltrials.gov/study/NCT07554521",
+    "cancers": [
+      "esophageal"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-07-22",
+    "sponsor": "BeOne Medicines",
+    "interventions": [
+      "Tislelizumab",
+      "Capecitabine",
+      "5-fluorouracil (5-FU)",
+      "Oxaliplatin",
+      "Leucovorin"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "tislelizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07733830",
+    "title": "Comparing ICI Followed By CCRT And CCRT Followed By Immunotherapy In Unresectable LA-ESCC",
+    "url": "https://clinicaltrials.gov/study/NCT07733830",
+    "cancers": [
+      "esophageal"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-07-29",
+    "sponsor": "Tianjin Medical University Cancer Institute and Hospital",
+    "interventions": [
+      "Adebrelimab",
+      "Nab paclitaxel",
+      "Carboplatin",
+      "radiation"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "immunotherapy"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT04912765",
+    "title": "Neoantigen Dendritic Cell Vaccine and Nivolumab in HCC and Liver Metastases From CRC",
+    "url": "https://clinicaltrials.gov/study/NCT04912765",
+    "cancers": [
+      "liver"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-07-31",
+    "sponsor": "National Cancer Centre, Singapore",
+    "interventions": [
+      "Neoantigen Dendritic Cell Vaccine",
+      "Nivolumab"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "nivolumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07179900",
+    "title": "Radiotherapy Combined With QL1706 and Bevacizumab for Unresectable Non-metastatic Hepatocellular Carcinoma",
+    "url": "https://clinicaltrials.gov/study/NCT07179900",
+    "cancers": [
+      "liver"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-03",
+    "sponsor": "Hebei Medical University Fourth Hospital",
+    "interventions": [
+      "QL1706",
+      "Radiotherapy",
+      "Sintilimab",
+      "Bevacizumab"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "sintilimab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07699939",
+    "title": "Perioperative HLX10 (Serplulimab) With S-1+Oxaliplatin (SOX) in Locally Advanced and PD-L1-Positive Gastric or Esophagogastric Junction Adenocarcinoma",
+    "url": "https://clinicaltrials.gov/study/NCT07699939",
+    "cancers": [
+      "gastric"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-05",
+    "sponsor": "National Cancer Center, Japan",
+    "interventions": [
+      "serplulimab",
+      "Placebo"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pd-l1"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT05361798",
+    "title": "A Phase II Study Evaluating T-Cell Clonality After Stereotactic Body Radiation Therapy Alone and in Combination With the Immunocytokine PDS01ADC in Localized High and Intermediate Risk Prostate Cancer Treated With Androgen Deprivation Therapy",
+    "url": "https://clinicaltrials.gov/study/NCT05361798",
+    "cancers": [
+      "prostate"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-11",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "PDS01ADC",
+      "Stereotactic Body Radiation Therapy (SBRT)"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "adc"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06880523",
+    "title": "STRIDE (Durvalumab + Tremelimumab) With Lenvatinib vs STRIDE Alone in Unresectable Hepatocellular Carcinoma",
+    "url": "https://clinicaltrials.gov/study/NCT06880523",
+    "cancers": [
+      "liver"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-11",
+    "sponsor": "Canadian Cancer Trials Group",
+    "interventions": [
+      "STRIDE (durvalumab + tremelimumab)",
+      "Durvalumab",
+      "Lenvatinib"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "durvalumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06904183",
+    "title": "Lenvatinib, Sintilimab, and DEB-TACE With/Without HAIC for HCC >7 cm With PVTT",
+    "url": "https://clinicaltrials.gov/study/NCT06904183",
+    "cancers": [
+      "liver"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-11",
+    "sponsor": "Second Affiliated Hospital of Guangzhou Medical University",
+    "interventions": [
+      "LEN+SIN+DEB-TACE+HAIC",
+      "LEN+SIN+DEB-TACE"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "sintilimab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07659795",
+    "title": "A Phase 2 Study of VS-7375 in Patients With KRAS G12D-Mutated Colorectal Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT07659795",
+    "cancers": [
+      "colorectal"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-11",
+    "sponsor": "Verastem, Inc.",
+    "interventions": [
+      "VS-7375",
+      "cetuximab",
+      "panitumumab",
+      "Cetuximab + mFOLFOX6"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "kras"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06525766",
+    "title": "Adaptive Therapy With Capecitabine for Treatment of Metastatic ER Positive, HER2 Negative Breast Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT06525766",
+    "cancers": [
+      "breast"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-12",
+    "sponsor": "Mayo Clinic",
+    "interventions": [
+      "Biospecimen Collection",
+      "Bone Scan",
+      "Capecitabine",
+      "Computed Tomography",
+      "Magnetic Resonance Imaging",
+      "Questionnaire Administration"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "her2"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06787612",
+    "title": "Investigation of Ubamatamab Combination Therapy in Adult Participants With Platinum-Resistant Ovarian Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT06787612",
+    "cancers": [
+      "ovarian"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-12",
+    "sponsor": "Regeneron Pharmaceuticals",
+    "interventions": [
+      "Ubamatamab",
+      "Bevacizumab",
+      "Cemiplimab",
+      "Fianlimab",
+      "PLD",
+      "Sarilumab",
+      "REGN10597"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "cemiplimab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07221149",
+    "title": "A Study to Evaluate the Safety and Efficacy of Pumitamig in Combination With Chemotherapy Versus Nivolumab in Combination With Chemotherapy in Participants With Previously Untreated Advanced or Metastatic Gastric, Gastroesophageal Junction, or Esophageal Adenocarcinoma (ROSETTA Gastric-204)",
+    "url": "https://clinicaltrials.gov/study/NCT07221149",
+    "cancers": [
+      "esophageal",
+      "gastric"
+    ],
+    "phase": "Phase 2/3",
+    "status": "Recruiting",
+    "date": "2026-08-12",
+    "sponsor": "Bristol-Myers Squibb",
+    "interventions": [
+      "Pumitamig",
+      "Folfox",
+      "Capox",
+      "Nivolumab"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "nivolumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07235293",
+    "title": "A Study to Test DSP107 in Combination With Atezolizumab in Comparison With Fruquintinib as a New Treatment for Colorectal Cancer.",
+    "url": "https://clinicaltrials.gov/study/NCT07235293",
+    "cancers": [
+      "colorectal"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-12",
+    "sponsor": "Kahr Bio Australia Pty Ltd",
+    "interventions": [
+      "DSP107 + Atezolizumab",
+      "Fruquintinib"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "atezolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT02133196",
+    "title": "T Cell Receptor Immunotherapy for Patients With Metastatic Non-Small Cell Lung Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT02133196",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Aldesleukin",
+      "Fludarabine",
+      "Cyclophosphamide",
+      "Young TIL"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "immunotherapy"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT05198830",
+    "title": "Testing the Addition of an Anti-Cancer Drug, TRC102, to the Usual Chemotherapy Treatment (Pemetrexed, Cisplatin or Carboplatin) During Radiation Therapy for Stage III Non-Squamous Non-Small Cell Lung Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT05198830",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Carboplatin",
+      "Cisplatin",
+      "Computed Tomography",
+      "Durvalumab",
+      "FDG-Positron Emission Tomography",
+      "Magnetic Resonance Imaging",
+      "Methoxyamine",
+      "Pemetrexed",
+      "Radiation Therapy"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "durvalumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06317649",
+    "title": "Venetoclax and HMA Treatment of Older and Unfit Adults With FLT3 Mutated Acute Myeloid Leukemia (AML) (A MyeloMATCH Treatment Trial)",
+    "url": "https://clinicaltrials.gov/study/NCT06317649",
+    "cancers": [
+      "leukemia"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Azacitidine",
+      "Biospecimen Collection",
+      "Bone Marrow Aspiration",
+      "Bone Marrow Biopsy",
+      "Gilteritinib",
+      "Venetoclax"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "flt3"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06712316",
+    "title": "Safety, Efficacy, and Pharmacokinetics of BNT327 in Combination With Chemotherapy and Other Investigational Agents for Lung Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT06712316",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 2/3",
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "BioNTech SE",
+    "interventions": [
+      "Pumitamig",
+      "Pembrolizumab",
+      "Carboplatin",
+      "Pemetrexed",
+      "Paclitaxel"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06050252",
+    "title": "Testing the Combination of the Anticancer Drug Durvalumab With Chemotherapy (Gemcitabine and Cisplatin) at Improving Outcomes for High-Risk Resectable Liver Cancer Before Surgery",
+    "url": "https://clinicaltrials.gov/study/NCT06050252",
+    "cancers": [
+      "liver"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Biopsy Procedure",
+      "Biospecimen Collection",
+      "Cisplatin",
+      "Computed Tomography",
+      "Durvalumab",
+      "Gemcitabine",
+      "Magnetic Resonance Imaging",
+      "Resection"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "durvalumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06518057",
+    "title": "Hippocampal Avoidance in Craniospinal Irradiation for the Treatment of Leptomeningeal Metastases From Breast Cancer or Non-small Cell Lung Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT06518057",
+    "cancers": [
+      "breast",
+      "lung"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "University of Washington",
+    "interventions": [
+      "Biospecimen Collection",
+      "Computed Tomography",
+      "Electronic Health Record Review",
+      "Lumbar Puncture",
+      "Magnetic Resonance Imaging",
+      "Positron Emission Tomography",
+      "Proton Beam Craniospinal Irradiation",
+      "Survey Administration",
+      "Volume Modulated Arc Therapy",
+      "Hippocampal-Avoidance Craniospinal Irradiation"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "menin"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06822543",
+    "title": "A Single Arm, Phase 2 Study of Datopotamab Deruxtecan, Carboplatin, and Pembrolizumab for Treatment-naive Brain Metastases From NSCLC (Non-small Cell Lung Cancer)",
+    "url": "https://clinicaltrials.gov/study/NCT06822543",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "Latin American Cooperative Oncology Group",
+    "interventions": [
+      "Pembrolizumab",
+      "Datopotamab deruxtecan",
+      "Carboplatin"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06878274",
+    "title": "Post-operative Radiotherapy After Neodjuvant Chemo-immunotherapy and Surgery in Stage III NSCLC",
+    "url": "https://clinicaltrials.gov/study/NCT06878274",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "Centre hospitalier de l'Université de Montréal (CHUM)",
+    "interventions": [
+      "Post-operative radiotherapy"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "immunotherapy"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07007559",
+    "title": "ASPEN-09-03: A Study of Evorpacept in Combination With Trastuzumab and Chemotherapy in Metastatic HER2-Positive Breast Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT07007559",
+    "cancers": [
+      "breast"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "ALX Oncology Inc.",
+    "interventions": [
+      "Evorpacept (ALX148)",
+      "Trastuzumab",
+      "Paclitaxel",
+      "Capecitabine",
+      "Eribulin",
+      "Gemcitabine",
+      "Vinorelbine"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "her2"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07155174",
+    "title": "A Study to Evaluate the Optimal Dose, Adverse Events and Change in Disease Activity of Intravenous ABBV-706 in Combination With Atezolizumab Versus Standard of Care as First-Line Treatment in Adult Participants With Previously Untreated Extensive Stage Small Cell Lung Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT07155174",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "AbbVie",
+    "interventions": [
+      "ABBV-706",
+      "Atezolizumab",
+      "Etoposide",
+      "Carboplatin",
+      "Carboplatin",
+      "Lurbinectedin"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "atezolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT03258567",
+    "title": "Nivolumab in Epstein-Barr Virus (EBV)-Positive Lymphoproliferative Disorders and EBV-Positive Non-HodgkinLymphomas",
+    "url": "https://clinicaltrials.gov/study/NCT03258567",
+    "cancers": [
+      "lymphoma"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Nivolumab"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "nivolumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT03412877",
+    "title": "Administration of Autologous T-Cells Genetically Engineered to Express T-Cell Receptors Reactive Against Neoantigens in People With Metastatic Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT03412877",
+    "cancers": [
+      "breast",
+      "lung",
+      "ovarian"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Cyclophosphamide",
+      "Fludarabine",
+      "Aldesleukin",
+      "Individual Patient TCR-Transduced PBL",
+      "Pembrolizumab (KEYTRUDA(R))"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT05708235",
+    "title": "A PoC Study to Evaluate Treatments' Efficacy by Monitoring MRD Using ctDNA in HR-positive/HER2-negative EBC Population",
+    "url": "https://clinicaltrials.gov/study/NCT05708235",
+    "cancers": [
+      "breast"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "MedSIR",
+    "interventions": [
+      "Giredestrant",
+      "Abemaciclib",
+      "Inavolisib",
+      "Standard ET followed by change in treatment"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "her2"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06203600",
+    "title": "Adding Nivolumab to Usual Treatment for People With Advanced Stomach or Esophageal Cancer, PARAMUNE Trial",
+    "url": "https://clinicaltrials.gov/study/NCT06203600",
+    "cancers": [
+      "esophageal",
+      "gastric"
+    ],
+    "phase": "Phase 2/3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Biospecimen Collection",
+      "Computed Tomography",
+      "Magnetic Resonance Imaging",
+      "Nivolumab",
+      "Paclitaxel",
+      "Questionnaire Administration",
+      "Ramucirumab"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "nivolumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06672146",
+    "title": "Comparing New Treatments for People With Newly Diagnosed Acute Myeloid Leukemia That Has an IDH2 Gene Change (A MyeloMATCH Treatment Trial)",
+    "url": "https://clinicaltrials.gov/study/NCT06672146",
+    "cancers": [
+      "leukemia"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Biospecimen Collection",
+      "Bone Marrow Aspiration",
+      "Bone Marrow Biopsy",
+      "Decitabine and Cedazuridine",
+      "Enasidenib",
+      "Venetoclax"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "idh2"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06768307",
+    "title": "Assessment of Adebelizumab Combined With Chemotherapy in Concurrent Radiotherapy Versus Sequential Radiotherapy as First-Line Treatment for Extensive-Stage Small Cell Lung Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT06768307",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Peking University Cancer Hospital & Institute",
+    "interventions": [
+      "First-line Immunotherapy Combined with Chemoradiotherapy for ES-SCLC"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "immunotherapy"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07226999",
+    "title": "Symbiotic-Lung-04: A Study to Learn About the Study Medicine Called PF-08634404 in Combination With Chemotherapy in Adult Participants With Extensive-Stage Small Cell Lung Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT07226999",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 2/3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Pfizer",
+    "interventions": [
+      "PF-08634404",
+      "Atezolizumab",
+      "Chemotherapy"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "atezolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07392892",
+    "title": "Symbiotic-GI-16: A Study to Learn About the Study Medicine Called PF-08634404 in Combination With Chemotherapy in Gastroesophageal Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT07392892",
+    "cancers": [
+      "esophageal",
+      "gastric"
+    ],
+    "phase": "Phase 2/3",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Pfizer",
+    "interventions": [
+      "PF-08634404",
+      "Chemotherapy",
+      "Nivolumab"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "nivolumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07644559",
+    "title": "A Phase 2 Study of VS-7375 in Patients With KRAS G12D-Mutated Pancreatic Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT07644559",
+    "cancers": [
+      "pancreatic"
+    ],
+    "phase": "Phase 2",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Verastem, Inc.",
+    "interventions": [
+      "VS-7375",
+      "cetuximab"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "kras"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06293898",
+    "title": "Open Label Study to Evaluate BL-M07D1 in HER2 Expressing Malignant Solid Tumors",
+    "url": "https://clinicaltrials.gov/study/NCT06293898",
+    "cancers": [
+      "esophageal"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-07-20",
+    "sponsor": "SystImmune Inc.",
+    "interventions": [
+      "BL-M07D1"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "her2"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT04198766",
+    "title": "Study of INBRX-106 and INBRX-106 in Combination With Pembrolizumab (Keytruda®) in Subjects With Locally Advanced or Metastatic Solid Tumors (Hexavalent OX40 Agonist)",
+    "url": "https://clinicaltrials.gov/study/NCT04198766",
+    "cancers": [
+      "gastric"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-07-29",
+    "sponsor": "Inhibrx Biosciences, Inc",
+    "interventions": [
+      "INBRX-106 - Hexavalent OX40 agonist antibody",
+      "pembrolizumab 200 mg",
+      "pembrolizumab 400 mg",
+      "Carboplatin AUC-5",
+      "Carboplatin AUC-6",
+      "Pemetrexed 500 mg/m2",
+      "Cisplatin 75mg/m2",
+      "Paclitaxel 200mg/m2",
+      "Nab paclitaxel 100mg/m2",
+      "Gemcitabine (1000 mg/m2)"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06427941",
+    "title": "A Phase 1 Study of BGB-B2033, Alone or in Combination With Tislelizumab With or Without Bevacizumab, in Participants With Advanced or Metastatic Solid Tumors",
+    "url": "https://clinicaltrials.gov/study/NCT06427941",
+    "cancers": [
+      "gastric",
+      "liver"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-07-29",
+    "sponsor": "BeOne Medicines",
+    "interventions": [
+      "BGB-B2033",
+      "Tislelizumab",
+      "Bevacizumab"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "tislelizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06915753",
+    "title": "Safety and Preliminary Anti-Tumor Activity of TYRA-430 in Advanced Hepatocellular Carcinoma and Other Solid Tumors With Activating FGF/FGFR Pathway Aberrations",
+    "url": "https://clinicaltrials.gov/study/NCT06915753",
+    "cancers": [
+      "liver"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-07-29",
+    "sponsor": "Tyra Biosciences, Inc",
+    "interventions": [
+      "TYRA-430"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "fgfr"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06066138",
+    "title": "A Study of Therapeutic Drug Monitoring-Based Atezolizumab Dosing",
+    "url": "https://clinicaltrials.gov/study/NCT06066138",
+    "cancers": [
+      "liver"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-03",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Atezolizumab"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "atezolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07444814",
+    "title": "Study Evaluating the Safety and Efficacy of HWK-007, a PTK7-directed Antibody Drug Conjugate in Participants With Advanced Solid Tumors",
+    "url": "https://clinicaltrials.gov/study/NCT07444814",
+    "cancers": [
+      "ovarian"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-05",
+    "sponsor": "Whitehawk Therapeutics, Inc.",
+    "interventions": [
+      "HWK-007"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "antibody drug conjugate"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT05372614",
+    "title": "Testing the Safety and Tolerability of the Anti-cancer Drugs Trastuzumab Deruxtecan and Neratinib for Cancers With Changes in the HER2 Gene",
+    "url": "https://clinicaltrials.gov/study/NCT05372614",
+    "cancers": [
+      "pancreatic"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-06",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Biopsy Procedure",
+      "Biospecimen Collection",
+      "Computed Tomography",
+      "Echocardiography Test",
+      "Multigated Acquisition Scan",
+      "Neratinib Maleate",
+      "Trastuzumab Deruxtecan"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "her2"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06324357",
+    "title": "Beamion BCGC-1: A Study to Find a Suitable Dose of Zongertinib Used Alone and in Combination With Other Treatments to Test Whether it Helps People With Different Types of HER2+ Cancer That Has Spread",
+    "url": "https://clinicaltrials.gov/study/NCT06324357",
+    "cancers": [
+      "esophageal",
+      "gastric"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-06",
+    "sponsor": "Boehringer Ingelheim",
+    "interventions": [
+      "Zongertinib",
+      "Trastuzumab deruxtecan",
+      "Trastuzumab emtansine",
+      "Trastuzumab",
+      "Capecitabine",
+      "mFOLFOX6",
+      "zanidatamab"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "her2"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07227168",
+    "title": "A Study of STRO-004 in Adults With Refractory/Recurrent Metastatic Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT07227168",
+    "cancers": [
+      "esophageal",
+      "gastric",
+      "pancreatic"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-06",
+    "sponsor": "Sutro Biopharma, Inc.",
+    "interventions": [
+      "STRO-004",
+      "Pembrolizumab"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07594067",
+    "title": "TCR1188-ABC Cells in KRAS-mutated Cancers",
+    "url": "https://clinicaltrials.gov/study/NCT07594067",
+    "cancers": [
+      "pancreatic"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-06",
+    "sponsor": "University of Pennsylvania",
+    "interventions": [
+      "TCR1188-ABC cells",
+      "Fludarabine + Cyclophosphamide combination",
+      "Tocilizumab"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "kras"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07749586",
+    "title": "A Study to Evaluate ARV-6723 Alone and With Pembrolizumab in Participants With Advanced Solid Tumors",
+    "url": "https://clinicaltrials.gov/study/NCT07749586",
+    "cancers": [
+      "esophageal",
+      "gastric",
+      "liver",
+      "ovarian"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-06",
+    "sponsor": "Arvinas Inc.",
+    "interventions": [
+      "ARV-6723",
+      "Pembrolizumab",
+      "SOC"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06469944",
+    "title": "Substudy 06C: A Study of Investigational Agents With Pembrolizumab (MK-3475) and Chemotherapy in Participants With First-Line Locally Advanced Unresectable/Metastatic Gastroesophageal Adenocarcinoma (MK-3475-06C/KEYMAKER-U06)",
+    "url": "https://clinicaltrials.gov/study/NCT06469944",
+    "cancers": [
+      "esophageal",
+      "gastric"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-07",
+    "sponsor": "Merck Sharp & Dohme LLC",
+    "interventions": [
+      "Pembrolizumab",
+      "Sacituzumab Tirumotecan (sac-TMT)",
+      "Capecitabine",
+      "Leucovorin",
+      "Levoleucovorin",
+      "5-Fluorouracil (5-FU)",
+      "Oxaliplatin",
+      "Patritumab Deruxtecan"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06751329",
+    "title": "A Study of DM002 in Patients With Advanced Solid Tumors",
+    "url": "https://clinicaltrials.gov/study/NCT06751329",
+    "cancers": [
+      "ovarian",
+      "pancreatic"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-07",
+    "sponsor": "Xadcera Biopharmaceutical (Suzhou) Co., Ltd.",
+    "interventions": [
+      "DM002"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "adc"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT04585958",
+    "title": "Testing the Combination of DS-8201a and Olaparib in HER2-Expressing Cancers With Expansion in Patients With Platinum Resistant Ovarian Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT04585958",
+    "cancers": [
+      "ovarian"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-10",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Biopsy Procedure",
+      "Biospecimen Collection",
+      "Computed Tomography",
+      "Echocardiography Test",
+      "Multigated Acquisition Scan",
+      "Olaparib",
+      "Trastuzumab Deruxtecan"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "her2"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07166601",
+    "title": "M0324 as Monotherapy and in Combination With Pembrolizumab or Chemotherapy in Participants With Selected Advanced Solid Tumors",
+    "url": "https://clinicaltrials.gov/study/NCT07166601",
+    "cancers": [
+      "pancreatic"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-11",
+    "sponsor": "EMD Serono Research & Development Institute, Inc.",
+    "interventions": [
+      "M0324",
+      "M0324",
+      "Pembrolizumab",
+      "mFOLFIRINOX"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07277322",
+    "title": "Neoadjuvant Dupilumab and Toripalimab in MSS CRC Subjects With Resectable Liver Metastases",
+    "url": "https://clinicaltrials.gov/study/NCT07277322",
+    "cancers": [
+      "colorectal",
+      "liver"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-12",
+    "sponsor": "Dan Feng",
+    "interventions": [
+      "Dupilumab",
+      "Toripalimab"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "toripalimab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT03190941",
+    "title": "Administering Peripheral Blood Lymphocytes Transduced With a Murine T-Cell Receptor Recognizing the G12V Variant of Mutated RAS in HLA-A*11:01 Patients",
+    "url": "https://clinicaltrials.gov/study/NCT03190941",
+    "cancers": [
+      "colorectal",
+      "gastric",
+      "pancreatic"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Cyclophosphamide",
+      "Fludarabine",
+      "Anti-KRAS G12V mTCR PBL",
+      "Aldesleukin"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "kras"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07147231",
+    "title": "Testing the Effectiveness of the Anti-cancer Drug Pidnarulex (CX-5461), in Combination With Another Anti-cancer Drug Cemiplimab (REGN2810), in Treating Refractory Microsatellite Stable Colorectal Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT07147231",
+    "cancers": [
+      "colorectal"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Biopsy Procedure",
+      "Biospecimen Collection",
+      "Cemiplimab",
+      "Computed Tomography",
+      "Magnetic Resonance Imaging",
+      "Pidnarulex",
+      "Positron Emission Tomography"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "cemiplimab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06826768",
+    "title": "A Ph Ib Study of REGN5678 Plus Cemiplimab in Patients With mCRPC",
+    "url": "https://clinicaltrials.gov/study/NCT06826768",
+    "cancers": [
+      "prostate"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "M.D. Anderson Cancer Center",
+    "interventions": [
+      "REGN5678",
+      "Cemiplimab"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "cemiplimab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06843447",
+    "title": "A Clinical Study of Raludotatug Deruxtecan in People With Ovarian Cancer (MK-5909-003)",
+    "url": "https://clinicaltrials.gov/study/NCT06843447",
+    "cancers": [
+      "ovarian"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "Merck Sharp & Dohme LLC",
+    "interventions": [
+      "Raludotatug Deruxtecan",
+      "Carboplatin",
+      "Paclitaxel",
+      "Bevacizumab",
+      "Rescue Medication",
+      "Pembrolizumab",
+      "Gemcitabine",
+      "Pegylated liposomal doxorubicin"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT04332588",
+    "title": "Monitoring HER2+ Breast Cancer Neoadjuvant Treatment With Advanced PET/MRI",
+    "url": "https://clinicaltrials.gov/study/NCT04332588",
+    "cancers": [
+      "breast"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "University of Alabama at Birmingham",
+    "interventions": [
+      "[18F]FMISO PET/MRI imaging"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "her2"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT04633252",
+    "title": "A Phase I/II Study of PDS01ADC With Docetaxel and Abiraterone in Adults With Metastatic Castration Sensitive and PDS01ADC With Docetaxel in Castration Resistant Prostate Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT04633252",
+    "cancers": [
+      "prostate"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "PDS01ADC",
+      "Docetaxel",
+      "M7824",
+      "Prednisone",
+      "ADT"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "adc"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT04861077",
+    "title": "Monitoring Breast Cancer Immunotherapy Treatment With Advanced Positron Emission Tomography Magnetic Resonance Imaging (PET/MRI)",
+    "url": "https://clinicaltrials.gov/study/NCT04861077",
+    "cancers": [
+      "breast"
+    ],
+    "phase": "Early Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "University of Alabama at Birmingham",
+    "interventions": [
+      "[18F]FMISO-PET with contrast-enhanced MRI"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "immunotherapy"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT04929223",
+    "title": "A Study Evaluating the Safety and Efficacy of Targeted Therapies in Subpopulations of Patients With Metastatic Colorectal Cancer (INTRINSIC)",
+    "url": "https://clinicaltrials.gov/study/NCT04929223",
+    "cancers": [
+      "colorectal"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Hoffmann-La Roche",
+    "interventions": [
+      "Inavolisib",
+      "Bevacizumab",
+      "Cetuximab",
+      "Atezolizumab",
+      "Tiragolumab",
+      "SY-5609",
+      "Divarasib",
+      "FOLFOX",
+      "FOLFIRI",
+      "FoundationOne®Liquid CDx"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "atezolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT05461768",
+    "title": "A Study of BL-M07D1 in Patients With Locally Advanced or Metastatic HER2-Positive/Negative Breast Cancer and Other Solid Tumors",
+    "url": "https://clinicaltrials.gov/study/NCT05461768",
+    "cancers": [
+      "breast"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Sichuan Baili Pharmaceutical Co., Ltd.",
+    "interventions": [
+      "BL-M07D1"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "her2"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT05919264",
+    "title": "FOG-001 in Locally Advanced or Metastatic Solid Tumors",
+    "url": "https://clinicaltrials.gov/study/NCT05919264",
+    "cancers": [
+      "colorectal",
+      "liver",
+      "prostate"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Parabilis Medicines, Inc.",
+    "interventions": [
+      "FOG-001",
+      "mFOLFOX-6",
+      "Nivolumab",
+      "Trifluridine/tipiracil",
+      "Bevacizumab",
+      "FOG-001"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "nivolumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06004245",
+    "title": "A Study to Evaluate the Safety, Pharmacokinetics, and Anti-Tumor Activity of VVD-133214 as Monotherapy and in Combination in Participants With Advanced Solid Tumors",
+    "url": "https://clinicaltrials.gov/study/NCT06004245",
+    "cancers": [
+      "colorectal"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Vividion Therapeutics, Inc.",
+    "interventions": [
+      "VVD-133214",
+      "Pembrolizumab",
+      "Bevacizumab"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06149481",
+    "title": "Phase I/II Study of the Combination Immunotherapy Regimen: SX-682, TriAdeno Vaccine, Retifanlimab and IL-15 Agonist N-803 (STAR15) for Metastatic Colorectal Cancer (mCRC)",
+    "url": "https://clinicaltrials.gov/study/NCT06149481",
+    "cancers": [
+      "colorectal"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [
+      "Retifanlimab",
+      "Therapeutic CEA, Brachyury and MUC1 TriAdeno Vaccine Platform",
+      "N-803",
+      "SX-682"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "immunotherapy"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06303505",
+    "title": "FiH Study to Investigate Safety, PK and Efficacy of the NaPi2b ADC TUB-040 in Patients With PROC or r/r Adenocarcinoma NSCLC",
+    "url": "https://clinicaltrials.gov/study/NCT06303505",
+    "cancers": [
+      "lung",
+      "ovarian"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Tubulis GmbH",
+    "interventions": [
+      "TUB-040"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "adc"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07140016",
+    "title": "A Study of Gilteritinib in Adults With Advanced ALK-positive Non-small Cell Lung Cancer (NSCLC)",
+    "url": "https://clinicaltrials.gov/study/NCT07140016",
+    "cancers": [
+      "lung",
+      "lymphoma"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Astellas Pharma Global Development, Inc.",
+    "interventions": [
+      "gilteritinib"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "alk"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07227012",
+    "title": "Symbiotic-GI-13: A Study to Learn About Study Medicine Called PF-08634404 as a Single Treatment and Combination Treatment in Adult Participants With a Liver Cancer Called Hepatocellular Carcinoma, That is Too Advanced to be Removed by Surgery and May Have Spread to Other Parts of the Body.",
+    "url": "https://clinicaltrials.gov/study/NCT07227012",
+    "cancers": [
+      "liver"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Pfizer",
+    "interventions": [
+      "PF-08634404",
+      "Ipilimumab"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "ipilimumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07227597",
+    "title": "A Clinical Study of Gocatamig (MK-6070) and Infinatamab Deruxtecan (MK-2400) in People With Small Cell Lung Cancer (MK-6070-003)",
+    "url": "https://clinicaltrials.gov/study/NCT07227597",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Phase 1/2",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Merck Sharp & Dohme LLC",
+    "interventions": [
+      "Gocatamig",
+      "I-DXd",
+      "Atezolizumab",
+      "Carboplatin",
+      "Etoposide",
+      "Rescue Medications"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "atezolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07341867",
+    "title": "Systemic Anti-Cancer Therapy Dose Modifications for Individuals With Duffy Null Phenotype",
+    "url": "https://clinicaltrials.gov/study/NCT07341867",
+    "cancers": [
+      "breast"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Andrew Hantel, MD",
+    "interventions": [
+      "Dexamethasone",
+      "Bortezomib",
+      "LENALIDOMIDE",
+      "Daratumumab",
+      "Carboplatin",
+      "Paclitaxel",
+      "Pembrolizumab",
+      "Cyclophosphamide",
+      "Doxorubicin"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "pembrolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07360314",
+    "title": "Anti-Ly6E Exatecan ADC M7437 in Advanced Solid Tumors",
+    "url": "https://clinicaltrials.gov/study/NCT07360314",
+    "cancers": [
+      "breast",
+      "gastric",
+      "ovarian",
+      "pancreatic"
+    ],
+    "phase": "Phase 1",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "EMD Serono Research & Development Institute, Inc.",
+    "interventions": [
+      "M7437",
+      "M7437"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "adc"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT05443087",
+    "title": "TARGETed Therapy Drug MONITOring in DIGestive Oncology",
+    "url": "https://clinicaltrials.gov/study/NCT05443087",
+    "cancers": [
+      "liver"
+    ],
+    "phase": "Not applicable",
+    "status": "Recruiting",
+    "date": "2026-08-03",
+    "sponsor": "UNICANCER",
+    "interventions": [
+      "Blood sampling to build population pharmacokinetics model"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "targeted therapy"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07495735",
+    "title": "Intelligence System for Predicting Atezolizumab-Bevacizumab Response and Clinical Outcomes in Unresectable Hepatocellular Carcinoma",
+    "url": "https://clinicaltrials.gov/study/NCT07495735",
+    "cancers": [
+      "liver"
+    ],
+    "phase": null,
+    "status": "Recruiting",
+    "date": "2026-08-04",
+    "sponsor": "First Affiliated Hospital of Wenzhou Medical University",
+    "interventions": [
+      "No intervention (observational study)"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "atezolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06252753",
+    "title": "Observational Study Protocol: LIVER-R",
+    "url": "https://clinicaltrials.gov/study/NCT06252753",
+    "cancers": [
+      "liver"
+    ],
+    "phase": null,
+    "status": "Recruiting",
+    "date": "2026-08-13",
+    "sponsor": "AstraZeneca",
+    "interventions": [
+      "Durvalumab-based combination therapies in observational study setting",
+      "Durvalumab-based combination therapies in observational study setting",
+      "Non Durvalumab-based therapies in observational study setting",
+      "Durvalumab-based combination therapies in observational study settings"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "durvalumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07737951",
+    "title": "Tai Chi for Reducing Aromatase Inhibitor-Induced Arthralgia",
+    "url": "https://clinicaltrials.gov/study/NCT07737951",
+    "cancers": [
+      "breast"
+    ],
+    "phase": "Not applicable",
+    "status": "Recruiting",
+    "date": "2026-08-14",
+    "sponsor": "Thomas Jefferson University",
+    "interventions": [
+      "Tai Chi",
+      "Health Education"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "inhibitor"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT02682667",
+    "title": "Biospecimen Procurement for Center for Immuno-Oncology Immunotherapy Protocols",
+    "url": "https://clinicaltrials.gov/study/NCT02682667",
+    "cancers": [
+      "leukemia",
+      "lung",
+      "lymphoma"
+    ],
+    "phase": null,
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "National Cancer Institute (NCI)",
+    "interventions": [],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "immunotherapy"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06727227",
+    "title": "Real-world Study of Trastuzumab Deruxtecan in Patients With Unresectable or Metastatic HER2-low Breast Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT06727227",
+    "cancers": [
+      "breast"
+    ],
+    "phase": null,
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "AstraZeneca",
+    "interventions": [
+      "trastuzumab deruxtecan"
+    ],
+    "modality": [
+      "targeted"
+    ],
+    "targetedEvidence": [
+      "her2"
+    ],
+    "immuneEvidence": [],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT06743581",
+    "title": "Study of Neoadjuvant Cemiplimab and Dupilumab in Early-Stage Non-Small Cell Lung Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT06743581",
+    "cancers": [
+      "lung"
+    ],
+    "phase": "Not applicable",
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Centre hospitalier de l'Université de Montréal (CHUM)",
+    "interventions": [
+      "Cemiplimab",
+      "Dupilumab"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "cemiplimab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  },
+  {
+    "id": "NCT07284121",
+    "title": "A Study to Evaluate Patient-Reported Satisfaction, Effectiveness, and Safety of Atezolizumab in Participants Treated in Routine Clinical Practice",
+    "url": "https://clinicaltrials.gov/study/NCT07284121",
+    "cancers": [
+      "liver",
+      "lung"
+    ],
+    "phase": null,
+    "status": "Recruiting",
+    "date": "2026-08-17",
+    "sponsor": "Hoffmann-La Roche",
+    "interventions": [
+      "Atezolizumab"
+    ],
+    "modality": [
+      "immunotherapy"
+    ],
+    "targetedEvidence": [],
+    "immuneEvidence": [
+      "atezolizumab"
+    ],
+    "biomarkerEvidence": [],
+    "frontierEvidence": [],
+    "score": 1
+  }
+]
