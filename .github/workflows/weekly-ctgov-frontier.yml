@@ -1,0 +1,101 @@
+name: Weekly ClinicalTrials Frontier Sync
+
+on:
+  schedule:
+    # Weekly, deliberately offset from the dependency audit and quality jobs.
+    - cron: '23 4 * * 2'
+  workflow_dispatch:
+    inputs:
+      skip_charts:
+        description: 'Skip PNG chart generation and update JSON assets only'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: weekly-ctgov-frontier
+  cancel-in-progress: false
+
+jobs:
+  sync-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      AUTH_SECRET: trialbeacon-ci-build-placeholder
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install JavaScript dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Install chart dependency
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.skip_charts != true }}
+        run: python -m pip install --disable-pip-version-check matplotlib
+
+      - name: Sync ClinicalTrials.gov snapshot
+        run: python3 scripts/sync_ctgov_snapshot.py --output-dir data/snapshots --page-size 100 --max-pages 1
+
+      - name: Rebuild frontend frontier assets
+        env:
+          SKIP_CHARTS: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.skip_charts == true) }}
+        run: |
+          if [ "$SKIP_CHARTS" = "true" ]; then
+            python3 scripts/update_frontier_assets.py --skip-charts
+          else
+            python3 scripts/update_frontier_assets.py
+          fi
+
+      - name: Check generated diff
+        id: diff
+        run: |
+          git diff --check
+          if git diff --quiet -- lib/data/frontier-trials.json lib/data/frontier-phase-matrix.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No frontend index changes detected."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git diff --stat -- lib/data/frontier-trials.json lib/data/frontier-phase-matrix.json
+          fi
+
+      - name: Upload sync report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ctgov-frontier-sync-${{ github.run_id }}
+          path: |
+            data/snapshots/ctgov-latest.report.json
+            data/analysis/frontier-trials-*/summary.json
+            data/analysis/frontier-trials-*/report.md
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Commit updated frontend assets
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lib/data/frontier-trials.json lib/data/frontier-phase-matrix.json
+          git commit -m "chore(data): refresh frontier trial index"
+          git push
