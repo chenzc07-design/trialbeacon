@@ -38,7 +38,6 @@ export async function AppQrSection() {
       <div className="card flex flex-col items-center gap-6 p-6 sm:flex-row sm:items-center sm:gap-8 sm:p-7">
         {/* Desktop: scannable QR. Hidden on mobile to avoid self-scan. */}
         <div className="hidden shrink-0 rounded-2xl bg-white p-3 shadow-card-hover ring-1 ring-slateish-200 md:block">
-          {/* eslint-disable-next-line react/no-danger -- server-generated QR SVG */}
           <div
             className="h-[160px] w-[160px]"
             dangerouslySetInnerHTML={{ __html: svg }}

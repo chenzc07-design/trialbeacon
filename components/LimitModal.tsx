@@ -93,12 +93,12 @@ export function LimitModalProvider({ children }: { children: ReactNode }) {
     } finally {
       setBusy(false);
     }
-  }, [user, limitSlug, chosen, m, refresh]);
+  }, [user, limitSlug, chosen, m, refresh, closeLimit]);
 
   const viewPro = useCallback(() => {
     closeLimit();
     router.push('/pro');
-  }, [router]);
+  }, [router, closeLimit]);
 
   const value = useMemo<LimitModalState>(
     () => ({ limitSlug, openLimit, closeLimit }),
