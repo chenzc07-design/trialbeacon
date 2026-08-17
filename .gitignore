@@ -16,3 +16,7 @@ npm-debug.log*
 *.tsbuildinfo
 .vercel
 .env*
+
+# Generated ClinicalTrials.gov sync artifacts
+/data/snapshots/
+/scripts/__pycache__/

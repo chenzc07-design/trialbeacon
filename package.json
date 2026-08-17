@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "sync:ctgov": "python3 scripts/sync_ctgov_snapshot.py --output-dir data/snapshots --page-size 100 --max-pages 1"
   },
   "engines": {
     "node": ">=18.18.0"
