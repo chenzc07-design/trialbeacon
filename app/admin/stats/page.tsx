@@ -100,8 +100,10 @@ export default async function AdminStatsPage({
 
   return (
     <main className="container-page max-w-3xl py-12">
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
         <h1 className="text-xl font-semibold text-ink-950">TrialBeacon 经营数据</h1>
+        <div className="flex items-center gap-3">
+          <a href="/admin/monitor" className="text-xs font-medium text-[#2e5747] underline-offset-4 hover:underline">查看系统监控</a>
         <span
           className={`rounded-full px-2.5 py-1 text-[11px] font-medium ${
             store === 'upstash'
@@ -111,6 +113,7 @@ export default async function AdminStatsPage({
         >
           {store === 'upstash' ? '持久化 (Upstash)' : '持久化 (本地文件)'}
         </span>
+        </div>
       </div>
       <p className="mt-2 text-sm text-slateish-600">
         仅记录匿名事件与付款元数据，不含任何健康信息。计数跨所有语言/页面汇总。
