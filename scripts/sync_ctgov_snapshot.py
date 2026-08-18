@@ -9,6 +9,7 @@ validates the normalized snapshot contract, and writes timestamped JSON files.
 from __future__ import annotations
 
 import argparse
+import http.client
 import json
 import re
 import sys
@@ -142,7 +143,7 @@ def fetch_json(url: str, timeout: float, retries: int) -> dict[str, Any]:
             last_error = error
             if error.code not in RETRYABLE_STATUS or attempt >= retries:
                 raise
-        except (URLError, TimeoutError, OSError, json.JSONDecodeError) as error:
+        except (http.client.IncompleteRead, URLError, TimeoutError, OSError, json.JSONDecodeError) as error:
             last_error = error
             if attempt >= retries:
                 raise

@@ -25,6 +25,9 @@ export type StatEvent =
   | 'buy_single_click'
   | 'pro_click'
   | 'alerts_subscribe'
+  | 'search_submit'
+  | 'follow_add'
+  | 'follow_remove'
   | 'page_view';
 
 export const STAT_EVENTS: StatEvent[] = [
@@ -41,6 +44,9 @@ export const STAT_EVENTS: StatEvent[] = [
   'buy_single_click',
   'pro_click',
   'alerts_subscribe',
+  'search_submit',
+  'follow_add',
+  'follow_remove',
 ];
 
 const PREFIX = 'tb:stat:';

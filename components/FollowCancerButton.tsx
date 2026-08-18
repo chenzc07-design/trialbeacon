@@ -74,6 +74,11 @@ export function FollowCancerButton({
         return;
       }
       await refresh();
+      fetch('/api/stats', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ event: follow ? 'follow_add' : 'follow_remove' }),
+      }).catch(() => undefined);
       showToast(
         follow
           ? t(m, 'follow.toastOn', { name: label })

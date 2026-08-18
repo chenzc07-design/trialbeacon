@@ -77,6 +77,11 @@ export function AlertsForm() {
           return;
         }
         setState('done');
+        fetch('/api/stats', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ event: 'alerts_subscribe' }),
+        }).catch(() => undefined);
         return;
       }
       const res = await fetch('/api/subscribe', {
@@ -91,6 +96,11 @@ export function AlertsForm() {
         return;
       }
       setState('done');
+      fetch('/api/stats', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ event: 'alerts_subscribe' }),
+      }).catch(() => undefined);
     } catch {
       setState('error');
       setMessage(m.alerts.form.errorNetwork);

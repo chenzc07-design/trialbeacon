@@ -23,6 +23,11 @@ export function SearchBox({
       onSubmit={(e) => {
         e.preventDefault();
         const trimmed = q.trim();
+        fetch('/api/stats', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ event: 'search_submit' }),
+        }).catch(() => undefined);
         router.push(trimmed ? `/search?q=${encodeURIComponent(trimmed)}` : '/search');
       }}
       className="flex w-full items-stretch gap-2"
