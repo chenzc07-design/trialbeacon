@@ -1,0 +1,100 @@
+{
+  "snapshot": "data/snapshots/ctgov-latest.json",
+  "generatedAt": "2026-08-17T14:22:47Z",
+  "dataTimestamp": "2026-08-17T09:00:05",
+  "records": 832,
+  "status": [
+    {
+      "code": "RECRUITING",
+      "label": "Recruiting",
+      "count": 521,
+      "share": 0.6262019230769231
+    },
+    {
+      "code": "ACTIVE_NOT_RECRUITING",
+      "label": "Active, not recruiting",
+      "count": 174,
+      "share": 0.2091346153846154
+    },
+    {
+      "code": "NOT_YET_RECRUITING",
+      "label": "Not yet recruiting",
+      "count": 123,
+      "share": 0.14783653846153846
+    },
+    {
+      "code": "ENROLLING_BY_INVITATION",
+      "label": "Enrolling by invitation",
+      "count": 14,
+      "share": 0.016826923076923076
+    }
+  ],
+  "cancers": [
+    {
+      "slug": "breast",
+      "label": "Breast cancer",
+      "count": 100,
+      "share": 0.1201923076923077
+    },
+    {
+      "slug": "colorectal",
+      "label": "Colorectal cancer",
+      "count": 100,
+      "share": 0.1201923076923077
+    },
+    {
+      "slug": "esophageal",
+      "label": "Esophageal cancer",
+      "count": 100,
+      "share": 0.1201923076923077
+    },
+    {
+      "slug": "gastric",
+      "label": "Gastric cancer",
+      "count": 100,
+      "share": 0.1201923076923077
+    },
+    {
+      "slug": "leukemia",
+      "label": "Leukemia",
+      "count": 100,
+      "share": 0.1201923076923077
+    },
+    {
+      "slug": "liver",
+      "label": "Liver cancer",
+      "count": 100,
+      "share": 0.1201923076923077
+    },
+    {
+      "slug": "lung",
+      "label": "Lung cancer",
+      "count": 100,
+      "share": 0.1201923076923077
+    },
+    {
+      "slug": "lymphoma",
+      "label": "Lymphoma",
+      "count": 100,
+      "share": 0.1201923076923077
+    },
+    {
+      "slug": "ovarian",
+      "label": "Ovarian cancer",
+      "count": 100,
+      "share": 0.1201923076923077
+    },
+    {
+      "slug": "pancreatic",
+      "label": "Pancreatic cancer",
+      "count": 100,
+      "share": 0.1201923076923077
+    },
+    {
+      "slug": "prostate",
+      "label": "Prostate cancer",
+      "count": 100,
+      "share": 0.1201923076923077
+    }
+  ]
+}
