@@ -156,7 +156,7 @@ export default async function HomePage() {
             <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#e5b182]">{m.home.badgeVerbatim}</p>
               <h2 className="mt-2 max-w-lg text-2xl font-semibold tracking-tight text-white sm:text-3xl">{m.home.sourcesTitle}</h2>
-              <p className="mt-3 max-w-xl text-sm leading-6 text-[#d0dce4]">{m.home.sourcesSub}</p>
+              <p className="mt-3 max-w-xl text-sm leading-6 text-[#d0dce4]">{m.home.sourcesSub.replace('{date}', SNAPSHOT_DATE)}</p>
             </div>
           </div>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
