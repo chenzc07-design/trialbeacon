@@ -8,6 +8,12 @@ const TOKEN_COOKIE = 'tb_x_oauth_token';
 const CALLBACK_PATH = '/api/x/oauth/callback';
 const MAX_STATE_AGE_MS = 10 * 60 * 1000;
 
+type PendingState = {
+  state: string;
+  verifier: string;
+  issuedAt: number;
+};
+
 type XTokenResponse = {
   token_type?: string;
   expires_in?: number;
@@ -60,6 +66,22 @@ function seal(value: string): string {
   return [iv, tag, ciphertext].map(base64Url).join('.');
 }
 
+function decodePendingStates(cookie: string | undefined): PendingState[] {
+  if (!cookie) return [];
+  try {
+    const json = fromBase64Url(decodeURIComponent(cookie)).toString('utf8');
+    const value = JSON.parse(json) as unknown;
+    if (!Array.isArray(value)) return [];
+    return value.filter((entry): entry is PendingState => {
+      if (!entry || typeof entry !== 'object') return false;
+      const item = entry as Record<string, unknown>;
+      return typeof item.state === 'string' && typeof item.verifier === 'string' && typeof item.issuedAt === 'number';
+    });
+  } catch {
+    return [];
+  }
+}
+
 function page(title: string, body: string, status = 200): NextResponse {
   return new NextResponse(
     `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title}</title></head><body style="font-family:system-ui,sans-serif;max-width:42rem;margin:5rem auto;padding:0 1.25rem;color:#172033"><h1>${title}</h1><p>${body}</p><p>You can close this window and return to TrialBeacon.</p></body></html>`,
@@ -81,19 +103,17 @@ export async function GET(request: Request) {
     return page('X authorization could not be verified', 'The authorization code or security state was missing. Start the connection again.', 400);
   }
 
-  const [nonce, verifier, issuedAtText] = decodeURIComponent(stateCookie).split('.');
-  const issuedAt = Number(issuedAtText);
   const stateParts = state.split('.');
   const statePayload = stateParts.slice(0, 2).join('.');
   const stateSignature = stateParts[2] || '';
-  if (!nonce || !verifier || !Number.isFinite(issuedAt) || stateParts.length !== 3) {
-    return page('X authorization could not be verified', 'The security state was malformed. Start the connection again.', 400);
-  }
-  if (Date.now() - issuedAt > MAX_STATE_AGE_MS || Date.now() < issuedAt - 30_000) {
-    return page('X authorization expired', 'The security state expired. Start the connection again.', 400);
-  }
-  if (statePayload !== `${nonce}.${issuedAtText}` || !safeEqual(stateSignature, sign(statePayload))) {
+  if (stateParts.length !== 3 || !safeEqual(stateSignature, sign(statePayload))) {
     return page('X authorization could not be verified', 'The security state did not match this browser session.', 400);
+  }
+
+  const pendingStates = decodePendingStates(stateCookie);
+  const pending = pendingStates.find((entry) => entry.state === state);
+  if (!pending || Date.now() - pending.issuedAt > MAX_STATE_AGE_MS || Date.now() < pending.issuedAt - 30_000) {
+    return page('X authorization could not be verified', 'The security state did not match this browser session. Start the connection again in the same browser window.', 400);
   }
 
   const clientId = process.env.X_CLIENT_ID;
@@ -107,7 +127,7 @@ export async function GET(request: Request) {
     grant_type: 'authorization_code',
     client_id: clientId,
     redirect_uri: redirectUri,
-    code_verifier: verifier,
+    code_verifier: pending.verifier,
   });
   const tokenResponse = await fetch('https://api.x.com/2/oauth2/token', {
     method: 'POST',

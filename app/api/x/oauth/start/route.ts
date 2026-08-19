@@ -6,6 +6,14 @@ export const dynamic = 'force-dynamic';
 const STATE_COOKIE = 'tb_x_oauth_state';
 const CALLBACK_PATH = '/api/x/oauth/callback';
 const SCOPES = ['tweet.read', 'tweet.write', 'users.read', 'offline.access'];
+const MAX_STATE_AGE_MS = 10 * 60 * 1000;
+const MAX_PENDING_STATES = 3;
+
+type PendingState = {
+  state: string;
+  verifier: string;
+  issuedAt: number;
+};
 
 function getSecret(): string {
   const secret = process.env.AUTH_SECRET;
@@ -42,6 +50,25 @@ function createPkce() {
   return { verifier, challenge };
 }
 
+function decodePendingStates(cookie: string | undefined): PendingState[] {
+  if (!cookie) return [];
+  try {
+    const json = Buffer.from(
+      cookie.replace(/-/g, '+').replace(/_/g, '/') + '='.repeat((4 - (cookie.length % 4)) % 4),
+      'base64'
+    ).toString('utf8');
+    const value = JSON.parse(json) as unknown;
+    if (!Array.isArray(value)) return [];
+    return value.filter((entry): entry is PendingState => {
+      if (!entry || typeof entry !== 'object') return false;
+      const item = entry as Record<string, unknown>;
+      return typeof item.state === 'string' && typeof item.verifier === 'string' && typeof item.issuedAt === 'number';
+    });
+  } catch {
+    return [];
+  }
+}
+
 export async function GET(request: Request) {
   const clientId = process.env.X_CLIENT_ID;
   if (!clientId) {
@@ -72,8 +99,15 @@ export async function GET(request: Request) {
     code_challenge_method: 'S256',
   }).toString();
 
+  const existing = decodePendingStates(
+    request.headers.get('cookie')?.match(/(?:^|; )tb_x_oauth_state=([^;]+)/)?.[1]
+  );
+  const pending = [...existing, { state, verifier, issuedAt }]
+    .filter((entry) => Date.now() - entry.issuedAt <= MAX_STATE_AGE_MS)
+    .slice(-MAX_PENDING_STATES);
+
   const response = NextResponse.redirect(authorize);
-  response.cookies.set(STATE_COOKIE, `${nonce}.${verifier}.${issuedAt}`, {
+  response.cookies.set(STATE_COOKIE, base64Url(JSON.stringify(pending)), {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
