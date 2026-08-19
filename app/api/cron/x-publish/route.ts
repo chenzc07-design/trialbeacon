@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { publishXPost } from '@/lib/x-publisher';
+import {
+  getXPublisherHealth,
+  publishXPost,
+  verifyXPublisherAuthorization,
+} from '@/lib/x-publisher';
 import { DEFAULT_X_POSTS } from '@/lib/x-content';
 
 export const dynamic = 'force-dynamic';
@@ -11,6 +15,16 @@ const QUEUE_KEY = 'tb:x:queue';
 const LAST_PUBLISH_KEY = 'tb:x:last-publish';
 const LOCK_KEY = 'tb:x:publish-lock';
 const MIN_INTERVAL_MS = 72 * 60 * 60 * 1000;
+
+type SafeCronError =
+  | 'x_publisher_storage_not_configured'
+  | 'x_publisher_not_configured'
+  | 'x_account_not_authorized'
+  | 'x_token_refresh_failed'
+  | `x_authorization_check_failed_${number}`
+  | `x_publish_failed_${number}`
+  | `upstash_${number}`
+  | 'x_publish_cron_failed';
 
 async function upstash(commands: [string, ...string[]][]): Promise<unknown[]> {
   if (!KV_URL || !KV_TOKEN) throw new Error('x_publisher_storage_not_configured');
@@ -32,6 +46,29 @@ function authorized(request: NextRequest): boolean {
   return provided === secret;
 }
 
+function safeErrorCode(error: unknown): SafeCronError {
+  if (!(error instanceof Error)) return 'x_publish_cron_failed';
+  const code = error.message;
+  if (
+    code === 'x_publisher_storage_not_configured'
+    || code === 'x_publisher_not_configured'
+    || code === 'x_account_not_authorized'
+    || code === 'x_token_refresh_failed'
+    || /^x_authorization_check_failed_\d{3}$/.test(code)
+    || /^x_publish_failed_\d{3}$/.test(code)
+    || /^upstash_\d{3}$/.test(code)
+  ) {
+    return code as SafeCronError;
+  }
+  return 'x_publish_cron_failed';
+}
+
+function failed(stage: 'dry_run' | 'cron', error: unknown) {
+  const code = safeErrorCode(error);
+  console.error('[x-publish]', { stage, code });
+  return NextResponse.json({ ok: false, stage, error: code }, { status: 503 });
+}
+
 export async function GET(request: NextRequest) {
   if (!authorized(request)) return NextResponse.json({ error: 'Unauthorized.' }, { status: 401 });
   if (process.env.X_AUTOPUBLISH_ENABLED !== 'true') {
@@ -41,7 +78,29 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ ok: false, error: 'x_publisher_not_configured' }, { status: 503 });
   }
 
-  const lock = (await upstash([['SET', LOCK_KEY, new Date().toISOString(), 'NX', 'EX', '120']]))[0];
+  if (request.nextUrl.searchParams.get('dryRun') === '1') {
+    try {
+      const health = await getXPublisherHealth();
+      if (!health.storageReachable) {
+        return NextResponse.json({ ok: false, dryRun: true, health, error: 'x_publisher_storage_unavailable' }, { status: 503 });
+      }
+      if (!health.authorizationReadable) {
+        return NextResponse.json({ ok: false, dryRun: true, health, error: 'x_account_not_authorized' }, { status: 503 });
+      }
+      await verifyXPublisherAuthorization();
+      return NextResponse.json({ ok: true, dryRun: true, health });
+    } catch (error) {
+      return failed('dry_run', error);
+    }
+  }
+
+  let lock: unknown;
+  try {
+    lock = (await upstash([['SET', LOCK_KEY, new Date().toISOString(), 'NX', 'EX', '120']]))[0];
+  } catch (error) {
+    return failed('cron', error);
+  }
+
   if (lock !== 'OK') return NextResponse.json({ ok: true, skipped: 'lock_held' });
 
   try {
@@ -68,8 +127,12 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ ok: true, published: true, id: result.id, publishedAt });
     } catch (error) {
       await upstash([['LPUSH', QUEUE_KEY, String(text)]]);
-      return NextResponse.json({ ok: false, error: error instanceof Error ? error.message : 'x_publish_failed' }, { status: 502 });
+      const code = safeErrorCode(error);
+      console.error('[x-publish]', { stage: 'publish', code });
+      return NextResponse.json({ ok: false, error: code }, { status: 502 });
     }
+  } catch (error) {
+    return failed('cron', error);
   } finally {
     await upstash([['DEL', LOCK_KEY]]).catch(() => undefined);
   }

@@ -26,3 +26,27 @@ X OAuth 2.0 PKCE 完成后，回调路由将访问令牌和刷新令牌使用 `A
 ## 停止条件
 
 任何 X API 401/403、令牌刷新失败、重复发布、内容违规提示、用户投诉或数据来源错误都应立即将 `X_AUTOPUBLISH_ENABLED` 改为 `false`。不通过增加频率、切换节点、批量关注、批量评论或重复授权来解决平台限制。
+
+## Production configuration check (2026-08-19)
+
+The Vercel Production environment visibly contains `X_CLIENT_ID`, `AUTH_SECRET`, `UPSTASH_REDIS_REST_URL`, and `UPSTASH_REDIS_REST_TOKEN`. A search for `CRON_SECRET` returned no result. The auto-publish endpoint therefore remains correctly protected and cannot run until the owner adds a new server-only `CRON_SECRET`; no value was read or changed during this check. `X_AUTOPUBLISH_ENABLED` also remains absent/default-off until explicitly added.
+
+## Production configuration update (2026-08-19)
+
+A newly generated random `CRON_SECRET` was added to Vercel Production only. Its value was not printed in user-facing messages, committed, or stored in the repository. Vercel reports that a new deployment is required before the value becomes active. `X_AUTOPUBLISH_ENABLED` remains unset and therefore false by default; no X post can be triggered by the scheduler at this stage.
+
+## Deployment after CRON_SECRET (2026-08-19)
+
+Vercel Production redeploy was initiated from the current `a345a32` source with the newly added `CRON_SECRET`. The X auto-publish switch remains unset/default-off. No X authorization or publication was triggered during this configuration step.
+
+## Controlled test credential rotation (2026-08-19)
+
+For the explicitly confirmed single-post test, the Production-only `CRON_SECRET` was rotated to a newly generated random value and a redeploy was initiated. The value was never committed or shown in a final message. Long-term X auto-publishing remains disabled.
+
+The explicitly confirmed single-test switch `X_AUTOPUBLISH_ENABLED=true` was added only to Production. It must be reverted to `false` immediately after the one-post verification; it is not a long-term operating setting.
+
+## Cron diagnostics hardening (2026-08-19)
+
+The protected endpoint now accepts `?dryRun=1` only after normal `CRON_SECRET` authorization. This check does not dequeue content or create an X post. It verifies only non-sensitive health signals: Redis reachability, encrypted token readability, whether a refresh token exists or is due, and a read-only X authorization check. It returns stable error codes and emits no token, secret, queue text, or X account data to logs.
+
+The user-directed Production switch is currently set to `X_AUTOPUBLISH_ENABLED=true`, but the actual publishing path has not yet passed acceptance: the earlier protected request returned HTTP 502. The switch must not be treated as confirmation that an X post can be created. First use the protected dry-run to identify the failing dependency, then carry out at most one explicitly confirmed post test after the result is healthy.
