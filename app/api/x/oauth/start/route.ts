@@ -5,22 +5,19 @@ export const dynamic = 'force-dynamic';
 
 const STATE_COOKIE = 'tb_x_oauth_state';
 const CALLBACK_PATH = '/api/x/oauth/callback';
+const CANONICAL_ORIGIN = 'https://trialbeacon.cn';
 const SCOPES = ['tweet.read', 'tweet.write', 'users.read', 'offline.access'];
 const MAX_STATE_AGE_MS = 10 * 60 * 1000;
-const MAX_PENDING_STATES = 3;
 
-type PendingState = {
-  state: string;
-  verifier: string;
-  issuedAt: number;
-};
-
-function getSecret(): string {
+function getSecret(): Buffer {
   const secret = process.env.AUTH_SECRET;
   if (!secret && process.env.NODE_ENV === 'production') {
     throw new Error('AUTH_SECRET is not configured.');
   }
-  return secret || 'tb-dev-secret-do-not-use-in-prod-0000000000000000';
+  return crypto
+    .createHash('sha256')
+    .update(secret || 'tb-dev-secret-do-not-use-in-prod-0000000000000000')
+    .digest();
 }
 
 function base64Url(value: Buffer | string): string {
@@ -31,15 +28,12 @@ function base64Url(value: Buffer | string): string {
     .replace(/\//g, '_');
 }
 
-function sign(value: string): string {
-  return base64Url(
-    crypto.createHmac('sha256', getSecret()).update(value).digest()
-  );
-}
-
-function createState(nonce: string, issuedAt: number): string {
-  const payload = `${nonce}.${issuedAt}`;
-  return `${payload}.${sign(payload)}`;
+function seal(value: string): string {
+  const iv = crypto.randomBytes(12);
+  const cipher = crypto.createCipheriv('aes-256-gcm', getSecret(), iv);
+  const ciphertext = Buffer.concat([cipher.update(value, 'utf8'), cipher.final()]);
+  const tag = cipher.getAuthTag();
+  return [iv, tag, ciphertext].map(base64Url).join('.');
 }
 
 function createPkce() {
@@ -48,25 +42,6 @@ function createPkce() {
     crypto.createHash('sha256').update(verifier).digest()
   );
   return { verifier, challenge };
-}
-
-function decodePendingStates(cookie: string | undefined): PendingState[] {
-  if (!cookie) return [];
-  try {
-    const json = Buffer.from(
-      cookie.replace(/-/g, '+').replace(/_/g, '/') + '='.repeat((4 - (cookie.length % 4)) % 4),
-      'base64'
-    ).toString('utf8');
-    const value = JSON.parse(json) as unknown;
-    if (!Array.isArray(value)) return [];
-    return value.filter((entry): entry is PendingState => {
-      if (!entry || typeof entry !== 'object') return false;
-      const item = entry as Record<string, unknown>;
-      return typeof item.state === 'string' && typeof item.verifier === 'string' && typeof item.issuedAt === 'number';
-    });
-  } catch {
-    return [];
-  }
 }
 
 export async function GET(request: Request) {
@@ -81,37 +56,27 @@ export async function GET(request: Request) {
     );
   }
 
-  const url = new URL(request.url);
-  const redirectUri = `${url.origin}${CALLBACK_PATH}`;
-  const { verifier, challenge } = createPkce();
-  const nonce = base64Url(crypto.randomBytes(18));
+  const { challenge, verifier } = createPkce();
   const issuedAt = Date.now();
-  const state = createState(nonce, issuedAt);
+  const state = seal(JSON.stringify({ verifier, issuedAt, nonce: base64Url(crypto.randomBytes(18)) }));
 
   const authorize = new URL('https://x.com/i/oauth2/authorize');
   authorize.search = new URLSearchParams({
     response_type: 'code',
     client_id: clientId,
-    redirect_uri: redirectUri,
+    redirect_uri: `${CANONICAL_ORIGIN}${CALLBACK_PATH}`,
     scope: SCOPES.join(' '),
     state,
     code_challenge: challenge,
     code_challenge_method: 'S256',
   }).toString();
 
-  const existing = decodePendingStates(
-    request.headers.get('cookie')?.match(/(?:^|; )tb_x_oauth_state=([^;]+)/)?.[1]
-  );
-  const pending = [...existing, { state, verifier, issuedAt }]
-    .filter((entry) => Date.now() - entry.issuedAt <= MAX_STATE_AGE_MS)
-    .slice(-MAX_PENDING_STATES);
-
   const response = NextResponse.redirect(authorize);
-  response.cookies.set(STATE_COOKIE, base64Url(JSON.stringify(pending)), {
+  response.cookies.set(STATE_COOKIE, '1', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
-    maxAge: 600,
+    maxAge: Math.floor(MAX_STATE_AGE_MS / 1000),
     path: CALLBACK_PATH,
   });
   return response;

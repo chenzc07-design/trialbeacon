@@ -6,13 +6,8 @@ export const dynamic = 'force-dynamic';
 const STATE_COOKIE = 'tb_x_oauth_state';
 const TOKEN_COOKIE = 'tb_x_oauth_token';
 const CALLBACK_PATH = '/api/x/oauth/callback';
+const CANONICAL_ORIGIN = 'https://trialbeacon.cn';
 const MAX_STATE_AGE_MS = 10 * 60 * 1000;
-
-type PendingState = {
-  state: string;
-  verifier: string;
-  issuedAt: number;
-};
 
 type XTokenResponse = {
   token_type?: string;
@@ -20,6 +15,12 @@ type XTokenResponse = {
   access_token?: string;
   refresh_token?: string;
   scope?: string;
+};
+
+type OAuthState = {
+  verifier: string;
+  issuedAt: number;
+  nonce: string;
 };
 
 function getSecret(): Buffer {
@@ -46,16 +47,22 @@ function fromBase64Url(value: string): Buffer {
   return Buffer.from(normalized + '='.repeat((4 - (normalized.length % 4)) % 4), 'base64');
 }
 
-function sign(value: string): string {
-  return base64Url(
-    crypto.createHmac('sha256', getSecret()).update(value).digest()
-  );
-}
-
-function safeEqual(left: string, right: string): boolean {
-  const a = Buffer.from(left);
-  const b = Buffer.from(right);
-  return a.length === b.length && crypto.timingSafeEqual(a, b);
+function open(value: string): OAuthState | null {
+  try {
+    const [ivText, tagText, ciphertextText] = value.split('.');
+    if (!ivText || !tagText || !ciphertextText) return null;
+    const decipher = crypto.createDecipheriv('aes-256-gcm', getSecret(), fromBase64Url(ivText));
+    decipher.setAuthTag(fromBase64Url(tagText));
+    const plaintext = Buffer.concat([
+      decipher.update(fromBase64Url(ciphertextText)),
+      decipher.final(),
+    ]).toString('utf8');
+    const state = JSON.parse(plaintext) as Partial<OAuthState>;
+    if (typeof state.verifier !== 'string' || typeof state.issuedAt !== 'number' || typeof state.nonce !== 'string') return null;
+    return state as OAuthState;
+  } catch {
+    return null;
+  }
 }
 
 function seal(value: string): string {
@@ -64,22 +71,6 @@ function seal(value: string): string {
   const ciphertext = Buffer.concat([cipher.update(value, 'utf8'), cipher.final()]);
   const tag = cipher.getAuthTag();
   return [iv, tag, ciphertext].map(base64Url).join('.');
-}
-
-function decodePendingStates(cookie: string | undefined): PendingState[] {
-  if (!cookie) return [];
-  try {
-    const json = fromBase64Url(decodeURIComponent(cookie)).toString('utf8');
-    const value = JSON.parse(json) as unknown;
-    if (!Array.isArray(value)) return [];
-    return value.filter((entry): entry is PendingState => {
-      if (!entry || typeof entry !== 'object') return false;
-      const item = entry as Record<string, unknown>;
-      return typeof item.state === 'string' && typeof item.verifier === 'string' && typeof item.issuedAt === 'number';
-    });
-  } catch {
-    return [];
-  }
 }
 
 function page(title: string, body: string, status = 200): NextResponse {
@@ -97,23 +88,14 @@ export async function GET(request: Request) {
   }
 
   const code = url.searchParams.get('code');
-  const state = url.searchParams.get('state');
-  const stateCookie = request.headers.get('cookie')?.match(/(?:^|; )tb_x_oauth_state=([^;]+)/)?.[1];
-  if (!code || !state || !stateCookie) {
+  const stateText = url.searchParams.get('state');
+  if (!code || !stateText) {
     return page('X authorization could not be verified', 'The authorization code or security state was missing. Start the connection again.', 400);
   }
 
-  const stateParts = state.split('.');
-  const statePayload = stateParts.slice(0, 2).join('.');
-  const stateSignature = stateParts[2] || '';
-  if (stateParts.length !== 3 || !safeEqual(stateSignature, sign(statePayload))) {
-    return page('X authorization could not be verified', 'The security state did not match this browser session.', 400);
-  }
-
-  const pendingStates = decodePendingStates(stateCookie);
-  const pending = pendingStates.find((entry) => entry.state === state);
-  if (!pending || Date.now() - pending.issuedAt > MAX_STATE_AGE_MS || Date.now() < pending.issuedAt - 30_000) {
-    return page('X authorization could not be verified', 'The security state did not match this browser session. Start the connection again in the same browser window.', 400);
+  const state = open(stateText);
+  if (!state || Date.now() - state.issuedAt > MAX_STATE_AGE_MS || Date.now() < state.issuedAt - 30_000) {
+    return page('X authorization could not be verified', 'The security state was invalid or expired. Start the connection again in the same browser window.', 400);
   }
 
   const clientId = process.env.X_CLIENT_ID;
@@ -121,13 +103,12 @@ export async function GET(request: Request) {
     return page('X authorization is not configured', 'The website is missing its X Client ID configuration.', 503);
   }
 
-  const redirectUri = `${url.origin}${CALLBACK_PATH}`;
   const body = new URLSearchParams({
     code,
     grant_type: 'authorization_code',
     client_id: clientId,
-    redirect_uri: redirectUri,
-    code_verifier: pending.verifier,
+    redirect_uri: `${CANONICAL_ORIGIN}${CALLBACK_PATH}`,
+    code_verifier: state.verifier,
   });
   const tokenResponse = await fetch('https://api.x.com/2/oauth2/token', {
     method: 'POST',
