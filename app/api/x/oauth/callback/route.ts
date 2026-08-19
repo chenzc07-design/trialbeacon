@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import crypto from 'node:crypto';
+import { saveAuthorizedToken } from '@/lib/x-publisher';
 
 export const dynamic = 'force-dynamic';
 
 const STATE_COOKIE = 'tb_x_oauth_state';
-const TOKEN_COOKIE = 'tb_x_oauth_token';
 const CALLBACK_PATH = '/api/x/oauth/callback';
 const CANONICAL_ORIGIN = 'https://trialbeacon.cn';
 const MAX_STATE_AGE_MS = 10 * 60 * 1000;
@@ -65,14 +65,6 @@ function open(value: string): OAuthState | null {
   }
 }
 
-function seal(value: string): string {
-  const iv = crypto.randomBytes(12);
-  const cipher = crypto.createCipheriv('aes-256-gcm', getSecret(), iv);
-  const ciphertext = Buffer.concat([cipher.update(value, 'utf8'), cipher.final()]);
-  const tag = cipher.getAuthTag();
-  return [iv, tag, ciphertext].map(base64Url).join('.');
-}
-
 function page(title: string, body: string, status = 200): NextResponse {
   return new NextResponse(
     `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title}</title></head><body style="font-family:system-ui,sans-serif;max-width:42rem;margin:5rem auto;padding:0 1.25rem;color:#172033"><h1>${title}</h1><p>${body}</p><p>You can close this window and return to TrialBeacon.</p></body></html>`,
@@ -121,14 +113,11 @@ export async function GET(request: Request) {
     return page('X authorization failed', 'X did not issue an access token. Check the exact callback URL and app authentication settings, then try again.', 502);
   }
 
-  const response = page('TrialBeacon is connected to X', 'Authorization completed successfully. The access token is stored in an encrypted, HttpOnly browser cookie and is not shown in this page or URL.');
+  const persisted = await saveAuthorizedToken(token);
+  if (!persisted) {
+    return page('X authorization needs server storage', 'The account was authorized, but automatic publishing is not enabled because durable server storage is not configured. No token was placed in a browser cookie.', 503);
+  }
+  const response = page('TrialBeacon is connected to X', 'Authorization completed successfully. The encrypted authorization token is stored on the server and is not shown in this page or URL.');
   response.cookies.set(STATE_COOKIE, '', { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'lax', maxAge: 0, path: CALLBACK_PATH });
-  response.cookies.set(TOKEN_COOKIE, seal(JSON.stringify({ accessToken: token.access_token, refreshToken: token.refresh_token, scope: token.scope, expiresAt: Date.now() + (token.expires_in ?? 7200) * 1000 })), {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    maxAge: 60 * 60 * 24 * 30,
-    path: '/api/x',
-  });
   return response;
 }
