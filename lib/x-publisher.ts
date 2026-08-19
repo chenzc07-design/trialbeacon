@@ -4,6 +4,7 @@ const KV_URL = process.env.UPSTASH_REDIS_REST_URL;
 const KV_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
 const TOKEN_KEY = 'tb:x:oauth:owner';
 const ENCRYPTION_CONTEXT = 'trialbeacon-x-oauth-v1';
+const X_REQUEST_TIMEOUT_MS = 8_000;
 
 type StoredToken = {
   accessToken: string;
@@ -77,6 +78,17 @@ async function jsonOrEmpty<T>(response: Response): Promise<T> {
   }
 }
 
+async function xFetch(url: string, init: RequestInit): Promise<Response> {
+  try {
+    return await fetch(url, { ...init, signal: AbortSignal.timeout(X_REQUEST_TIMEOUT_MS) });
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'TimeoutError') {
+      throw new Error('x_request_timeout');
+    }
+    throw new Error('x_request_failed');
+  }
+}
+
 async function upstash(commands: [string, ...string[]][]): Promise<unknown[]> {
   if (!KV_URL || !KV_TOKEN) throw new Error('x_publisher_storage_not_configured');
   const response = await fetch(`${KV_URL.replace(/\/+$/, '')}/pipeline`, {
@@ -118,7 +130,7 @@ async function storeToken(token: XTokenResponse, previous?: StoredToken): Promis
 
 async function refreshTokenIfNeeded(current: StoredToken): Promise<StoredToken> {
   if (current.expiresAt > Date.now() + 60_000 || !current.refreshToken) return current;
-  const response = await fetch('https://api.x.com/2/oauth2/token', {
+  const response = await xFetch('https://api.x.com/2/oauth2/token', {
     method: 'POST',
     headers: { 'content-type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({
@@ -180,7 +192,7 @@ export async function verifyXPublisherAuthorization(): Promise<void> {
   if (!current) throw new Error('x_account_not_authorized');
 
   const token = await refreshTokenIfNeeded(current);
-  const response = await fetch('https://api.x.com/2/users/me', {
+  const response = await xFetch('https://api.x.com/2/users/me', {
     headers: { authorization: `Bearer ${token.accessToken}` },
     cache: 'no-store',
   });
@@ -200,7 +212,7 @@ export async function publishXPost(text: string): Promise<{ id: string; text: st
   const current = await readStoredToken();
   if (!current) throw new Error('x_account_not_authorized');
   const token = await refreshTokenIfNeeded(current);
-  const publish = async (accessToken: string) => fetch('https://api.x.com/2/tweets', {
+  const publish = async (accessToken: string) => xFetch('https://api.x.com/2/tweets', {
     method: 'POST',
     headers: { authorization: `Bearer ${accessToken}`, 'content-type': 'application/json' },
     body: JSON.stringify({ text }),

@@ -21,6 +21,8 @@ type SafeCronError =
   | 'x_publisher_not_configured'
   | 'x_account_not_authorized'
   | 'x_token_refresh_failed'
+  | 'x_request_timeout'
+  | 'x_request_failed'
   | `x_authorization_check_failed_${number}`
   | `x_publish_failed_${number}`
   | `upstash_${number}`
@@ -54,6 +56,8 @@ function safeErrorCode(error: unknown): SafeCronError {
     || code === 'x_publisher_not_configured'
     || code === 'x_account_not_authorized'
     || code === 'x_token_refresh_failed'
+    || code === 'x_request_timeout'
+    || code === 'x_request_failed'
     || /^x_authorization_check_failed_\d{3}$/.test(code)
     || /^x_publish_failed_\d{3}$/.test(code)
     || /^upstash_\d{3}$/.test(code)
