@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { getAfterCareFeed, getCancerFeed } from '@/lib/data';
+import { getAfterCareFeed, getCancerFeed, SNAPSHOT_DATE } from '@/lib/data';
 import { getCancer, CANCERS } from '@/lib/cancers';
 import { RegionTabs } from '@/components/RegionTabs';
 import { DataStatus } from '@/components/DataStatus';
@@ -33,6 +33,7 @@ export default async function AfterCarePage({
   const feed = cancer
     ? await getCancerFeed(cancer.slug, { afterCareOnly: true })
     : await getAfterCareFeed();
+  const snapshotNote = m.dataStatus.snapshot.replace('{date}', SNAPSHOT_DATE);
 
   return (
     <>
@@ -50,6 +51,10 @@ export default async function AfterCarePage({
       />
 
       <div className="container-page py-10 sm:py-12">
+        <p className="mb-4 text-xs leading-5 text-slateish-500">
+          {snapshotNote}
+        </p>
+
         {/* Mobile short intro — hidden on sm+ */}
         <p className="mb-4 text-sm leading-relaxed text-slateish-600 sm:hidden">
           {m.afterCare.introMobile}
