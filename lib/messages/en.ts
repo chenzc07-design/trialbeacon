@@ -40,6 +40,8 @@ export const en = {
     details: 'Details',
     back: 'Back',
     lastVerified: 'Last verified {date}',
+    sourceUpdated: 'Source updated',
+    indexVerified: 'Index verified',
     stale7d: 'Verification is more than 7 days old',
     sortBy: 'Sort by',
     sortRecent: 'Most recent',
@@ -58,7 +60,7 @@ export const en = {
     subtitle:
       'TrialBeacon does one thing: it gathers publicly listed clinical-trial registrations, guideline indexes and regulatory notices from the United States, Europe and China that relate to advanced / recurrent / later-line / supportive care, and provides direct links to the original sources. No recommendations, no ranking, no interpretation.',
     subtitleShort:
-      'It simply gathers publicly listed advanced / recurrent / later-line official records from the US, Europe and China, and provides links to the originals. No recommendations, no interpretation.',
+      'It gathers publicly listed advanced / recurrent / later-line official records from the US, Europe and China, with direct links to the originals.',
     // Rendered as its own line under the subtitle, both desktop and mobile.
     subtitleNo: '',
     // Hero primary action. Long label on desktop, short label on mobile.

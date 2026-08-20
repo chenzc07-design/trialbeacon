@@ -1,6 +1,6 @@
 'use client';
 
-import { SNAPSHOT_DATE } from '@/lib/data/trials';
+import { SNAPSHOT_DATE } from '@/lib/data';
 import { useI18n } from './I18nProvider';
 
 /**

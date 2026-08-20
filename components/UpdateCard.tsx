@@ -127,7 +127,9 @@ export function UpdateCard({
         <PhaseBadge phase={item.phase} />
         <StatusBadge status={item.status} />
         <span className="text-xs tabular-nums text-slateish-500">
-          {formatDate(item.date || SNAPSHOT_DATE, locale)}
+          {item.date
+            ? `${m.common.sourceUpdated}: ${formatDate(item.date, locale)}`
+            : `${m.common.indexVerified}: ${formatDate(SNAPSHOT_DATE, locale)}`}
         </span>
       </div>
 
