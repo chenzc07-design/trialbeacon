@@ -18,6 +18,8 @@ export interface AuthUser {
   provider: 'email' | 'google' | 'microsoft';
   /** Login methods used with this account (Email/Google/Microsoft). */
   providers: string[];
+  /** Optional non-clinical display name selected by the account holder. */
+  name?: string | null;
   myList: string[];
   alertCancers: string[];
   alertRegions: ('US' | 'EU' | 'CN')[];

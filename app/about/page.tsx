@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { PageHero } from '@/components/PageHero';
 import { ShieldMotif } from '@/components/Motifs';
 import { getServerMessages } from '@/lib/i18n-server';
+import { getPublicCopy, SUPPORT_EMAIL } from '@/lib/public-copy';
 
 export async function generateMetadata(): Promise<Metadata> {
   const { messages: m } = await getServerMessages();
@@ -14,7 +15,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function AboutPage() {
-  const { messages: m } = await getServerMessages();
+  const { locale, messages: m } = await getServerMessages();
+  const copy = getPublicCopy(locale).about;
 
   return (
     <>
@@ -90,12 +92,26 @@ export default async function AboutPage() {
           </p>
         </div>
 
+        <section className="mt-8 rounded-card border border-slateish-200 bg-white p-5">
+          <h2 className="text-base font-semibold text-ink-950">{copy.contactTitle}</h2>
+          <p className="mt-2 text-sm leading-relaxed text-slateish-600">
+            {copy.contactBody}{' '}
+            <a className="font-medium text-navy-700 underline underline-offset-4" href={`mailto:${SUPPORT_EMAIL}`}>
+              {SUPPORT_EMAIL}
+            </a>
+            .
+          </p>
+        </section>
+
         <div className="mt-8 flex flex-wrap gap-3">
           <Link href="/sources" className="btn-secondary text-[13px]">
             {m.about.sourcesCta}
           </Link>
           <Link href="/disclaimer" className="btn-secondary text-[13px]">
             {m.about.disclaimerCta}
+          </Link>
+          <Link href="/privacy" className="btn-secondary text-[13px]">
+            {getPublicCopy(locale).footerPrivacy}
           </Link>
         </div>
       </div>

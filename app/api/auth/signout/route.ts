@@ -7,6 +7,7 @@ import {
   erasePrefs,
 } from '@/lib/auth';
 import { store } from '@/lib/subscriptions';
+import { anonymizeAccountMetrics } from '@/lib/metrics';
 
 export const dynamic = 'force-dynamic';
 
@@ -38,7 +39,14 @@ export async function POST(req: Request) {
       try {
         await store.remove(u.email);
       } catch {
-        /* the preferences are gone regardless */
+        /* preferences are already removed; continue with account anonymization */
+      }
+      // Keep payment totals for financial reconciliation, but remove the email
+      // association and the account-registration key from owner metrics.
+      try {
+        await anonymizeAccountMetrics(u.email);
+      } catch {
+        /* do not retain the authenticated session solely because metric cleanup failed */
       }
     }
   }

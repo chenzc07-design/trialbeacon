@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { baselineCancerStats, SNAPSHOT_DATE } from '@/lib/data';
 import { SearchBox } from '@/components/SearchBox';
 import { FollowCancerButton } from '@/components/FollowCancerButton';
+import { StableHeroImage } from '@/components/StableHeroImage';
 import { t, getServerMessages } from '@/lib/i18n-server';
 
 const SOURCE_GROUPS = [
@@ -84,13 +85,7 @@ export default async function HomePage() {
 
             <aside className="relative lg:pt-2" aria-label={m.home.freshnessTitle}>
               <div className="relative mb-4 h-36 overflow-hidden rounded-[26px] border border-white/70 bg-[#dbe9e5] shadow-[0_20px_55px_rgba(53,91,91,.12)] sm:h-44">
-                <Image
-                  src="/home-research-hero.jpg"
-                  alt={m.home.badgeVerbatim}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 420px"
-                  className="object-cover"
-                />
+                <StableHeroImage alt={m.home.badgeVerbatim} />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#173044]/55 via-transparent to-transparent" />
                 <p className="absolute inset-x-0 bottom-0 p-4 text-xs font-medium tracking-wide text-white">{m.home.badgeVerbatim}</p>
               </div>

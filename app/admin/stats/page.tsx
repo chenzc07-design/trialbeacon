@@ -148,6 +148,22 @@ export default async function AdminStatsPage({
         />
       </section>
 
+      <section className="mt-8">
+        <h2 className="text-sm font-semibold text-ink-900">核心路径与转化</h2>
+        <p className="mt-1 text-xs leading-relaxed text-slateish-500">
+          仅为预定义匿名事件的累计次数；不包含搜索词、访问路径、健康信息或广告画像。
+        </p>
+        <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Kpi label="首页访问" value={stats.view_home.toLocaleString()} sub="view_home" />
+          <Kpi label="After Care 访问" value={stats.view_aftercare.toLocaleString()} sub="view_aftercare" />
+          <Kpi label="癌种页访问" value={stats.view_cancer.toLocaleString()} sub="view_cancer（汇总）" />
+          <Kpi label="Pro 访问" value={stats.pro_visit.toLocaleString()} sub="pro_visit" />
+          <Kpi label="生成沟通清单" value={stats.select_generate.toLocaleString()} sub="select_generate" />
+          <Kpi label="触达免费限额" value={stats.limit_reached.toLocaleString()} sub="limit_reached" />
+          <Kpi label="付款成功" value={stats.payment_success.toLocaleString()} sub="payment_success" />
+        </div>
+      </section>
+
       {store === 'file' ? (
         <p className="mt-4 rounded-lg bg-[#eef2fb] px-3 py-2 text-[12px] text-[#2e4a7a]">
           数据存于本机磁盘（<code>.tb_state/</code>），<b>重启不会清零</b>；

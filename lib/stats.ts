@@ -13,6 +13,7 @@ import { kvIncr, kvGet, isSyncConfigured } from './auth';
 import { loadJson, saveJson } from './persist';
 
 export type StatEvent =
+  | 'view_home'
   | 'view_aftercare'
   | 'view_cancer'
   | 'view_original'
@@ -32,6 +33,7 @@ export type StatEvent =
 
 export const STAT_EVENTS: StatEvent[] = [
   'page_view',
+  'view_home',
   'view_cancer',
   'view_aftercare',
   'view_original',

@@ -7,10 +7,10 @@ import { AuthProvider } from '@/components/AuthProvider';
 import { LimitModalProvider } from '@/components/LimitModal';
 import { PageViewPing } from '@/components/PageViewPing';
 import { getServerMessages } from '@/lib/i18n-server';
-import { siteJsonLd, hreflangAll } from '@/lib/seo';
+import { siteJsonLd, hreflangAll, SITE_URL } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.SITE_URL ?? 'https://trialbeacon.vercel.app'),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: 'TrialBeacon — official public records for advanced and later-line care',
     template: '%s · TrialBeacon',

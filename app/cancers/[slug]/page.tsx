@@ -9,6 +9,7 @@ import { PageHero } from '@/components/PageHero';
 import { StatsPing } from '@/components/StatsPing';
 import { FollowCancerButton } from '@/components/FollowCancerButton';
 import { t, getServerMessages } from '@/lib/i18n-server';
+import { cancerSeo } from '@/lib/public-copy';
 
 // Detail pages must show the latest public registry response rather than a
 // build-time/ISR snapshot. The API request still falls back safely in lib/data.
@@ -21,13 +22,10 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const { messages: m } = await getServerMessages();
+  const { locale, messages: m } = await getServerMessages();
   const cancer = getCancer(slug);
   if (!cancer) return {};
-  return {
-    title: m.cancers[slug].label,
-    description: m.cancersIndex.subtitle,
-  };
+  return cancerSeo(locale, m.cancers[slug].label);
 }
 
 export default async function CancerDetailPage({

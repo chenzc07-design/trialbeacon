@@ -190,3 +190,46 @@ export async function readAccountCount(): Promise<number> {
   const res = await upstash([['SCARD', 'tb:accts']]);
   return Number(res[0] ?? 0);
 }
+
+/**
+ * Remove the identifiable account link from owner metrics after an account
+ * deletion. Aggregate payment counts and amounts remain for reconciliation,
+ * while the payer email is discarded. No health information is involved.
+ */
+export async function anonymizeAccountMetrics(email: string): Promise<void> {
+  const normalized = email.trim().toLowerCase();
+  if (!normalized) return;
+
+  if (!isSyncConfigured()) {
+    await hydrateAccounts();
+    memAccounts.delete(normalized);
+    await persistAccounts();
+
+    await hydratePayments();
+    let changed = false;
+    for (const payment of memPayments) {
+      if (payment.email?.toLowerCase() === normalized) {
+        delete payment.email;
+        changed = true;
+      }
+    }
+    if (changed) await persistPayments();
+    return;
+  }
+
+  const idResult = await upstash([['SMEMBERS', 'tb:pays']]);
+  const ids = (idResult[0] as string[]) ?? [];
+  const writes: [string, ...string[]][] = [['SREM', 'tb:accts', normalized]];
+
+  for (const id of ids) {
+    const recordResult = await upstash([['GET', `tb:pay:${id}`]]);
+    if (!recordResult[0]) continue;
+    const payment = JSON.parse(String(recordResult[0])) as PaymentRecord;
+    if (payment.email?.toLowerCase() === normalized) {
+      delete payment.email;
+      writes.push(['SET', `tb:pay:${id}`, JSON.stringify(payment)]);
+    }
+  }
+
+  await upstash(writes);
+}

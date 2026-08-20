@@ -6,7 +6,11 @@ export const dynamic = 'force-dynamic';
 
 export async function generateMetadata(): Promise<Metadata> {
   const { messages: m } = await getServerMessages();
-  return { title: m.account.title, description: m.account.listHint };
+  return {
+    title: m.account.title,
+    description: m.account.listHint,
+    robots: { index: false, follow: false },
+  };
 }
 
 export default function AccountPage() {

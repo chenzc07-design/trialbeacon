@@ -8,6 +8,7 @@ import { PageHero } from './PageHero';
 import { CANCERS } from '@/lib/cancers';
 import { ALERT_FREE_LIMIT } from '@/lib/auth-shared';
 import { t } from '@/lib/i18n-runtime';
+import { getPublicCopy } from '@/lib/public-copy';
 
 function fmtDate(ms: number, locale: string): string {
   try {
@@ -34,6 +35,7 @@ const PROVIDER_META: Record<string, { label: string; dot: string }> = {
 
 export function AccountClient() {
   const { messages: m, locale } = useI18n();
+  const accountCopy = getPublicCopy(locale).account;
   const { user, signOut, eraseAll, openSignIn, refresh, status } = useAuth();
   const [saving, setSaving] = useState(false);
   const [savedAt, setSavedAt] = useState<string | null>(null);
@@ -42,6 +44,9 @@ export function AccountClient() {
   const [confirmErase, setConfirmErase] = useState(false);
   const [erasing, setErasing] = useState(false);
   const [cancelling, setCancelling] = useState(false);
+  const [displayName, setDisplayName] = useState('');
+  const [profileSaving, setProfileSaving] = useState(false);
+  const [profileStatus, setProfileStatus] = useState<'saved' | 'error' | null>(null);
 
   const userId = user?.id ?? null;
 
@@ -56,6 +61,8 @@ export function AccountClient() {
     if (!user) return;
     setSelected(user.alertCancers ?? []);
     setRegions(user.alertRegions?.length ? user.alertRegions : DEFAULT_REGIONS);
+    setDisplayName(user.name ?? '');
+    setProfileStatus(null);
     setConfirmErase(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
@@ -131,6 +138,25 @@ export function AccountClient() {
     }
   };
 
+  const saveProfile = async () => {
+    setProfileSaving(true);
+    setProfileStatus(null);
+    try {
+      const response = await fetch('/api/auth/profile', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ name: displayName }),
+      });
+      if (!response.ok) throw new Error('profile_save_failed');
+      await refresh();
+      setProfileStatus('saved');
+    } catch {
+      setProfileStatus('error');
+    } finally {
+      setProfileSaving(false);
+    }
+  };
+
   const cancelPro = async () => {
     setCancelling(true);
     try {
@@ -151,6 +177,27 @@ export function AccountClient() {
       <div className="container-page py-10">
         <div className="grid gap-6 lg:grid-cols-2">
           <div className="card p-6">
+            <h2 className="text-base font-semibold text-ink-950">{accountCopy.profileTitle}</h2>
+            <label htmlFor="display-name" className="mt-4 block text-sm font-medium text-ink-900">
+              {accountCopy.displayNameLabel}
+            </label>
+            <input
+              id="display-name"
+              value={displayName}
+              maxLength={80}
+              onChange={(event) => setDisplayName(event.target.value)}
+              className="mt-2 min-h-11 w-full rounded-lg border border-slateish-300 bg-white px-3 text-sm text-ink-900 outline-none focus:border-navy-500 focus:ring-2 focus:ring-navy-100"
+            />
+            <p className="mt-1.5 text-xs leading-relaxed text-slateish-500">{accountCopy.displayNameHint}</p>
+            <div className="mt-3 flex flex-wrap items-center gap-3">
+              <button type="button" onClick={saveProfile} disabled={profileSaving} className="btn-secondary text-[13px]">
+                {profileSaving ? m.alerts.form.submitting : accountCopy.saveProfile}
+              </button>
+              {profileStatus === 'saved' ? <span className="text-xs text-[#2e5747]">{accountCopy.profileSaved}</span> : null}
+              {profileStatus === 'error' ? <span className="text-xs text-[#a34747]">{accountCopy.profileError}</span> : null}
+            </div>
+
+            <hr className="my-5 border-slateish-200" />
             <h2 className="text-base font-semibold text-ink-950">
               {m.account.emailLabel}
             </h2>
@@ -184,6 +231,10 @@ export function AccountClient() {
                 })}
               </ul>
             </div>
+            <section className="mt-5 border-t border-slateish-200 pt-5">
+              <h2 className="text-base font-semibold text-ink-950">{accountCopy.passwordTitle}</h2>
+              <p className="mt-1 text-sm leading-relaxed text-slateish-500">{accountCopy.passwordBody}</p>
+            </section>
             <hr className="my-5 border-slateish-200" />
             <h2 className="text-base font-semibold text-ink-950">
               {m.account.listTitle}
@@ -377,10 +428,10 @@ export function AccountClient() {
 
         <div className="mt-8 rounded-2xl border border-[#e8c9c9] bg-[#faf7f6] p-5">
           <h2 className="text-sm font-semibold text-ink-950">
-            {m.account.eraseTitle}
+            {accountCopy.deleteTitle}
           </h2>
           <p className="mt-1 max-w-2xl text-sm leading-relaxed text-slateish-600">
-            {m.account.eraseHint}
+            {accountCopy.deleteHint}
           </p>
           {confirmErase ? (
             <div className="mt-4 flex flex-wrap items-center gap-4">
@@ -397,14 +448,14 @@ export function AccountClient() {
                 disabled={erasing}
                 className="rounded-xl border border-[#a34747] bg-[#a34747] px-4 py-2 text-[13px] font-medium text-white transition-colors hover:bg-[#8c3b3b] disabled:opacity-60"
               >
-                {erasing ? m.account.erasing : m.account.eraseConfirmCta}
+                {erasing ? accountCopy.deleting : accountCopy.deleteConfirm}
               </button>
               <button
                 type="button"
                 onClick={() => setConfirmErase(false)}
                 className="text-[13px] text-slateish-600 hover:underline"
               >
-                {m.account.eraseCancel}
+                {accountCopy.deleteCancel}
               </button>
             </div>
           ) : (
@@ -413,7 +464,7 @@ export function AccountClient() {
               onClick={() => setConfirmErase(true)}
               className="btn-secondary mt-4 text-[13px]"
             >
-              {m.account.eraseCta}
+              {accountCopy.deleteCta}
             </button>
           )}
         </div>

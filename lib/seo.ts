@@ -2,7 +2,7 @@ import { CANCERS, getCancer } from '@/lib/cancers';
 
 /** Canonical site origin. Override with SITE_URL in production. */
 export const SITE_URL =
-  process.env.SITE_URL ?? 'https://trialbeacon.vercel.app';
+  process.env.SITE_URL ?? 'https://trialbeacon.cn';
 
 /**
  * Hreflang alternates for a given path.
@@ -87,7 +87,9 @@ export function sitemapRoutes(): { path: string; changeFreq: string; priority: n
     { path: '/search', changeFreq: 'weekly', priority: 0.5 },
     { path: '/sources', changeFreq: 'monthly', priority: 0.6 },
     { path: '/about', changeFreq: 'monthly', priority: 0.5 },
+    { path: '/privacy', changeFreq: 'monthly', priority: 0.5 },
     { path: '/disclaimer', changeFreq: 'monthly', priority: 0.4 },
+    { path: '/pro', changeFreq: 'monthly', priority: 0.5 },
     { path: '/safety', changeFreq: 'monthly', priority: 0.4 },
     { path: '/alerts', changeFreq: 'monthly', priority: 0.6 },
     ...CANCERS.map((c) => ({

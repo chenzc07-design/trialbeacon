@@ -20,6 +20,16 @@ export function PageViewPing() {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ event: 'page_view' }),
     }).catch(() => undefined);
+
+    // Only bucket the homepage. Other important routes already emit their own
+    // fixed event names; no pathname, query, search term or health data is sent.
+    if (pathname === '/') {
+      fetch('/api/stats', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ event: 'view_home' }),
+      }).catch(() => undefined);
+    }
   }, [pathname]);
   return null;
 }

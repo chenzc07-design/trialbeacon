@@ -6,6 +6,7 @@ import { RegionBadge } from '@/components/badges';
 import { PageHero } from '@/components/PageHero';
 import { DocumentMotif } from '@/components/Motifs';
 import { t, getServerMessages } from '@/lib/i18n-server';
+import { getPublicCopy } from '@/lib/public-copy';
 
 export async function generateMetadata(): Promise<Metadata> {
   const { messages: m } = await getServerMessages();
@@ -25,7 +26,8 @@ const METHOD_KEYS = [
 ] as const;
 
 export default async function SourcesPage() {
-  const { messages: m } = await getServerMessages();
+  const { locale, messages: m } = await getServerMessages();
+  const copy = getPublicCopy(locale).sources;
   const regions: Region[] = ['US', 'EU', 'CN'];
 
   return (
@@ -108,6 +110,14 @@ export default async function SourcesPage() {
             </div>
           ))}
         </div>
+      </section>
+
+      <section className="mt-8 max-w-3xl rounded-card border border-slateish-200 bg-white p-5">
+        <h2 className="text-base font-semibold text-ink-950">{copy.sitemapTitle}</h2>
+        <p className="mt-2 text-sm leading-relaxed text-slateish-600">{copy.sitemapBody}</p>
+        <a href="/sitemap.xml" className="btn-secondary mt-4 inline-flex text-[13px]">
+          {copy.sitemapLinkLabel} →
+        </a>
       </section>
       </div>
     </>

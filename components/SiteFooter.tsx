@@ -4,9 +4,11 @@ import Link from 'next/link';
 import { BeaconMark } from './Logo';
 import { Disclaimer } from './Disclaimer';
 import { useI18n } from './I18nProvider';
+import { getPublicCopy } from '@/lib/public-copy';
 
 export function SiteFooter() {
-  const { messages: m } = useI18n();
+  const { locale, messages: m } = useI18n();
+  const copy = getPublicCopy(locale);
 
   const FOOTER_LINKS = [
     {
@@ -23,6 +25,7 @@ export function SiteFooter() {
       links: [
         { href: '/sources', label: m.sources.title },
         { href: '/about', label: m.about.title },
+        { href: '/privacy', label: copy.footerPrivacy },
         { href: '/disclaimer', label: m.disclaimer.title },
       ],
     },

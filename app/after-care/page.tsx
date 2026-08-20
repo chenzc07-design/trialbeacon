@@ -10,15 +10,13 @@ import { FilterMotif } from '@/components/Motifs';
 import { DiscussionPrompt } from '@/components/DiscussionPrompt';
 import { FollowCancerButton } from '@/components/FollowCancerButton';
 import { getServerMessages } from '@/lib/i18n-server';
+import { afterCareSeo } from '@/lib/public-copy';
 
 export const revalidate = 3600;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { messages: m } = await getServerMessages();
-  return {
-    title: m.afterCare.title,
-    description: m.afterCare.introDesktop,
-  };
+  const { locale } = await getServerMessages();
+  return afterCareSeo(locale);
 }
 
 export default async function AfterCarePage({
